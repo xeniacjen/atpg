@@ -1,0 +1,4206 @@
+model BENCX1 (S, A, X2, M2, M1, M0 ) (
+input (M2, M1, M0) ()
+intern( m1n,m0n,m1n_and_m0n,m1_and_m0,m2n,x2n ) (
+   primitive = _inv I0 (M1, m1n);
+   primitive = _inv I1 (M0, m0n);
+   primitive = _and  I2 (m1n, m0n, m1n_and_m0n);
+   primitive = _and  I3 (M1, M0, m1_and_m0);
+   primitive = _xor I4 (M1, M0, x2n);
+   primitive = _inv I5 (M2, m2n);
+ )
+ output (S, A, X2) (
+   primitive = _or I6 (M2, m1n_and_m0n, A);
+   primitive = _inv I7 (x2n, X2);
+   primitive = _or I8 (m2n, m1_and_m0, S);
+ )    
+)
+model BENCX2 (S, A, X2, M2, M1, M0 ) (
+input (M2, M1, M0) ()
+intern( m1n,m0n,m1n_and_m0n,m1_and_m0,m2n,x2n ) (
+   primitive = _inv I0 (M1, m1n);
+   primitive = _inv I1 (M0, m0n);
+   primitive = _and  I2 (m1n, m0n, m1n_and_m0n);
+   primitive = _and  I3 (M1, M0, m1_and_m0);
+   primitive = _xor I4 (M1, M0, x2n);
+   primitive = _inv I5 (M2, m2n);
+ )
+ output (S, A, X2) (
+   primitive = _or I6 (M2, m1n_and_m0n, A);
+   primitive = _inv I7 (x2n, X2);
+   primitive = _or I8 (m2n, m1_and_m0, S);
+ )    
+)
+model BENCX4 (S, A, X2, M2, M1, M0 ) (
+input (M2, M1, M0) ()
+intern( m1n,m0n,m1n_and_m0n,m1_and_m0,m2n,x2n ) (
+   primitive = _inv I0 (M1, m1n);
+   primitive = _inv I1 (M0, m0n);
+   primitive = _and  I2 (m1n, m0n, m1n_and_m0n);
+   primitive = _and  I3 (M1, M0, m1_and_m0);
+   primitive = _xor I4 (M1, M0, x2n);
+   primitive = _inv I5 (M2, m2n);
+ )
+ output (S, A, X2) (
+   primitive = _or I6 (M2, m1n_and_m0n, A);
+   primitive = _inv I7 (x2n, X2);
+   primitive = _or I8 (m2n, m1_and_m0, S);
+ )    
+)
+model BMXX1 (PP, X2, A, S, M1, M0 ) (
+input (X2, A, S, M1, M0) ()
+ intern(ab) (primitive = _inv I3 (A,ab);)
+ intern(sb) (primitive = _inv I4 (S,sb);)
+ intern(s1) (primitive = _mux I0 (sb,ab,M0,s1);)
+ intern(s2) (primitive = _mux I1 (sb,ab,M1,s2);)
+ output (PP) (primitive = _mux I2 (s2,s1,X2,PP);)
+)
+model CMPR22X1 ( S, CO, A, B ) (
+  input( A, B ) ()
+  output( S, CO ) (
+    primitive = _and I1 (A,B,CO);
+    primitive = _xor I0 (A,B,S);
+  )
+)
+model CMPR32X1 (S, CO, A, B, C ) (
+  input (A, B, C) ()
+  intern (t1,t2,t3,t4) (
+    primitive = _xor I0 (A, B, t1);
+    primitive = _and I1 (A, B, t2);
+    primitive = _and I2 (A, C, t3);
+    primitive = _and I3 (B, C, t4);
+  )
+  output (S, CO) (
+    primitive = _xor I4 (t1, C, S);
+    primitive = _or  I5 (t2, t3, t4, CO);
+  )
+)
+model CMPR42X1 (S, CO, ICO, A, B, C, D, ICI ) (
+  input (A, B, C, D, ICI) ()
+  intern (t1,s1,t2,t3,t4,ss,t5,t6,t7) (
+    primitive = _xor I0 (A, B, t1);
+    primitive = _xor I1 (t1, C, s1);
+    primitive = _and I2 (A, B, t2);
+    primitive = _and I3 (A, C, t3);
+    primitive = _and I4 (B, C, t4);
+    primitive = _xor I5 (s1, D, ss);
+    primitive = _and I6 (s1, D, t5);
+    primitive = _and I7 (s1, ICI, t6);
+    primitive = _and I8 (D, ICI, t7);
+  )
+  output (S, CO, ICO) (
+    primitive = _xor I9  (ss, ICI, S);
+    primitive = _or  I10 (t2, t3, t4, ICO);
+    primitive = _or  I11 (t5, t6, t7, CO);
+  )
+)
+model CMPR42X2 (S, CO, ICO, A, B, C, D, ICI ) (
+  input (A, B, C, D, ICI) ()
+  intern (t1,s1,t2,t3,t4,ss,t5,t6,t7) (
+    primitive = _xor I0 (A, B, t1);
+    primitive = _xor I1 (t1, C, s1);
+    primitive = _and I2 (A, B, t2);
+    primitive = _and I3 (A, C, t3);
+    primitive = _and I4 (B, C, t4);
+    primitive = _xor I5 (s1, D, ss);
+    primitive = _and I6 (s1, D, t5);
+    primitive = _and I7 (s1, ICI, t6);
+    primitive = _and I8 (D, ICI, t7);
+  )
+  output (S, CO, ICO) (
+    primitive = _xor I9  (ss, ICI, S);
+    primitive = _or  I10 (t2, t3, t4, ICO);
+    primitive = _or  I11 (t5, t6, t7, CO);
+  )
+)
+model AFHCINX2 ( S, CO, A, B, CIN ) (
+  input( A, B, CIN ) ()
+  output( S, CO ) ()
+  intern(b_and_ci,a_and_ci,ci,a_and_b)  (
+    primitive = _inv I0 (CIN, ci);
+    primitive = _xor I1 (A, B, ci, S);
+    primitive = _and I2 (A, B,  a_and_b);
+    primitive = _and I3 (A, ci, a_and_ci);
+    primitive = _and I4 (B, ci, b_and_ci);
+    primitive = _or  I5 (a_and_b, a_and_ci, b_and_ci, CO);
+  )
+)
+model AFHCINX4 ( S, CO, A, B, CIN ) (
+  input( A, B, CIN ) ()
+  output( S, CO ) ()
+  intern(b_and_ci,a_and_ci,ci,a_and_b)  (
+    primitive = _inv I0 (CIN, ci);
+    primitive = _xor I1 (A, B, ci, S);
+    primitive = _and I2 (A, B,  a_and_b);
+    primitive = _and I3 (A, ci, a_and_ci);
+    primitive = _and I4 (B, ci, b_and_ci);
+    primitive = _or  I5 (a_and_b, a_and_ci, b_and_ci, CO);
+  )
+)
+model AFHCONX2 ( S, CON, A, B, CI ) (
+  input( A, B, CI ) ()
+  output( S, CON ) ()
+  intern(b_and_ci,a_and_ci,a_and_b,co)  (
+    primitive = _xor I0 (A, B, CI, S);
+    primitive = _and I1 (A, B,  a_and_b);
+    primitive = _and I2 (A, CI, a_and_ci);
+    primitive = _and I3 (B, CI, b_and_ci);
+    primitive = _or  I4 (a_and_b, a_and_ci, b_and_ci, co);
+    primitive = _inv I5 (co, CON);
+  )
+)
+model AFHCONX4 ( S, CON, A, B, CI ) (
+  input( A, B, CI ) ()
+  output( S, CON ) ()
+  intern(b_and_ci,a_and_ci,a_and_b,co)  (
+    primitive = _xor I0 (A, B, CI, S);
+    primitive = _and I1 (A, B,  a_and_b);
+    primitive = _and I2 (A, CI, a_and_ci);
+    primitive = _and I3 (B, CI, b_and_ci);
+    primitive = _or  I4 (a_and_b, a_and_ci, b_and_ci, co);
+    primitive = _inv I5 (co, CON);
+  )
+)
+model AHHCINX2 ( S, CO, A, CIN ) (
+  input( A, CIN ) ()
+  output( S, CO ) ()
+  intern(ci)  (
+    primitive = _inv I0 (CIN, ci);
+    primitive = _xor I1 (A, ci, S);
+    primitive = _and I2 (A, ci, CO);
+  )
+)
+model AHHCINX4 ( S, CO, A, CIN ) (
+  input( A, CIN ) ()
+  output( S, CO ) ()
+  intern(ci)  (
+    primitive = _inv I0 (CIN, ci);
+    primitive = _xor I1 (A, ci, S);
+    primitive = _and I2 (A, ci, CO);
+  )
+)
+model AHHCONX2 ( S, CON, A, CI ) (
+  input( A, CI ) ()
+  output( S, CON ) ()
+  intern(co)  (
+    primitive = _xor I0 (A, CI, S);
+    primitive = _and I1 (A, CI, co);
+    primitive = _inv I2 (co, CON);
+  )
+)
+model AHHCONX4 ( S, CON, A, CI ) (
+  input( A, CI ) ()
+  output( S, CON ) ()
+  intern(co)  (
+    primitive = _xor I0 (A, CI, S);
+    primitive = _and I1 (A, CI, co);
+    primitive = _inv I2 (co, CON);
+  )
+)
+model AFCSHCINX2 ( S, CO0, CO1, A, B, CI0N, CI1N, CS ) (
+  input( A, B, CI0N, CI1N, CS ) ()
+  intern(ci1)        (primitive = _inv I0  (CI1N, ci1);)
+  intern(ci0)        (primitive = _inv I1  (CI0N, ci0);)
+  intern(s1)         (primitive = _xor I2  (A,B,ci1,s1);)
+  intern(s2)         (primitive = _xor I3  (A,B,ci0,s2);)
+  intern(s3)         (primitive = _and I4  (CS,s1,s3);)
+  intern(csn)        (primitive = _inv I5  (CS, csn);)
+  intern(s4)         (primitive = _and I6  (csn,s2,s4);)
+  intern(a_and_b)    (primitive = _and I7  (A,B,a_and_b);)
+  intern(a_and_ci0)  (primitive = _and I8  (A,ci0,a_and_ci0);)
+  intern(b_and_ci0)  (primitive = _and I9  (B,ci0,b_and_ci0);)
+  intern(a_and_ci1)  (primitive = _and I10 (A,ci1,a_and_ci1);)
+  intern(b_and_ci1)  (primitive = _and I11 (B,ci1,b_and_ci1);)
+  output( S, CO0, CO1 ) (
+    primitive = _or I12 (s3,s4,S);
+    primitive = _or I13 (a_and_b, a_and_ci0, b_and_ci0, CO0);
+    primitive = _or I14 (a_and_b, a_and_ci1, b_and_ci1, CO1);
+  )
+)
+model AFCSHCINX4 ( S, CO0, CO1, A, B, CI0N, CI1N, CS ) (
+  input( A, B, CI0N, CI1N, CS ) ()
+  intern(ci1)        (primitive = _inv I0  (CI1N, ci1);)
+  intern(ci0)        (primitive = _inv I1  (CI0N, ci0);)
+  intern(s1)         (primitive = _xor I2  (A,B,ci1,s1);)
+  intern(s2)         (primitive = _xor I3  (A,B,ci0,s2);)
+  intern(s3)         (primitive = _and I4  (CS,s1,s3);)
+  intern(csn)        (primitive = _inv I5  (CS, csn);)
+  intern(s4)         (primitive = _and I6  (csn,s2,s4);)
+  intern(a_and_b)    (primitive = _and I7  (A,B,a_and_b);)
+  intern(a_and_ci0)  (primitive = _and I8  (A,ci0,a_and_ci0);)
+  intern(b_and_ci0)  (primitive = _and I9  (B,ci0,b_and_ci0);)
+  intern(a_and_ci1)  (primitive = _and I10 (A,ci1,a_and_ci1);)
+  intern(b_and_ci1)  (primitive = _and I11 (B,ci1,b_and_ci1);)
+  output( S, CO0, CO1 ) (
+    primitive = _or I12 (s3,s4,S);
+    primitive = _or I13 (a_and_b, a_and_ci0, b_and_ci0, CO0);
+    primitive = _or I14 (a_and_b, a_and_ci1, b_and_ci1, CO1);
+  )
+)
+model AFCSHCONX2 ( S, CO0N, CO1N, A, B, CI0, CI1, CS ) (
+  input( A, B, CI0, CI1, CS ) ()
+  intern(s1)         (primitive = _xor I2  (A,B,CI1,s1);)
+  intern(s2)         (primitive = _xor I3  (A,B,CI0,s2);)
+  intern(s3)         (primitive = _and I4  (CS,s1,s3);)
+  intern(csn)        (primitive = _inv I5  (CS, csn);)
+  intern(s4)         (primitive = _and I6  (csn,s2,s4);)
+  intern(a_and_b)    (primitive = _and I7  (A,B,a_and_b);)
+  intern(a_and_ci0)  (primitive = _and I8  (A,CI0,a_and_ci0);)
+  intern(b_and_ci0)  (primitive = _and I9  (B,CI0,b_and_ci0);)
+  intern(co0)        (primitive = _or  I10 (a_and_b, a_and_ci0, b_and_ci0, co0);)
+  intern(a_and_ci1)  (primitive = _and I11 (A,CI1,a_and_ci1);)
+  intern(b_and_ci1)  (primitive = _and I12 (B,CI1,b_and_ci1);)
+  intern(co1)        (primitive = _or  I13 (a_and_b, a_and_ci1, b_and_ci1, co1);)
+  output( S, CO0N, CO1N ) (
+    primitive = _or  I14 (s3,s4,S);
+    primitive = _inv I15 (co0, CO0N);
+    primitive = _inv I16 (co1, CO1N);
+  )
+)
+model AFCSHCONX4 ( S, CO0N, CO1N, A, B, CI0, CI1, CS ) (
+  input( A, B, CI0, CI1, CS ) ()
+  intern(s1)         (primitive = _xor I2  (A,B,CI1,s1);)
+  intern(s2)         (primitive = _xor I3  (A,B,CI0,s2);)
+  intern(s3)         (primitive = _and I4  (CS,s1,s3);)
+  intern(csn)        (primitive = _inv I5  (CS, csn);)
+  intern(s4)         (primitive = _and I6  (csn,s2,s4);)
+  intern(a_and_b)    (primitive = _and I7  (A,B,a_and_b);)
+  intern(a_and_ci0)  (primitive = _and I8  (A,CI0,a_and_ci0);)
+  intern(b_and_ci0)  (primitive = _and I9  (B,CI0,b_and_ci0);)
+  intern(co0)        (primitive = _or  I10 (a_and_b, a_and_ci0, b_and_ci0, co0);)
+  intern(a_and_ci1)  (primitive = _and I11 (A,CI1,a_and_ci1);)
+  intern(b_and_ci1)  (primitive = _and I12 (B,CI1,b_and_ci1);)
+  intern(co1)        (primitive = _or  I13 (a_and_b, a_and_ci1, b_and_ci1, co1);)
+  output( S, CO0N, CO1N ) (
+    primitive = _or  I14 (s3,s4,S);
+    primitive = _inv I15 (co0, CO0N);
+    primitive = _inv I16 (co1, CO1N);
+  )
+)
+model XNOR3X2 (Y, A, B, C ) (
+  input (A, B, C) ()
+  output (Y) (
+    primitive = _xnor I0(A, B, C, Y);
+  )
+)
+model XNOR3X4 (Y, A, B, C ) (
+  input (A, B, C) ()
+  output (Y) (
+    primitive = _xnor I0(A, B, C, Y);
+  )
+)
+model XOR3X2 (Y, A, B, C ) (
+  input (A, B, C) ()
+  output (Y) (
+    primitive = _xor I0(A, B, C, Y);
+  )
+)
+model XOR3X4 (Y, A, B, C ) (
+  input (A, B, C) ()
+  output (Y) (
+    primitive = _xor I0(A, B, C, Y);
+  )
+)
+model RFRDX1 (BRB, RB ) (
+input (RB) ()
+ output (BRB) (
+         bus_keeper = zhold;
+         primitive  = _inv I4 (RB,BRB);
+ )
+)
+model RFRDX2 (BRB, RB ) (
+input (RB) ()
+ output (BRB) (
+         bus_keeper = zhold;
+         primitive  = _inv I4 (RB,BRB);
+ )
+)
+model RFRDX4 (BRB, RB ) (
+input (RB) ()
+ output (BRB) (
+         bus_keeper = zhold;
+         primitive  = _inv I4 (RB,BRB);
+ )
+)
+model RF2R1WX2 (R1B, R2B, WB, WW, R1W, R2W ) (
+input (WB, WW, R1W, R2W) ()
+ intern(r1wn)    (primitive = _inv  I0 (R1W,r1wn);)
+ intern(r2wn)    (primitive = _inv  I1 (R2W,r2wn);)
+ intern(n0)      (primitive = _dlat I2 (,,WW,WB,n0,);)
+ intern(r1wnbar) (primitive = _inv  I3 (r1wn,r1wnbar);)
+ intern(n2)      (primitive = _mux  I4 (r1wnbar,R1W,n0,n2);)
+ intern(r2wnbar) (primitive = _inv  I5 (r2wn,r2wnbar);)
+ intern(n3)      (primitive = _mux  I6 (r2wnbar,R2W,n0,n3);)
+ output (R1B, R2B) (
+        primitive = _tshi I7 (n0,n2,R1B);
+        primitive = _tshi I8 (n0,n3,R2B);
+ )
+)
+model RF1R1WX2 (RB, WB, WW, RW, RWN ) (
+input (WB, WW, RW, RWN) ()
+ intern(n0)     (primitive = _dlat I0 (,,WW,WB,n0,);)
+ intern(rwnbar) (primitive = _inv  I1 (RWN,rwnbar);)
+ intern(n2)     (primitive = _mux  I2 (rwnbar,RW,n0,n2);)
+ output (RB) (primitive = _tshi I3 (n0,n2,RB);)
+)
+model ADDFHX1 ( S, CO, A, B, CI ) (
+  input( A, B, CI ) ()
+
+  output( S, CO ) ()
+  intern(b_and_ci,a_and_ci,a_and_b)  (
+    primitive = _or I4 (a_and_b,a_and_ci,b_and_ci,CO);
+    primitive = _and I3 (B,CI,b_and_ci);
+    primitive = _and I2 (A,CI,a_and_ci);
+    primitive = _and I1 (A,B,a_and_b);
+    primitive = _xor I0 (A,B,CI,S); 
+  )
+)
+model ADDFHX2 ( S, CO, A, B, CI ) (
+  input( A, B, CI ) ()
+
+  output( S, CO ) ()
+  intern(b_and_ci,a_and_ci,a_and_b)  (
+    primitive = _or I4 (a_and_b,a_and_ci,b_and_ci,CO);
+    primitive = _and I3 (B,CI,b_and_ci);
+    primitive = _and I2 (A,CI,a_and_ci);
+    primitive = _and I1 (A,B,a_and_b);
+    primitive = _xor I0 (A,B,CI,S); 
+  )
+)
+model ADDFHX4 ( S, CO, A, B, CI ) (
+  input( A, B, CI ) ()
+
+  output( S, CO ) ()
+  intern(b_and_ci,a_and_ci,a_and_b)  (
+    primitive = _or I4 (a_and_b,a_and_ci,b_and_ci,CO);
+    primitive = _and I3 (B,CI,b_and_ci);
+    primitive = _and I2 (A,CI,a_and_ci);
+    primitive = _and I1 (A,B,a_and_b);
+    primitive = _xor I0 (A,B,CI,S); 
+  )
+)
+model ADDFHXL ( S, CO, A, B, CI ) (
+  input( A, B, CI ) ()
+
+  output( S, CO ) ()
+  intern(b_and_ci,a_and_ci,a_and_b)  (
+    primitive = _or I4 (a_and_b,a_and_ci,b_and_ci,CO);
+    primitive = _and I3 (B,CI,b_and_ci);
+    primitive = _and I2 (A,CI,a_and_ci);
+    primitive = _and I1 (A,B,a_and_b);
+    primitive = _xor I0 (A,B,CI,S); 
+  )
+)
+model ADDFX1 ( S, CO, A, B, CI ) (
+  input( A, B, CI ) ()
+
+  output( S, CO ) ()
+  intern(b_and_ci,a_and_ci,a_and_b)  (
+    primitive = _or I4 (a_and_b,a_and_ci,b_and_ci,CO);
+    primitive = _and I3 (B,CI,b_and_ci);
+    primitive = _and I2 (A,CI,a_and_ci);
+    primitive = _and I1 (A,B,a_and_b);
+    primitive = _xor I0 (A,B,CI,S); 
+  )
+)
+model ADDFX2 ( S, CO, A, B, CI ) (
+  input( A, B, CI ) ()
+
+  output( S, CO ) ()
+  intern(b_and_ci,a_and_ci,a_and_b)  (
+    primitive = _or I4 (a_and_b,a_and_ci,b_and_ci,CO);
+    primitive = _and I3 (B,CI,b_and_ci);
+    primitive = _and I2 (A,CI,a_and_ci);
+    primitive = _and I1 (A,B,a_and_b);
+    primitive = _xor I0 (A,B,CI,S); 
+  )
+)
+model ADDFX4 ( S, CO, A, B, CI ) (
+  input( A, B, CI ) ()
+
+  output( S, CO ) ()
+  intern(b_and_ci,a_and_ci,a_and_b)  (
+    primitive = _or I4 (a_and_b,a_and_ci,b_and_ci,CO);
+    primitive = _and I3 (B,CI,b_and_ci);
+    primitive = _and I2 (A,CI,a_and_ci);
+    primitive = _and I1 (A,B,a_and_b);
+    primitive = _xor I0 (A,B,CI,S); 
+  )
+)
+model ADDFXL ( S, CO, A, B, CI ) (
+  input( A, B, CI ) ()
+
+  output( S, CO ) ()
+  intern(b_and_ci,a_and_ci,a_and_b)  (
+    primitive = _or I4 (a_and_b,a_and_ci,b_and_ci,CO);
+    primitive = _and I3 (B,CI,b_and_ci);
+    primitive = _and I2 (A,CI,a_and_ci);
+    primitive = _and I1 (A,B,a_and_b);
+    primitive = _xor I0 (A,B,CI,S); 
+  )
+)
+model ADDHX1 ( S, CO, A, B ) (
+  input( A, B ) ()
+  output( S, CO ) (
+    primitive = _and I1 (A,B,CO);
+    primitive = _xor I0 (A,B,S);
+  )
+)
+model ADDHX2 ( S, CO, A, B ) (
+  input( A, B ) ()
+  output( S, CO ) (
+    primitive = _and I1 (A,B,CO);
+    primitive = _xor I0 (A,B,S);
+  )
+)
+model ADDHX4 ( S, CO, A, B ) (
+  input( A, B ) ()
+  output( S, CO ) (
+    primitive = _and I1 (A,B,CO);
+    primitive = _xor I0 (A,B,S);
+  )
+)
+model ADDHXL ( S, CO, A, B ) (
+  input( A, B ) ()
+  output( S, CO ) (
+    primitive = _and I1 (A,B,CO);
+    primitive = _xor I0 (A,B,S);
+  )
+)
+model AND2X1 (Y, A, B) (
+  input (A, B) ()
+  output (Y) (
+
+    primitive = _and U1 (A, B, Y);
+ )
+)
+model AND2X2 (Y, A, B) (
+  input (A, B) ()
+  output (Y) (
+
+    primitive = _and U1 (A, B, Y);
+ )
+)
+model AND2X4 (Y, A, B) (
+  input (A, B) ()
+  output (Y) (
+
+    primitive = _and U1 (A, B, Y);
+ )
+)
+model AND2XL (Y, A, B) (
+  input (A, B) ()
+  output (Y) (
+
+    primitive = _and U1 (A, B, Y);
+ )
+)
+model AND3X1 (Y, A, B, C) (
+  input (A, B, C) ()
+  output (Y) (
+
+    primitive = _and U1 (A, B, C, Y);
+ )
+)
+model AND3X2 (Y, A, B, C) (
+  input (A, B, C) ()
+  output (Y) (
+
+    primitive = _and U1 (A, B, C, Y);
+ )
+)
+model AND3X4 (Y, A, B, C) (
+  input (A, B, C) ()
+  output (Y) (
+
+    primitive = _and U1 (A, B, C, Y);
+ )
+)
+model AND3XL (Y, A, B, C) (
+  input (A, B, C) ()
+  output (Y) (
+
+    primitive = _and U1 (A, B, C, Y);
+ )
+)
+model AND4X1 (Y, A, B, C, D) (
+  input (A, B, C, D) ()
+  output (Y) (
+
+    primitive = _and U1 (A, B, C, D, Y);
+ )
+)
+model AND4X2 (Y, A, B, C, D) (
+  input (A, B, C, D) ()
+  output (Y) (
+
+    primitive = _and U1 (A, B, C, D, Y);
+ )
+)
+model AND4X4 (Y, A, B, C, D) (
+  input (A, B, C, D) ()
+  output (Y) (
+
+    primitive = _and U1 (A, B, C, D, Y);
+ )
+)
+model AND4XL (Y, A, B, C, D) (
+  input (A, B, C, D) ()
+  output (Y) (
+
+    primitive = _and U1 (A, B, C, D, Y);
+ )
+)
+model AOI211X1 (Y, A0, A1, B0, C0) (
+input (A0, A1, B0, C0) ()
+output (Y) ()
+  intern(outA) (
+    primitive = _and I0 (A0,A1,outA);
+    primitive = _nor I1 (B0,C0,outA,Y);
+  )
+)
+model AOI211X2 (Y, A0, A1, B0, C0) (
+input (A0, A1, B0, C0) ()
+output (Y) ()
+  intern(outA) (
+    primitive = _and I0 (A0,A1,outA);
+    primitive = _nor I1 (B0,C0,outA,Y);
+  )
+)
+model AOI211X4 (Y, A0, A1, B0, C0) (
+input (A0, A1, B0, C0) ()
+output (Y) ()
+  intern(outA) (
+    primitive = _and I0 (A0,A1,outA);
+    primitive = _nor I1 (B0,C0,outA,Y);
+  )
+)
+model AOI211XL (Y, A0, A1, B0, C0) (
+input (A0, A1, B0, C0) ()
+output (Y) ()
+  intern(outA) (
+    primitive = _and I0 (A0,A1,outA);
+    primitive = _nor I1 (B0,C0,outA,Y);
+  )
+)
+model AOI21X1 (Y, A0, A1, B0) (
+input (A0, A1, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nor I1 (B0,outA,Y);
+    primitive = _and I0 (A0,A1,outA);
+  )
+)
+model AOI21X2 (Y, A0, A1, B0) (
+input (A0, A1, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nor I1 (B0,outA,Y);
+    primitive = _and I0 (A0,A1,outA);
+  )
+)
+model AOI21X4 (Y, A0, A1, B0) (
+input (A0, A1, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nor I1 (B0,outA,Y);
+    primitive = _and I0 (A0,A1,outA);
+  )
+)
+model AOI21XL (Y, A0, A1, B0) (
+input (A0, A1, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nor I1 (B0,outA,Y);
+    primitive = _and I0 (A0,A1,outA);
+  )
+)
+model AOI221X1 (Y, A0, A1, B0, B1, C0) (
+input (A0, A1, B0, B1, C0) ()
+output (Y) ()
+  intern(outA,outB)  (
+    primitive = _nor I2 (C0,outB,outA,Y);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _and I0 (A0,A1,outA);
+  )
+)
+model AOI221X2 (Y, A0, A1, B0, B1, C0) (
+input (A0, A1, B0, B1, C0) ()
+output (Y) ()
+  intern(outA,outB)  (
+    primitive = _nor I2 (C0,outB,outA,Y);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _and I0 (A0,A1,outA);
+  )
+)
+model AOI221X4 (Y, A0, A1, B0, B1, C0) (
+input (A0, A1, B0, B1, C0) ()
+output (Y) ()
+  intern(outA,outB)  (
+    primitive = _nor I2 (C0,outB,outA,Y);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _and I0 (A0,A1,outA);
+  )
+)
+model AOI221XL (Y, A0, A1, B0, B1, C0) (
+input (A0, A1, B0, B1, C0) ()
+output (Y) ()
+  intern(outA,outB)  (
+    primitive = _nor I2 (C0,outB,outA,Y);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _and I0 (A0,A1,outA);
+  )
+)
+model AOI222X1 (Y, A0, A1, B0, B1, C0, C1) (
+input (A0, A1, B0, B1, C0, C1) ()
+output (Y) ()
+  intern(outC,outB,outA)  (
+    primitive = _nor I3 (outA,outB,outC,Y);
+    primitive = _and I2 (C0,C1,outC);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _and I0 (A0,A1,outA);
+  )
+)
+model AOI222X2 (Y, A0, A1, B0, B1, C0, C1) (
+input (A0, A1, B0, B1, C0, C1) ()
+output (Y) ()
+  intern(outC,outB,outA)  (
+    primitive = _nor I3 (outA,outB,outC,Y);
+    primitive = _and I2 (C0,C1,outC);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _and I0 (A0,A1,outA);
+  )
+)
+model AOI222X4 (Y, A0, A1, B0, B1, C0, C1) (
+input (A0, A1, B0, B1, C0, C1) ()
+output (Y) ()
+  intern(outC,outB,outA)  (
+    primitive = _nor I3 (outA,outB,outC,Y);
+    primitive = _and I2 (C0,C1,outC);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _and I0 (A0,A1,outA);
+  )
+)
+model AOI222XL (Y, A0, A1, B0, B1, C0, C1) (
+input (A0, A1, B0, B1, C0, C1) ()
+output (Y) ()
+  intern(outC,outB,outA)  (
+    primitive = _nor I3 (outA,outB,outC,Y);
+    primitive = _and I2 (C0,C1,outC);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _and I0 (A0,A1,outA);
+  )
+)
+model AOI22X1 (Y, A0, A1, B0, B1) (
+input (A0, A1, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nor I2 (outA,outB,Y);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _and I0 (A0,A1,outA);
+  )
+)
+model AOI22X2 (Y, A0, A1, B0, B1) (
+input (A0, A1, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nor I2 (outA,outB,Y);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _and I0 (A0,A1,outA);
+  )
+)
+model AOI22X4 (Y, A0, A1, B0, B1) (
+input (A0, A1, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nor I2 (outA,outB,Y);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _and I0 (A0,A1,outA);
+  )
+)
+model AOI22XL (Y, A0, A1, B0, B1) (
+input (A0, A1, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nor I2 (outA,outB,Y);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _and I0 (A0,A1,outA);
+  )
+)
+model AOI2BB1X1 (Y, A0N, A1N, B0) (
+input (A0N, A1N, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nor I1 (B0,outA,Y);
+    primitive = _nor I0 (A0N,A1N,outA);
+  )
+)
+model AOI2BB1X2 (Y, A0N, A1N, B0) (
+input (A0N, A1N, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nor I1 (B0,outA,Y);
+    primitive = _nor I0 (A0N,A1N,outA);
+  )
+)
+model AOI2BB1X4 (Y, A0N, A1N, B0) (
+input (A0N, A1N, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nor I1 (B0,outA,Y);
+    primitive = _nor I0 (A0N,A1N,outA);
+  )
+)
+model AOI2BB1XL (Y, A0N, A1N, B0) (
+input (A0N, A1N, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nor I1 (B0,outA,Y);
+    primitive = _nor I0 (A0N,A1N,outA);
+  )
+)
+model AOI2BB2X1 (Y, A0N, A1N, B0, B1) (
+input (A0N, A1N, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nor I2 (outA,outB,Y);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _nor I0 (A0N,A1N,outA);
+  )
+)
+model AOI2BB2X2 (Y, A0N, A1N, B0, B1) (
+input (A0N, A1N, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nor I2 (outA,outB,Y);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _nor I0 (A0N,A1N,outA);
+  )
+)
+model AOI2BB2X4 (Y, A0N, A1N, B0, B1) (
+input (A0N, A1N, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nor I2 (outA,outB,Y);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _nor I0 (A0N,A1N,outA);
+  )
+)
+model AOI2BB2XL (Y, A0N, A1N, B0, B1) (
+input (A0N, A1N, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nor I2 (outA,outB,Y);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _nor I0 (A0N,A1N,outA);
+  )
+)
+model AOI31X1 (Y, A0, A1, A2, B0) (
+input (A0, A1, A2, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nor I1 (B0,outA,Y);
+    primitive = _and I0 (A0,A1,A2,outA);
+  )
+)
+model AOI31X2 (Y, A0, A1, A2, B0) (
+input (A0, A1, A2, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nor I1 (B0,outA,Y);
+    primitive = _and I0 (A0,A1,A2,outA);
+  )
+)
+model AOI31X4 (Y, A0, A1, A2, B0) (
+input (A0, A1, A2, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nor I1 (B0,outA,Y);
+    primitive = _and I0 (A0,A1,A2,outA);
+  )
+)
+model AOI31XL (Y, A0, A1, A2, B0) (
+input (A0, A1, A2, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nor I1 (B0,outA,Y);
+    primitive = _and I0 (A0,A1,A2,outA);
+  )
+)
+model AOI32X1 (Y, A0, A1, A2, B0, B1) (
+input (A0, A1, A2, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nor I2 (outA,outB,Y);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _and I0 (A0,A1,A2,outA);
+  )
+)
+model AOI32X2 (Y, A0, A1, A2, B0, B1) (
+input (A0, A1, A2, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nor I2 (outA,outB,Y);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _and I0 (A0,A1,A2,outA);
+  )
+)
+model AOI32X4 (Y, A0, A1, A2, B0, B1) (
+input (A0, A1, A2, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nor I2 (outA,outB,Y);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _and I0 (A0,A1,A2,outA);
+  )
+)
+model AOI32XL (Y, A0, A1, A2, B0, B1) (
+input (A0, A1, A2, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nor I2 (outA,outB,Y);
+    primitive = _and I1 (B0,B1,outB);
+    primitive = _and I0 (A0,A1,A2,outA);
+  )
+)
+model AOI33X1 (Y, A0, A1, A2, B0, B1, B2) (
+input (A0, A1, A2, B0, B1, B2) ()
+output (Y) ()
+
+  intern(outB,outA)  (
+    primitive = _nor I2 (outA,outB,Y);
+    primitive = _and I1 (B0,B1,B2,outB);
+    primitive = _and I0 (A0,A1,A2,outA);
+  )
+)
+model AOI33X2 (Y, A0, A1, A2, B0, B1, B2) (
+input (A0, A1, A2, B0, B1, B2) ()
+output (Y) ()
+
+  intern(outB,outA)  (
+    primitive = _nor I2 (outA,outB,Y);
+    primitive = _and I1 (B0,B1,B2,outB);
+    primitive = _and I0 (A0,A1,A2,outA);
+  )
+)
+model AOI33X4 (Y, A0, A1, A2, B0, B1, B2) (
+input (A0, A1, A2, B0, B1, B2) ()
+output (Y) ()
+
+  intern(outB,outA)  (
+    primitive = _nor I2 (outA,outB,Y);
+    primitive = _and I1 (B0,B1,B2,outB);
+    primitive = _and I0 (A0,A1,A2,outA);
+  )
+)
+model AOI33XL (Y, A0, A1, A2, B0, B1, B2) (
+input (A0, A1, A2, B0, B1, B2) ()
+output (Y) ()
+
+  intern(outB,outA)  (
+    primitive = _nor I2 (outA,outB,Y);
+    primitive = _and I1 (B0,B1,B2,outB);
+    primitive = _and I0 (A0,A1,A2,outA);
+  )
+)
+model BUFX12 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model BUFX16 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model BUFX1 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model BUFX20 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model BUFX2 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model BUFX3 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model BUFX4 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model BUFX8 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model BUFXL (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model CLKBUFX12 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model CLKBUFX16 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model CLKBUFX1 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model CLKBUFX20 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model CLKBUFX2 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model CLKBUFX3 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model CLKBUFX4 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model CLKBUFX8 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model CLKBUFXL (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model CLKINVX12 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model CLKINVX16 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model CLKINVX1 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model CLKINVX20 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model CLKINVX2 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model CLKINVX3 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model CLKINVX4 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model CLKINVX8 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model CLKINVXL (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model DFFX1 (Q, QN, D, CK) (
+  input  (D, CK) ()
+  output (Q, QN) (primitive = _dff I1 (,,CK,D,Q,QN);) 
+)
+model DFFX2 (Q, QN, D, CK) (
+  input  (D, CK) ()
+  output (Q, QN) (primitive = _dff I1 (,,CK,D,Q,QN);) 
+)
+model DFFX4 (Q, QN, D, CK) (
+  input  (D, CK) ()
+  output (Q, QN) (primitive = _dff I1 (,,CK,D,Q,QN);) 
+)
+model DFFXL (Q, QN, D, CK) (
+  input  (D, CK) ()
+  output (Q, QN) (primitive = _dff I1 (,,CK,D,Q,QN);) 
+)
+model DFFHQX1 (Q, D, CK) (
+  input  (D, CK) ()
+  output (Q) (primitive = _dff I1 (,,CK,D,Q,);) 
+)
+model DFFHQX2 (Q, D, CK) (
+  input  (D, CK) ()
+  output (Q) (primitive = _dff I1 (,,CK,D,Q,);) 
+)
+model DFFHQX4 (Q, D, CK) (
+  input  (D, CK) ()
+  output (Q) (primitive = _dff I1 (,,CK,D,Q,);) 
+)
+model DFFHQXL (Q, D, CK) (
+  input  (D, CK) ()
+  output (Q) (primitive = _dff I1 (,,CK,D,Q,);) 
+)
+model DFFNX1 (Q, QN, D, CKN) (
+  input  (D, CKN) ()
+  output (Q, QN) ()
+  intern(CK) (
+    primitive = _inv I0 (CKN,CK);
+    primitive = _dff I1 (,,CK,D,Q,QN);
+  )
+)
+model DFFNX2 (Q, QN, D, CKN) (
+  input  (D, CKN) ()
+  output (Q, QN) ()
+  intern(CK) (
+    primitive = _inv I0 (CKN,CK);
+    primitive = _dff I1 (,,CK,D,Q,QN);
+  )
+)
+model DFFNX4 (Q, QN, D, CKN) (
+  input  (D, CKN) ()
+  output (Q, QN) ()
+  intern(CK) (
+    primitive = _inv I0 (CKN,CK);
+    primitive = _dff I1 (,,CK,D,Q,QN);
+  )
+)
+model DFFNXL (Q, QN, D, CKN) (
+  input  (D, CKN) ()
+  output (Q, QN) ()
+  intern(CK) (
+    primitive = _inv I0 (CKN,CK);
+    primitive = _dff I1 (,,CK,D,Q,QN);
+  )
+)
+model DFFNRX1 (Q, QN, D, CKN, RN) (
+  input  (D, CKN, RN) ()
+  output (Q, QN) ()
+  intern(R,CK)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _dff I1 (,R,CK,D,Q,QN);
+  )
+)
+model DFFNRX2 (Q, QN, D, CKN, RN) (
+  input  (D, CKN, RN) ()
+  output (Q, QN) ()
+  intern(R,CK)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _dff I1 (,R,CK,D,Q,QN);
+  )
+)
+model DFFNRX4 (Q, QN, D, CKN, RN) (
+  input  (D, CKN, RN) ()
+  output (Q, QN) ()
+  intern(R,CK)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _dff I1 (,R,CK,D,Q,QN);
+  )
+)
+model DFFNRXL (Q, QN, D, CKN, RN) (
+  input  (D, CKN, RN) ()
+  output (Q, QN) ()
+  intern(R,CK)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _dff I1 (,R,CK,D,Q,QN);
+  )
+)
+model DFFNSX1 (Q, QN, D, CKN, SN) (
+  input  (D, CKN, SN) ()
+  output (Q, QN) ()
+  intern(S,CK)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _dff I1 (S,,CK,D,Q,QN);
+  )
+)
+model DFFNSX2 (Q, QN, D, CKN, SN) (
+  input  (D, CKN, SN) ()
+  output (Q, QN) ()
+  intern(S,CK)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _dff I1 (S,,CK,D,Q,QN);
+  )
+)
+model DFFNSX4 (Q, QN, D, CKN, SN) (
+  input  (D, CKN, SN) ()
+  output (Q, QN) ()
+  intern(S,CK)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _dff I1 (S,,CK,D,Q,QN);
+  )
+)
+model DFFNSXL (Q, QN, D, CKN, SN) (
+  input  (D, CKN, SN) ()
+  output (Q, QN) ()
+  intern(S,CK)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _dff I1 (S,,CK,D,Q,QN);
+  )
+)
+model DFFNSRX1 (Q, QN, D, CKN, SN, RN) (
+  input  (D, CKN, SN, RN) ()
+  output (Q, QN) ()
+  intern(R,S,CK)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I1 (SN,S);
+    primitive = _inv I3 (CKN,CK);
+    primitive = _dff I2 (S,R,CK,D,Q,QN);
+  )
+)
+model DFFNSRX2 (Q, QN, D, CKN, SN, RN) (
+  input  (D, CKN, SN, RN) ()
+  output (Q, QN) ()
+  intern(R,S,CK)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I1 (SN,S);
+    primitive = _inv I3 (CKN,CK);
+    primitive = _dff I2 (S,R,CK,D,Q,QN);
+  )
+)
+model DFFNSRX4 (Q, QN, D, CKN, SN, RN) (
+  input  (D, CKN, SN, RN) ()
+  output (Q, QN) ()
+  intern(R,S,CK)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I1 (SN,S);
+    primitive = _inv I3 (CKN,CK);
+    primitive = _dff I2 (S,R,CK,D,Q,QN);
+  )
+)
+model DFFNSRXL (Q, QN, D, CKN, SN, RN) (
+  input  (D, CKN, SN, RN) ()
+  output (Q, QN) ()
+  intern(R,S,CK)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I1 (SN,S);
+    primitive = _inv I3 (CKN,CK);
+    primitive = _dff I2 (S,R,CK,D,Q,QN);
+  )
+)
+model DFFRX1 (Q, QN, D, CK, RN) (
+  input  (D, CK, RN) ()
+  output (Q, QN) ()
+  intern(R)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _dff I1 (,R,CK,D,Q,QN);
+  )
+)
+model DFFRX2 (Q, QN, D, CK, RN) (
+  input  (D, CK, RN) ()
+  output (Q, QN) ()
+  intern(R)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _dff I1 (,R,CK,D,Q,QN);
+  )
+)
+model DFFRX4 (Q, QN, D, CK, RN) (
+  input  (D, CK, RN) ()
+  output (Q, QN) ()
+  intern(R)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _dff I1 (,R,CK,D,Q,QN);
+  )
+)
+model DFFRXL (Q, QN, D, CK, RN) (
+  input  (D, CK, RN) ()
+  output (Q, QN) ()
+  intern(R)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _dff I1 (,R,CK,D,Q,QN);
+  )
+)
+model DFFRHQX1 (Q, D, CK, RN) (
+  input  (D, CK, RN) ()
+  output (Q) ()
+  intern(R)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _dff I1 (,R,CK,D,Q,);
+  )
+)
+model DFFRHQX2 (Q, D, CK, RN) (
+  input  (D, CK, RN) ()
+  output (Q) ()
+  intern(R)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _dff I1 (,R,CK,D,Q,);
+  )
+)
+model DFFRHQX4 (Q, D, CK, RN) (
+  input  (D, CK, RN) ()
+  output (Q) ()
+  intern(R)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _dff I1 (,R,CK,D,Q,);
+  )
+)
+model DFFRHQXL (Q, D, CK, RN) (
+  input  (D, CK, RN) ()
+  output (Q) ()
+  intern(R)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _dff I1 (,R,CK,D,Q,);
+  )
+)
+model DFFSX1 (Q, QN, D, CK, SN) (
+  input  (D, CK, SN) ()
+  output (Q, QN) ()
+  intern(S)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _dff I1 (S,,CK,D,Q,QN);
+  )
+)
+model DFFSX2 (Q, QN, D, CK, SN) (
+  input  (D, CK, SN) ()
+  output (Q, QN) ()
+  intern(S)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _dff I1 (S,,CK,D,Q,QN);
+  )
+)
+model DFFSX4 (Q, QN, D, CK, SN) (
+  input  (D, CK, SN) ()
+  output (Q, QN) ()
+  intern(S)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _dff I1 (S,,CK,D,Q,QN);
+  )
+)
+model DFFSXL (Q, QN, D, CK, SN) (
+  input  (D, CK, SN) ()
+  output (Q, QN) ()
+  intern(S)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _dff I1 (S,,CK,D,Q,QN);
+  )
+)
+model DFFSHQX1 (Q, D, CK, SN) (
+  input  (D, CK, SN) ()
+  output (Q) ()
+  intern(S)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _dff I1 (S,,CK,D,Q,);
+  )
+)
+model DFFSHQX2 (Q, D, CK, SN) (
+  input  (D, CK, SN) ()
+  output (Q) ()
+  intern(S)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _dff I1 (S,,CK,D,Q,);
+  )
+)
+model DFFSHQX4 (Q, D, CK, SN) (
+  input  (D, CK, SN) ()
+  output (Q) ()
+  intern(S)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _dff I1 (S,,CK,D,Q,);
+  )
+)
+model DFFSHQXL (Q, D, CK, SN) (
+  input  (D, CK, SN) ()
+  output (Q) ()
+  intern(S)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _dff I1 (S,,CK,D,Q,);
+  )
+)
+model DFFSRX1 (Q, QN, D, CK, SN, RN) (
+  input  (D, CK, SN, RN) ()
+  output (Q, QN) ()
+  intern(R,S)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _inv I1 (RN,R);
+    primitive = _dff I2 (S,R,CK,D,Q,QN);
+  )
+)
+model DFFSRX2 (Q, QN, D, CK, SN, RN) (
+  input  (D, CK, SN, RN) ()
+  output (Q, QN) ()
+  intern(R,S)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _inv I1 (RN,R);
+    primitive = _dff I2 (S,R,CK,D,Q,QN);
+  )
+)
+model DFFSRX4 (Q, QN, D, CK, SN, RN) (
+  input  (D, CK, SN, RN) ()
+  output (Q, QN) ()
+  intern(R,S)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _inv I1 (RN,R);
+    primitive = _dff I2 (S,R,CK,D,Q,QN);
+  )
+)
+model DFFSRXL (Q, QN, D, CK, SN, RN) (
+  input  (D, CK, SN, RN) ()
+  output (Q, QN) ()
+  intern(R,S)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _inv I1 (RN,R);
+    primitive = _dff I2 (S,R,CK,D,Q,QN);
+  )
+)
+model DFFSRHQX1 (Q, D, CK, SN, RN) (
+  input  (D, CK, SN, RN) ()
+  output (Q) ()
+  intern(R,S)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _inv I1 (RN,R);
+    primitive = _dff I2 (S,R,CK,D,Q,);
+  )
+)
+model DFFSRHQX2 (Q, D, CK, SN, RN) (
+  input  (D, CK, SN, RN) ()
+  output (Q) ()
+  intern(R,S)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _inv I1 (RN,R);
+    primitive = _dff I2 (S,R,CK,D,Q,);
+  )
+)
+model DFFSRHQX4 (Q, D, CK, SN, RN) (
+  input  (D, CK, SN, RN) ()
+  output (Q) ()
+  intern(R,S)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _inv I1 (RN,R);
+    primitive = _dff I2 (S,R,CK,D,Q,);
+  )
+)
+model DFFSRHQXL (Q, D, CK, SN, RN) (
+  input  (D, CK, SN, RN) ()
+  output (Q) ()
+  intern(R,S)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _inv I1 (RN,R);
+    primitive = _dff I2 (S,R,CK,D,Q,);
+  )
+)
+model DFFTRX1 (Q, QN, D, CK, RN) (
+  input  (D, CK, RN) ()
+  intern (NN0) (primitive = _and U1 (D,RN,NN0);)
+  output(Q, QN)  (primitive = _dff U2 (,,CK,NN0,Q,QN);)
+)
+model DFFTRX2 (Q, QN, D, CK, RN) (
+  input  (D, CK, RN) ()
+  intern (NN0) (primitive = _and U1 (D,RN,NN0);)
+  output(Q, QN)  (primitive = _dff U2 (,,CK,NN0,Q,QN);)
+)
+model DFFTRX4 (Q, QN, D, CK, RN) (
+  input  (D, CK, RN) ()
+  intern (NN0) (primitive = _and U1 (D,RN,NN0);)
+  output(Q, QN)  (primitive = _dff U2 (,,CK,NN0,Q,QN);)
+)
+model DFFTRXL (Q, QN, D, CK, RN) (
+  input  (D, CK, RN) ()
+  intern (NN0) (primitive = _and U1 (D,RN,NN0);)
+  output(Q, QN)  (primitive = _dff U2 (,,CK,NN0,Q,QN);)
+)
+model DLY1X1 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model DLY2X1 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model DLY3X1 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model DLY4X1 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _buf I0 (A, Y);
+  )
+)
+model EDFFX1 (Q, QN, D, CK, E) (
+  input (D, CK, E ) ()
+  intern(n0)   (primitive = _mux U0 (Q,D,E,n0);)
+  output(Q, QN) (primitive = _dff U1 (,,CK,n0,Q,QN);)
+)
+model EDFFX2 (Q, QN, D, CK, E) (
+  input (D, CK, E ) ()
+  intern(n0)   (primitive = _mux U0 (Q,D,E,n0);)
+  output(Q, QN) (primitive = _dff U1 (,,CK,n0,Q,QN);)
+)
+model EDFFX4 (Q, QN, D, CK, E) (
+  input (D, CK, E ) ()
+  intern(n0)   (primitive = _mux U0 (Q,D,E,n0);)
+  output(Q, QN) (primitive = _dff U1 (,,CK,n0,Q,QN);)
+)
+model EDFFXL (Q, QN, D, CK, E) (
+  input (D, CK, E ) ()
+  intern(n0)   (primitive = _mux U0 (Q,D,E,n0);)
+  output(Q, QN) (primitive = _dff U1 (,,CK,n0,Q,QN);)
+)
+model EDFFTRX1 (Q, QN, D, CK, E, RN) (
+  input (D, CK, E, RN ) ()
+  intern(D_MUX) (primitive = _mux U0 (Q, D, E, D_MUX);)
+  intern(NN0)  (primitive = _and I0 (D_MUX,RN,NN0);)
+  output(Q, QN)  (primitive = _dff I2 (,,CK,NN0,Q,QN);)
+)
+model EDFFTRX2 (Q, QN, D, CK, E, RN) (
+  input (D, CK, E, RN ) ()
+  intern(D_MUX) (primitive = _mux U0 (Q, D, E, D_MUX);)
+  intern(NN0)  (primitive = _and I0 (D_MUX,RN,NN0);)
+  output(Q, QN)  (primitive = _dff I2 (,,CK,NN0,Q,QN);)
+)
+model EDFFTRX4 (Q, QN, D, CK, E, RN) (
+  input (D, CK, E, RN ) ()
+  intern(D_MUX) (primitive = _mux U0 (Q, D, E, D_MUX);)
+  intern(NN0)  (primitive = _and I0 (D_MUX,RN,NN0);)
+  output(Q, QN)  (primitive = _dff I2 (,,CK,NN0,Q,QN);)
+)
+model EDFFTRXL (Q, QN, D, CK, E, RN) (
+  input (D, CK, E, RN ) ()
+  intern(D_MUX) (primitive = _mux U0 (Q, D, E, D_MUX);)
+  intern(NN0)  (primitive = _and I0 (D_MUX,RN,NN0);)
+  output(Q, QN)  (primitive = _dff I2 (,,CK,NN0,Q,QN);)
+)
+model HOLDX1 (Y) (
+  inout (Y) (
+   primitive = _inv I0 (Y,io_wire);
+   primitive = _invf I1 (io_wire,Y); 
+  )
+)
+model INVX12 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model INVX16 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model INVX1 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model INVX20 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model INVX2 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model INVX3 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model INVX4 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model INVX8 (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model INVXL (Y, A) (
+  input (A) ()
+  output (Y) (
+    primitive = _inv I0 (A, Y);
+  )
+)
+model JKFFX1 (Q, QN, J, K, CK ) (
+input  (J, K, CK) ()
+  intern(_NN2) (primitive = _inv U0 (K,_NN2);)
+  intern(_NN3) (primitive = _mux U1 (_NN2,J,QN,_NN3);)
+  output(Q, QN) (primitive = _dff U2 (,,CK,_NN3,Q,QN);)
+)
+model JKFFX2 (Q, QN, J, K, CK ) (
+input  (J, K, CK) ()
+  intern(_NN2) (primitive = _inv U0 (K,_NN2);)
+  intern(_NN3) (primitive = _mux U1 (_NN2,J,QN,_NN3);)
+  output(Q, QN) (primitive = _dff U2 (,,CK,_NN3,Q,QN);)
+)
+model JKFFX4 (Q, QN, J, K, CK ) (
+input  (J, K, CK) ()
+  intern(_NN2) (primitive = _inv U0 (K,_NN2);)
+  intern(_NN3) (primitive = _mux U1 (_NN2,J,QN,_NN3);)
+  output(Q, QN) (primitive = _dff U2 (,,CK,_NN3,Q,QN);)
+)
+model JKFFXL (Q, QN, J, K, CK ) (
+input  (J, K, CK) ()
+  intern(_NN2) (primitive = _inv U0 (K,_NN2);)
+  intern(_NN3) (primitive = _mux U1 (_NN2,J,QN,_NN3);)
+  output(Q, QN) (primitive = _dff U2 (,,CK,_NN3,Q,QN);)
+)
+model JKFFRX1 (Q, QN, J, K, CK, RN ) (
+input  (J, K, CK, RN) ()
+  intern(_NN2) (primitive = _inv U0 (K,_NN2);)
+  intern(_NN3) (primitive = _mux U1 (_NN2,J,QN,_NN3);)
+  intern(R) (primitive = _inv U3 (RN,R);)
+  output(Q, QN) (primitive = _dff U2 (,R,CK,_NN3,Q,QN);)
+)
+model JKFFRX2 (Q, QN, J, K, CK, RN ) (
+input  (J, K, CK, RN) ()
+  intern(_NN2) (primitive = _inv U0 (K,_NN2);)
+  intern(_NN3) (primitive = _mux U1 (_NN2,J,QN,_NN3);)
+  intern(R) (primitive = _inv U3 (RN,R);)
+  output(Q, QN) (primitive = _dff U2 (,R,CK,_NN3,Q,QN);)
+)
+model JKFFRX4 (Q, QN, J, K, CK, RN ) (
+input  (J, K, CK, RN) ()
+  intern(_NN2) (primitive = _inv U0 (K,_NN2);)
+  intern(_NN3) (primitive = _mux U1 (_NN2,J,QN,_NN3);)
+  intern(R) (primitive = _inv U3 (RN,R);)
+  output(Q, QN) (primitive = _dff U2 (,R,CK,_NN3,Q,QN);)
+)
+model JKFFRXL (Q, QN, J, K, CK, RN ) (
+input  (J, K, CK, RN) ()
+  intern(_NN2) (primitive = _inv U0 (K,_NN2);)
+  intern(_NN3) (primitive = _mux U1 (_NN2,J,QN,_NN3);)
+  intern(R) (primitive = _inv U3 (RN,R);)
+  output(Q, QN) (primitive = _dff U2 (,R,CK,_NN3,Q,QN);)
+)
+model JKFFSX1 (Q, QN, J, K, CK, SN ) (
+input  (J, K, CK, SN) ()
+  intern(_NN2) (primitive = _inv U0 (K,_NN2);)
+  intern(_NN3) (primitive = _mux U1 (_NN2,J,QN,_NN3);)
+  intern(S) (primitive = _inv U3 (SN,S);)
+  output(Q, QN) (primitive = _dff U2 (S,,CK,_NN3,Q,QN);)
+)
+model JKFFSX2 (Q, QN, J, K, CK, SN ) (
+input  (J, K, CK, SN) ()
+  intern(_NN2) (primitive = _inv U0 (K,_NN2);)
+  intern(_NN3) (primitive = _mux U1 (_NN2,J,QN,_NN3);)
+  intern(S) (primitive = _inv U3 (SN,S);)
+  output(Q, QN) (primitive = _dff U2 (S,,CK,_NN3,Q,QN);)
+)
+model JKFFSX4 (Q, QN, J, K, CK, SN ) (
+input  (J, K, CK, SN) ()
+  intern(_NN2) (primitive = _inv U0 (K,_NN2);)
+  intern(_NN3) (primitive = _mux U1 (_NN2,J,QN,_NN3);)
+  intern(S) (primitive = _inv U3 (SN,S);)
+  output(Q, QN) (primitive = _dff U2 (S,,CK,_NN3,Q,QN);)
+)
+model JKFFSXL (Q, QN, J, K, CK, SN ) (
+input  (J, K, CK, SN) ()
+  intern(_NN2) (primitive = _inv U0 (K,_NN2);)
+  intern(_NN3) (primitive = _mux U1 (_NN2,J,QN,_NN3);)
+  intern(S) (primitive = _inv U3 (SN,S);)
+  output(Q, QN) (primitive = _dff U2 (S,,CK,_NN3,Q,QN);)
+)
+model JKFFSRX1 (Q, QN, J, K, CK, SN, RN ) (
+input  (J, K, CK, SN, RN) ()
+  intern(_NN2) (primitive = _inv U0 (K,_NN2);)
+  intern(_NN3) (primitive = _mux U1 (_NN2,J,QN,_NN3);)
+  intern(R) (primitive = _inv U2 (RN,R);)
+  intern(S) (primitive = _inv U3 (SN,S);)
+  output(Q, QN) (primitive = _dff U4 (S,R,CK,_NN3,Q,QN);)
+)
+model JKFFSRX2 (Q, QN, J, K, CK, SN, RN ) (
+input  (J, K, CK, SN, RN) ()
+  intern(_NN2) (primitive = _inv U0 (K,_NN2);)
+  intern(_NN3) (primitive = _mux U1 (_NN2,J,QN,_NN3);)
+  intern(R) (primitive = _inv U2 (RN,R);)
+  intern(S) (primitive = _inv U3 (SN,S);)
+  output(Q, QN) (primitive = _dff U4 (S,R,CK,_NN3,Q,QN);)
+)
+model JKFFSRX4 (Q, QN, J, K, CK, SN, RN ) (
+input  (J, K, CK, SN, RN) ()
+  intern(_NN2) (primitive = _inv U0 (K,_NN2);)
+  intern(_NN3) (primitive = _mux U1 (_NN2,J,QN,_NN3);)
+  intern(R) (primitive = _inv U2 (RN,R);)
+  intern(S) (primitive = _inv U3 (SN,S);)
+  output(Q, QN) (primitive = _dff U4 (S,R,CK,_NN3,Q,QN);)
+)
+model JKFFSRXL (Q, QN, J, K, CK, SN, RN ) (
+input  (J, K, CK, SN, RN) ()
+  intern(_NN2) (primitive = _inv U0 (K,_NN2);)
+  intern(_NN3) (primitive = _mux U1 (_NN2,J,QN,_NN3);)
+  intern(R) (primitive = _inv U2 (RN,R);)
+  intern(S) (primitive = _inv U3 (SN,S);)
+  output(Q, QN) (primitive = _dff U4 (S,R,CK,_NN3,Q,QN);)
+)
+model MX2X1 (Y, A, B, S0) (
+  input (A, B, S0) ()
+
+  output (Y) (
+      primitive = _mux I0 (A,B,S0,Y);
+  )
+)
+model MX2X2 (Y, A, B, S0) (
+  input (A, B, S0) ()
+
+  output (Y) (
+      primitive = _mux I0 (A,B,S0,Y);
+  )
+)
+model MX2X4 (Y, A, B, S0) (
+  input (A, B, S0) ()
+
+  output (Y) (
+      primitive = _mux I0 (A,B,S0,Y);
+  )
+)
+model MX2XL (Y, A, B, S0) (
+  input (A, B, S0) ()
+
+  output (Y) (
+      primitive = _mux I0 (A,B,S0,Y);
+  )
+)
+model MX4X1 (Y, A, B, C, D, S0, S1) (
+  input (A, B, C, D, S0, S1) ()
+
+  output (Y) ()
+  intern (n0,n1) (
+      primitive = _mux I0 (A,B,S0,n0);
+      primitive = _mux I1 (C,D,S0,n1);
+      primitive = _mux I2 (n0,n1,S1,Y);
+  )
+)
+model MX4X2 (Y, A, B, C, D, S0, S1) (
+  input (A, B, C, D, S0, S1) ()
+
+  output (Y) ()
+  intern (n0,n1) (
+      primitive = _mux I0 (A,B,S0,n0);
+      primitive = _mux I1 (C,D,S0,n1);
+      primitive = _mux I2 (n0,n1,S1,Y);
+  )
+)
+model MX4X4 (Y, A, B, C, D, S0, S1) (
+  input (A, B, C, D, S0, S1) ()
+
+  output (Y) ()
+  intern (n0,n1) (
+      primitive = _mux I0 (A,B,S0,n0);
+      primitive = _mux I1 (C,D,S0,n1);
+      primitive = _mux I2 (n0,n1,S1,Y);
+  )
+)
+model MX4XL (Y, A, B, C, D, S0, S1) (
+  input (A, B, C, D, S0, S1) ()
+
+  output (Y) ()
+  intern (n0,n1) (
+      primitive = _mux I0 (A,B,S0,n0);
+      primitive = _mux I1 (C,D,S0,n1);
+      primitive = _mux I2 (n0,n1,S1,Y);
+  )
+)
+model MXI2X1 (Y, A, B, S0) (
+  input (A, B, S0) ()
+
+  output (Y) ()
+  intern (n3) (
+      primitive = _mux I0 (A,B,S0,n3);
+      primitive = _inv I1 (n3,Y);
+  )
+)
+model MXI2X2 (Y, A, B, S0) (
+  input (A, B, S0) ()
+
+  output (Y) ()
+  intern (n3) (
+      primitive = _mux I0 (A,B,S0,n3);
+      primitive = _inv I1 (n3,Y);
+  )
+)
+model MXI2X4 (Y, A, B, S0) (
+  input (A, B, S0) ()
+
+  output (Y) ()
+  intern (n3) (
+      primitive = _mux I0 (A,B,S0,n3);
+      primitive = _inv I1 (n3,Y);
+  )
+)
+model MXI2XL (Y, A, B, S0) (
+  input (A, B, S0) ()
+
+  output (Y) ()
+  intern (n3) (
+      primitive = _mux I0 (A,B,S0,n3);
+      primitive = _inv I1 (n3,Y);
+  )
+)
+model MXI4X1 (Y, A, B, C, D, S0, S1) (
+  input (A, B, C, D, S0, S1) ()
+
+  output (Y) ()
+  intern (n0,n1,n3) (
+      primitive = _mux I0 (A,B,S0,n0);
+      primitive = _mux I1 (C,D,S0,n1);
+      primitive = _mux I2 (n0,n1,S1,n3);
+      primitive = _inv I3 (n3,Y);
+  )
+)
+model MXI4X2 (Y, A, B, C, D, S0, S1) (
+  input (A, B, C, D, S0, S1) ()
+
+  output (Y) ()
+  intern (n0,n1,n3) (
+      primitive = _mux I0 (A,B,S0,n0);
+      primitive = _mux I1 (C,D,S0,n1);
+      primitive = _mux I2 (n0,n1,S1,n3);
+      primitive = _inv I3 (n3,Y);
+  )
+)
+model MXI4X4 (Y, A, B, C, D, S0, S1) (
+  input (A, B, C, D, S0, S1) ()
+
+  output (Y) ()
+  intern (n0,n1,n3) (
+      primitive = _mux I0 (A,B,S0,n0);
+      primitive = _mux I1 (C,D,S0,n1);
+      primitive = _mux I2 (n0,n1,S1,n3);
+      primitive = _inv I3 (n3,Y);
+  )
+)
+model MXI4XL (Y, A, B, C, D, S0, S1) (
+  input (A, B, C, D, S0, S1) ()
+
+  output (Y) ()
+  intern (n0,n1,n3) (
+      primitive = _mux I0 (A,B,S0,n0);
+      primitive = _mux I1 (C,D,S0,n1);
+      primitive = _mux I2 (n0,n1,S1,n3);
+      primitive = _inv I3 (n3,Y);
+  )
+)
+model NAND2X1 (Y, A, B) (
+  input (A, B) ()
+  output (Y) (
+
+    primitive = _nand U1 (A, B, Y);
+ )
+)
+model NAND2X2 (Y, A, B) (
+  input (A, B) ()
+  output (Y) (
+
+    primitive = _nand U1 (A, B, Y);
+ )
+)
+model NAND2X4 (Y, A, B) (
+  input (A, B) ()
+  output (Y) (
+
+    primitive = _nand U1 (A, B, Y);
+ )
+)
+model NAND2XL (Y, A, B) (
+  input (A, B) ()
+  output (Y) (
+
+    primitive = _nand U1 (A, B, Y);
+ )
+)
+model NAND2BX1 (Y, AN, B) (
+  input (AN, B) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nand U3 (A, B, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NAND2BX2 (Y, AN, B) (
+  input (AN, B) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nand U3 (A, B, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NAND2BX4 (Y, AN, B) (
+  input (AN, B) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nand U3 (A, B, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NAND2BXL (Y, AN, B) (
+  input (AN, B) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nand U3 (A, B, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NAND3X1 (Y, A, B, C) (
+  input (A, B, C) ()
+  output (Y) (
+
+    primitive = _nand U1 (A, B, C, Y);
+ )
+)
+model NAND3X2 (Y, A, B, C) (
+  input (A, B, C) ()
+  output (Y) (
+
+    primitive = _nand U1 (A, B, C, Y);
+ )
+)
+model NAND3X4 (Y, A, B, C) (
+  input (A, B, C) ()
+  output (Y) (
+
+    primitive = _nand U1 (A, B, C, Y);
+ )
+)
+model NAND3XL (Y, A, B, C) (
+  input (A, B, C) ()
+  output (Y) (
+
+    primitive = _nand U1 (A, B, C, Y);
+ )
+)
+model NAND3BX1 (Y, AN, B, C) (
+  input (AN, B, C) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nand U3 (A, B, C, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NAND3BX2 (Y, AN, B, C) (
+  input (AN, B, C) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nand U3 (A, B, C, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NAND3BX4 (Y, AN, B, C) (
+  input (AN, B, C) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nand U3 (A, B, C, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NAND3BXL (Y, AN, B, C) (
+  input (AN, B, C) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nand U3 (A, B, C, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NAND4X1 (Y, A, B, C, D) (
+  input (A, B, C, D) ()
+  output (Y) (
+
+    primitive = _nand U1 (A, B, C, D, Y);
+ )
+)
+model NAND4X2 (Y, A, B, C, D) (
+  input (A, B, C, D) ()
+  output (Y) (
+
+    primitive = _nand U1 (A, B, C, D, Y);
+ )
+)
+model NAND4X4 (Y, A, B, C, D) (
+  input (A, B, C, D) ()
+  output (Y) (
+
+    primitive = _nand U1 (A, B, C, D, Y);
+ )
+)
+model NAND4XL (Y, A, B, C, D) (
+  input (A, B, C, D) ()
+  output (Y) (
+
+    primitive = _nand U1 (A, B, C, D, Y);
+ )
+)
+model NAND4BX1 (Y, AN, B, C, D) (
+  input (AN, B, C, D) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nand U3 (A, B, C, D, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NAND4BX2 (Y, AN, B, C, D) (
+  input (AN, B, C, D) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nand U3 (A, B, C, D, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NAND4BX4 (Y, AN, B, C, D) (
+  input (AN, B, C, D) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nand U3 (A, B, C, D, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NAND4BXL (Y, AN, B, C, D) (
+  input (AN, B, C, D) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nand U3 (A, B, C, D, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NAND4BBX1 (Y, AN, BN, C, D) (
+  input (AN, BN, C, D) ()
+  output (Y) ()
+
+  intern(B,A)  (
+    primitive = _nand U3 (A, B, C, D, Y);
+    primitive = _inv U2 (AN,A);
+    primitive = _inv U1 (BN,B);
+  )
+)
+model NAND4BBX2 (Y, AN, BN, C, D) (
+  input (AN, BN, C, D) ()
+  output (Y) ()
+
+  intern(B,A)  (
+    primitive = _nand U3 (A, B, C, D, Y);
+    primitive = _inv U2 (AN,A);
+    primitive = _inv U1 (BN,B);
+  )
+)
+model NAND4BBX4 (Y, AN, BN, C, D) (
+  input (AN, BN, C, D) ()
+  output (Y) ()
+
+  intern(B,A)  (
+    primitive = _nand U3 (A, B, C, D, Y);
+    primitive = _inv U2 (AN,A);
+    primitive = _inv U1 (BN,B);
+  )
+)
+model NAND4BBXL (Y, AN, BN, C, D) (
+  input (AN, BN, C, D) ()
+  output (Y) ()
+
+  intern(B,A)  (
+    primitive = _nand U3 (A, B, C, D, Y);
+    primitive = _inv U2 (AN,A);
+    primitive = _inv U1 (BN,B);
+  )
+)
+model NOR2X1 (Y, A, B) (
+  input (A, B) ()
+  output (Y) (
+
+    primitive = _nor U1 (A, B, Y);
+ )
+)
+model NOR2X2 (Y, A, B) (
+  input (A, B) ()
+  output (Y) (
+
+    primitive = _nor U1 (A, B, Y);
+ )
+)
+model NOR2X4 (Y, A, B) (
+  input (A, B) ()
+  output (Y) (
+
+    primitive = _nor U1 (A, B, Y);
+ )
+)
+model NOR2XL (Y, A, B) (
+  input (A, B) ()
+  output (Y) (
+
+    primitive = _nor U1 (A, B, Y);
+ )
+)
+model NOR2BX1 (Y, AN, B) (
+  input (AN, B) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nor U3 (A, B, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NOR2BX2 (Y, AN, B) (
+  input (AN, B) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nor U3 (A, B, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NOR2BX4 (Y, AN, B) (
+  input (AN, B) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nor U3 (A, B, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NOR2BXL (Y, AN, B) (
+  input (AN, B) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nor U3 (A, B, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NOR3X1 (Y, A, B, C) (
+  input (A, B, C) ()
+  output (Y) (
+
+    primitive = _nor U1 (A, B, C, Y);
+ )
+)
+model NOR3X2 (Y, A, B, C) (
+  input (A, B, C) ()
+  output (Y) (
+
+    primitive = _nor U1 (A, B, C, Y);
+ )
+)
+model NOR3X4 (Y, A, B, C) (
+  input (A, B, C) ()
+  output (Y) (
+
+    primitive = _nor U1 (A, B, C, Y);
+ )
+)
+model NOR3XL (Y, A, B, C) (
+  input (A, B, C) ()
+  output (Y) (
+
+    primitive = _nor U1 (A, B, C, Y);
+ )
+)
+model NOR3BX1 (Y, AN, B, C) (
+  input (AN, B, C) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nor U3 (A, B, C, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NOR3BX2 (Y, AN, B, C) (
+  input (AN, B, C) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nor U3 (A, B, C, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NOR3BX4 (Y, AN, B, C) (
+  input (AN, B, C) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nor U3 (A, B, C, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NOR3BXL (Y, AN, B, C) (
+  input (AN, B, C) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nor U3 (A, B, C, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NOR4X1 (Y, A, B, C, D) (
+  input (A, B, C, D) ()
+  output (Y) (
+
+    primitive = _nor U1 (A, B, C, D, Y);
+ )
+)
+model NOR4X2 (Y, A, B, C, D) (
+  input (A, B, C, D) ()
+  output (Y) (
+
+    primitive = _nor U1 (A, B, C, D, Y);
+ )
+)
+model NOR4X4 (Y, A, B, C, D) (
+  input (A, B, C, D) ()
+  output (Y) (
+
+    primitive = _nor U1 (A, B, C, D, Y);
+ )
+)
+model NOR4XL (Y, A, B, C, D) (
+  input (A, B, C, D) ()
+  output (Y) (
+
+    primitive = _nor U1 (A, B, C, D, Y);
+ )
+)
+model NOR4BX1 (Y, AN, B, C, D) (
+  input (AN, B, C, D) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nor U3 (A, B, C, D, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NOR4BX2 (Y, AN, B, C, D) (
+  input (AN, B, C, D) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nor U3 (A, B, C, D, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NOR4BX4 (Y, AN, B, C, D) (
+  input (AN, B, C, D) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nor U3 (A, B, C, D, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NOR4BXL (Y, AN, B, C, D) (
+  input (AN, B, C, D) ()
+  output (Y) ()
+
+  intern(A)  (
+    primitive = _nor U3 (A, B, C, D, Y);
+    primitive = _inv U2 (AN,A);
+  )
+)
+model NOR4BBX1 (Y, AN, BN, C, D) (
+  input (AN, BN, C, D) ()
+  output (Y) ()
+
+  intern(B,A)  (
+    primitive = _nor U3 (A, B, C, D, Y);
+    primitive = _inv U2 (AN,A);
+    primitive = _inv U1 (BN,B);
+  )
+)
+model NOR4BBX2 (Y, AN, BN, C, D) (
+  input (AN, BN, C, D) ()
+  output (Y) ()
+
+  intern(B,A)  (
+    primitive = _nor U3 (A, B, C, D, Y);
+    primitive = _inv U2 (AN,A);
+    primitive = _inv U1 (BN,B);
+  )
+)
+model NOR4BBX4 (Y, AN, BN, C, D) (
+  input (AN, BN, C, D) ()
+  output (Y) ()
+
+  intern(B,A)  (
+    primitive = _nor U3 (A, B, C, D, Y);
+    primitive = _inv U2 (AN,A);
+    primitive = _inv U1 (BN,B);
+  )
+)
+model NOR4BBXL (Y, AN, BN, C, D) (
+  input (AN, BN, C, D) ()
+  output (Y) ()
+
+  intern(B,A)  (
+    primitive = _nor U3 (A, B, C, D, Y);
+    primitive = _inv U2 (AN,A);
+    primitive = _inv U1 (BN,B);
+  )
+)
+model OAI211X1 (Y, A0, A1, B0, C0) (
+input (A0, A1, B0, C0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nand I1 (B0,C0,outA,Y);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI211X2 (Y, A0, A1, B0, C0) (
+input (A0, A1, B0, C0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nand I1 (B0,C0,outA,Y);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI211X4 (Y, A0, A1, B0, C0) (
+input (A0, A1, B0, C0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nand I1 (B0,C0,outA,Y);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI211XL (Y, A0, A1, B0, C0) (
+input (A0, A1, B0, C0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nand I1 (B0,C0,outA,Y);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI21X1 (Y, A0, A1, B0) (
+input (A0, A1, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nand I1 (B0,outA,Y);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI21X2 (Y, A0, A1, B0) (
+input (A0, A1, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nand I1 (B0,outA,Y);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI21X4 (Y, A0, A1, B0) (
+input (A0, A1, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nand I1 (B0,outA,Y);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI21XL (Y, A0, A1, B0) (
+input (A0, A1, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nand I1 (B0,outA,Y);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI221X1 (Y, A0, A1, B0, B1, C0) (
+input (A0, A1, B0, B1, C0) ()
+output (Y) ()
+  intern(outA,outB)  (
+    primitive = _nand I2 (C0,outB,outA,Y);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI221X2 (Y, A0, A1, B0, B1, C0) (
+input (A0, A1, B0, B1, C0) ()
+output (Y) ()
+  intern(outA,outB)  (
+    primitive = _nand I2 (C0,outB,outA,Y);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI221X4 (Y, A0, A1, B0, B1, C0) (
+input (A0, A1, B0, B1, C0) ()
+output (Y) ()
+  intern(outA,outB)  (
+    primitive = _nand I2 (C0,outB,outA,Y);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI221XL (Y, A0, A1, B0, B1, C0) (
+input (A0, A1, B0, B1, C0) ()
+output (Y) ()
+  intern(outA,outB)  (
+    primitive = _nand I2 (C0,outB,outA,Y);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI222X1 (Y, A0, A1, B0, B1, C0, C1) (
+input (A0, A1, B0, B1, C0, C1) ()
+output (Y) ()
+  intern(outC,outB,outA)  (
+    primitive = _nand I3 (outA,outB,outC,Y);
+    primitive = _or I2 (C0,C1,outC);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI222X2 (Y, A0, A1, B0, B1, C0, C1) (
+input (A0, A1, B0, B1, C0, C1) ()
+output (Y) ()
+  intern(outC,outB,outA)  (
+    primitive = _nand I3 (outA,outB,outC,Y);
+    primitive = _or I2 (C0,C1,outC);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI222X4 (Y, A0, A1, B0, B1, C0, C1) (
+input (A0, A1, B0, B1, C0, C1) ()
+output (Y) ()
+  intern(outC,outB,outA)  (
+    primitive = _nand I3 (outA,outB,outC,Y);
+    primitive = _or I2 (C0,C1,outC);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI222XL (Y, A0, A1, B0, B1, C0, C1) (
+input (A0, A1, B0, B1, C0, C1) ()
+output (Y) ()
+  intern(outC,outB,outA)  (
+    primitive = _nand I3 (outA,outB,outC,Y);
+    primitive = _or I2 (C0,C1,outC);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI22X1 (Y, A0, A1, B0, B1) (
+input (A0, A1, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nand I2 (outA,outB,Y);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI22X2 (Y, A0, A1, B0, B1) (
+input (A0, A1, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nand I2 (outA,outB,Y);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI22X4 (Y, A0, A1, B0, B1) (
+input (A0, A1, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nand I2 (outA,outB,Y);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI22XL (Y, A0, A1, B0, B1) (
+input (A0, A1, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nand I2 (outA,outB,Y);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _or I0 (A0,A1,outA);
+  )
+)
+model OAI2BB1X1 (Y, A0N, A1N, B0) (
+input (A0N, A1N, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nand I1 (B0,outA,Y);
+    primitive = _nand I0 (A0N,A1N,outA);
+  )
+)
+model OAI2BB1X2 (Y, A0N, A1N, B0) (
+input (A0N, A1N, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nand I1 (B0,outA,Y);
+    primitive = _nand I0 (A0N,A1N,outA);
+  )
+)
+model OAI2BB1X4 (Y, A0N, A1N, B0) (
+input (A0N, A1N, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nand I1 (B0,outA,Y);
+    primitive = _nand I0 (A0N,A1N,outA);
+  )
+)
+model OAI2BB1XL (Y, A0N, A1N, B0) (
+input (A0N, A1N, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nand I1 (B0,outA,Y);
+    primitive = _nand I0 (A0N,A1N,outA);
+  )
+)
+model OAI2BB2X1 (Y, A0N, A1N, B0, B1) (
+input (A0N, A1N, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nand I2 (outA,outB,Y);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _nand I0 (A0N,A1N,outA);
+  )
+)
+model OAI2BB2X2 (Y, A0N, A1N, B0, B1) (
+input (A0N, A1N, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nand I2 (outA,outB,Y);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _nand I0 (A0N,A1N,outA);
+  )
+)
+model OAI2BB2X4 (Y, A0N, A1N, B0, B1) (
+input (A0N, A1N, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nand I2 (outA,outB,Y);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _nand I0 (A0N,A1N,outA);
+  )
+)
+model OAI2BB2XL (Y, A0N, A1N, B0, B1) (
+input (A0N, A1N, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nand I2 (outA,outB,Y);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _nand I0 (A0N,A1N,outA);
+  )
+)
+model OAI31X1 (Y, A0, A1, A2, B0) (
+input (A0, A1, A2, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nand I1 (B0,outA,Y);
+    primitive = _or I0 (A0,A1,A2,outA);
+  )
+)
+model OAI31X2 (Y, A0, A1, A2, B0) (
+input (A0, A1, A2, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nand I1 (B0,outA,Y);
+    primitive = _or I0 (A0,A1,A2,outA);
+  )
+)
+model OAI31X4 (Y, A0, A1, A2, B0) (
+input (A0, A1, A2, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nand I1 (B0,outA,Y);
+    primitive = _or I0 (A0,A1,A2,outA);
+  )
+)
+model OAI31XL (Y, A0, A1, A2, B0) (
+input (A0, A1, A2, B0) ()
+output (Y) ()
+  intern(outA)  (
+    primitive = _nand I1 (B0,outA,Y);
+    primitive = _or I0 (A0,A1,A2,outA);
+  )
+)
+model OAI32X1 (Y, A0, A1, A2, B0, B1) (
+input (A0, A1, A2, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nand I2 (outA,outB,Y);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _or I0 (A0,A1,A2,outA);
+  )
+)
+model OAI32X2 (Y, A0, A1, A2, B0, B1) (
+input (A0, A1, A2, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nand I2 (outA,outB,Y);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _or I0 (A0,A1,A2,outA);
+  )
+)
+model OAI32X4 (Y, A0, A1, A2, B0, B1) (
+input (A0, A1, A2, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nand I2 (outA,outB,Y);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _or I0 (A0,A1,A2,outA);
+  )
+)
+model OAI32XL (Y, A0, A1, A2, B0, B1) (
+input (A0, A1, A2, B0, B1) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nand I2 (outA,outB,Y);
+    primitive = _or I1 (B0,B1,outB);
+    primitive = _or I0 (A0,A1,A2,outA);
+  )
+)
+model OAI33X1 (Y, A0, A1, A2, B0, B1, B2) (
+input (A0, A1, A2, B0, B1, B2) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nand I2 (outA,outB,Y);
+    primitive = _or I1 (B0,B1,B2,outB);
+    primitive = _or I0 (A0,A1,A2,outA);
+  )
+)
+model OAI33X2 (Y, A0, A1, A2, B0, B1, B2) (
+input (A0, A1, A2, B0, B1, B2) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nand I2 (outA,outB,Y);
+    primitive = _or I1 (B0,B1,B2,outB);
+    primitive = _or I0 (A0,A1,A2,outA);
+  )
+)
+model OAI33X4 (Y, A0, A1, A2, B0, B1, B2) (
+input (A0, A1, A2, B0, B1, B2) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nand I2 (outA,outB,Y);
+    primitive = _or I1 (B0,B1,B2,outB);
+    primitive = _or I0 (A0,A1,A2,outA);
+  )
+)
+model OAI33XL (Y, A0, A1, A2, B0, B1, B2) (
+input (A0, A1, A2, B0, B1, B2) ()
+output (Y) ()
+  intern(outB,outA)  (
+    primitive = _nand I2 (outA,outB,Y);
+    primitive = _or I1 (B0,B1,B2,outB);
+    primitive = _or I0 (A0,A1,A2,outA);
+  )
+)
+model OR2X1 (Y, A, B) (
+  input (A, B) ()
+  output (Y) (
+
+    primitive = _or U1 (A, B, Y);
+ )
+)
+model OR2X2 (Y, A, B) (
+  input (A, B) ()
+  output (Y) (
+
+    primitive = _or U1 (A, B, Y);
+ )
+)
+model OR2X4 (Y, A, B) (
+  input (A, B) ()
+  output (Y) (
+
+    primitive = _or U1 (A, B, Y);
+ )
+)
+model OR2XL (Y, A, B) (
+  input (A, B) ()
+  output (Y) (
+
+    primitive = _or U1 (A, B, Y);
+ )
+)
+model OR3X1 (Y, A, B, C) (
+  input (A, B, C) ()
+  output (Y) (
+
+    primitive = _or U1 (A, B, C, Y);
+ )
+)
+model OR3X2 (Y, A, B, C) (
+  input (A, B, C) ()
+  output (Y) (
+
+    primitive = _or U1 (A, B, C, Y);
+ )
+)
+model OR3X4 (Y, A, B, C) (
+  input (A, B, C) ()
+  output (Y) (
+
+    primitive = _or U1 (A, B, C, Y);
+ )
+)
+model OR3XL (Y, A, B, C) (
+  input (A, B, C) ()
+  output (Y) (
+
+    primitive = _or U1 (A, B, C, Y);
+ )
+)
+model OR4X1 (Y, A, B, C, D) (
+  input (A, B, C, D) ()
+  output (Y) (
+
+    primitive = _or U1 (A, B, C, D, Y);
+ )
+)
+model OR4X2 (Y, A, B, C, D) (
+  input (A, B, C, D) ()
+  output (Y) (
+
+    primitive = _or U1 (A, B, C, D, Y);
+ )
+)
+model OR4X4 (Y, A, B, C, D) (
+  input (A, B, C, D) ()
+  output (Y) (
+
+    primitive = _or U1 (A, B, C, D, Y);
+ )
+)
+model OR4XL (Y, A, B, C, D) (
+  input (A, B, C, D) ()
+  output (Y) (
+
+    primitive = _or U1 (A, B, C, D, Y);
+ )
+)
+model RSLATX1 (Q, QN, R, S) (
+  input (R, S) ()
+  output (Q, QN) (
+     primitive = _dff I1 (S,R,zero,zero,Q,QN);
+     fault = none;
+     primitive = _tie0 I0 (zero);
+  )
+)
+model RSLATX2 (Q, QN, R, S) (
+  input (R, S) ()
+  output (Q, QN) (
+     primitive = _dff I1 (S,R,zero,zero,Q,QN);
+     fault = none;
+     primitive = _tie0 I0 (zero);
+  )
+)
+model RSLATX4 (Q, QN, R, S) (
+  input (R, S) ()
+  output (Q, QN) (
+     primitive = _dff I1 (S,R,zero,zero,Q,QN);
+     fault = none;
+     primitive = _tie0 I0 (zero);
+  )
+)
+model RSLATXL (Q, QN, R, S) (
+  input (R, S) ()
+  output (Q, QN) (
+     primitive = _dff I1 (S,R,zero,zero,Q,QN);
+     fault = none;
+     primitive = _tie0 I0 (zero);
+  )
+)
+model RSLATNX1 (Q, QN, RN, SN) (
+  input (RN, SN) ()
+  output (Q, QN) ()
+  intern(S,R)  (
+    primitive = _inv I3 (SN,S);
+    primitive = _inv I2 (RN,R);
+    primitive = _dff I1 (S,R,zero,zero,Q,QN);
+    fault = none;
+    primitive = _tie0 I0 (zero);
+  )
+)
+model RSLATNX2 (Q, QN, RN, SN) (
+  input (RN, SN) ()
+  output (Q, QN) ()
+  intern(S,R)  (
+    primitive = _inv I3 (SN,S);
+    primitive = _inv I2 (RN,R);
+    primitive = _dff I1 (S,R,zero,zero,Q,QN);
+    fault = none;
+    primitive = _tie0 I0 (zero);
+  )
+)
+model RSLATNX4 (Q, QN, RN, SN) (
+  input (RN, SN) ()
+  output (Q, QN) ()
+  intern(S,R)  (
+    primitive = _inv I3 (SN,S);
+    primitive = _inv I2 (RN,R);
+    primitive = _dff I1 (S,R,zero,zero,Q,QN);
+    fault = none;
+    primitive = _tie0 I0 (zero);
+  )
+)
+model RSLATNXL (Q, QN, RN, SN) (
+  input (RN, SN) ()
+  output (Q, QN) ()
+  intern(S,R)  (
+    primitive = _inv I3 (SN,S);
+    primitive = _inv I2 (RN,R);
+    primitive = _dff I1 (S,R,zero,zero,Q,QN);
+    fault = none;
+    primitive = _tie0 I0 (zero);
+  )
+)
+model SDFFX1 (Q, QN, D, SI, SE, CK) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFX1 (Q,QN,D,CK);
+  )
+  input  (D, SI, SE, CK) ()
+  output (Q, QN) ()
+  intern(NN0)  (
+    primitive = _mux I0 (D,SI,SE,NN0);
+    primitive = _dff I1 (,,CK,NN0,Q,QN);
+  )
+)
+model SDFFX2 (Q, QN, D, SI, SE, CK) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFX2 (Q,QN,D,CK);
+  )
+  input  (D, SI, SE, CK) ()
+  output (Q, QN) ()
+  intern(NN0)  (
+    primitive = _mux I0 (D,SI,SE,NN0);
+    primitive = _dff I1 (,,CK,NN0,Q,QN);
+  )
+)
+model SDFFX4 (Q, QN, D, SI, SE, CK) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFX4 (Q,QN,D,CK);
+  )
+  input  (D, SI, SE, CK) ()
+  output (Q, QN) ()
+  intern(NN0)  (
+    primitive = _mux I0 (D,SI,SE,NN0);
+    primitive = _dff I1 (,,CK,NN0,Q,QN);
+  )
+)
+model SDFFXL (Q, QN, D, SI, SE, CK) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFXL (Q,QN,D,CK);
+  )
+  input  (D, SI, SE, CK) ()
+  output (Q, QN) ()
+  intern(NN0)  (
+    primitive = _mux I0 (D,SI,SE,NN0);
+    primitive = _dff I1 (,,CK,NN0,Q,QN);
+  )
+)
+model SDFFHQX1 (Q, D, SI, SE, CK) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q;
+        non_scan_model = DFFHQX1 (Q,D,CK);
+  )
+  input  (D, SI, SE, CK) ()
+  output (Q) ()
+  intern(NN0)  (
+    primitive = _mux I0 (D,SI,SE,NN0);
+    primitive = _dff I1 (,,CK,NN0,Q,);
+  )
+)
+model SDFFHQX2 (Q, D, SI, SE, CK) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q;
+        non_scan_model = DFFHQX2 (Q,D,CK);
+  )
+  input  (D, SI, SE, CK) ()
+  output (Q) ()
+  intern(NN0)  (
+    primitive = _mux I0 (D,SI,SE,NN0);
+    primitive = _dff I1 (,,CK,NN0,Q,);
+  )
+)
+model SDFFHQX4 (Q, D, SI, SE, CK) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q;
+        non_scan_model = DFFHQX4 (Q,D,CK);
+  )
+  input  (D, SI, SE, CK) ()
+  output (Q) ()
+  intern(NN0)  (
+    primitive = _mux I0 (D,SI,SE,NN0);
+    primitive = _dff I1 (,,CK,NN0,Q,);
+  )
+)
+model SDFFHQXL (Q, D, SI, SE, CK) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q;
+        non_scan_model = DFFHQXL (Q,D,CK);
+  )
+  input  (D, SI, SE, CK) ()
+  output (Q) ()
+  intern(NN0)  (
+    primitive = _mux I0 (D,SI,SE,NN0);
+    primitive = _dff I1 (,,CK,NN0,Q,);
+  )
+)
+model SDFFNX1 (Q, QN, D, SI, SE, CKN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFNX1 (Q,QN,D,CKN);
+  )
+  input  (D, SI, SE, CKN) ()
+  output (Q, QN) ()
+  intern(CK,NN0)  (
+    primitive = _inv I0 (CKN,CK);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (,,CK,NN0,Q,QN);
+  )
+)
+model SDFFNX2 (Q, QN, D, SI, SE, CKN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFNX2 (Q,QN,D,CKN);
+  )
+  input  (D, SI, SE, CKN) ()
+  output (Q, QN) ()
+  intern(CK,NN0)  (
+    primitive = _inv I0 (CKN,CK);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (,,CK,NN0,Q,QN);
+  )
+)
+model SDFFNX4 (Q, QN, D, SI, SE, CKN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFNX4 (Q,QN,D,CKN);
+  )
+  input  (D, SI, SE, CKN) ()
+  output (Q, QN) ()
+  intern(CK,NN0)  (
+    primitive = _inv I0 (CKN,CK);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (,,CK,NN0,Q,QN);
+  )
+)
+model SDFFNXL (Q, QN, D, SI, SE, CKN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFNXL (Q,QN,D,CKN);
+  )
+  input  (D, SI, SE, CKN) ()
+  output (Q, QN) ()
+  intern(CK,NN0)  (
+    primitive = _inv I0 (CKN,CK);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (,,CK,NN0,Q,QN);
+  )
+)
+model SDFFNRX1 (Q, QN, D, SI, SE, CKN, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFNRX1 (Q,QN,D,CKN,RN);
+  )
+  input  (D, SI, SE, CKN, RN) ()
+  output (Q, QN) ()
+  intern(R,CK,NN0)  (
+    primitive = _inv I1 (RN,R);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _mux I3 (D,SI,SE,NN0);
+    primitive = _dff I4 (,R,CK,NN0,Q,QN);
+  )
+)
+model SDFFNRX2 (Q, QN, D, SI, SE, CKN, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFNRX2 (Q,QN,D,CKN,RN);
+  )
+  input  (D, SI, SE, CKN, RN) ()
+  output (Q, QN) ()
+  intern(R,CK,NN0)  (
+    primitive = _inv I1 (RN,R);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _mux I3 (D,SI,SE,NN0);
+    primitive = _dff I4 (,R,CK,NN0,Q,QN);
+  )
+)
+model SDFFNRX4 (Q, QN, D, SI, SE, CKN, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFNRX4 (Q,QN,D,CKN,RN);
+  )
+  input  (D, SI, SE, CKN, RN) ()
+  output (Q, QN) ()
+  intern(R,CK,NN0)  (
+    primitive = _inv I1 (RN,R);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _mux I3 (D,SI,SE,NN0);
+    primitive = _dff I4 (,R,CK,NN0,Q,QN);
+  )
+)
+model SDFFNRXL (Q, QN, D, SI, SE, CKN, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFNRXL (Q,QN,D,CKN,RN);
+  )
+  input  (D, SI, SE, CKN, RN) ()
+  output (Q, QN) ()
+  intern(R,CK,NN0)  (
+    primitive = _inv I1 (RN,R);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _mux I3 (D,SI,SE,NN0);
+    primitive = _dff I4 (,R,CK,NN0,Q,QN);
+  )
+)
+model SDFFNSX1 (Q, QN, D, SI, SE, CKN, SN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFNSX1 (Q,QN,D,CKN,SN);
+  )
+  input  (D, SI, SE, CKN, SN) ()
+  output (Q, QN) ()
+  intern(S,CK,NN0)  (
+    primitive = _inv I1 (SN,S);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _mux I3 (D,SI,SE,NN0);
+    primitive = _dff I4 (S,,CK,NN0,Q,QN);
+  )
+)
+model SDFFNSX2 (Q, QN, D, SI, SE, CKN, SN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFNSX2 (Q,QN,D,CKN,SN);
+  )
+  input  (D, SI, SE, CKN, SN) ()
+  output (Q, QN) ()
+  intern(S,CK,NN0)  (
+    primitive = _inv I1 (SN,S);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _mux I3 (D,SI,SE,NN0);
+    primitive = _dff I4 (S,,CK,NN0,Q,QN);
+  )
+)
+model SDFFNSX4 (Q, QN, D, SI, SE, CKN, SN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFNSX4 (Q,QN,D,CKN,SN);
+  )
+  input  (D, SI, SE, CKN, SN) ()
+  output (Q, QN) ()
+  intern(S,CK,NN0)  (
+    primitive = _inv I1 (SN,S);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _mux I3 (D,SI,SE,NN0);
+    primitive = _dff I4 (S,,CK,NN0,Q,QN);
+  )
+)
+model SDFFNSXL (Q, QN, D, SI, SE, CKN, SN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFNSXL (Q,QN,D,CKN,SN);
+  )
+  input  (D, SI, SE, CKN, SN) ()
+  output (Q, QN) ()
+  intern(S,CK,NN0)  (
+    primitive = _inv I1 (SN,S);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _mux I3 (D,SI,SE,NN0);
+    primitive = _dff I4 (S,,CK,NN0,Q,QN);
+  )
+)
+model SDFFNSRX1 (Q, QN, D, SI, SE, CKN, SN, RN) (
+
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFNSRX1 (Q,QN,D,CKN,SN,RN);
+  )
+  input  (D, SI, SE, CKN, SN, RN) ()
+  output (Q, QN) ()
+  intern(R,S,CK,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I1 (SN,S);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _mux I3 (D,SI,SE,NN0);
+    primitive = _dff I4 (S,R,CK,NN0,Q,QN);
+  )
+
+)
+model SDFFNSRX2 (Q, QN, D, SI, SE, CKN, SN, RN) (
+
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFNSRX2 (Q,QN,D,CKN,SN,RN);
+  )
+  input  (D, SI, SE, CKN, SN, RN) ()
+  output (Q, QN) ()
+  intern(R,S,CK,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I1 (SN,S);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _mux I3 (D,SI,SE,NN0);
+    primitive = _dff I4 (S,R,CK,NN0,Q,QN);
+  )
+
+)
+model SDFFNSRX4 (Q, QN, D, SI, SE, CKN, SN, RN) (
+
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFNSRX4 (Q,QN,D,CKN,SN,RN);
+  )
+  input  (D, SI, SE, CKN, SN, RN) ()
+  output (Q, QN) ()
+  intern(R,S,CK,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I1 (SN,S);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _mux I3 (D,SI,SE,NN0);
+    primitive = _dff I4 (S,R,CK,NN0,Q,QN);
+  )
+
+)
+model SDFFNSRXL (Q, QN, D, SI, SE, CKN, SN, RN) (
+
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFNSRXL (Q,QN,D,CKN,SN,RN);
+  )
+  input  (D, SI, SE, CKN, SN, RN) ()
+  output (Q, QN) ()
+  intern(R,S,CK,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I1 (SN,S);
+    primitive = _inv I2 (CKN,CK);
+    primitive = _mux I3 (D,SI,SE,NN0);
+    primitive = _dff I4 (S,R,CK,NN0,Q,QN);
+  )
+
+)
+model SDFFRX1 (Q, QN, D, SI, SE, CK, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFRX1 (Q,QN,D,CK,RN);
+  )
+  input  (D, SI, SE, CK, RN) ()
+  output (Q, QN) ()
+  intern(R,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (,R,CK,NN0,Q,QN);
+  )
+)
+model SDFFRX2 (Q, QN, D, SI, SE, CK, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFRX2 (Q,QN,D,CK,RN);
+  )
+  input  (D, SI, SE, CK, RN) ()
+  output (Q, QN) ()
+  intern(R,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (,R,CK,NN0,Q,QN);
+  )
+)
+model SDFFRX4 (Q, QN, D, SI, SE, CK, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFRX4 (Q,QN,D,CK,RN);
+  )
+  input  (D, SI, SE, CK, RN) ()
+  output (Q, QN) ()
+  intern(R,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (,R,CK,NN0,Q,QN);
+  )
+)
+model SDFFRXL (Q, QN, D, SI, SE, CK, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFRXL (Q,QN,D,CK,RN);
+  )
+  input  (D, SI, SE, CK, RN) ()
+  output (Q, QN) ()
+  intern(R,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (,R,CK,NN0,Q,QN);
+  )
+)
+model SDFFRHQX1 (Q, D, SI, SE, CK, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q;
+        non_scan_model = DFFRHQX1 (Q,D,CK,RN);
+  )
+  input  (D, SI, SE, CK, RN) ()
+  output (Q) ()
+  intern(R,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (,R,CK,NN0,Q,);
+  )
+)
+model SDFFRHQX2 (Q, D, SI, SE, CK, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q;
+        non_scan_model = DFFRHQX2 (Q,D,CK,RN);
+  )
+  input  (D, SI, SE, CK, RN) ()
+  output (Q) ()
+  intern(R,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (,R,CK,NN0,Q,);
+  )
+)
+model SDFFRHQX4 (Q, D, SI, SE, CK, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q;
+        non_scan_model = DFFRHQX4 (Q,D,CK,RN);
+  )
+  input  (D, SI, SE, CK, RN) ()
+  output (Q) ()
+  intern(R,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (,R,CK,NN0,Q,);
+  )
+)
+model SDFFRHQXL (Q, D, SI, SE, CK, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q;
+        non_scan_model = DFFRHQXL (Q,D,CK,RN);
+  )
+  input  (D, SI, SE, CK, RN) ()
+  output (Q) ()
+  intern(R,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (,R,CK,NN0,Q,);
+  )
+)
+model SDFFSX1 (Q, QN, D, SI, SE, CK, SN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFSX1 (Q,QN,D,CK,SN);
+  )
+  input  (D, SI, SE, CK, SN) ()
+  output (Q, QN) ()
+  intern(S,NN0)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (S,,CK,NN0,Q,QN);
+  )
+)
+model SDFFSX2 (Q, QN, D, SI, SE, CK, SN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFSX2 (Q,QN,D,CK,SN);
+  )
+  input  (D, SI, SE, CK, SN) ()
+  output (Q, QN) ()
+  intern(S,NN0)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (S,,CK,NN0,Q,QN);
+  )
+)
+model SDFFSX4 (Q, QN, D, SI, SE, CK, SN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFSX4 (Q,QN,D,CK,SN);
+  )
+  input  (D, SI, SE, CK, SN) ()
+  output (Q, QN) ()
+  intern(S,NN0)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (S,,CK,NN0,Q,QN);
+  )
+)
+model SDFFSXL (Q, QN, D, SI, SE, CK, SN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFSXL (Q,QN,D,CK,SN);
+  )
+  input  (D, SI, SE, CK, SN) ()
+  output (Q, QN) ()
+  intern(S,NN0)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (S,,CK,NN0,Q,QN);
+  )
+)
+model SDFFSHQX1 (Q, D, SI, SE, CK, SN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q;
+        non_scan_model = DFFSHQX1 (Q,D,CK,SN);
+  )
+  input  (D, SI, SE, CK, SN) ()
+  output (Q) ()
+  intern(S,NN0)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (S,,CK,NN0,Q,);
+  )
+)
+model SDFFSHQX2 (Q, D, SI, SE, CK, SN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q;
+        non_scan_model = DFFSHQX2 (Q,D,CK,SN);
+  )
+  input  (D, SI, SE, CK, SN) ()
+  output (Q) ()
+  intern(S,NN0)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (S,,CK,NN0,Q,);
+  )
+)
+model SDFFSHQX4 (Q, D, SI, SE, CK, SN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q;
+        non_scan_model = DFFSHQX4 (Q,D,CK,SN);
+  )
+  input  (D, SI, SE, CK, SN) ()
+  output (Q) ()
+  intern(S,NN0)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (S,,CK,NN0,Q,);
+  )
+)
+model SDFFSHQXL (Q, D, SI, SE, CK, SN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q;
+        non_scan_model = DFFSHQXL (Q,D,CK,SN);
+  )
+  input  (D, SI, SE, CK, SN) ()
+  output (Q) ()
+  intern(S,NN0)  (
+    primitive = _inv I0 (SN,S);
+    primitive = _mux I1 (D,SI,SE,NN0);
+    primitive = _dff I2 (S,,CK,NN0,Q,);
+  )
+)
+model SDFFSRX1 (Q, QN, D, SI, SE, CK, SN, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFSRX1 (Q,QN,D,CK,SN,RN);
+  )
+  input  (D, SI, SE, CK, SN, RN) ()
+  output (Q, QN) ()
+  intern(S,R,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I1 (SN,S);
+    primitive = _mux I2 (D,SI,SE,NN0);
+    primitive = _dff I3 (S,R,CK,NN0,Q,QN);
+  )
+)
+model SDFFSRX2 (Q, QN, D, SI, SE, CK, SN, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFSRX2 (Q,QN,D,CK,SN,RN);
+  )
+  input  (D, SI, SE, CK, SN, RN) ()
+  output (Q, QN) ()
+  intern(S,R,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I1 (SN,S);
+    primitive = _mux I2 (D,SI,SE,NN0);
+    primitive = _dff I3 (S,R,CK,NN0,Q,QN);
+  )
+)
+model SDFFSRX4 (Q, QN, D, SI, SE, CK, SN, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFSRX4 (Q,QN,D,CK,SN,RN);
+  )
+  input  (D, SI, SE, CK, SN, RN) ()
+  output (Q, QN) ()
+  intern(S,R,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I1 (SN,S);
+    primitive = _mux I2 (D,SI,SE,NN0);
+    primitive = _dff I3 (S,R,CK,NN0,Q,QN);
+  )
+)
+model SDFFSRXL (Q, QN, D, SI, SE, CK, SN, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFSRXL (Q,QN,D,CK,SN,RN);
+  )
+  input  (D, SI, SE, CK, SN, RN) ()
+  output (Q, QN) ()
+  intern(S,R,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I1 (SN,S);
+    primitive = _mux I2 (D,SI,SE,NN0);
+    primitive = _dff I3 (S,R,CK,NN0,Q,QN);
+  )
+)
+model SDFFSRHQX1 (Q, D, SI, SE, CK, SN, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q;
+        non_scan_model = DFFSRHQX1 (Q,D,CK,SN,RN);
+  )
+  input  (D, SI, SE, CK, SN, RN) ()
+  output (Q) ()
+  intern(S,R,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I1 (SN,S);
+    primitive = _mux I2 (D,SI,SE,NN0);
+    primitive = _dff I3 (S,R,CK,NN0,Q,);
+  )
+)
+model SDFFSRHQX2 (Q, D, SI, SE, CK, SN, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q;
+        non_scan_model = DFFSRHQX2 (Q,D,CK,SN,RN);
+  )
+  input  (D, SI, SE, CK, SN, RN) ()
+  output (Q) ()
+  intern(S,R,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I1 (SN,S);
+    primitive = _mux I2 (D,SI,SE,NN0);
+    primitive = _dff I3 (S,R,CK,NN0,Q,);
+  )
+)
+model SDFFSRHQX4 (Q, D, SI, SE, CK, SN, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q;
+        non_scan_model = DFFSRHQX4 (Q,D,CK,SN,RN);
+  )
+  input  (D, SI, SE, CK, SN, RN) ()
+  output (Q) ()
+  intern(S,R,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I1 (SN,S);
+    primitive = _mux I2 (D,SI,SE,NN0);
+    primitive = _dff I3 (S,R,CK,NN0,Q,);
+  )
+)
+model SDFFSRHQXL (Q, D, SI, SE, CK, SN, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q;
+        non_scan_model = DFFSRHQXL (Q,D,CK,SN,RN);
+  )
+  input  (D, SI, SE, CK, SN, RN) ()
+  output (Q) ()
+  intern(S,R,NN0)  (
+    primitive = _inv I0 (RN,R);
+    primitive = _inv I1 (SN,S);
+    primitive = _mux I2 (D,SI,SE,NN0);
+    primitive = _dff I3 (S,R,CK,NN0,Q,);
+  )
+)
+model SDFFTRX1 (Q, QN, D, SI, SE, CK, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFTRX1 (Q,QN,D,CK,RN);
+  )
+  input  (D, SI, SE, CK, RN) ()
+  intern(NN0)  (primitive = _and I0 (D,RN,NN0);)
+  intern(D_IN) (primitive = _mux I1 (NN0,SI,SE,D_IN);)
+  output (Q, QN) (primitive = _dff I2 (,,CK,D_IN,Q,QN);)
+)
+model SDFFTRX2 (Q, QN, D, SI, SE, CK, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFTRX2 (Q,QN,D,CK,RN);
+  )
+  input  (D, SI, SE, CK, RN) ()
+  intern(NN0)  (primitive = _and I0 (D,RN,NN0);)
+  intern(D_IN) (primitive = _mux I1 (NN0,SI,SE,D_IN);)
+  output (Q, QN) (primitive = _dff I2 (,,CK,D_IN,Q,QN);)
+)
+model SDFFTRX4 (Q, QN, D, SI, SE, CK, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFTRX4 (Q,QN,D,CK,RN);
+  )
+  input  (D, SI, SE, CK, RN) ()
+  intern(NN0)  (primitive = _and I0 (D,RN,NN0);)
+  intern(D_IN) (primitive = _mux I1 (NN0,SI,SE,D_IN);)
+  output (Q, QN) (primitive = _dff I2 (,,CK,D_IN,Q,QN);)
+)
+model SDFFTRXL (Q, QN, D, SI, SE, CK, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = DFFTRXL (Q,QN,D,CK,RN);
+  )
+  input  (D, SI, SE, CK, RN) ()
+  intern(NN0)  (primitive = _and I0 (D,RN,NN0);)
+  intern(D_IN) (primitive = _mux I1 (NN0,SI,SE,D_IN);)
+  output (Q, QN) (primitive = _dff I2 (,,CK,D_IN,Q,QN);)
+)
+model SEDFFX1 (Q, QN, D, CK, E, SE, SI) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = EDFFX1 (Q,QN,D,CK,E);
+  )
+
+  input (D, CK, E, SE, SI ) ()
+  intern(D_MUX) (primitive = _mux U0 (Q, D, E, D_MUX);)
+  intern(D_IN) (primitive = _mux I1 (D_MUX,SI,SE,D_IN);)
+  output(Q, QN) (primitive = _dff U1 (,,CK,D_IN,Q,QN);)
+)
+model SEDFFX2 (Q, QN, D, CK, E, SE, SI) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = EDFFX2 (Q,QN,D,CK,E);
+  )
+
+  input (D, CK, E, SE, SI ) ()
+  intern(D_MUX) (primitive = _mux U0 (Q, D, E, D_MUX);)
+  intern(D_IN) (primitive = _mux I1 (D_MUX,SI,SE,D_IN);)
+  output(Q, QN) (primitive = _dff U1 (,,CK,D_IN,Q,QN);)
+)
+model SEDFFX4 (Q, QN, D, CK, E, SE, SI) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = EDFFX4 (Q,QN,D,CK,E);
+  )
+
+  input (D, CK, E, SE, SI ) ()
+  intern(D_MUX) (primitive = _mux U0 (Q, D, E, D_MUX);)
+  intern(D_IN) (primitive = _mux I1 (D_MUX,SI,SE,D_IN);)
+  output(Q, QN) (primitive = _dff U1 (,,CK,D_IN,Q,QN);)
+)
+model SEDFFXL (Q, QN, D, CK, E, SE, SI) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = EDFFXL (Q,QN,D,CK,E);
+  )
+
+  input (D, CK, E, SE, SI ) ()
+  intern(D_MUX) (primitive = _mux U0 (Q, D, E, D_MUX);)
+  intern(D_IN) (primitive = _mux I1 (D_MUX,SI,SE,D_IN);)
+  output(Q, QN) (primitive = _dff U1 (,,CK,D_IN,Q,QN);)
+)
+model SEDFFTRX1 (Q, QN, D, CK, E, SE, SI, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = EDFFTRX1 (Q,QN,D,CK,E,RN);
+  )
+  input (D, CK, E, SE, SI, RN ) ()
+  intern(D_MUX) (primitive = _mux U0 (Q, D, E, D_MUX);)
+  intern(NN0)  (primitive = _and I0 (D_MUX,RN,NN0);)
+  intern(D_IN) (primitive = _mux I1 (NN0,SI,SE,D_IN);)
+  output(Q, QN)  (primitive = _dff I2 (,,CK,D_IN,Q,QN);)
+)
+model SEDFFTRX2 (Q, QN, D, CK, E, SE, SI, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = EDFFTRX2 (Q,QN,D,CK,E,RN);
+  )
+  input (D, CK, E, SE, SI, RN ) ()
+  intern(D_MUX) (primitive = _mux U0 (Q, D, E, D_MUX);)
+  intern(NN0)  (primitive = _and I0 (D_MUX,RN,NN0);)
+  intern(D_IN) (primitive = _mux I1 (NN0,SI,SE,D_IN);)
+  output(Q, QN)  (primitive = _dff I2 (,,CK,D_IN,Q,QN);)
+)
+model SEDFFTRX4 (Q, QN, D, CK, E, SE, SI, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = EDFFTRX4 (Q,QN,D,CK,E,RN);
+  )
+  input (D, CK, E, SE, SI, RN ) ()
+  intern(D_MUX) (primitive = _mux U0 (Q, D, E, D_MUX);)
+  intern(NN0)  (primitive = _and I0 (D_MUX,RN,NN0);)
+  intern(D_IN) (primitive = _mux I1 (NN0,SI,SE,D_IN);)
+  output(Q, QN)  (primitive = _dff I2 (,,CK,D_IN,Q,QN);)
+)
+model SEDFFTRXL (Q, QN, D, CK, E, SE, SI, RN) (
+  scan_definition (
+        type = mux_scan;
+        data_in = D;
+        scan_in = SI;
+        scan_enable = SE;
+        scan_out = Q,QN;
+        non_scan_model = EDFFTRXL (Q,QN,D,CK,E,RN);
+  )
+  input (D, CK, E, SE, SI, RN ) ()
+  intern(D_MUX) (primitive = _mux U0 (Q, D, E, D_MUX);)
+  intern(NN0)  (primitive = _and I0 (D_MUX,RN,NN0);)
+  intern(D_IN) (primitive = _mux I1 (NN0,SI,SE,D_IN);)
+  output(Q, QN)  (primitive = _dff I2 (,,CK,D_IN,Q,QN);)
+)
+model TBUFX12 (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tsh I0 (A, OE, Y);
+  )
+)
+model TBUFX16 (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tsh I0 (A, OE, Y);
+  )
+)
+model TBUFX1 (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tsh I0 (A, OE, Y);
+  )
+)
+model TBUFX20 (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tsh I0 (A, OE, Y);
+  )
+)
+model TBUFX2 (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tsh I0 (A, OE, Y);
+  )
+)
+model TBUFX3 (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tsh I0 (A, OE, Y);
+  )
+)
+model TBUFX4 (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tsh I0 (A, OE, Y);
+  )
+)
+model TBUFX8 (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tsh I0 (A, OE, Y);
+  )
+)
+model TBUFXL (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tsh I0 (A, OE, Y);
+  )
+)
+model TBUFIX12 (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tshi I0 (A, OE, Y);
+  )
+)
+model TBUFIX16 (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tshi I0 (A, OE, Y);
+  )
+)
+model TBUFIX1 (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tshi I0 (A, OE, Y);
+  )
+)
+model TBUFIX20 (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tshi I0 (A, OE, Y);
+  )
+)
+model TBUFIX2 (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tshi I0 (A, OE, Y);
+  )
+)
+model TBUFIX3 (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tshi I0 (A, OE, Y);
+  )
+)
+model TBUFIX4 (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tshi I0 (A, OE, Y);
+  )
+)
+model TBUFIX8 (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tshi I0 (A, OE, Y);
+  )
+)
+model TBUFIXL (Y, A, OE) (
+  input (A, OE) ()
+  output (Y) (
+    primitive = _tshi I0 (A, OE, Y);
+  )
+)
+model TIEHI (Y) (
+output (Y) ()
+  intern(vin_5)  (
+    primitive = _buf I0 (vin_5,Y);
+    fault = none;
+    primitive = _tie1 dummy1 (vin_5);
+  )
+)
+model TIELO (Y) (
+output (Y) ()
+  intern(vin_6)  (
+    primitive = _buf I0 (vin_6,Y);
+    fault = none;
+    primitive = _tie0 dummy1 (vin_6);
+  )
+)
+model TTLATX1 (Q,D, G, OE) (
+input  (D, G, OE) ()
+  intern(n0)  (primitive = _dlat U0 (,,G,D,n0,);)
+  output(Q)  (primitive = _tsh U1 (n0,OE,Q);)
+)
+model TTLATX2 (Q,D, G, OE) (
+input  (D, G, OE) ()
+  intern(n0)  (primitive = _dlat U0 (,,G,D,n0,);)
+  output(Q)  (primitive = _tsh U1 (n0,OE,Q);)
+)
+model TTLATX4 (Q,D, G, OE) (
+input  (D, G, OE) ()
+  intern(n0)  (primitive = _dlat U0 (,,G,D,n0,);)
+  output(Q)  (primitive = _tsh U1 (n0,OE,Q);)
+)
+model TTLATXL (Q,D, G, OE) (
+input  (D, G, OE) ()
+  intern(n0)  (primitive = _dlat U0 (,,G,D,n0,);)
+  output(Q)  (primitive = _tsh U1 (n0,OE,Q);)
+)
+model TLATX1 (Q, QN, D, G) (
+  input  (D, G) ()
+  output(Q,QN)  (primitive = _dlat U0 (,,G,D,Q,QN);)
+)
+model TLATX2 (Q, QN, D, G) (
+  input  (D, G) ()
+  output(Q,QN)  (primitive = _dlat U0 (,,G,D,Q,QN);)
+)
+model TLATX4 (Q, QN, D, G) (
+  input  (D, G) ()
+  output(Q,QN)  (primitive = _dlat U0 (,,G,D,Q,QN);)
+)
+model TLATXL (Q, QN, D, G) (
+  input  (D, G) ()
+  output(Q,QN)  (primitive = _dlat U0 (,,G,D,Q,QN);)
+)
+model TLATNX1 (Q, QN, D, GN) (
+  input  (D, GN) ()
+  intern(G) (primitive = _inv U0 (GN,G);)
+  output(Q,QN)  (primitive = _dlat U1 (,,G,D,Q,QN);)
+)
+model TLATNX2 (Q, QN, D, GN) (
+  input  (D, GN) ()
+  intern(G) (primitive = _inv U0 (GN,G);)
+  output(Q,QN)  (primitive = _dlat U1 (,,G,D,Q,QN);)
+)
+model TLATNX4 (Q, QN, D, GN) (
+  input  (D, GN) ()
+  intern(G) (primitive = _inv U0 (GN,G);)
+  output(Q,QN)  (primitive = _dlat U1 (,,G,D,Q,QN);)
+)
+model TLATNXL (Q, QN, D, GN) (
+  input  (D, GN) ()
+  intern(G) (primitive = _inv U0 (GN,G);)
+  output(Q,QN)  (primitive = _dlat U1 (,,G,D,Q,QN);)
+)
+model TLATNRX1 (Q, QN,  D, GN, RN) (
+  input  ( D, GN, RN) ()
+  intern(R) (primitive = _inv U0 (RN,R);)
+  intern(G) (primitive = _inv U1 (GN,G);)
+  output(Q,QN)  (primitive = _dlat U2 (,R,G,D,Q,QN);)
+)
+model TLATNRX2 (Q, QN,  D, GN, RN) (
+  input  ( D, GN, RN) ()
+  intern(R) (primitive = _inv U0 (RN,R);)
+  intern(G) (primitive = _inv U1 (GN,G);)
+  output(Q,QN)  (primitive = _dlat U2 (,R,G,D,Q,QN);)
+)
+model TLATNRX4 (Q, QN,  D, GN, RN) (
+  input  ( D, GN, RN) ()
+  intern(R) (primitive = _inv U0 (RN,R);)
+  intern(G) (primitive = _inv U1 (GN,G);)
+  output(Q,QN)  (primitive = _dlat U2 (,R,G,D,Q,QN);)
+)
+model TLATNRXL (Q, QN,  D, GN, RN) (
+  input  ( D, GN, RN) ()
+  intern(R) (primitive = _inv U0 (RN,R);)
+  intern(G) (primitive = _inv U1 (GN,G);)
+  output(Q,QN)  (primitive = _dlat U2 (,R,G,D,Q,QN);)
+)
+model TLATNSX1 (Q, QN, D, GN, SN) (
+  input  (D, GN, SN) ()
+  intern(S) (primitive = _inv U0 (SN,S);)
+  intern(G) (primitive = _inv U1 (GN,G);)
+  output(Q,QN)  (primitive = _dlat U2 (S,,G,D,Q,QN);)
+)
+model TLATNSX2 (Q, QN, D, GN, SN) (
+  input  (D, GN, SN) ()
+  intern(S) (primitive = _inv U0 (SN,S);)
+  intern(G) (primitive = _inv U1 (GN,G);)
+  output(Q,QN)  (primitive = _dlat U2 (S,,G,D,Q,QN);)
+)
+model TLATNSX4 (Q, QN, D, GN, SN) (
+  input  (D, GN, SN) ()
+  intern(S) (primitive = _inv U0 (SN,S);)
+  intern(G) (primitive = _inv U1 (GN,G);)
+  output(Q,QN)  (primitive = _dlat U2 (S,,G,D,Q,QN);)
+)
+model TLATNSXL (Q, QN, D, GN, SN) (
+  input  (D, GN, SN) ()
+  intern(S) (primitive = _inv U0 (SN,S);)
+  intern(G) (primitive = _inv U1 (GN,G);)
+  output(Q,QN)  (primitive = _dlat U2 (S,,G,D,Q,QN);)
+)
+model TLATNSRX1 (Q, QN, D, GN, RN, SN) (
+  input  (D, GN, RN, SN) ()
+  intern(R) (primitive = _inv U0 (RN,R);)
+  intern(S) (primitive = _inv U1 (SN,S);)
+  intern(G) (primitive = _inv U2 (GN,G);)
+  output(Q,QN)  (primitive = _dlat U3 (S,R,G,D,Q,QN);)
+)
+model TLATNSRX2 (Q, QN, D, GN, RN, SN) (
+  input  (D, GN, RN, SN) ()
+  intern(R) (primitive = _inv U0 (RN,R);)
+  intern(S) (primitive = _inv U1 (SN,S);)
+  intern(G) (primitive = _inv U2 (GN,G);)
+  output(Q,QN)  (primitive = _dlat U3 (S,R,G,D,Q,QN);)
+)
+model TLATNSRX4 (Q, QN, D, GN, RN, SN) (
+  input  (D, GN, RN, SN) ()
+  intern(R) (primitive = _inv U0 (RN,R);)
+  intern(S) (primitive = _inv U1 (SN,S);)
+  intern(G) (primitive = _inv U2 (GN,G);)
+  output(Q,QN)  (primitive = _dlat U3 (S,R,G,D,Q,QN);)
+)
+model TLATNSRXL (Q, QN, D, GN, RN, SN) (
+  input  (D, GN, RN, SN) ()
+  intern(R) (primitive = _inv U0 (RN,R);)
+  intern(S) (primitive = _inv U1 (SN,S);)
+  intern(G) (primitive = _inv U2 (GN,G);)
+  output(Q,QN)  (primitive = _dlat U3 (S,R,G,D,Q,QN);)
+)
+model TLATRX1 (Q, QN, D, G, RN) (
+  input  (D, G, RN) ()
+  intern(R) (primitive = _inv U0 (RN,R);)
+  output(Q,QN)  (primitive = _dlat U1 (,R,G,D,Q,QN);)
+)
+model TLATRX2 (Q, QN, D, G, RN) (
+  input  (D, G, RN) ()
+  intern(R) (primitive = _inv U0 (RN,R);)
+  output(Q,QN)  (primitive = _dlat U1 (,R,G,D,Q,QN);)
+)
+model TLATRX4 (Q, QN, D, G, RN) (
+  input  (D, G, RN) ()
+  intern(R) (primitive = _inv U0 (RN,R);)
+  output(Q,QN)  (primitive = _dlat U1 (,R,G,D,Q,QN);)
+)
+model TLATRXL (Q, QN, D, G, RN) (
+  input  (D, G, RN) ()
+  intern(R) (primitive = _inv U0 (RN,R);)
+  output(Q,QN)  (primitive = _dlat U1 (,R,G,D,Q,QN);)
+)
+model TLATSX1 (Q, QN, D, G, SN) (
+  input  (D, G, SN) ()
+  intern(S) (primitive = _inv U0 (SN,S);)
+  output(Q,QN)  (primitive = _dlat U1 (S,,G,D,Q,QN);)
+)
+model TLATSX2 (Q, QN, D, G, SN) (
+  input  (D, G, SN) ()
+  intern(S) (primitive = _inv U0 (SN,S);)
+  output(Q,QN)  (primitive = _dlat U1 (S,,G,D,Q,QN);)
+)
+model TLATSX4 (Q, QN, D, G, SN) (
+  input  (D, G, SN) ()
+  intern(S) (primitive = _inv U0 (SN,S);)
+  output(Q,QN)  (primitive = _dlat U1 (S,,G,D,Q,QN);)
+)
+model TLATSXL (Q, QN, D, G, SN) (
+  input  (D, G, SN) ()
+  intern(S) (primitive = _inv U0 (SN,S);)
+  output(Q,QN)  (primitive = _dlat U1 (S,,G,D,Q,QN);)
+)
+model TLATSRX1 (Q, QN, D, G, SN, RN) (
+  input  (D, G, SN, RN) ()
+  intern(S) (primitive = _inv U0 (SN,S);)
+  intern(R) (primitive = _inv U1 (RN,R);)
+  output(Q,QN)  (primitive = _dlat U2 (S,R,G,D,Q,QN);)
+)
+model TLATSRX2 (Q, QN, D, G, SN, RN) (
+  input  (D, G, SN, RN) ()
+  intern(S) (primitive = _inv U0 (SN,S);)
+  intern(R) (primitive = _inv U1 (RN,R);)
+  output(Q,QN)  (primitive = _dlat U2 (S,R,G,D,Q,QN);)
+)
+model TLATSRX4 (Q, QN, D, G, SN, RN) (
+  input  (D, G, SN, RN) ()
+  intern(S) (primitive = _inv U0 (SN,S);)
+  intern(R) (primitive = _inv U1 (RN,R);)
+  output(Q,QN)  (primitive = _dlat U2 (S,R,G,D,Q,QN);)
+)
+model TLATSRXL (Q, QN, D, G, SN, RN) (
+  input  (D, G, SN, RN) ()
+  intern(S) (primitive = _inv U0 (SN,S);)
+  intern(R) (primitive = _inv U1 (RN,R);)
+  output(Q,QN)  (primitive = _dlat U2 (S,R,G,D,Q,QN);)
+)
+model XNOR2X1 (Y, A, B ) (
+  input (A, B) ()
+  output (Y) (
+    primitive = _xnor I0(A, B, Y);
+  )
+)
+model XNOR2X2 (Y, A, B ) (
+  input (A, B) ()
+  output (Y) (
+    primitive = _xnor I0(A, B, Y);
+  )
+)
+model XNOR2X4 (Y, A, B ) (
+  input (A, B) ()
+  output (Y) (
+    primitive = _xnor I0(A, B, Y);
+  )
+)
+model XNOR2XL (Y, A, B ) (
+  input (A, B) ()
+  output (Y) (
+    primitive = _xnor I0(A, B, Y);
+  )
+)
+model XOR2X1 (Y, A, B ) (
+  input (A, B) ()
+  output (Y) (
+    primitive = _xor I0(A, B, Y);
+  )
+)
+model XOR2X2 (Y, A, B ) (
+  input (A, B) ()
+  output (Y) (
+    primitive = _xor I0(A, B, Y);
+  )
+)
+model XOR2X4 (Y, A, B ) (
+  input (A, B) ()
+  output (Y) (
+    primitive = _xor I0(A, B, Y);
+  )
+)
+model XOR2XL (Y, A, B ) (
+  input (A, B) ()
+  output (Y) (
+    primitive = _xor I0(A, B, Y);
+  )
+)

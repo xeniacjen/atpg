@@ -1,0 +1,15 @@
+read_lib techlib/tsmc18.mdt
+read_netlist netlist/c432.v
+report_netlist
+build_circuit --frame 2
+report_circuit
+set_fault_type tdf
+add_fault --all
+set_X-Fill on
+set_pattern_type LOC   // no need for combinational circuit
+run_atpg
+report_statistics > rpt/c432_loc_t.rpt
+write_pattern pat/c432_loc_t.pat
+write_pattern -f ascii pat/c432_tdfloc_t.ascii  // for fastscan
+exit
+

@@ -1,0 +1,12 @@
+./bin/opt/fan -f ./script/atpg_c17_tdf.script
+./bin/opt/fan -f ./script/atpg_s27_tdf.script
+./bin/opt/fan -f ./script/atpg_s208_tdf.script
+./bin/opt/fan -f ./script/atpg_s444_tdf.script
+./bin/opt/fan -f ./script/atpg_c432_tdf.script
+./bin/opt/fan -f ./script/atpg_s1238_tdf.script
+./bin/opt/fan -f ./script/atpg_c1355_tdf.script
+./bin/opt/fan -f ./script/atpg_c5315_tdf.script
+./bin/opt/fan -f ./script/atpg_c6288_tdf.script
+./bin/opt/fan -f ./script/atpg_s9234_tdf.script
+./bin/opt/fan -f ./script/atpg_s15850_tdf.script
+./bin/opt/fan -f ./script/atpg_s38417_tdf.script

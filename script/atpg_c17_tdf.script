@@ -1,0 +1,12 @@
+read_lib techlib/tsmc18.mdt
+read_netlist netlist/c17.v
+report_netlist
+build_circuit --frame 2
+report_circuit
+set_fault_type tdf
+add_fault --all
+set_X-Fill on
+set_pattern_type LOC   // no need for combinational circuit
+run_atpg
+report_statistics > rpt/c17_loc_t_tdf.rpt
+exit

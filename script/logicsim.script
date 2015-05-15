@@ -1,0 +1,13 @@
+read_lib techlib/tsmc18.mdt
+report_lib
+read_netlist netlist/c17.v
+report_netlist
+build_circuit
+report_circuit
+read_pattern pat/c17_saf.pat
+report_pattern
+report_gate
+run_logic_sim
+report_value
+exit
+

@@ -1,0 +1,7 @@
+bin/dbg/vlog_test : lib/dbg/vlog_test.o $(LIBOBJS) $(REQLIBS)
+	@if [ ! -d $(BINDIR)/$(MODE) ]; then \
+		mkdir -p $(BINDIR)/$(MODE); \
+	fi
+	@echo "    LD    $(notdir $@)"
+	@$(CXX) $(CFLAGS) $(PKGFLAGS) $(INCLOC) $< $(LIBOBJS) $(LIBLOC) $(LNKLIBS) -o $@
+
