@@ -48,7 +48,8 @@ public:
 
     void GetPiPattern(Pattern& p) const; 
     void GetPoPattern(Pattern& p) const; 
-    void SetPatternToPi(Pattern& p); 
+    void assignPatternPiValue(Pattern *pat); // write PI values to pattern
+    void assignPatternPoValue(Pattern *pat); // write PO values to pattern
 
 private: 
     Value           GoodEval(Gate *g) const; 
