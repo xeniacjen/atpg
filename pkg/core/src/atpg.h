@@ -16,7 +16,6 @@
  * =====================================================================================
  */
 
-
 #ifndef _CORE_ATPG_H_ 
 #define _CORE_ATPG_H_ 
 
@@ -31,33 +30,52 @@ typedef std::pair<int, Value> Objective;
 class Atpg { 
 public: 
     enum GenStatus             { TEST_FOUND = 0, UNTESTABLE, ABORT }; 
-    enum AtpgStatus            { IMPLY_AND_CHECK = 0, 
-                                 DECISION, 
-                                 BACKTRACE, 
-                                 BACKTRACK,  
-                                 EXIT }; 
 
         Atpg(Circuit *cir, Fault *f); 
         ~Atpg(); 
 
     GenStatus Tpg(); 
+    void      GetPattern(Pattern *p); 
 
-    void assignPatternPiValue(Pattern *pat); // write PI values to pattern
-    void assignPatternPoValue(Pattern *pat); // write PO values to pattern
+private: 
+    bool isTestPossible(); 
+    bool isaTest(); 
 
 protected:
+    void init(); 
+    bool Imply(); 
+    bool FaultActivate(); 
+    bool DDrive(); 
+    bool Backtrace(); 
+    bool BackTrack(); 
+
     Circuit     *cir_;
     Implicator  *impl_; 
 
     Fault       *current_fault_;
 
+    unsigned    back_track_count; 
+    unsigned    back_track_limit; 
+
+    Objective   current_obj_; 
 }; //Atpg 
 
 inline Atpg::Atpg(Circuit *cir, Fault *f) { 
     cir_ = cir;
+    current_fault_ = f; 
+
     impl_ = new Implicator(cir, f); 
+    init(); 
 }
 
+inline Atpg::~Atpg() { 
+    delete impl_; 
+}
+
+inline void Atpg::GetPattern(Pattern *p) { 
+    impl_->GetPiPattern(p);    
+    impl_->GetPoPattern(p);    
+}
 }; //CoreNs 
 
 #endif //_CORE_ATPG_H_

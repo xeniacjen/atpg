@@ -72,9 +72,9 @@ Value Implicator::GoodEval(Gate *g) const {
         case Gate::NOR4: 
             return EvalNorN(vs); 
             break; 
+        case Gate::BUF: 
         case Gate::PO: 
         case Gate::PPO: 
-        case Gate::BUF: 
             return v; 
             break;  
         default:  
@@ -86,7 +86,11 @@ Value Implicator::GoodEval(Gate *g) const {
 
 Value Implicator::FaultEval(Gate *g) const { 
     if (target_fault_->line_==0) { //fault on output 
-        Value v = GoodEval(g); 
+        Value v;  
+        if (g->type_==Gate::PI || g->type_==Gate::PPI) 
+            v = values_[g->id_]; 
+        else 
+            v = GoodEval(g); 
         if (v==L&&(target_fault_->type_==Fault::SA1
             || target_fault_->type_==Fault::STF)) v = B; 
         if (v==H&&(target_fault_->type_==Fault::SA0

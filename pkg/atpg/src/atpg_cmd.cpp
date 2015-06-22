@@ -1116,13 +1116,10 @@ bool RunAtpgCmd::exec(const vector<string> &argv) {
     if (!fanMgr_->atpg_mgr->sim_)
         fanMgr_->atpg_mgr->sim_ = new Simulator(fanMgr_->atpg_mgr->cir_);
 
-    delete fanMgr_->atpg_mgr->atpg_;
-    fanMgr_->atpg_mgr->atpg_ = new Atpg(fanMgr_->atpg_mgr->cir_, fanMgr_->atpg_mgr->sim_);
-
     cout << "#  Performing pattern generation ..." << endl;
     fanMgr_->tmusg.periodStart();
 
-    fanMgr_->atpg_mgr->atpg_->generation(fanMgr_->atpg_mgr->pcoll_, fanMgr_->atpg_mgr->fListExtract_);
+    fanMgr_->atpg_mgr->generation();
 
     fanMgr_->tmusg.getPeriodUsage(fanMgr_->atpgStat);
     cout << "#  Finished pattern generation";

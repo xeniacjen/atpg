@@ -30,11 +30,14 @@ class AtpgMgr {
 public: 
     AtpgMgr();  
     ~AtpgMgr();  
+
+    void generation(); 
     
     FaultListExtract    *fListExtract_;
     PatternProcessor    *pcoll_;
     Circuit             *cir_;
     Simulator           *sim_;
+private: 
     Atpg                *atpg_; 
 
     //AtpgVec             atpgs_; 

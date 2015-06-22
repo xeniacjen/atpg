@@ -41,15 +41,14 @@ public:
   //bool MakeDecision(); 
 
     Value GetVal(int gid) const; 
+    bool  SetVal(int gid, Value v); 
 
     void GetDFrontier(GateVec& df) const; 
 
     bool IsFaultAtPo() const; 
 
-    void GetPiPattern(Pattern& p) const; 
-    void GetPoPattern(Pattern& p) const; 
-    void assignPatternPiValue(Pattern *pat); // write PI values to pattern
-    void assignPatternPoValue(Pattern *pat); // write PO values to pattern
+    void GetPiPattern(Pattern *p) const; 
+    void GetPoPattern(Pattern *p) const; 
 
 private: 
     Value           GoodEval(Gate *g) const; 
@@ -84,6 +83,25 @@ inline void Implicator::Init() {
 inline Value Implicator::GetVal(int gid) const {
     return values_[gid]; 
 }
+
+inline bool Implicator::SetVal(int gid, Value v) { 
+    if (values_[gid]!=X && values_[gid]!=v) return false; 
+
+    values_[gid] = v; 
+    return true; 
+}
+
+inline void Implicator::GetPiPattern(Pattern *p) const {
+    for (int i=0; i<cir_->npi_; i++)    
+        p->pi1_[i] = GetVal(i); 
+	if(p->pi2_!=NULL && cir_->nframe_>1)
+		for( int i = 0 ; i < cir_->npi_ ; i++ )
+            p->pi2_[i] = GetVal(i+cir_->ngate_); 
+	for( int i = 0 ; i < cir_->nppi_ ; i++ )
+            p->ppi_[i] = GetVal(i+cir_->npi_); 
+}
+
+inline void Implicator::GetPoPattern(Pattern *p) const  {}
 
 }; // CoreNs
 

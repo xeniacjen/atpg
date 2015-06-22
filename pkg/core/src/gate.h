@@ -54,7 +54,7 @@ public:
     int       *fos_;  // fanout array
 
     // values
-    Value     v_;     // single value for ATPG
+    //Value     v_;     // single value for ATPG
     ParaValue gl_;    // good low
     ParaValue gh_;    // good high
     ParaValue fl_;    // faulty low
@@ -92,7 +92,6 @@ inline Gate::Gate() {
     fis_     = NULL;
     nfo_     = 0;
     fos_     = NULL;
-    v_       = X;
     gl_      = PARA_L;
     gh_      = PARA_L;
     fl_      = PARA_L;
