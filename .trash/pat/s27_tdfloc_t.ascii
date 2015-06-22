@@ -1,0 +1,238 @@
+ASCII_PATTERN_FILE_VERSION = 2;
+SETUP =
+declare input bus "PI" = "/CK", "/test_si", "/test_se", "/G0", "/G1", "/G2", "/G3";
+declare output bus "PO" = "/test_so", "/G17";
+clock "/CK" =
+    off_state = 0;
+    pulse_width = 1;
+end;
+procedure test_setup "test_setup" =
+    force "/CK" 0 0;
+    force "/test_si" 0 0;
+    force "/test_se" 0 0;
+end;
+scan_group "group1" =
+    scan_chain "chain1" =
+    scan_in = "/test_si";
+    scan_out = "/test_so";
+    length = 3;
+    end;
+    procedure shift "group1_load_shift" =
+    force_sci "chain1" 0;
+    force "/CK" 1 16;
+    force "/CK" 0 19;
+    period 32;
+    end;
+    procedure shift "group1_unload_shift" =
+    measure_sco "chain1" 0;
+    force "/CK" 1 16;
+    force "/CK" 0 19;
+    period 32;
+    end;
+    procedure load "group1_load" =
+    force "/CK" 0 0;
+    force "/test_se" 1 0;
+    force "/test_si" 0 0;
+    apply "group1_load_shift" 3 32;
+    end;
+    procedure unload "group1_unload" =
+    force "/CK" 0 0;
+    force "/test_se" 1 0;
+    force "/test_si" 0 0;
+    apply "group1_unload_shift" 3 32;
+    end;
+end;
+end;
+
+SCAN_TEST =
+pattern = 0 clock_sequential;
+apply  "group1_load" 0 =
+chain "chain1" = "000";
+end;
+force "PI" "0000011" 1;
+pulse "/CK" 2;
+force "PI" "0001111" 3;
+measure "PO" "X1" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "001";
+end;
+pattern = 1 clock_sequential;
+apply  "group1_load" 0 =
+chain "chain1" = "000";
+end;
+force "PI" "0001011" 1;
+pulse "/CK" 2;
+force "PI" "0000111" 3;
+measure "PO" "X0" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "010";
+end;
+pattern = 2 clock_sequential;
+apply  "group1_load" 0 =
+chain "chain1" = "111";
+end;
+force "PI" "0001110" 1;
+pulse "/CK" 2;
+force "PI" "0001000" 3;
+measure "PO" "X1" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "001";
+end;
+pattern = 3 clock_sequential;
+apply  "group1_load" 0 =
+chain "chain1" = "111";
+end;
+force "PI" "0001001" 1;
+pulse "/CK" 2;
+force "PI" "0000110" 3;
+measure "PO" "X1" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "000";
+end;
+pattern = 4 clock_sequential;
+apply  "group1_load" 0 =
+chain "chain1" = "111";
+end;
+force "PI" "0001011" 1;
+pulse "/CK" 2;
+force "PI" "0000100" 3;
+measure "PO" "X1" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "100";
+end;
+pattern = 5 clock_sequential;
+apply  "group1_load" 0 =
+chain "chain1" = "110";
+end;
+force "PI" "0000110" 1;
+pulse "/CK" 2;
+force "PI" "0001011" 3;
+measure "PO" "X0" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "010";
+end;
+pattern = 6 clock_sequential;
+apply  "group1_load" 0 =
+chain "chain1" = "110";
+end;
+force "PI" "0000111" 1;
+pulse "/CK" 2;
+force "PI" "0001010" 3;
+measure "PO" "X1" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "001";
+end;
+pattern = 7 clock_sequential;
+apply  "group1_load" 0 =
+chain "chain1" = "011";
+end;
+force "PI" "0001100" 1;
+pulse "/CK" 2;
+force "PI" "0001001" 3;
+measure "PO" "X1" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "101";
+end;
+pattern = 8 clock_sequential;
+apply  "group1_load" 0 =
+chain "chain1" = "111";
+end;
+force "PI" "0000101" 1;
+pulse "/CK" 2;
+force "PI" "0000111" 3;
+measure "PO" "X1" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "000";
+end;
+pattern = 9 clock_sequential;
+apply  "group1_load" 0 =
+chain "chain1" = "011";
+end;
+force "PI" "0001001" 1;
+pulse "/CK" 2;
+force "PI" "0001100" 3;
+measure "PO" "X1" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "101";
+end;
+pattern = 10 clock_sequential;
+apply  "group1_load" 0 =
+chain "chain1" = "100";
+end;
+force "PI" "0000111" 1;
+pulse "/CK" 2;
+force "PI" "0001011" 3;
+measure "PO" "X0" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "010";
+end;
+pattern = 11 clock_sequential;
+apply  "group1_load" 0 =
+chain "chain1" = "100";
+end;
+force "PI" "0000110" 1;
+pulse "/CK" 2;
+force "PI" "0001011" 3;
+measure "PO" "X0" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "010";
+end;
+pattern = 12 clock_sequential;
+apply  "group1_load" 0 =
+chain "chain1" = "000";
+end;
+force "PI" "0001011" 1;
+pulse "/CK" 2;
+force "PI" "0000110" 3;
+measure "PO" "X0" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "010";
+end;
+pattern = 13 clock_sequential;
+apply  "group1_load" 0 =
+chain "chain1" = "100";
+end;
+force "PI" "0001110" 1;
+pulse "/CK" 2;
+force "PI" "0001011" 3;
+measure "PO" "X1" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "001";
+end;
+pattern = 14 clock_sequential;
+apply  "group1_load" 0 =
+chain "chain1" = "111";
+end;
+force "PI" "0000110" 1;
+pulse "/CK" 2;
+force "PI" "0001011" 3;
+measure "PO" "X0" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "010";
+end;
+end;
+SCAN_CELLS =
+scan_group "group1" =
+scan_chain "chain1" =
+scan_cell = 0 MASTER FFFF "/U_G7" "I1" "SI" "Q";
+scan_cell = 1 MASTER FFFF "/U_G6" "I1" "SI" "Q";
+scan_cell = 2 MASTER FFFF "/U_G5" "I1" "SI" "Q";
+end;
+end;
+end;
+

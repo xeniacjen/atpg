@@ -21,7 +21,7 @@
 #        DYNPKGS = out
 #
 #############################################################################
-STAPKGS = common interface core fan
+STAPKGS = common interface core atpg
 DYNPKGS =
 
 OWNPKGS = $(STAPKGS) $(DYNPKGS)
@@ -30,7 +30,7 @@ OWNPKGS = $(STAPKGS) $(DYNPKGS)
 #        test3_DEP = test1 test2          // test3 depends on test1 and test2
 
 core_DEP = interface
-fan_DEP = common interface core
+atpg_DEP = common interface core
 
 # To specify sources containing main function
 #        test1_EXE = hello.cpp route.cpp  // hello.cpp and route.cpp in test1
@@ -45,13 +45,13 @@ interface_EXE = mdt_test.cpp     \
 				lht_pat_test.cpp \
 				vlog2pmt.cpp
 
-fan_EXE = main.cpp
+atpg_EXE = main.cpp
 
 # To specify binary names
 # 		 hello.cpp_test1_BIN = Hello      // hello.cpp in test1 will be built
 # 		                                  // into Hello
 
-main.cpp_fan_BIN = fan
+main.cpp_atpg_BIN = atpg
 
 # To specify package additional C flags
 #        test1_CFLAGS = -Wall             // test1 C flag is "-Wall"

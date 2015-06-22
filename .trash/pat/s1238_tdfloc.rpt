@@ -1,0 +1,28 @@
+#                 Statistics Report
+#  Circuit name                                s1238
+#  Fault model                                   TDF
+#  Pattern type                                  LOC
+#  -------------------------------------------------
+#  Fault classes                             #faults
+#  ----------------------------  -------------------
+#    FU (full)                                  3378
+#    --------------------------  -------------------
+#    UD (undetected)                             131
+#    PT (possibly testable)                        0
+#    AU (atpg untestable)                          0
+#    RE (redundant)                                0
+#    AB (atpg abort)                               0
+#    TI (tied)                                     0
+#    --------------------------  -------------------
+#    DT (detected)                              3247
+#  -------------------------------------------------
+#  Coverage                               percentage
+#    --------------------------  -------------------
+#    test coverage                            96.12%
+#    fault coverage                           96.12%
+#    atpg effectiveness                       96.12%
+#  -------------------------------------------------
+#  #Patterns                                     399
+#  -------------------------------------------------
+#  ATPG runtime                             0.0341 s
+#  -------------------------------------------------

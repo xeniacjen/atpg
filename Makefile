@@ -26,7 +26,7 @@ uninstall : $(OWNUNINS)
 	@echo -n
 
 tags :
-	ctags -R .
+	@$(PKGDIR)/cscope.sh 
 
 clean : $(OWNCLN)
 	@echo -n

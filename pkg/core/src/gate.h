@@ -16,6 +16,10 @@
 
 namespace CoreNs {
 
+class Gate; 
+
+typedef std::vector<Gate *> GateVec;  
+
 class Gate {
 public:
               Gate();
@@ -154,7 +158,7 @@ inline Value Gate::getOutputCtrlValue() const {
     }
 }
 
-};
+}; // CoreNs
 
 #endif
 
