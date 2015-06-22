@@ -35,10 +35,10 @@ void FaultListExtract::extract(Circuit *cir) {
                 }
                 else {
                     temp = new Fault(i, Fault::SA0, 0); //Q
-                    temp->state_ = Fault::DT;
+                    temp->state_ = Fault::UD;
                     faults_.push_back(temp);
                     temp = new Fault(i, Fault::SA1, 0); //Q
-                    temp->state_ = Fault::DT;
+                    temp->state_ = Fault::UD;
                     faults_.push_back(temp);
                 }
             }
@@ -47,6 +47,7 @@ void FaultListExtract::extract(Circuit *cir) {
                 faults_.push_back(new Fault(i, Fault::SA0, j + 1));
                 faults_.push_back(new Fault(i, Fault::SA1, j + 1));
             }
+            /** not considered so far... 
             if (cir->gates_[i].type_ == Gate::PPI) {
                 temp = new Fault(i, Fault::SA0, -1); //CK
                 temp->state_ = Fault::DT;
@@ -58,7 +59,7 @@ void FaultListExtract::extract(Circuit *cir) {
                 temp->state_ = Fault::DT;
                 faults_.push_back(temp);
                 temp = new Fault(i, Fault::SA0, -4); //QN
-                temp->state_ = Fault::UD;
+                temp->state_ = Fault::DT;
                 faults_.push_back(temp);
                 temp = new Fault(i, Fault::SA1, -1); //CK
                 temp->state_ = Fault::DT;
@@ -70,11 +71,12 @@ void FaultListExtract::extract(Circuit *cir) {
                 temp->state_ = Fault::DT;
                 faults_.push_back(temp);
                 temp = new Fault(i, Fault::SA1, -4); //QN
-                temp->state_ = Fault::UD;
+                temp->state_ = Fault::DT;
                 faults_.push_back(temp);
-            }
+            } */ 
         }
 
+/** not considered so far... 
 // HYH try to fix the fault number @20141121
 
     for (size_t i = 0; i < cir->nl_->getTop()->getNPort(); ++i) {
@@ -109,7 +111,7 @@ void FaultListExtract::extract(Circuit *cir) {
             faults_.push_back(temp);
         }
 
-    }
+    } */ 
 //
     }// end of stuck-at fault
 	// for transition fault

@@ -28,6 +28,8 @@ void AtpgMgr::generation() {
     FaultListIter fit = fListExtract_->current_.begin(); 
     for (; fit!=fListExtract_->current_.end(); ++fit) { 
         Fault *f = *fit; 
+        if (f->state_==Fault::DT) 
+            continue; 
         atpg_ = new Atpg(cir_, f); 
         Atpg::GenStatus ret = atpg_->Tpg(); 
 

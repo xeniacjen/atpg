@@ -140,7 +140,7 @@ bool Atpg::Backtrace() {
             int ctr_ablility = INT_MAX; 
             for (size_t n=0; n<g->nfi_; n++ ) { 
                 if (impl_->GetVal(g->fis_[n])==X 
-                    && cir_->gates_[g->fis_[n]].lvl_> ctr_ablility) { 
+                    && cir_->gates_[g->fis_[n]].lvl_<ctr_ablility) { 
                     gnext = &cir_->gates_[g->fis_[n]]; 
                     ctr_ablility = cir_->gates_[g->fis_[n]].lvl_; 
                 }
