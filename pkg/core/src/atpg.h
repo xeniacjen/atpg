@@ -19,7 +19,7 @@
 #ifndef _CORE_ATPG_H_ 
 #define _CORE_ATPG_H_ 
 
-#define _MAX_BACK_TRACK_LIMIT_   256
+#define _MAX_BACK_TRACK_LIMIT_  32
 
 #include "implicator.h" 
 
@@ -35,7 +35,7 @@ public:
         ~Atpg(); 
 
     GenStatus Tpg(); 
-    void      GetPattern(Pattern *p); 
+    void      GetPiPattern(Pattern *p); 
 
 private: 
     bool isTestPossible(); 
@@ -72,9 +72,8 @@ inline Atpg::~Atpg() {
     delete impl_; 
 }
 
-inline void Atpg::GetPattern(Pattern *p) { 
+inline void Atpg::GetPiPattern(Pattern *p) { 
     impl_->GetPiPattern(p);    
-    impl_->GetPoPattern(p);    
 }
 }; //CoreNs 
 

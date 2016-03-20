@@ -31,13 +31,15 @@ public:
     AtpgMgr();  
     ~AtpgMgr();  
 
-    void generation(); 
+    void                generation(); 
     
     FaultListExtract    *fListExtract_;
     PatternProcessor    *pcoll_;
     Circuit             *cir_;
     Simulator           *sim_;
 private: 
+    void                getPoPattern(Pattern *pat);  
+
     Atpg                *atpg_; 
 
     //AtpgVec             atpgs_; 

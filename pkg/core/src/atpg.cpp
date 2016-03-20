@@ -29,14 +29,14 @@ Atpg::GenStatus Atpg::Tpg() {
     while (true) { 
         if (isTestPossible()) { 
             Backtrace(); // Make a decision 
-            Imply(); 
-            if (isaTest()) { 
-                return TEST_FOUND; 
-            }
         } 
         else { 
             if(!BackTrack()) 
                 return (back_track_count>=back_track_limit)?ABORT:UNTESTABLE; 
+        }
+        Imply(); 
+        if (isaTest()) { 
+            return TEST_FOUND; 
         }
     }
 }
@@ -166,17 +166,12 @@ bool Atpg::Backtrace() {
         g = gnext; 
     }
 
-    if (!impl_->SetVal(g->id_, objv)) return false; 
-    if (current_fault_->gate_==g->id_) 
-        impl_->PushEvent(g->id_); 
-    else 
-        impl_->PushFanoutEvent(g->id_); 
-
-    return true; 
+    return impl_->MakeDecision(g, objv); 
 }
 
 bool Atpg::BackTrack() { 
-    // TODO 
-    
-    return false; 
+    back_track_count++; 
+    if (back_track_count>=back_track_limit) return false; 
+
+    return impl_->BackTrack(); 
 }

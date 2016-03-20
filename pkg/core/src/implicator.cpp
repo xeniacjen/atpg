@@ -34,7 +34,8 @@ bool Implicator::EventDrivenSim() {
             v = (g->id_==target_fault_->gate_)?FaultEval(g):GoodEval(g); 
 
             if (GetVal(g->id_)!=v) { 
-                values_[g->id_] = v; 
+                if (!SetVal(g->id_, v)) return false; 
+                e_front_list_.push_back(g->id_); 
                 PushFanoutEvent(g->id_); 
             }
         }
@@ -181,4 +182,48 @@ void Implicator::GetDFrontier(GateVec& df) const {
             }
         }
     }
+}
+
+
+bool Implicator::MakeDecision(Gate *g, Value v) {
+    if (!SetVal(g->id_, v)) return false; 
+
+    decision_tree_.put(g->id_, e_front_list_.size()); 
+    e_front_list_.push_back(g->id_); 
+
+    if (target_fault_->gate_==g->id_) 
+        PushEvent(g->id_); 
+    else 
+        PushFanoutEvent(g->id_); 
+    return true; 
+}
+
+bool Implicator::BackTrack() {
+    int gid = -1; 
+    unsigned back_track_point = 0; 
+
+    while (!decision_tree_.empty()) { // while decision tree is not empty 
+        if (decision_tree_.get(gid, back_track_point)) // while last node is flagged  
+            continue; 
+
+        Value flipped_val; 
+        if (GetVal(gid)==D) flipped_val = L; 
+        else if (GetVal(gid)==B) flipped_val = H; 
+        else if (GetVal(gid)==X) assert(0); 
+        else flipped_val = EvalNot(GetVal(gid)); 
+
+        for (int i=back_track_point+1; i<e_front_list_.size(); i++) 
+            values_[e_front_list_[i]] = X; 
+
+        e_front_list_.resize(back_track_point+1); 
+        values_[gid] = flipped_val; 
+
+        if (target_fault_->gate_==gid) 
+            PushEvent(gid); 
+        else 
+            PushFanoutEvent(gid); 
+        return true; 
+    }
+
+    return false; 
 }

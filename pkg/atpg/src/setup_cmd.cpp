@@ -5,6 +5,8 @@
 // Date       [ 2011/08/30 created ]
 // **************************************************************************
 
+#include <cstdlib>
+
 #include "interface/netlist_builder.h"
 #include "interface/techlib_builder.h"
 

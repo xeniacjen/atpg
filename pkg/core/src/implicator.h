@@ -21,6 +21,7 @@
 
 #include <queue> 
 
+#include "decision_tree.h"
 #include "pattern.h"
 
 namespace CoreNs {
@@ -38,7 +39,8 @@ public:
     void PushFanoutEvent(int gid); 
     void PushEvent(int gid); 
 
-  //bool MakeDecision(); 
+    bool MakeDecision(Gate *g, Value v); 
+    bool BackTrack(); 
 
     Value GetVal(int gid) const; 
     bool  SetVal(int gid, Value v); 
@@ -60,6 +62,8 @@ private:
     Value           *values_; 
     std::queue<int> *events_; 
 
+    DecisionTree    decision_tree_; 
+    std::vector<int> e_front_list_; 
 }; // Implicator 
 
 inline Implicator::Implicator(Circuit *cir, Fault *ftarget) {
