@@ -25,19 +25,22 @@ using namespace std;
 using namespace CoreNs; 
 
 bool Implicator::EventDrivenSim() {
-    for (int l=0; l<cir_->tlvl_; l++) { 
-        while (!events_[l].empty()) { 
-            Gate *g = &cir_->gates_[events_[l].front()]; 
-            events_[l].pop(); 
+    while (!events_->empty()) { 
+        Gate *g = &cir_->gates_[events_->front()]; 
+        events_->pop(); 
 
-            Value v; 
-            v = (g->id_==target_fault_->gate_)?FaultEval(g):GoodEval(g); 
+        Value v; 
+        v = (g->id_==target_fault_->gate_)?FaultEval(g):GoodEval(g); 
 
-            if (GetVal(g->id_)!=v) { 
-                if (!SetVal(g->id_, v)) return false; 
-                e_front_list_.push_back(g->id_); 
-                PushFanoutEvent(g->id_); 
+        if (GetVal(g->id_)!=v) { 
+            if (!SetVal(g->id_, v)) { 
+                if (g->id_==target_fault_->gate_)
+                    values_[g->id_] = v; 
+                else 
+                    assert(0); 
             }
+            e_front_list_.push_back(g->id_); 
+            PushFanoutEvent(g->id_); 
         }
     }
     return true; 
@@ -150,7 +153,7 @@ Value Implicator::FaultEval(Gate *g) const {
 }
 
 void Implicator::PushEvent(int gid) {
-    events_[cir_->gates_[gid].lvl_].push(gid); 
+    events_->push(gid); 
 }
 
 void Implicator::PushFanoutEvent(int gid) {
@@ -184,9 +187,9 @@ void Implicator::GetDFrontier(GateVec& df) const {
     }
 }
 
-
 bool Implicator::MakeDecision(Gate *g, Value v) {
-    if (!SetVal(g->id_, v)) return false; 
+    // if (!SetVal(g->id_, v)) return false; 
+    if (!SetVal(g->id_, v)) assert(0); 
 
     decision_tree_.put(g->id_, e_front_list_.size()); 
     e_front_list_.push_back(g->id_); 
@@ -203,7 +206,7 @@ bool Implicator::BackTrack() {
     unsigned back_track_point = 0; 
 
     while (!decision_tree_.empty()) { // while decision tree is not empty 
-        if (decision_tree_.get(gid, back_track_point)) // while last node is flagged  
+        if (decision_tree_.get(gid, back_track_point)) // while last node is flagged 
             continue; 
 
         Value flipped_val; 

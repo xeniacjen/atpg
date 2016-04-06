@@ -389,6 +389,8 @@ bool ReportFaultCmd::exec(const vector<string> &argv) {
             state = Fault::RE;
         else if (stateStr == "ab" || stateStr == "AB")
             state = Fault::AB;
+        else if (stateStr == "pt" || stateStr == "PT")
+            state = Fault::PT;
         else {
             stateSet = true;
             cerr << "**WARN ReportFaultCmd::exec(): fault state `";

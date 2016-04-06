@@ -38,7 +38,9 @@ void AtpgMgr::generation() {
             break; 
 
         if (f==flist.front()) { 
-            assert(0); // shouldn't reach here
+            // assert(0); // shouldn't reach here
+            f->state_ = Fault::PT; 
+            flist.pop_front(); 
         }
 
         f = flist.front();  

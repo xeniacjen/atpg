@@ -71,12 +71,12 @@ inline Implicator::Implicator(Circuit *cir, Fault *ftarget) {
     target_fault_ = ftarget;     
 
     values_ = new Value [cir_->tgate_]; 
-    events_ = new std::queue<int> [cir_->tlvl_]; 
+    events_ = new std::queue<int>();  
 }
 
 inline Implicator::~Implicator() {
     delete [] values_; 
-    delete [] events_; 
+    delete    events_; 
 } 
 
 inline void Implicator::Init() {
