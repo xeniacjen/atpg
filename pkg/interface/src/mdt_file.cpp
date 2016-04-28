@@ -12,11 +12,11 @@
 using namespace std;
 using namespace IntfNs;
 
-bool MdtFile::read(const char * const fname, const bool &verbose) {
-    extern int mdt_fileparse(void *);
-    extern int mdt_filewarning;
-    extern FILE *mdt_filein;
+extern int mdt_fileparse(void *);
+extern int mdt_filewarning;
+extern FILE *mdt_filein;
 
+bool MdtFile::read(const char * const fname, const bool &verbose) {
     verbose_ = verbose;
 
     if (verbose_)
@@ -41,7 +41,6 @@ bool MdtFile::read(const char * const fname, const bool &verbose) {
 
     return success_;
 }
-
 
 void MdtFile::addModel(const char * const name) {
     if (verbose_)

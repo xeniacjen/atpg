@@ -12,10 +12,10 @@
 using namespace std;
 using namespace IntfNs;
 
-bool LhtPatFile::read(const char * const fname, const bool &verbose) {
-    extern int lht_pat_fileparse(void *);
-    extern FILE *lht_pat_filein;
+extern int lht_pat_fileparse(void *);
+extern FILE *lht_pat_filein;
 
+bool LhtPatFile::read(const char * const fname, const bool &verbose) {
     verbose_ = verbose;
     lht_pat_filein = fopen(fname, "r");
     if (!lht_pat_filein) {

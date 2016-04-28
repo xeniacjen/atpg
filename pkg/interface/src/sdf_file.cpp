@@ -12,10 +12,10 @@
 using namespace std;
 using namespace IntfNs;
 
-bool SdfFile::read(const char * const fname, const bool &verbose) {
-    extern int sdf_fileparse(void *);
-    extern FILE *sdf_filein;
+extern int sdf_fileparse(void *);
+extern FILE *sdf_filein;
 
+bool SdfFile::read(const char * const fname, const bool &verbose) {
     verbose_ = verbose;
     sdf_filein = fopen(fname, "r");
     if (!sdf_filein) {

@@ -5,6 +5,7 @@
 // Date       [ Ver. 2.0 started 2010/07/01 ]
 // **************************************************************************
 
+#include <unistd.h>
 #include <cstdlib>
 #include <fstream>
 

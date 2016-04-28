@@ -12,10 +12,10 @@
 using namespace std;
 using namespace IntfNs;
 
-bool VlogFile::read(const char * const fname, const bool &verbose) {
-    extern int vlog_fileparse(void *);
-    extern FILE *vlog_filein;
+extern int vlog_fileparse(void *);
+extern FILE *vlog_filein;
 
+bool VlogFile::read(const char * const fname, const bool &verbose) {
     verbose_ = verbose;
     vlog_filein = fopen(fname, "r");
     if (!vlog_filein) {
