@@ -124,9 +124,9 @@ void printWelcome() {
         fclose(meminfo);
     }
 
-    cout << "#  Note:     ";
-    cout << "UI, including COMMON & INTERFACE package, is" << endl; 
-    cout << "#            in the courtesy of LaDS(II)" << endl; 
+    // cout << "#  Note:     ";
+    // cout << "UI, including COMMON & INTERFACE package, is" << endl; 
+    // cout << "#            in the courtesy of LaDS(II)" << endl; 
 
     cout << "#" << endl;
 }

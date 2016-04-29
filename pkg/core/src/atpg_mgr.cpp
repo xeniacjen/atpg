@@ -34,12 +34,63 @@ void AtpgMgr::generation() {
             flist.pop_front(); 
             continue; 
         }
-        if (flist.front()->state_==Fault::AB) 
+        // if (flist.front()->state_==Fault::AB) 
+        if (flist.front()->state_==Fault::AB || flist.front()->state_==Fault::PT) 
             break; 
 
         if (f==flist.front()) { 
             // assert(0); // shouldn't reach here
+            #if MODE == dbg
+            cout << "#  " << f->gate_ << " s-a-";  
+            cout << f->type_ << endl;
+            cout << "#    pi order: ";
+            for (int i = 0; i < pcoll_->npi_; ++i)
+                cout << " " << pcoll_->piOrder_[i];
+            cout << endl;
+            cout << "#    ppi order:";
+            for (int i = 0; i < pcoll_->nppi_; ++i)
+                cout << " " << pcoll_->ppiOrder_[i];
+            cout << endl;
+            cout << "#    po order: ";
+            for (int i = 0; i < pcoll_->npo_; ++i)
+                cout << " " << pcoll_->poOrder_[i];
+            cout << endl;
+
+            cout << "#" << endl;
+
+            cout << "#      pi1: ";
+            if (pcoll_->pats_.back()->pi1_)
+                for (int j = 0; j < pcoll_->npi_; ++j)
+                    printValue(pcoll_->pats_.back()->pi1_[j]);
+            cout << endl;
+            cout << "#      pi2: ";
+            if (pcoll_->pats_.back()->pi2_)
+                for (int j = 0; j < pcoll_->npi_; ++j)
+                    printValue(pcoll_->pats_.back()->pi2_[j]);
+            cout << endl;
+            cout << "#      ppi: ";
+            if (pcoll_->pats_.back()->ppi_)
+                for (int j = 0; j < pcoll_->nppi_; ++j)
+                    printValue(pcoll_->pats_.back()->ppi_[j]);
+            cout << endl;
+            cout << "#      po1: ";
+            if (pcoll_->pats_.back()->po1_)
+                for (int j = 0; j < pcoll_->npo_; ++j)
+                    printValue(pcoll_->pats_.back()->po1_[j]);
+            cout << endl;
+            cout << "#      po2: ";
+            if (pcoll_->pats_.back()->po2_)
+                for (int j = 0; j < pcoll_->npo_; ++j)
+                    printValue(pcoll_->pats_.back()->po2_[j]);
+            cout << endl;
+            cout << "#      ppo: ";
+            if (pcoll_->pats_.back()->ppo_)
+                for (int j = 0; j < pcoll_->nppi_; ++j)
+                    printValue(pcoll_->pats_.back()->ppo_[j]);
+            cout << endl << "#" << endl;
+            #endif 
             f->state_ = Fault::PT; 
+            flist.push_back(flist.front()); 
             flist.pop_front(); 
         }
 

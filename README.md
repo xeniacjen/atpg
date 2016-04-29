@@ -1,5 +1,5 @@
 
-LaDS                        ATPG v2013                         SEP 2013
+LaDS(I)                     ATPG SYSTEM v2016                   FEB 2016
 
 
 CONTENTS
@@ -18,8 +18,8 @@ I.      INTRODUCTION
 
 II.     DIRECTORY STRUCTURE
 
-    Main files: pkg/core
-    Fan's commands files: pkg/fan
+    ATPG package: pkg/core
+    atpg's commands files: pkg/atpg
     Interface files: pkg/interface
     Commands, options and arguments manager files: pkg/common
     Circuit files: netlist
@@ -43,14 +43,20 @@ III.    USAGE
 
 IV.     REVISION HISTORY
 
-    v2013 - Initial release.
+    v2016 - Initial release.
 
 
 V.      Author
+    
+    The tool is currently under construction and managed by J.Y.Chen 
+    (xenia-cjen). Any suggestions and comments are welcomed.
 
-    Hsu Po-Ya, Chen Yu-Chen
-    Han Cheng-You, Chen Ching-Yu, Chiang Kuan-Ying, Wang Ying-Hsu, Chen Po-Hao, Lin Kuo-Yu, Pan Chun-Han, Li Chia-An, Tsai Chia-Ling, Hsu Ling-Yun
+    - e-mail: jonah0604@gmail.com
+    - github: https://github.com/xenia-cjen
+
+    Note: UI, including COMMON & INTERFACE package, is in the courtesy 
+	  of LaDS(II). 
 
 
-Copyright (c) 2013 LaDS. All Rights Reserved.
+Copyright (c) 2016 LaDS. All Rights Reserved.
 
