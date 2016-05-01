@@ -113,6 +113,7 @@ bool Atpg::DDrive() {
             observ = dfront[i]->lvl_; 
         }
 
+    assert(gtoprop->isUnary()==L); 
     current_obj_.first = gtoprop->id_; 
     current_obj_.second = EvalNot(gtoprop->getOutputCtrlValue()); 
 

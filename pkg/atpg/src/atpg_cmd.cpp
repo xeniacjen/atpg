@@ -123,54 +123,10 @@ bool ReportPatCmd::exec(const vector<string> &argv) {
     cout << "#  pattern information" << endl;
     cout << "#    number of pattern: " << fanMgr_->atpg_mgr->pcoll_->pats_.size() << endl;
     if (!optMgr_.isFlagSet("disable-order")) {
-        cout << "#    pi order: ";
-        for (int i = 0; i < fanMgr_->atpg_mgr->pcoll_->npi_; ++i)
-            cout << " " << fanMgr_->atpg_mgr->pcoll_->piOrder_[i];
-        cout << endl;
-        cout << "#    ppi order:";
-        for (int i = 0; i < fanMgr_->atpg_mgr->pcoll_->nppi_; ++i)
-            cout << " " << fanMgr_->atpg_mgr->pcoll_->ppiOrder_[i];
-        cout << endl;
-        cout << "#    po order: ";
-        for (int i = 0; i < fanMgr_->atpg_mgr->pcoll_->npo_; ++i)
-            cout << " " << fanMgr_->atpg_mgr->pcoll_->poOrder_[i];
-        cout << endl;
+        fanMgr_->atpg_mgr->pcoll_->PrintPorts(); 
     }
     cout << "#" << endl;
-
-    for (int i = 0; i < (int)fanMgr_->atpg_mgr->pcoll_->pats_.size(); ++i) {
-        cout << "#    pattern " << i << endl;
-        cout << "#      pi1: ";
-        if (fanMgr_->atpg_mgr->pcoll_->pats_[i]->pi1_)
-            for (int j = 0; j < fanMgr_->atpg_mgr->pcoll_->npi_; ++j)
-                printValue(fanMgr_->atpg_mgr->pcoll_->pats_[i]->pi1_[j]);
-        cout << endl;
-        cout << "#      pi2: ";
-        if (fanMgr_->atpg_mgr->pcoll_->pats_[i]->pi2_)
-            for (int j = 0; j < fanMgr_->atpg_mgr->pcoll_->npi_; ++j)
-                printValue(fanMgr_->atpg_mgr->pcoll_->pats_[i]->pi2_[j]);
-        cout << endl;
-        cout << "#      ppi: ";
-        if (fanMgr_->atpg_mgr->pcoll_->pats_[i]->ppi_)
-            for (int j = 0; j < fanMgr_->atpg_mgr->pcoll_->nppi_; ++j)
-                printValue(fanMgr_->atpg_mgr->pcoll_->pats_[i]->ppi_[j]);
-        cout << endl;
-        cout << "#      po1: ";
-        if (fanMgr_->atpg_mgr->pcoll_->pats_[i]->po1_)
-            for (int j = 0; j < fanMgr_->atpg_mgr->pcoll_->npo_; ++j)
-                printValue(fanMgr_->atpg_mgr->pcoll_->pats_[i]->po1_[j]);
-        cout << endl;
-        cout << "#      po2: ";
-        if (fanMgr_->atpg_mgr->pcoll_->pats_[i]->po2_)
-            for (int j = 0; j < fanMgr_->atpg_mgr->pcoll_->npo_; ++j)
-                printValue(fanMgr_->atpg_mgr->pcoll_->pats_[i]->po2_[j]);
-        cout << endl;
-        cout << "#      ppo: ";
-        if (fanMgr_->atpg_mgr->pcoll_->pats_[i]->ppo_)
-            for (int j = 0; j < fanMgr_->atpg_mgr->pcoll_->nppi_; ++j)
-                printValue(fanMgr_->atpg_mgr->pcoll_->pats_[i]->ppo_[j]);
-        cout << endl << "#" << endl;
-    }
+    fanMgr_->atpg_mgr->pcoll_->PrintPatterns(); 
 
     return true;
 } //}}}

@@ -8,9 +8,12 @@
 #ifndef _CORE_PATTERN_H_
 #define _CORE_PATTERN_H_
 
+#include <iostream>
 #include <vector>
 #include "circuit.h"
 #include "fault.h"
+
+using namespace std; 
 
 namespace CoreNs {
 
@@ -67,12 +70,17 @@ public:
     int        nsi_;
     int        npo_;
     PatternVec pats_;
+    // for debug 
+    PatternVec pats_dbg;
     int        *piOrder_;
     int        *ppiOrder_;
     int        *poOrder_;
 
     void       init(Circuit *cir);
 	void 	   StaticCompression();
+    void       PrintPorts() const; 
+    void       PrintPatterns() const; 
+    void       PrintPattern(unsigned i) const; 
 };
 
 
@@ -116,6 +124,7 @@ inline PatternProcessor::~PatternProcessor() {
     if (pats_.size() > 0)
         delete [] pats_[0];
     pats_.clear();
+    pats_dbg.clear();
     delete [] piOrder_;
     delete [] ppiOrder_;
     delete [] poOrder_;
@@ -145,6 +154,63 @@ inline void PatternProcessor::init(Circuit *cir) {
     for (int i = 0; i < nppi_; ++i)
         ppiOrder_[i] = cir->npi_ + i;
 }
+
+
+inline void PatternProcessor::PrintPorts() const {
+    cout << "#    pi order: ";
+    for (int i = 0; i < npi_; ++i)
+        cout << " " << piOrder_[i];
+    cout << endl;
+    cout << "#    ppi order:";
+    for (int i = 0; i < nppi_; ++i)
+        cout << " " << ppiOrder_[i];
+    cout << endl;
+    cout << "#    po order: ";
+    for (int i = 0; i < npo_; ++i)
+        cout << " " << poOrder_[i];
+    cout << endl;
+} 
+
+inline void PatternProcessor::PrintPatterns() const {
+    for (int i = 0; i < (int)pats_.size(); ++i) {
+        cout << "#    pattern " << i << endl;
+        PrintPattern(i); 
+        cout << endl << "#" << endl;
+    }
+} 
+
+inline void PatternProcessor::PrintPattern(unsigned i) const {
+    cout << "#      pi1: ";
+    if (pats_[i]->pi1_)
+        for (int j = 0; j < npi_; ++j)
+            printValue(pats_[i]->pi1_[j]);
+    cout << endl;
+    cout << "#      pi2: ";
+    if (pats_[i]->pi2_)
+        for (int j = 0; j < npi_; ++j)
+            printValue(pats_[i]->pi2_[j]);
+    cout << endl;
+    cout << "#      ppi: ";
+    if (pats_[i]->ppi_)
+        for (int j = 0; j < nppi_; ++j)
+            printValue(pats_[i]->ppi_[j]);
+    cout << endl;
+    cout << "#      po1: ";
+    if (pats_[i]->po1_)
+        for (int j = 0; j < npo_; ++j)
+            printValue(pats_[i]->po1_[j]);
+    cout << endl;
+    cout << "#      po2: ";
+    if (pats_[i]->po2_)
+        for (int j = 0; j < npo_; ++j)
+            printValue(pats_[i]->po2_[j]);
+    cout << endl;
+    cout << "#      ppo: ";
+    if (pats_[i]->ppo_)
+        for (int j = 0; j < nppi_; ++j)
+            printValue(pats_[i]->ppo_[j]);
+} 
+
 // **************************************************************************
 // Function   [ PatternProcessor::StaticCompression ]
 // Commentor  [ HKY CYW ]

@@ -19,7 +19,7 @@
 #ifndef _CORE_ATPG_H_ 
 #define _CORE_ATPG_H_ 
 
-#define _MAX_BACK_TRACK_LIMIT_  32
+#define _MAX_BACK_TRACK_LIMIT_  0 
 
 #include "implicator.h" 
 
