@@ -39,12 +39,39 @@ void AtpgMgr::generation() {
             break; 
 
         if (f==flist.front()) { 
-            // assert(0); // shouldn't reach here
-            cout << "#  " << f->gate_ << " s-a-";  
-            cout << f->type_ << endl;
+            Gate *g = &cir_->gates_[f->gate_];
+            cout << "#  ";
+            cout << "id(" << f->gate_ << ") ";
+            cout << "lvl(" << g->lvl_ << ") ";
+            cout << "type(" << g->type_ << ") ";
+            cout << "SA" << f->type_; 
+            cout << endl;
+            cout << "#    fi[" << g->nfi_ << "]";
+            for (int j = 0; j < g->nfi_; ++j)
+                cout << " " << g->fis_[j];
+            cout << endl;
+            cout << "#    fo[" << g->nfo_ << "]";
+            for (int j = 0; j < g->nfo_; ++j)
+                cout << " " << g->fos_[j];
+
+            atpg_ = new Atpg(cir_, f); 
+
+            FaultList fl; fl.push_back(f); 
+            sim_->pfFaultSim(pcoll_->pats_.back(), fl); 
+
+            cout << "#    good:   ";
+            printValue(g->gl_, g->gh_);
+            cout << endl;
+            cout << "#    faulty: ";
+            printValue(g->fl_, g->fh_);
+            cout << endl;
+            cout << endl;
+
             f->state_ = Fault::PT; 
             flist.push_back(flist.front()); 
             flist.pop_front(); 
+            
+            delete atpg_; 
         }
 
         f = flist.front();  
@@ -59,6 +86,10 @@ void AtpgMgr::generation() {
 		    p->ppo_ = new Value[cir_->nppi_];
 		    pcoll_->pats_.push_back(p);
             atpg_->GetPiPattern(p); 
+
+		if ((pcoll_->staticCompression_ == PatternProcessor::OFF) && (pcoll_->XFill_ == PatternProcessor::ON)){
+			pcoll_->randomFill(pcoll_->pats_.back());
+		}
 
             sim_->pfFaultSim(pcoll_->pats_.back(), flist); 
             getPoPattern(pcoll_->pats_.back()); 

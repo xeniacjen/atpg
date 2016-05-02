@@ -28,24 +28,17 @@ void FaultListExtract::extract(Circuit *cir) {
             gateToFault_[i] = faults_.size();
 			// extract fault of gate outputs 
 			// but do not extract faults between two time frames
-            if (cir->gates_[i].nfo_ > 0 && i < cir->ngate_ - cir->nppi_) {
-                if(cir->gates_[i].type_ != Gate::PPI) {
+            //if (cir->gates_[i].nfo_ > 0 && i < cir->ngate_ - cir->nppi_) {
+            if (cir->gates_[i].nfo_ > 0 && i < cir->npi_ + cir->nppi_) {
                     faults_.push_back(new Fault(i, Fault::SA0, 0));
                     faults_.push_back(new Fault(i, Fault::SA1, 0));
-                }
-                else {
-                    temp = new Fault(i, Fault::SA0, 0); //Q
-                    temp->state_ = Fault::UD;
-                    faults_.push_back(temp);
-                    temp = new Fault(i, Fault::SA1, 0); //Q
-                    temp->state_ = Fault::UD;
-                    faults_.push_back(temp);
-                }
             }
 			// extract faults of gate inputs
             for (int j = 0; j < cir->gates_[i].nfi_; ++j) {
-                faults_.push_back(new Fault(i, Fault::SA0, j + 1));
-                faults_.push_back(new Fault(i, Fault::SA1, j + 1));
+                if (cir->gates_[cir->gates_[i].fis_[j]].nfo_>1) { 
+                    faults_.push_back(new Fault(i, Fault::SA0, j + 1));
+                    faults_.push_back(new Fault(i, Fault::SA1, j + 1));
+                }
             }
             /** not considered so far... 
             if (cir->gates_[i].type_ == Gate::PPI) {

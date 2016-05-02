@@ -147,6 +147,8 @@ inline Value Gate::getOutputCtrlValue() const {
         case NAND3:
         case NAND4:
             return L;
+        case PI: 
+        case PPI: 
         case INV: 
         case BUF: 
         case PO: 

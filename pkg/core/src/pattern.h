@@ -8,6 +8,7 @@
 #ifndef _CORE_PATTERN_H_
 #define _CORE_PATTERN_H_
 
+#include <cstdlib>
 #include <iostream>
 #include <vector>
 #include "circuit.h"
@@ -81,6 +82,8 @@ public:
     void       PrintPorts() const; 
     void       PrintPatterns() const; 
     void       PrintPattern(unsigned i) const; 
+
+    void       randomFill(Pattern* pat);  
 };
 
 
@@ -324,6 +327,24 @@ inline void PatternProcessor::StaticCompression()
 		}
 	}
 	pats_ = compPattern;
+
+}
+
+inline void PatternProcessor::randomFill(Pattern *pat){
+    srand(0);
+    for( int i = 0 ; i < npi_ ; i++ )
+        if( pat->pi1_[i] == X )
+            pat->pi1_[i] = rand()%2;
+    for( int i = 0 ; i < nppi_ ; i++ )
+        if( pat->ppi_[i] == X )
+            pat->ppi_[i] = rand()%2;
+	if(pat->pi2_!=NULL)
+		for( int i = 0 ; i < npi_ ; i++ )
+			if( pat->pi2_[i] == X )
+				pat->pi2_[i] = rand()%2;
+	if(pat->si_!=NULL)
+		if( pat->si_[0] == X )
+			pat->si_[0] = rand()%2;
 
 }
 

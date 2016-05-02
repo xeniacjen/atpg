@@ -84,7 +84,7 @@ bool Atpg::FaultActivate() { // TODO: TDF support
         }
         else { 
             Value objv = EvalNot(fg->getOutputCtrlValue()); 
-            if (objv==X) return true; //NOT, PO, PPO, TODO: XOR, XNOR
+            if (objv==X) assert(0); //NOT, PO, PPO, TODO: XOR, XNOR
             current_obj_.first = fg->id_; 
             current_obj_.second = objv; 
             return true; 
@@ -105,6 +105,9 @@ bool Atpg::DDrive() {
 
     if (dfront.size()==0) return false; 
 
+    Gate *fg = &cir_->gates_[current_fault_->gate_]; 
+    assert(impl_->GetVal(fg->id_)==D || impl_->GetVal(fg->id_)==B); 
+    
     Gate *gtoprop = NULL; 
     int observ = INT_MIN; 
     for (size_t i=0; i<dfront.size(); i++) 
@@ -126,10 +129,11 @@ bool Atpg::Backtrace() {
     while (!(g->type_==Gate::PI 
         || g->type_==Gate::PPI)) { // while objective net not fed by P/PI 
         
-        if (g->getOutputCtrlValue()==X) { //NOT, TODO: XOR, XNOR 
+        if (g->getOutputCtrlValue()==X) { //NOT, BUF, TODO: XOR, XNOR 
             if (g->type_==Gate::INV) 
                 objv = EvalNot(objv); 
             g = &cir_->gates_[g->fis_[0]]; 
+            assert(impl_->GetVal(g->id_)==X); 
             continue; 
         } 
 
