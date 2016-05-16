@@ -29,9 +29,30 @@ bool Implicator::EventDrivenSim() {
         Gate *g = &cir_->gates_[events_->front()]; 
         events_->pop(); 
 
-        Value v; 
+        Value v, v1, v2; 
         v = (g->id_==target_fault_->gate_)?FaultEval(g):GoodEval(g); 
+        sim_->goodEval(g->id_); 
+    
+        if (v==D || v==B) 
+            v1 = (v==D)?H:L;
+        else 
+            v1 = v;
 
+        if (g->gl_!=PARA_L) v2 = L; 
+        else if (g->gh_!=PARA_L) v2 = H; 
+        else v2 = X; 
+/* 
+        if (v1!=v2) {
+            cout << "\n----------------------------------------------------------------\n"; 
+            cout << "Mismatch Found: \n"; 
+            cout << "----------------------------------------------------------------\n"; 
+            PrintGate(g->id_); 
+            printValue(v); cout << " =/= "; 
+            printValue(g->gl_, g->gh_); cout << endl;  
+            cout << "----------------------------------------------------------------\n"; 
+            v = v2; 
+        }
+   */     
         if (GetVal(g->id_)!=v) { 
             if (!SetVal(g->id_, v)) { 
                 if (g->id_==target_fault_->gate_)
@@ -191,6 +212,9 @@ bool Implicator::MakeDecision(Gate *g, Value v) {
     // if (!SetVal(g->id_, v)) return false; 
     assert(g->type_==Gate::PI || g->type_==Gate::PPI); 
     if (!SetVal(g->id_, v)) assert(0); 
+
+    if (v==L) g->gl_ = PARA_H; 
+    else if (v==H) g->gh_ = PARA_H; 
 
     decision_tree_.put(g->id_, e_front_list_.size()); 
     e_front_list_.push_back(g->id_); 

@@ -26,24 +26,8 @@ using namespace std;
 using namespace CoreNs; 
 
 Atpg::GenStatus Atpg::Tpg() { 
-    if (atpg_debug) {
-        cout << "\n################################################################\n"; 
-        cout << "Target Fault: \n"; 
-        cout << "################################################################\n"; 
-        cir_->gates_[current_fault_->gate_].print();
-        current_fault_->print(); 
-        cout << "################################################################\n"; 
-    }
-
     while (true) { 
         if (isTestPossible()) { 
-            // if (atpg_debug) { 
-                // cir_->gates_[current_obj_.first].print(); 
-                // cout << "Set to "; 
-                // printValue(current_obj_.second); 
-                // cout << endl; 
-                // atpg_pause(); 
-            // }
             Backtrace(); // Make a decision 
         } 
         else { 
@@ -80,7 +64,7 @@ void Atpg::init() {
     back_track_limit = _MAX_BACK_TRACK_LIMIT_; 
 
     // debug 
-    atpg_debug = false; 
+    // atpg_debug = false; 
 
     impl_->Init(); 
 }
@@ -102,7 +86,7 @@ bool Atpg::FaultActivate() { // TODO: TDF support
             current_obj_.second = objv; 
         }
         else { 
-            Value objv = EvalNot(fg->getOutputCtrlValue()); 
+            Value objv = fg->getOutputCtrlValue(); 
             if (objv==X) assert(0); //NOT, PO, PPO, TODO: XOR, XNOR
             current_obj_.first = fg->id_; 
             current_obj_.second = objv; 
@@ -137,7 +121,7 @@ bool Atpg::DDrive() {
 
     assert(gtoprop->isUnary()==L); 
     current_obj_.first = gtoprop->id_; 
-    current_obj_.second = EvalNot(gtoprop->getOutputCtrlValue()); 
+    current_obj_.second = gtoprop->getOutputCtrlValue(); 
 
     return true; 
 }
@@ -157,7 +141,7 @@ bool Atpg::Backtrace() {
         } 
 
         Gate *gnext = NULL; 
-        if (objv==g->getOutputCtrlValue()) { // if objv is easy to set 
+        if (objv==EvalNot(g->getOutputCtrlValue())) { // if objv is easy to set 
             // choose input of "g" which 
             //  1) is at X 
             //  2) is easiest to control 
@@ -170,7 +154,7 @@ bool Atpg::Backtrace() {
                 }
             }
         }
-        else if (objv==EvalNot(g->getOutputCtrlValue())) { // is objv is hard to set 
+        else if (objv==g->getOutputCtrlValue()) { // is objv is hard to set
             // choose input of "g" which 
             //  1) is at X 
             //  2) is hardest to control 

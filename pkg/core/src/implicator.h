@@ -23,6 +23,7 @@
 
 #include "decision_tree.h"
 #include "pattern.h"
+#include "simulator.h"
 
 namespace CoreNs {
 
@@ -46,6 +47,8 @@ public:
     Value Get3Val(int gid) const; 
     bool  SetVal(int gid, Value v); 
 
+    void PrintGate(int gid) const; 
+
     void GetDFrontier(GateVec& df) const; 
 
     bool IsFaultAtPo() const; 
@@ -58,6 +61,8 @@ private:
     Value           FaultEval(Gate* g) const; 
 
     Circuit         *cir_; 
+    Simulator       *sim_;  
+
     Fault           *target_fault_; 
 
     Value           *values_; 
@@ -71,18 +76,25 @@ inline Implicator::Implicator(Circuit *cir, Fault *ftarget) {
     cir_ = cir; 
     target_fault_ = ftarget;     
 
+    sim_    = new Simulator(cir_); 
     values_ = new Value [cir_->tgate_]; 
     events_ = new std::queue<int>();  
 }
 
 inline Implicator::~Implicator() {
+    delete    sim_; 
     delete [] values_; 
     delete    events_; 
 } 
 
 inline void Implicator::Init() {
-    for (int i=0; i<cir_->tgate_; i++) 
+    for (int i=0; i<cir_->tgate_; i++) { 
         values_[i] = X; 
+        cir_->gates_[i].gl_ = PARA_L; 
+        cir_->gates_[i].gh_ = PARA_L; 
+        cir_->gates_[i].fl_ = PARA_L; 
+        cir_->gates_[i].fh_ = PARA_L; 
+    }
 }
 
 inline Value Implicator::GetVal(int gid) const {
@@ -114,6 +126,29 @@ inline void Implicator::GetPiPattern(Pattern *p) const {
 }
 
 inline void Implicator::GetPoPattern(Pattern *p) const  {}
+
+
+inline void Implicator::PrintGate(int gid) const {
+    Gate *g = &cir_->gates_[gid]; 
+
+    cout << "#  ";
+    cout << "id(" << g->id_ << ") ";
+    cout << "lvl(" << g->lvl_ << ") ";
+    cout << "type(" << g->type_ << ") ";
+    cout << "frame(" << g->frame_ << ")";
+    cout << endl;
+    cout << "#    fi[" << g->nfi_ << "]";
+    for (int j = 0; j < g->nfi_; ++j) { 
+        cout << " " << g->fis_[j] << "("; 
+        printValue(GetVal(g->fis_[j])); 
+        cout << ")"; 
+    }
+    cout << endl;
+    cout << "#    fo[" << g->nfo_ << "]";
+    for (int j = 0; j < g->nfo_; ++j)
+        cout << " " << g->fos_[j];
+    cout << endl << endl;
+} 
 
 }; // CoreNs
 

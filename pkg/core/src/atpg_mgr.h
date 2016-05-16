@@ -20,7 +20,6 @@
 #define _CORE_ATPG_MGR_H_ 
 
 #include "atpg.h" 
-#include "simulator.h" 
 
 namespace CoreNs {
 
