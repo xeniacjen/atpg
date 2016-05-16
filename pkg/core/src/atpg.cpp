@@ -26,8 +26,24 @@ using namespace std;
 using namespace CoreNs; 
 
 Atpg::GenStatus Atpg::Tpg() { 
+    if (atpg_debug) {
+        cout << "\n################################################################\n"; 
+        cout << "Target Fault: \n"; 
+        cout << "################################################################\n"; 
+        cir_->gates_[current_fault_->gate_].print();
+        current_fault_->print(); 
+        cout << "################################################################\n"; 
+    }
+
     while (true) { 
         if (isTestPossible()) { 
+            // if (atpg_debug) { 
+                // cir_->gates_[current_obj_.first].print(); 
+                // cout << "Set to "; 
+                // printValue(current_obj_.second); 
+                // cout << endl; 
+                // atpg_pause(); 
+            // }
             Backtrace(); // Make a decision 
         } 
         else { 
@@ -62,6 +78,9 @@ bool Atpg::isaTest() {
 void Atpg::init() { 
     back_track_count = 0; 
     back_track_limit = _MAX_BACK_TRACK_LIMIT_; 
+
+    // debug 
+    atpg_debug = false; 
 
     impl_->Init(); 
 }

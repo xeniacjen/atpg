@@ -36,6 +36,16 @@ public:
 
     GenStatus Tpg(); 
     void      GetPiPattern(Pattern *p); 
+    // debug 
+    bool      atpg_debug; 
+    void atpg_pause() {
+        std::cout << "\nPlease enter to continue...\n"; 
+        std::cin.get(); 
+    }
+
+    Implicator* get_impl() {
+        return impl_; 
+    }
 
 private: 
     bool isTestPossible(); 

@@ -189,6 +189,7 @@ void Implicator::GetDFrontier(GateVec& df) const {
 
 bool Implicator::MakeDecision(Gate *g, Value v) {
     // if (!SetVal(g->id_, v)) return false; 
+    assert(g->type_==Gate::PI || g->type_==Gate::PPI); 
     if (!SetVal(g->id_, v)) assert(0); 
 
     decision_tree_.put(g->id_, e_front_list_.size()); 

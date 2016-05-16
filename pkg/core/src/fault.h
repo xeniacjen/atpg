@@ -8,9 +8,12 @@
 #ifndef _CORE_FAULT_H_
 #define _CORE_FAULT_H_
 
+#include <iostream>
 #include <list>
 
 #include "circuit.h"
+
+using namespace std; 
 
 namespace CoreNs {
 
@@ -52,6 +55,8 @@ public:
                   //              on the corresponding gate input line
     int   det_;   // number of detection
     State state_; // fault state
+
+    void  print() const; 
 };
 
 class FaultListExtract {
@@ -88,6 +93,52 @@ inline Fault::Fault(int gate, Type type, int line, int aggr) {
 }
 
 inline Fault::~Fault() {}
+
+inline void Fault::print() const 
+{
+    cout << "#    ";
+    switch (type_) {
+        case Fault::SA0:
+            cout << "SA0     ";
+            break;
+        case Fault::SA1:
+            cout << "SA1     ";
+            break;
+        case Fault::STR:
+            cout << "STR     ";
+            break;
+        case Fault::STF:
+            cout << "STF     ";
+            break;
+        case Fault::BR:
+            cout << "BR      ";
+            break;
+    }
+    switch (state_) {
+        case Fault::UD:
+            cout << " UD     ";
+            break;
+        case Fault::DT:
+            cout << " DT     ";
+            break;
+        case Fault::PT:
+            cout << " PT     ";
+            break;
+        case Fault::AU:
+            cout << " AU     ";
+            break;
+        case Fault::TI:
+            cout << " TI     ";
+            break;
+        case Fault::RE:
+            cout << " RE     ";
+            break;
+        case Fault::AB:
+            cout << " AB     ";
+            break;
+    }
+    cout << gate_ << "/" << line_ << endl;  
+}
 
 inline FaultListExtract::FaultListExtract() {
     gateToFault_ = NULL;

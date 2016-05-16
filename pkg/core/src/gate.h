@@ -8,11 +8,14 @@
 #ifndef _CORE_GATE_H_
 #define _CORE_GATE_H_
 
+#include <iostream>
 #include <cstring>
 
 #include "interface/cell.h"
 
 #include "logic.h"
+
+using namespace std; 
 
 namespace CoreNs {
 
@@ -73,6 +76,8 @@ public:
     int       depthFromPo_; // depth from po, this is for fault effect propagation
     int       fiMinLvl_;    // the minimum level of the fanin gates, this is to justify the headline cone, (in atpg.cpp)
 
+    void      print() const; 
+    
     Value     isUnary() const;
     Value     isInverse() const;
     Value     getInputNonCtrlValue() const;
@@ -108,6 +113,23 @@ inline Gate::Gate() {
 }
 
 inline Gate::~Gate() {}
+
+inline void Gate::print() const {
+    cout << "#  ";
+    cout << "id(" << id_ << ") ";
+    cout << "lvl(" << lvl_ << ") ";
+    cout << "type(" << type_ << ") ";
+    cout << "frame(" << frame_ << ")";
+    cout << endl;
+    cout << "#    fi[" << nfi_ << "]";
+    for (int j = 0; j < nfi_; ++j)
+        cout << " " << fis_[j];
+    cout << endl;
+    cout << "#    fo[" << nfo_ << "]";
+    for (int j = 0; j < nfo_; ++j)
+        cout << " " << fos_[j];
+    cout << endl << endl;
+}
 
 inline Value Gate::isUnary() const {
     return nfi_ == 1 ? H : L;

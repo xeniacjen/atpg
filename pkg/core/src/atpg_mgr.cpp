@@ -39,33 +39,43 @@ void AtpgMgr::generation() {
             break; 
 
         if (f==flist.front()) { 
-            Gate *g = &cir_->gates_[f->gate_];
-            cout << "#  ";
-            cout << "id(" << f->gate_ << ") ";
-            cout << "lvl(" << g->lvl_ << ") ";
-            cout << "type(" << g->type_ << ") ";
-            cout << "SA" << f->type_; 
-            cout << endl;
-            cout << "#    fi[" << g->nfi_ << "]";
-            for (int j = 0; j < g->nfi_; ++j)
-                cout << " " << g->fis_[j];
-            cout << endl;
-            cout << "#    fo[" << g->nfo_ << "]";
-            for (int j = 0; j < g->nfo_; ++j)
-                cout << " " << g->fos_[j];
-
             atpg_ = new Atpg(cir_, f); 
+            atpg_->atpg_debug = true; 
+            assert(atpg_->Tpg()==Atpg::TEST_FOUND); 
+            // FaultList fl; fl.push_back(f); 
+            // sim_->pfFaultSim(pcoll_->pats_.back(), fl); 
+            Pattern *p = new Pattern; 
+		    p->pi1_ = new Value[cir_->npi_];
+		    p->ppi_ = new Value[cir_->nppi_];
+		    p->po1_ = new Value[cir_->npo_];
+		    p->ppo_ = new Value[cir_->nppi_];
 
-            FaultList fl; fl.push_back(f); 
-            sim_->pfFaultSim(pcoll_->pats_.back(), fl); 
+            atpg_->GetPiPattern(p); 
+            sim_->assignPatternToPi(p); 
+            sim_->goodSim(); 
 
-            cout << "#    good:   ";
-            printValue(g->gl_, g->gh_);
-            cout << endl;
-            cout << "#    faulty: ";
-            printValue(g->fl_, g->fh_);
-            cout << endl;
-            cout << endl;
+            Implicator* impl = atpg_->get_impl();  
+
+            for (int i=0; i<cir_->tgate_; i++) {
+                Gate* g = &cir_->gates_[i]; 
+                Value v1 = impl->Get3Val(i); 
+                Value v2; 
+                if (g->gl_!=PARA_L) v2 = L; 
+                else if (g->gh_!=PARA_L) v2 = H; 
+                else v2 = X; 
+
+                if (v1!=v2) {
+                    cout << "\n----------------------------------------------------------------\n"; 
+                    cout << "Mismatch Found: \n"; 
+                    cout << "----------------------------------------------------------------\n"; 
+                    g->print(); 
+                    printValue(impl->Get3Val(i)); cout << " =/= "; 
+                    printValue(g->gl_, g->gh_); cout << endl;  
+                    cout << "----------------------------------------------------------------\n"; 
+                }
+            }
+
+            delete p; 
 
             f->state_ = Fault::PT; 
             flist.push_back(flist.front()); 
