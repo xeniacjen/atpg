@@ -9,6 +9,7 @@
 #define _CORE_LOGIC_H_
 
 #include <iostream>
+#include <cassert>
 #include <vector>
 
 namespace CoreNs {
@@ -54,13 +55,13 @@ const Value OrMap[5][5] = {
         { B, H, X, H, B }
      };
 
-//const Value XorMap[5][5] = {  
-//        { L, H, X, D, B }, 
-//        { H, L, X, B, D }, 
-//        { X, X, X, X, X }, 
-//        { D, B, X, L, H }, 
-//        { B, D, X, H, L }
-//     };
+const Value XorMap[5][5] = {  
+        { L, H, X, D, B }, 
+        { H, L, X, B, D }, 
+        { X, X, X, X, X }, 
+        { D, B, X, L, H }, 
+        { B, D, X, H, L }
+     };
 	
 const Value NandMap[5][5] = { 
         { H, H, H, H, H }, 
@@ -78,13 +79,13 @@ const Value NorMap[5][5] = {
         { D, L, X, L, D }
      };
 
-//const Value XnorMap[5][5] = { 
-//        { H, L, X, B, D }, 
-//        { L, H, X, D, B }, 
-//        { X, X, X, X, X }, 
-//        { B, D, X, H, L }, 
-//        { D, B, X, L, H }
-//     };
+const Value XnorMap[5][5] = { 
+        { H, L, X, B, D }, 
+        { L, H, X, D, B }, 
+        { X, X, X, X, X }, 
+        { B, D, X, H, L }, 
+        { D, B, X, L, H }
+     };
 
 
 inline void setBitValue(ParaValue &pv, const size_t &i, const Value &v) {
@@ -119,12 +120,26 @@ inline Value EvalOrN(std::vector<Value>& vals) {
     return ret; 
 }
 
+inline Value EvalXorN(std::vector<Value>& vals) {
+    if (vals.size()<2) assert(0);  
+
+    Value ret = XorMap[vals[0]][vals[1]]; 
+    for (size_t n=2; n<vals.size(); n++) 
+        ret = XorMap[ret][vals[n]]; 
+
+    return ret; 
+}
+
 inline Value EvalNandN(std::vector<Value>& vals) {
     return EvalNot(EvalAndN(vals)); 
 }
 
 inline Value EvalNorN(std::vector<Value>& vals) {
     return EvalNot(EvalOrN(vals)); 
+}
+
+inline Value EvalXnorN(std::vector<Value>& vals) {
+    return EvalNot(EvalXorN(vals)); 
 }
 
 void printValue(const Value &v, std::ostream &out = std::cout);

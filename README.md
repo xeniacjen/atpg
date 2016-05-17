@@ -33,11 +33,11 @@ III.    USAGE
         make
 
     Run ATPG:
-        ./bin/opt/fan
+        ./bin/opt/atpg
         source script/atpg.script
 
     Run fault simulation:
-        ./bin/opt/fan
+        ./bin/opt/atpg
         source script/fsim.script
 
 

@@ -5,6 +5,8 @@
 // Date       [ 2011/07/05 created ]
 // **************************************************************************
 
+#include <climits>
+
 #include "circuit.h"
 
 using namespace std;
@@ -46,7 +48,8 @@ bool Circuit::build(Netlist * const nl, const int &nframe,
     createGate();
     connectFrame(); // for multiple time frames
 	assignFiMinLvl();
-
+    
+    runScoap(); 
 
     return true;
 }
@@ -227,6 +230,9 @@ void Circuit::createComb(int &nfi, int &nfo) {
 
             Pmt *pmt = (Pmt *)c->libc_->getCell(j);
             createPmt(id, c, pmt, nfi, nfo);
+            gates_[id].co_i_ = new int[gates_[id].nfi_]; 
+            for(int pid=0; pid<gates_[id].nfi_; pid++)
+                gates_[id].co_i_[pid] = 0;   
         }
     }
     if (top->getNCell() > 0)
@@ -442,6 +448,9 @@ void Circuit::createPo(int &nfi) {
 
             nfi++;
         }
+        gates_[id].co_i_ = new int[gates_[id].nfi_]; 
+        for(int pid=0; pid<gates_[id].nfi_; pid++)
+            gates_[id].co_i_[pid] = 0;   
     }
 } //}}}
 //{{{ void Circuit::createPpo()
@@ -484,6 +493,9 @@ void Circuit::createPpo(int &nfi) {
 
             nfi++;
         }
+        gates_[id].co_i_ = new int[gates_[id].nfi_]; 
+        for(int pid=0; pid<gates_[id].nfi_; pid++)
+            gates_[id].co_i_[pid] = 0;   
     }
 } //}}}
 
@@ -604,4 +616,147 @@ void Circuit::assignFiMinLvl(){
 //          ************          *********
 			}
 	}
+}
+
+
+void Circuit::runScoap() {
+    //calculate cc 
+    for(int i=0; i<tgate_; ++i) {
+        Gate& g = gates_[i]; 
+        switch(g.type_) {
+        case Gate::PI: 
+        case Gate::PPI: 
+            g.cc0_=g.cc1_=1; 
+            break; 
+        case Gate::PO: 
+        case Gate::PPO: 
+            g.cc0_=gates_[g.fis_[0]].cc0_; 
+            g.cc1_=gates_[g.fis_[0]].cc1_; 
+            break; 
+        case Gate::INV: 
+        case Gate::BUF: 
+        {
+            Gate fi = gates_[g.fis_[0]]; 
+            g.cc0_ = (!g.isInverse())?fi.cc0_:fi.cc1_; 
+            g.cc1_ = (!g.isInverse())?fi.cc1_:fi.cc0_; 
+
+            g.cc0_+=1; 
+            g.cc1_+=1; 
+            break; 
+        }
+        case Gate::AND2: 
+        case Gate::AND3: 
+        case Gate::AND4: 
+        case Gate::NAND2: 
+        case Gate::NAND3: 
+        case Gate::NAND4: 
+        { 
+            int cc1_sum = 0; 
+            int cc0_min = INT_MAX; 
+            for(int i=0; i<g.nfi_; i++) { 
+                Gate fi = gates_[g.fis_[i]]; 
+                cc1_sum+=fi.cc1_; 
+                if(fi.cc0_ < cc0_min) 
+                    cc0_min = fi.cc0_; 
+            }
+
+            g.cc0_ = (!g.isInverse())?cc0_min:cc1_sum; 
+            g.cc1_ = (!g.isInverse())?cc1_sum:cc0_min; 
+
+            g.cc0_+=1; 
+            g.cc1_+=1; 
+            break; 
+        }
+        case Gate::OR2: 
+        case Gate::OR3: 
+        case Gate::OR4: 
+        case Gate::NOR2: 
+        case Gate::NOR3: 
+        case Gate::NOR4: 
+        { 
+            int cc0_sum = 0; 
+            int cc1_min = INT_MAX; 
+            for(int i=0; i<g.nfi_; i++) { 
+                Gate fi = gates_[g.fis_[i]]; 
+                cc0_sum+=fi.cc0_; 
+                if(fi.cc1_ < cc1_min) 
+                    cc1_min = fi.cc1_; 
+            }
+
+            g.cc0_ = (!g.isInverse())?cc0_sum:cc1_min; 
+            g.cc1_ = (!g.isInverse())?cc1_min:cc0_sum; 
+
+            g.cc0_+=1; 
+            g.cc1_+=1; 
+            break; 
+        }
+        default: 
+            cout << "***WARNNING: Circuit::runScoap(): gate type "; 
+            cout << g.type_; 
+            cout << "currently not supported...\n"; 
+            break; 
+        }
+    }
+
+    //calculate co 
+    for(int n=tgate_-1; n>=0; --n) {
+        Gate *g = &gates_[n]; 
+        //set co_o_
+        bool co_o_set = false; 
+        int co_o_min = INT_MAX; 
+        for(int i=0; i<g->nfo_; ++i) {
+            Gate *fo = &gates_[g->fos_[i]]; 
+            for(int j=0; j<fo->nfi_; ++j) { 
+                if(fo->fis_[j]==g->id_ && 
+                     fo->co_i_[j]<co_o_min) { 
+                        co_o_min = fo->co_i_[j]; 
+                        co_o_set = true; 
+                }
+            }
+        }
+        g->co_o_ = (!co_o_set)?0:co_o_min; 
+
+        //set co_i_[]; 
+        switch(g->type_) { 
+        case Gate::PI: 
+        case Gate::PPI: 
+            break; 
+        case Gate::PO: 
+        case Gate::PPO: 
+            g->co_i_[0] = 0; 
+            break; 
+        case Gate::INV: 
+        case Gate::BUF: 
+            g->co_i_[0] = g->co_o_+1; 
+            break; 
+        case Gate::AND2: 
+        case Gate::AND3: 
+        case Gate::AND4: 
+        case Gate::NAND2: 
+        case Gate::NAND3: 
+        case Gate::NAND4: 
+        case Gate::OR2: 
+        case Gate::OR3: 
+        case Gate::OR4: 
+        case Gate::NOR2: 
+        case Gate::NOR3: 
+        case Gate::NOR4: 
+        {
+            for(int i=0; i<g->nfi_; ++i) { 
+                g->co_i_[i] = g->co_o_ + 1; 
+                for(int j=0; j<g->nfi_; ++j) { 
+                    if(j==i) continue; 
+                    int cc = (g->getInputNonCtrlValue()==L)?gates_[g->fis_[j]].cc0_:gates_[g->fis_[j]].cc1_;  
+                    g->co_i_[i]+=cc; 
+                }
+            }
+            break; 
+        }
+        default: 
+            cout << "***WARNNING: Circuit::runScoap(): gate type "; 
+            cout << g->type_; 
+            cout << "currently not supported...\n"; 
+            break; 
+        }
+    }
 }

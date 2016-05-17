@@ -219,8 +219,9 @@ void initCmd(CmdMgr &cmdMgr, FanMgr &fanMgr) {
     Cmd *reportValueCmd   = new ReportValueCmd("report_value", &fanMgr);
     Cmd *reportStatsCmd   = new ReportStatsCmd("report_statistics", &fanMgr);
     Cmd *writePatCmd      = new WritePatCmd("write_pattern", &fanMgr);
-    Cmd *writeProcCmd      = new WriteProcCmd("write_test_procedure_file", &fanMgr);
-    Cmd *addScanChainsCmd      = new AddScanChainsCmd("add_scan_chains", &fanMgr);
+    Cmd *writeProcCmd     = new WriteProcCmd("write_test_procedure_file", &fanMgr);
+    Cmd *addScanChainsCmd = new AddScanChainsCmd("add_scan_chains", &fanMgr);
+    Cmd *reportScoapCmd   = new ReportScoapCmd("report_scoap", &fanMgr); 
     cmdMgr.regCmd("ATPG", readPatCmd);
     cmdMgr.regCmd("ATPG", reportPatCmd);
     cmdMgr.regCmd("ATPG", addFaultCmd);
@@ -236,6 +237,7 @@ void initCmd(CmdMgr &cmdMgr, FanMgr &fanMgr) {
     cmdMgr.regCmd("ATPG", writePatCmd);
     cmdMgr.regCmd("ATPG", writeProcCmd);
     cmdMgr.regCmd("ATPG", addScanChainsCmd);
+    cmdMgr.regCmd("ATPG", reportScoapCmd); 
 
     // misc commands
     Cmd *reportPatFormatCmd = new ReportPatFormatCmd("report_pattern_format");

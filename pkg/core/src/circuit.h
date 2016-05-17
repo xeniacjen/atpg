@@ -75,6 +75,8 @@ protected:
     void createPpo(int &nfi);
     void connectFrame();
     void assignFiMinLvl();
+
+    void runScoap(); 
 };
 
 inline Circuit::Circuit() {

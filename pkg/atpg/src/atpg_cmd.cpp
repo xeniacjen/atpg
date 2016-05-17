@@ -1196,9 +1196,6 @@ bool AddScanChainsCmd::exec(const vector<string> &argv) {
 } //}}}
 //Ne
 
-
-
-
 //{{{ WriteProcCmd::WriteProcCmd()
 WriteProcCmd::WriteProcCmd(const std::string &name, FanMgr *fanMgr) :
   Cmd(name) {
@@ -1246,4 +1243,124 @@ bool WriteProcCmd::exec(const vector<string> &argv) {
 
     return true;
 } //}}}
+//}}}
 
+//{{{ReportScoapCmd(const std:string &name, FanMgr *fanMgr); 
+ReportScoapCmd::ReportScoapCmd(const string &name, FanMgr *fanMgr) : 
+  Cmd(name) {
+    fanMgr_ = fanMgr;       
+    optMgr_.setName(name); 
+    optMgr_.setShortDes("report testability and/or observability"); 
+    optMgr_.setDes("report testability and/or observability for each net"); 
+    Opt *opt = new Opt(Opt::BOOL, "print usage", "");
+    opt->addFlag("h");
+    opt->addFlag("help");
+    optMgr_.regOpt(opt);
+    opt = new Opt(Opt::BOOL, "report option", "OPTION");
+    opt->addFlag("CC1");
+    optMgr_.regOpt(opt);
+    opt = new Opt(Opt::BOOL, "report option", "OPTION");
+    opt->addFlag("CC0");
+    optMgr_.regOpt(opt);
+    opt = new Opt(Opt::BOOL, "report option", "OPTION");
+    opt->addFlag("CO");
+    optMgr_.regOpt(opt);
+} 
+//}}}
+//{{{~ReportScoapCmd();   
+ReportScoapCmd::~ReportScoapCmd(){} 
+//}}}
+//{{{bool exec(const std::vector<std::string> &argv); 
+bool ReportScoapCmd::exec(const vector<string> &argv) {
+    optMgr_.parse(argv); 
+    
+    if (optMgr_.isFlagSet("h")) { 
+        optMgr_.usage(); 
+        return true; 
+    }
+
+    if (!fanMgr_->atpg_mgr->cir_) {
+        cerr << "**ERROR AddFaultCmd::exec(): circuit needed";
+        cerr << endl;
+        return false;
+    }
+
+    //TODO: check if wrong specified arguments 
+        cout << "Circuit: " << fanMgr_->nl->getTop()->name_ << endl; 
+        cout << "SCOAP "; 
+
+        Type type; 
+        if(optMgr_.isFlagSet("CC1")) {
+            type = CC1; 
+            cout << "CC1 \n"; 
+        }
+        else if(optMgr_.isFlagSet("CC0")) {
+            type = CC0; 
+            cout << "CC0 \n"; 
+        }
+        else if(optMgr_.isFlagSet("CO")) {
+            type = CO; 
+            cout << "CO \n"; 
+        }
+
+        cout << "Number_of_Nodes: " << fanMgr_->atpg_mgr->cir_->npi_
+            + fanMgr_->atpg_mgr->cir_->nppi_+fanMgr_->atpg_mgr->cir_->ncomb_ << endl; 
+        cout << "Format: SCOAP node\n"; 
+        reportScoap(type); 
+        cout << "END\n\n"; 
+    //}
+    return true; 
+} 
+//}}}
+//{{{void reportScoap(Type type); 
+bool scoap_cmp(pair<int, string> l1, pair<int, string> l2); 
+void ReportScoapCmd::reportScoap(Type type) {
+    list<pair<int, string> > linesToPrint; 
+    for(int i=0; i<fanMgr_->atpg_mgr->cir_->tgate_ 
+      - fanMgr_->atpg_mgr->cir_->nppi_ 
+      - fanMgr_->atpg_mgr->cir_->npo_; ++i) {
+        pair<int, string> line; 
+        Gate *g = &fanMgr_->atpg_mgr->cir_->gates_[i];
+        if (g->type_ == Gate::PO || g->type_ == Gate::PPO)
+            continue; 
+
+        int c = -1; 
+        if(type==CC1) 
+            c = g->cc1_; 
+        else if(type==CC0) 
+            c = g->cc0_; 
+        else if(type==CO) 
+            c = g->co_o_;  
+
+        //cout << c << " "; 
+        line.first = c; 
+        if (g->type_ == Gate::PI)
+            //cout << fanMgr_->nl->getTop()->getPort((size_t)g->cid_)->name_ << endl;
+            line.second = string(fanMgr_->nl->getTop()->getPort((size_t)g->cid_)->name_);
+        else { 
+            Cell *c =  fanMgr_->nl->getTop()->getCell((size_t)g->cid_);
+
+            Port *p = 0; 
+            for(size_t j=0; j<c->getNPort(); ++j)  
+                if(c->getPort(j)->type_==Port::OUTPUT) {
+                    p = c->getPort(j); 
+                    break; 
+                }
+            
+            //cout << p->exNet_->name_ << endl; 
+            line.second = string(p->exNet_->name_); 
+        }
+        linesToPrint.push_back(line); 
+    }
+    linesToPrint.sort(scoap_cmp); 
+    while(!linesToPrint.empty()) {
+        cout << linesToPrint.front().first << " "; 
+        cout << linesToPrint.front().second << endl; 
+        linesToPrint.pop_front(); 
+    }
+} 
+
+bool scoap_cmp(pair<int, string> l1, pair<int, string> l2) { 
+    return l2.first < l1.first; 
+}
+//}}}

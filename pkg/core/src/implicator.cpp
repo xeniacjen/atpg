@@ -97,6 +97,14 @@ Value Implicator::GoodEval(Gate *g) const {
         case Gate::NOR4: 
             return EvalNorN(vs); 
             break; 
+        case Gate::XOR2: 
+        case Gate::XOR3: 
+            return EvalXorN(vs); 
+            break; 
+        case Gate::XNOR2: 
+        case Gate::XNOR3: 
+            return EvalXnorN(vs); 
+            break; 
         case Gate::BUF: 
         case Gate::PO: 
         case Gate::PPO: 
@@ -158,6 +166,14 @@ Value Implicator::FaultEval(Gate *g) const {
             case Gate::NOR3: 
             case Gate::NOR4: 
                 return EvalNorN(vs); 
+                break; 
+            case Gate::XOR2: 
+            case Gate::XOR3: 
+                return EvalXorN(vs); 
+                break; 
+            case Gate::XNOR2: 
+            case Gate::XNOR3: 
+                return EvalXnorN(vs); 
                 break; 
             case Gate::PO: 
             case Gate::PPO: 

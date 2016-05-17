@@ -71,7 +71,8 @@ public:
     // SCOAP, testability
     int       cc0_;
     int       cc1_;
-    int       co_;
+    int       co_o_; 
+    int       *co_i_; 
 
     int       depthFromPo_; // depth from po, this is for fault effect propagation
     int       fiMinLvl_;    // the minimum level of the fanin gates, this is to justify the headline cone, (in atpg.cpp)
@@ -106,13 +107,16 @@ inline Gate::Gate() {
 
     cc0_     = 0;
     cc1_     = 0;
-    co_      = 0;
+    co_o_    = 0;
+    co_i_    = 0; 
 
     depthFromPo_ = -1;
     fiMinLvl_    = -1;
 }
 
-inline Gate::~Gate() {}
+inline Gate::~Gate() {
+    if(!co_i_) delete co_i_;    
+}
 
 inline void Gate::print() const {
     cout << "#  ";

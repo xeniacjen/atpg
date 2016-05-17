@@ -187,6 +187,23 @@ private:
     FanMgr *fanMgr_;
 };
 
+class ReportScoapCmd : public CommonNs::Cmd {    
+public: 
+         ReportScoapCmd(const std::string &name, FanMgr *fanMgr); 
+         ~ReportScoapCmd(); 
+
+    bool exec(const std::vector<std::string> &argv); 
+private: 
+    FanMgr *fanMgr_;  
+
+    enum Type { NA = -1, 
+                CC1, CC0, CO }; 
+
+    void reportScoap(Type type); 
+    void reportCC1(); 
+    void reportCC0(); 
+    void reportCO(); 
+}; 
 
 };
 
