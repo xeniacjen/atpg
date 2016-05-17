@@ -41,7 +41,7 @@ bool Implicator::EventDrivenSim() {
         if (g->gl_!=PARA_L) v2 = L; 
         else if (g->gh_!=PARA_L) v2 = H; 
         else v2 = X; 
-/* 
+/** 
         if (v1!=v2) {
             cout << "\n----------------------------------------------------------------\n"; 
             cout << "Mismatch Found: \n"; 
@@ -52,7 +52,7 @@ bool Implicator::EventDrivenSim() {
             cout << "----------------------------------------------------------------\n"; 
             v = v2; 
         }
-   */     
+*/ 
         if (GetVal(g->id_)!=v) { 
             if (!SetVal(g->id_, v)) { 
                 if (g->id_==target_fault_->gate_)

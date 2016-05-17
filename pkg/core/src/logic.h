@@ -120,23 +120,11 @@ inline Value EvalOrN(std::vector<Value>& vals) {
 }
 
 inline Value EvalNandN(std::vector<Value>& vals) {
-    if(vals.size()<2) return X; 
-
-    Value ret = NandMap[vals[0]][vals[1]]; 
-    for(size_t n=2; n<vals.size(); n++) 
-        ret = NandMap[ret][vals[n]]; 
-
-    return ret; 
+    return EvalNot(EvalAndN(vals)); 
 }
 
 inline Value EvalNorN(std::vector<Value>& vals) {
-    if(vals.size()<2) return X; 
-
-    Value ret = NorMap[vals[0]][vals[1]]; 
-    for(size_t n=2; n<vals.size(); n++) 
-        ret = NorMap[ret][vals[n]]; 
-
-    return ret; 
+    return EvalNot(EvalOrN(vals)); 
 }
 
 void printValue(const Value &v, std::ostream &out = std::cout);
