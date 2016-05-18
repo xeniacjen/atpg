@@ -56,6 +56,8 @@ public:
     int   det_;   // number of detection
     State state_; // fault state
 
+    int   hard_; 
+
     void  print() const; 
 };
 
@@ -81,6 +83,7 @@ inline Fault::Fault() {
     line_  = -1;
     det_   = 0;
     state_ = UD;
+    hard_  = -1; 
 }
 // for bridging fault only
 inline Fault::Fault(int gate, Type type, int line, int aggr) {

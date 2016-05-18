@@ -112,11 +112,11 @@ bool Atpg::DDrive() {
     assert(impl_->GetVal(fg->id_)==D || impl_->GetVal(fg->id_)==B); 
     
     Gate *gtoprop = NULL; 
-    int observ = INT_MIN; 
+    int observ = INT_MAX; 
     for (size_t i=0; i<dfront.size(); i++) 
-        if(dfront[i]->lvl_>observ) { 
+        if(dfront[i]->co_o_<observ) { 
             gtoprop = dfront[i]; 
-            observ = dfront[i]->lvl_; 
+            observ = dfront[i]->co_o_; 
         }
 
     assert(gtoprop->isUnary()==L); 
@@ -145,27 +145,13 @@ bool Atpg::Backtrace() {
             // choose input of "g" which 
             //  1) is at X 
             //  2) is easiest to control 
-            int ctr_ablility = INT_MAX; 
-            for (size_t n=0; n<g->nfi_; n++ ) { 
-                if (impl_->GetVal(g->fis_[n])==X 
-                    && cir_->gates_[g->fis_[n]].lvl_<ctr_ablility) { 
-                    gnext = &cir_->gates_[g->fis_[n]]; 
-                    ctr_ablility = cir_->gates_[g->fis_[n]].lvl_; 
-                }
-            }
+            gnext = FindEasiestToSetFanIn(g, objv); 
         }
         else if (objv==g->getOutputCtrlValue()) { // is objv is hard to set
             // choose input of "g" which 
             //  1) is at X 
             //  2) is hardest to control 
-            int ctr_ablility = INT_MIN; 
-            for (size_t n=0; n<g->nfi_; n++ ) { 
-                if (impl_->GetVal(g->fis_[n])==X 
-                    && cir_->gates_[g->fis_[n]].lvl_>ctr_ablility) { 
-                    gnext = &cir_->gates_[g->fis_[n]]; 
-                    ctr_ablility = cir_->gates_[g->fis_[n]].lvl_; 
-                }
-            }
+            gnext = FindHardestToSetFanIn(g, objv); 
         } 
         
         if (g->isInverse()) 
@@ -176,6 +162,45 @@ bool Atpg::Backtrace() {
 
     return impl_->MakeDecision(g, objv); 
 }
+
+
+Gate *Atpg::FindHardestToSetFanIn(Gate *g, Value obj) const {
+    Gate *ret = 0; 
+    int ctr_ablility = INT_MIN; 
+    if (g->isInverse()) 
+        obj = EvalNot(obj); 
+
+    for (size_t n=0; n<g->nfi_; n++ ) { 
+        int cc = (obj==H)?cir_->gates_[g->fis_[n]].cc1_
+          : cir_->gates_[g->fis_[n]].cc0_; 
+
+        if (impl_->GetVal(g->fis_[n])==X && cc>ctr_ablility) { 
+            ret = &cir_->gates_[g->fis_[n]]; 
+            ctr_ablility = cc; 
+        }
+    }
+
+    return ret; 
+} 
+
+Gate *Atpg::FindEasiestToSetFanIn(Gate *g, Value obj) const { 
+    Gate *ret = 0; 
+    int ctr_ablility = INT_MAX; 
+    if (g->isInverse()) 
+        obj = EvalNot(obj); 
+
+    for (size_t n=0; n<g->nfi_; n++ ) { 
+        int cc = (obj==H)?cir_->gates_[g->fis_[n]].cc1_
+          : cir_->gates_[g->fis_[n]].cc0_; 
+
+        if (impl_->GetVal(g->fis_[n])==X && cc<ctr_ablility) { 
+            ret = &cir_->gates_[g->fis_[n]]; 
+            ctr_ablility = cc; 
+        }
+    }
+
+    return ret; 
+} 
 
 bool Atpg::BackTrack() { 
     back_track_count++; 

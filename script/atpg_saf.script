@@ -2,7 +2,7 @@
 ./bin/opt/atpg -f ./script/atpg_s27_saf.script
 ./bin/opt/atpg -f ./script/atpg_s208_saf.script
 ./bin/opt/atpg -f ./script/atpg_s444_saf.script
-./bin/opt/atpg -f ./script/atpg_c432_saf.script
+# ./bin/opt/atpg -f ./script/atpg_c432_saf.script
 ./bin/opt/atpg -f ./script/atpg_s1238_saf.script
 ./bin/opt/atpg -f ./script/atpg_c1355_saf.script
 ./bin/opt/atpg -f ./script/atpg_c5315_saf.script

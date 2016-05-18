@@ -36,16 +36,6 @@ public:
 
     GenStatus Tpg(); 
     void      GetPiPattern(Pattern *p); 
-    // debug 
-    // bool      atpg_debug; 
-    // void atpg_pause() {
-    //     std::cout << "\nPlease enter to continue...\n"; 
-    //     std::cin.get(); 
-    // }
-
-    // Implicator* get_impl() {
-    //     return impl_; 
-    // }
 
 private: 
     bool isTestPossible(); 
@@ -58,6 +48,8 @@ protected:
     bool DDrive(); 
     bool Backtrace(); 
     bool BackTrack(); 
+    Gate *FindHardestToSetFanIn(Gate *g, Value obj) const; 
+    Gate *FindEasiestToSetFanIn(Gate *g, Value obj) const; 
 
     Circuit     *cir_;
     Implicator  *impl_; 

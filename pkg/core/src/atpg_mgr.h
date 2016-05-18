@@ -38,6 +38,8 @@ public:
     Simulator           *sim_;
 private: 
     void                getPoPattern(Pattern *pat);  
+    // bool                comp_fault(Fault* f1, Fault* f2); 
+    void                calc_fault_hardness(Fault* f1); 
 
     Atpg                *atpg_; 
 

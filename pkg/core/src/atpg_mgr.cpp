@@ -24,10 +24,15 @@ using namespace std;
 
 using namespace CoreNs; 
 
+bool comp_fault(Fault* f1, Fault* f2);  
 void AtpgMgr::generation() { 
     pcoll_->init(cir_); 
     Fault *f = NULL; 
+    for (int i=0; i<fListExtract_->faults_.size(); i++) 
+        calc_fault_hardness(fListExtract_->faults_[i]); 
+
     FaultList flist = fListExtract_->current_; 
+    flist.sort(comp_fault); 
 
     while (flist.begin()!=flist.end()) { 
         if (flist.front()->state_==Fault::DT) { 
@@ -79,6 +84,21 @@ void AtpgMgr::generation() {
         delete atpg_; 
     }
 }
+
+bool comp_fault(Fault* f1, Fault* f2) {
+    return f1->hard_ > f2->hard_; 
+} 
+
+void AtpgMgr::calc_fault_hardness(Fault* f1) {
+    int t1; 
+    
+    t1 = (f1->type_==Fault::SA0 || f1->type_==Fault::STR)?cir_->gates_[f1->gate_].cc1_:cir_->gates_[f1->gate_].cc0_; 
+    t1 *= (f1->line_)?cir_->gates_[f1->gate_].co_i_[f1->line_-1]:cir_->gates_[f1->gate_].co_o_;
+
+    f1->hard_ = t1; 
+
+}
+
 
 void AtpgMgr::getPoPattern(Pattern *pat) { 
     sim_->goodSim();
