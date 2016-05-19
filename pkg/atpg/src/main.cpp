@@ -54,6 +54,12 @@ int main(int argc, char **argv) {
         res = cmdMgr.exec(cmd);
     }
 
+    // read techlib
+    if (optMgr.isFlagSet("l")) {
+        string cmd = "read_lib " + optMgr.getFlagVar("l");
+        res = cmdMgr.exec(cmd);
+    }
+
     // enter user interface
     while (res != CmdMgr::EXIT) {
         res = cmdMgr.read();
@@ -157,6 +163,11 @@ void initOpt(OptMgr &mgr) {
 
     opt = new Opt(Opt::STR_REQ, "execute command file at startup", "file");
     opt->addFlag("f");
+    mgr.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ, "read technology library", "techlib");
+    opt->addFlag("l");
+    opt->addFlag("lib");
     mgr.regOpt(opt);
 }
 

@@ -68,12 +68,13 @@ bool Netlist::check(const bool &verbose) const {
     for (size_t i = 0; i < top_->getNNet(); ++i) {
         Net *n = top_->getNet(i);
         if (n->getNPort() == 0) {
-            res = false;
+            // res = false;
             if (verbose) {
-                fprintf(stderr, "**ERROR Netlist::check(): net ");
+                fprintf(stderr, "**WARN Netlist::check(): net ");
                 fprintf(stderr, "`%s/%s' ", top_->name_, n->name_);
                 fprintf(stderr, "is unconnected\n");
             }
+            continue; 
         }
         if (n->getNPort() == 1 && n->getNEqv() == 0) {
             if (verbose) {
@@ -81,6 +82,7 @@ bool Netlist::check(const bool &verbose) const {
                 fprintf(stderr, "`%s/%s' ", top_->name_, n->name_);
                 fprintf(stderr, "is floating\n");
             }
+            continue; 
         }
         if (n->top_ != top_) {
             res = false;
@@ -125,7 +127,7 @@ bool Netlist::check(const bool &verbose) const {
             }
         }
         if (!hasIn) {
-            res = false;
+            res = false; 
             if (verbose) {
                 fprintf(stderr, "**ERROR Netlist::check(): net ");
                 fprintf(stderr, "`%s/%s' ", top_->name_, n->name_);
@@ -133,13 +135,14 @@ bool Netlist::check(const bool &verbose) const {
             }
         }
         if (!hasOut) {
-            res = false;
+            res = false; 
             if (verbose) {
                 fprintf(stderr, "**ERROR Netlist::check(): net ");
                 fprintf(stderr, "`%s/%s' ", top_->name_, n->name_);
                 fprintf(stderr, "drives no cell\n");
             }
         }
+
     } //}}}
     //{{{ check cells
     for (size_t i = 0; i < top_->getNCell(); ++i) {

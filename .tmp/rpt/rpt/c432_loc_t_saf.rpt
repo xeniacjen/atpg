@@ -1,28 +1,28 @@
 #                 Statistics Report
-#  Circuit name                                c6288
+#  Circuit name                                 c432
 #  Fault model                                   SAF
 #  Pattern type                                  LOC
 #  -------------------------------------------------
 #  Fault classes                             #faults
 #  ----------------------------  -------------------
-#    FU (full)                                  7744
+#    FU (full)                                  1110
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
-#    AU (atpg untestable)                         48
+#    AU (atpg untestable)                          1
 #    RE (redundant)                                0
-#    AB (atpg abort)                               3
+#    AB (atpg abort)                              28
 #    TI (tied)                                     0
 #    --------------------------  -------------------
-#    DT (detected)                              7693
+#    DT (detected)                              1081
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
-#    test coverage                            99.96%
-#    fault coverage                           99.34%
-#    atpg effectiveness                       99.96%
+#    test coverage                            97.48%
+#    fault coverage                           97.39%
+#    atpg effectiveness                       97.48%
 #  -------------------------------------------------
-#  #Patterns                                      61
+#  #Patterns                                      79
 #  -------------------------------------------------
-#  ATPG runtime                             0.3052 s
+#  ATPG runtime                             0.6842 s
 #  -------------------------------------------------

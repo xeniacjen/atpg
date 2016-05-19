@@ -253,7 +253,100 @@ void VlogNlBuilder::setRegNets(VlogNames * const nets) {}
 void VlogNlBuilder::setSupplyLNets(VlogNames * const nets) {}
 void VlogNlBuilder::setSupplyHNets(VlogNames * const nets) {}
 void VlogNlBuilder::addCell(const char * const type, const char * const name,
-                            VlogNames * const ports) {}
+                            VlogNames * const ports) {
+    if (!success_) 
+        return; 
+
+    char cname[NAME_LEN];
+    if (!strcmp(name, ""))
+        sprintf(cname, "LOO%d", (int)curModule_->getNCell());
+    else
+        strcpy(cname, name);
+    if (curModule_->getCell(cname)) {
+        if (verbose_) {
+            fprintf(stderr, "**ERROR VlogNlBuilder::addCell(): cell ");
+            fprintf(stderr, "`%s/%s'\n", curModule_->name_, cname);
+        }
+        success_ = false;
+        return;
+    }
+    Cell *c = new Cell(cname);
+    c->top_ = curModule_;
+    strcpy(c->typeName_, type);
+    //TODO: techlib support 
+
+    bool isDff = false; 
+    if(!strcmp(c->typeName_, "dff")) 
+        isDff = true; 
+        
+
+    VlogNames *p2n = ports->head; 
+    int nport = 0; 
+    while (p2n) { 
+        Net *n = curModule_->getNet(p2n->name); 
+        if (!n) {
+            if (verbose_) {
+                fprintf(stderr, "**WARN VlogNlBuilder::addCell(): net ");
+                fprintf(stderr, "`%s/%s' ", curModule_->name_, p2n->name);
+                fprintf(stderr, "set as wire\n");
+            }
+            n = new Net(p2n->name);
+            n->top_ = curModule_;
+            curModule_->addNet(n);
+        }
+        //TODO: techlib support 
+        Port *p = new Port(""); 
+        char pname[NAME_LEN]; 
+        if (!isDff) { // combinational cells 
+            if (nport<1) { 
+                strcpy(pname, "Y"); //output port 
+                p->type_ = Port::OUTPUT; 
+            }
+            else { 
+                strcpy(pname, "A"); //first input port 
+                pname[0] += (nport - 1); 
+                p->type_ = Port::INPUT; 
+            }
+        } 
+        else {
+            if (nport==0) {
+                strcpy(pname, "CK"); //output port 
+                p->type_ = Port::INPUT; 
+            }
+            else if (nport==1) {
+                strcpy(pname, "D_IN"); //output port 
+                p->type_ = Port::OUTPUT; 
+            } 
+            else if (nport==2) {
+                strcpy(pname, "Q"); //output port 
+                p->type_ = Port::INPUT; 
+            } 
+            else {
+                if (verbose_) {
+                    fprintf(stderr, "**ERROR VlogNlBuilder::addCell(): port");
+                    fprintf(stderr, " `%s/ ", curModule_->name_);
+                    fprintf(stderr, "%s' ", p2n->name);
+                    fprintf(stderr, "does not match library cell\n");
+                }
+                success_ = false;
+                return;
+            }
+        }
+
+        strcpy(p->name_, pname); 
+        p->top_ = c; 
+        c->addPort(p); 
+
+        p->exNet_ = n; 
+        n->addPort(p); 
+
+        p2n = p2n->next; 
+        nport++; 
+    }
+
+    curModule_->addCell(c); 
+}
+
 void VlogNlBuilder::addCell(const char * const type,
                             VlogNames * const strengths,
                             const char * const name,
