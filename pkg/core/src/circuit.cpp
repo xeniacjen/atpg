@@ -234,14 +234,26 @@ void Circuit::createComb(int &nfi, int &nfo) {
 
     for (int i = nppi_; i < (int)top->getNCell(); ++i) {
         Cell *c = top->getCell(i);
-        for (int j = 0; j < (int)c->libc_->getNCell(); ++j) {
-            int id = cellToGate_[i] + j;
+        if (c->libc_) { 
+            for (int j = 0; j < (int)c->libc_->getNCell(); ++j) {
+                int id = cellToGate_[i] + j;
+                gates_[id].id_ = id;
+                gates_[id].cid_ = c->id_;
+                gates_[id].pmtid_ = j;
+    
+                Pmt *pmt = (Pmt *)c->libc_->getCell(j);
+                createPmt(id, c, pmt, nfi, nfo);
+                gates_[id].co_i_ = new int[gates_[id].nfi_]; 
+                for(int pid=0; pid<gates_[id].nfi_; pid++)
+                    gates_[id].co_i_[pid] = 0;   
+            }
+        }
+        else { //TODO: XOR gate 
+            int id = cellToGate_[i];
             gates_[id].id_ = id;
             gates_[id].cid_ = c->id_;
-            gates_[id].pmtid_ = j;
-
-            Pmt *pmt = (Pmt *)c->libc_->getCell(j);
-            createPmt(id, c, pmt, nfi, nfo);
+    
+            createVerilogPmt(id, c, nfi, nfo); 
             gates_[id].co_i_ = new int[gates_[id].nfi_]; 
             for(int pid=0; pid<gates_[id].nfi_; pid++)
                 gates_[id].co_i_[pid] = 0;   
@@ -251,6 +263,27 @@ void Circuit::createComb(int &nfi, int &nfo) {
         lvl_ = gates_[cellToGate_[top->getNCell() - 1]].lvl_ + 2;
 }
 //}}}
+void Circuit::createVerilogPmt(const int &id, const Cell * const c,
+                        int &nfi, int &nfo) {
+
+    gates_[id].fis_ = &fis_[nfi]; 
+    int maxLvl = -1;
+    for (size_t i=0; i<c->getNPort(); ++i) {
+        if (c->getPort(i)->type_ != Port::INPUT) 
+            continue; 
+
+        Net *nin = c->getPort(i)->exNet_;
+        for (size_t j=0; j<nin->getNPort(); j++) {
+            Port *p = nin->getPort(j) 
+            if (p==c->getPort(i)) 
+                continue; 
+
+            int inId = 0; 
+            
+        }
+    }
+}
+
 //{{{ void Circuit::createPmt()
 // primitive is from Mentor .mdt
 // cell--> primitive  --> gate
