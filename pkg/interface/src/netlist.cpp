@@ -319,18 +319,35 @@ bool Netlist::levelize() {
     // process PPIs
     for (size_t i = 0; i < top_->getNCell(); ++i) {
         Cell *c = top_->getCell(i);
-        if (!lib_->hasPmt(c->libc_->id_, Pmt::DFF))
-            continue;
-        c->lvl_ = 0;
-        processed[i] = true;
-        levelized[i] = true;
-        CellSet cells = top_->getFanout(i);
-        for (CellSet::iterator it = cells.begin(); it != cells.end(); ++it) {
-            if (processed[(*it)->id_]
-                || lib_->hasPmt((*it)->libc_->id_, Pmt::DFF))
+        if (c->libc_) { 
+            if (!lib_->hasPmt(c->libc_->id_, Pmt::DFF))
                 continue;
-            processed[(*it)->id_] = true;
-            cque.push((*it));
+            c->lvl_ = 0;
+            processed[i] = true;
+            levelized[i] = true;
+            CellSet cells = top_->getFanout(i);
+            for (CellSet::iterator it = cells.begin(); it != cells.end(); ++it) {
+                if (processed[(*it)->id_]
+                    || lib_->hasPmt((*it)->libc_->id_, Pmt::DFF))
+                    continue;
+                processed[(*it)->id_] = true;
+                cque.push((*it));
+            }
+        } 
+        else { // verilog primitive 
+            if (strcmp(c->typeName_, "dff")!=0) 
+                continue; 
+            c->lvl_ = 0;
+            processed[i] = true;
+            levelized[i] = true;
+            CellSet cells = top_->getFanout(i);
+            for (CellSet::iterator it = cells.begin(); it != cells.end(); ++it) {
+                if (processed[(*it)->id_]
+                    || strcmp((*it)->typeName_, "dff")==0)
+                    continue;
+                processed[(*it)->id_] = true;
+                cque.push((*it));
+            }
         }
     }
 

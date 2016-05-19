@@ -69,6 +69,8 @@ protected:
     void createComb(int &nfi, int &nfo);
     void createPmt(const int &id, const IntfNs::Cell * const c,
                    const IntfNs::Pmt * const pmt, int &nfi, int &nfo);
+    void createVerilogPmt(const int &id, const IntfNs::Cell * const c,
+                   int &nfi, int &nfo);
     void detGateType(const int &id, const IntfNs::Cell * const c,
                      const IntfNs::Pmt * const pmt);
     void createPo(int &nfi);

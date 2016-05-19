@@ -99,12 +99,22 @@ void Circuit::calNgate() {
     cellToGate_ = new int[top->getNCell()];
     for (size_t i = 0 ; i < top->getNCell(); ++i) {
         cellToGate_[i] = ngate_;
-        if (lib->hasPmt(top->getCell(i)->libc_->id_, Pmt::DFF)) {
-            nppi_++;
-            ngate_++;
+        if (top->getCell(i)->libc_) { 
+            if (lib->hasPmt(top->getCell(i)->libc_->id_, Pmt::DFF)) {
+                nppi_++;
+                ngate_++;
+            }
+            else
+                ngate_ += top->getCell(i)->libc_->getNCell();
+        } 
+        else {
+            if (strcmp(top->getCell(i)->typeName_, "dff")==0) {
+                nppi_++; 
+                ngate_++; 
+            } 
+            else //TODO: XOR gate 
+                ngate_++; 
         }
-        else
-            ngate_ += top->getCell(i)->libc_->getNCell();
     }
 
     // calculate combinational gates
@@ -151,6 +161,8 @@ void Circuit::calNnet() {
     // add internal nets
     for (size_t i = 0; i < top->getNCell(); ++i) {
         Cell *c = top->getCell(i);
+        if (!c->libc_) continue; 
+
         if (!lib->hasPmt(c->typeName_, Pmt::DFF))
             nnet_ += c->libc_->getNNet() - c->libc_->getNPort();
     }
