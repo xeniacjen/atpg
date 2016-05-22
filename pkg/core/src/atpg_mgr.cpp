@@ -74,8 +74,6 @@ void AtpgMgr::generation() {
             flist.pop_front(); 
         }
         else { // ABORT 
-            //TODO 
-         // cout << "*** BACKTRACK NEEDED!! \n";  
             flist.front()->state_ = Fault::AB; 
             flist.push_back(flist.front()); 
             flist.pop_front(); 

@@ -86,7 +86,8 @@ void Circuit::calNgate() {
         Port *p = top->getPort(i);
         if (p->type_ != Port::INPUT)
             continue;
-		if(!strcmp(p->name_,"CK") || !strcmp(p->name_,"test_si") || !strcmp(p->name_,"test_se"))
+		if(!strcmp(p->name_,"CK") || !strcmp(p->name_,"test_si") || !strcmp(p->name_,"test_se")
+          || !strcmp(p->name_, "GND") || !strcmp(p->name_, "VDD"))
 			continue;
         portToGate_[i] = npi_;
         ngate_++;
@@ -192,7 +193,8 @@ void Circuit::createPi(int &nfo) {
 
     for (size_t i = 0; i < top->getNPort(); ++i) {
         Port *p = top->getPort(i);
-		if(!strcmp(p->name_,"CK") || !strcmp(p->name_,"test_si") || !strcmp(p->name_,"test_se"))
+		if(!strcmp(p->name_,"CK") || !strcmp(p->name_,"test_si") || !strcmp(p->name_,"test_se")
+          || !strcmp(p->name_, "GND") || !strcmp(p->name_, "VDD"))
 			continue;
         int id = portToGate_[i];
         if (p->type_ != Port::INPUT || id < 0)
@@ -221,6 +223,8 @@ void Circuit::createPpi(int &nfo) {
 		int qid = 0;
 		while(strcmp(c->getPort(qid)->name_,"Q"))++qid;
 		nfo += top->getNetPorts(c->getPort(qid)->exNet_->id_).size() - 2;
+        if (!c->libc_) // has no serial output to next SDFF 
+            nfo++; 
 		
 		if(nframe_ > 1 && connType_ == SHIFT && i < nppi_-1)++nfo;
 		
@@ -266,6 +270,8 @@ void Circuit::createComb(int &nfi, int &nfo) {
 void Circuit::createVerilogPmt(const int &id, const Cell * const c,
                         int &nfi, int &nfo) {
 
+    detVerilogPmtType(id, c); 
+
     gates_[id].fis_ = &fis_[nfi]; 
     int maxLvl = -1;
     for (size_t i=0; i<c->getNPort(); ++i) {
@@ -274,15 +280,122 @@ void Circuit::createVerilogPmt(const int &id, const Cell * const c,
 
         Net *nin = c->getPort(i)->exNet_;
         for (size_t j=0; j<nin->getNPort(); j++) {
-            Port *p = nin->getPort(j) 
+            Port *p = nin->getPort(j);  
             if (p==c->getPort(i)) 
                 continue; 
 
             int inId = 0; 
-            
+            // TODO: XOR gate 
+            if (p->type_==Port::OUTPUT && p->top_!=c->top_) 
+                inId = cellToGate_[p->top_->id_]; 
+            else if (p->type_==Port::INPUT && p->top_==c->top_)
+                inId = portToGate_[p->id_];
+            else continue; 
+
+            gates_[id].fis_[gates_[id].nfi_] = inId;
+            gates_[id].nfi_++;
+            nfi++;
+
+            gates_[inId].fos_[gates_[inId].nfo_] = id;
+            gates_[inId].nfo_++;
+
+            if (gates_[inId].lvl_ > maxLvl)
+                maxLvl = gates_[inId].lvl_;
+        }
+    }
+
+    gates_[id].lvl_ = maxLvl + 1;
+
+    gates_[id].fos_ = &fos_[nfo];
+    Port *outp = NULL;
+    for (size_t i = 0; i < c->getNPort() && !outp; ++i) {
+        if (c->getPort(i)->type_ == Port::OUTPUT)
+            outp = c->getPort(i);
+    }
+    PortSet ps = c->top_->getNetPorts(outp->exNet_->id_);
+    PortSet::iterator it = ps.begin();
+    for ( ; it != ps.end(); ++it) {
+        if ((*it)->top_ != c->top_ && (*it)->top_ != c) {
+            nfo += 1; 
+        }
+        else if ((*it)->top_ == c->top_) {
+            nfo += 1; 
         }
     }
 }
+
+void Circuit::detVerilogPmtType(const int &id, const IntfNs::Cell * const c) {
+    if (!strcmp(c->typeName_, "and")) { 
+        gates_[id].type_ = Gate::AND;
+        if (c->getNPort() == 3)
+            gates_[id].type_ = Gate::AND2;
+        else if (c->getNPort() == 4)
+            gates_[id].type_ = Gate::AND3;
+        else if (c->getNPort() == 5)
+            gates_[id].type_ = Gate::AND4;
+        else { 
+            fprintf(stderr, "**WARN Circuit::detVerilogPmtType(): cell ");
+            fprintf(stderr, " `%s ", c->name_);
+            fprintf(stderr, "has larger fan-in counts than normal\n");
+        }
+    } 
+    else if (!strcmp(c->typeName_, "nand")) { 
+        gates_[id].type_ = Gate::NAND;
+        if (c->getNPort() == 3)
+            gates_[id].type_ = Gate::NAND2;
+        else if (c->getNPort() == 4)
+            gates_[id].type_ = Gate::NAND3;
+        else if (c->getNPort() == 5)
+            gates_[id].type_ = Gate::NAND4;
+        else { 
+            fprintf(stderr, "**WARN Circuit::detVerilogPmtType(): cell ");
+            fprintf(stderr, " `%s ", c->name_);
+            fprintf(stderr, "has larger fan-in counts than normal\n");
+        }
+    }
+    else if (!strcmp(c->typeName_, "or")) { 
+        gates_[id].type_ = Gate::OR;
+        if (c->getNPort() == 3)
+            gates_[id].type_ = Gate::OR2;
+        else if (c->getNPort() == 4)
+            gates_[id].type_ = Gate::OR3;
+        else if (c->getNPort() == 5)
+            gates_[id].type_ = Gate::OR4;
+        else { 
+            fprintf(stderr, "**WARN Circuit::detVerilogPmtType(): cell ");
+            fprintf(stderr, " `%s ", c->name_);
+            fprintf(stderr, "has larger fan-in counts than normal\n");
+        }
+    }
+    else if (!strcmp(c->typeName_, "nor")) { 
+        gates_[id].type_ = Gate::NOR; 
+        if (c->getNPort() == 3)
+            gates_[id].type_ = Gate::NOR2;
+        else if (c->getNPort() == 4)
+            gates_[id].type_ = Gate::NOR3;
+        else if (c->getNPort() == 5)
+            gates_[id].type_ = Gate::NOR4;
+        else { 
+            fprintf(stderr, "**WARN Circuit::detVerilogPmtType(): cell ");
+            fprintf(stderr, " `%s ", c->name_);
+            fprintf(stderr, "has larger fan-in counts than normal\n");
+        }
+    } 
+    else if (!strcmp(c->typeName_, "xor")) 
+        gates_[id].type_ = Gate::XOR; // TODO 
+    else if (!strcmp(c->typeName_, "xnor")) 
+        gates_[id].type_ = Gate::XNOR; // TODO 
+    else if (!strcmp(c->typeName_, "not")) 
+        gates_[id].type_ = Gate::INV; 
+    else if (!strcmp(c->typeName_, "buf")) 
+        gates_[id].type_ = Gate::BUF; 
+    else { 
+        fprintf(stderr, "**ERROR Circuit::createVerilogPmt(): cell type");
+        fprintf(stderr, " `%s/ ", c->typeName_);
+        fprintf(stderr, "not recognized cell type\n");
+        assert(0); 
+    }
+} 
 
 //{{{ void Circuit::createPmt()
 // primitive is from Mentor .mdt
@@ -388,7 +501,7 @@ void Circuit::detGateType(const int &id, const Cell * const c,
             else if (c->getNPort() == 5)
                 gates_[id].type_ = Gate::AND4;
             else
-                gates_[id].type_ = Gate::NA;
+                gates_[id].type_ = Gate::AND;
             break;
         case Pmt::NAND:
             if (c->getNPort() == 3)
@@ -398,7 +511,7 @@ void Circuit::detGateType(const int &id, const Cell * const c,
             else if (c->getNPort() == 5)
                 gates_[id].type_ = Gate::NAND4;
             else
-                gates_[id].type_ = Gate::NA;
+                gates_[id].type_ = Gate::NAND;
             break;
         case Pmt::OR:
             if (c->getNPort() == 3)
@@ -408,7 +521,7 @@ void Circuit::detGateType(const int &id, const Cell * const c,
             else if (c->getNPort() == 5)
                 gates_[id].type_ = Gate::OR4;
             else
-                gates_[id].type_ = Gate::NA;
+                gates_[id].type_ = Gate::OR;
             break;
         case Pmt::NOR:
             if (c->getNPort() == 3)
@@ -418,7 +531,7 @@ void Circuit::detGateType(const int &id, const Cell * const c,
             else if (c->getNPort() == 5)
                 gates_[id].type_ = Gate::NOR4;
             else
-                gates_[id].type_ = Gate::NA;
+                gates_[id].type_ = Gate::NOR;
             break;
         case Pmt::XOR:
             if (c->getNPort() == 3)
@@ -426,7 +539,7 @@ void Circuit::detGateType(const int &id, const Cell * const c,
             else if (c->getNPort() == 4)
                 gates_[id].type_ = Gate::XOR3;
             else
-                gates_[id].type_ = Gate::NA;
+                gates_[id].type_ = Gate::XOR;
             break;
         case Pmt::XNOR:
             if (c->getNPort() == 3)
@@ -434,7 +547,7 @@ void Circuit::detGateType(const int &id, const Cell * const c,
             else if (c->getNPort() == 4)
                 gates_[id].type_ = Gate::XNOR3;
             else
-                gates_[id].type_ = Gate::NA;
+                gates_[id].type_ = Gate::XNOR;
             break;
         case Pmt::TIE1:
             gates_[id].type_ = Gate::TIE1;
@@ -480,8 +593,9 @@ void Circuit::createPo(int &nfi) {
             else if ((*it)->top_ != top && (*it)->type_ == Port::OUTPUT) {
                 inId = cellToGate_[(*it)->top_->id_];
                 Cell *libc = (*it)->top_->libc_;
-				if (!nl_->getTechlib()->hasPmt(libc->id_, Pmt::DFF))//NE
-					inId += (*libc->getPortCells((*it)->id_).begin())->id_;
+                if (libc) 
+				    if (!nl_->getTechlib()->hasPmt(libc->id_, Pmt::DFF))//NE
+					    inId += (*libc->getPortCells((*it)->id_).begin())->id_;
             }
 			else continue;
 
@@ -525,8 +639,9 @@ void Circuit::createPpo(int &nfi) {
             else if ((*it)->top_ != top && (*it)->type_ == Port::OUTPUT) {
                 inId = cellToGate_[(*it)->top_->id_];
                 Cell *libc = (*it)->top_->libc_;
-				if (!nl_->getTechlib()->hasPmt(libc->id_, Pmt::DFF))//NE
-					inId += (*libc->getPortCells((*it)->id_).begin())->id_;
+                if (libc) 
+				    if (!nl_->getTechlib()->hasPmt(libc->id_, Pmt::DFF))//NE
+					    inId += (*libc->getPortCells((*it)->id_).begin())->id_;
             }
 			else continue;
 
@@ -689,9 +804,11 @@ void Circuit::runScoap() {
             g.cc1_+=1; 
             break; 
         }
+        case Gate::AND: 
         case Gate::AND2: 
         case Gate::AND3: 
         case Gate::AND4: 
+        case Gate::NAND: 
         case Gate::NAND2: 
         case Gate::NAND3: 
         case Gate::NAND4: 
@@ -712,9 +829,11 @@ void Circuit::runScoap() {
             g.cc1_+=1; 
             break; 
         }
+        case Gate::OR: 
         case Gate::OR2: 
         case Gate::OR3: 
         case Gate::OR4: 
+        case Gate::NOR: 
         case Gate::NOR2: 
         case Gate::NOR3: 
         case Gate::NOR4: 
@@ -738,7 +857,7 @@ void Circuit::runScoap() {
         default: 
             cout << "***WARNNING: Circuit::runScoap(): gate type "; 
             cout << g.type_; 
-            cout << "currently not supported...\n"; 
+            cout << " currently not supported...\n"; 
             break; 
         }
     }
@@ -774,15 +893,19 @@ void Circuit::runScoap() {
         case Gate::BUF: 
             g->co_i_[0] = g->co_o_+1; 
             break; 
+        case Gate::AND: 
         case Gate::AND2: 
         case Gate::AND3: 
         case Gate::AND4: 
+        case Gate::NAND: 
         case Gate::NAND2: 
         case Gate::NAND3: 
         case Gate::NAND4: 
+        case Gate::OR: 
         case Gate::OR2: 
         case Gate::OR3: 
         case Gate::OR4: 
+        case Gate::NOR:  
         case Gate::NOR2: 
         case Gate::NOR3: 
         case Gate::NOR4: 
@@ -800,7 +923,7 @@ void Circuit::runScoap() {
         default: 
             cout << "***WARNNING: Circuit::runScoap(): gate type "; 
             cout << g->type_; 
-            cout << "currently not supported...\n"; 
+            cout << " currently not supported...\n"; 
             break; 
         }
     }

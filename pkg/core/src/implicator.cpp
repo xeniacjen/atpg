@@ -29,30 +29,9 @@ bool Implicator::EventDrivenSim() {
         Gate *g = &cir_->gates_[events_->front()]; 
         events_->pop(); 
 
-        Value v, v1, v2; 
+        Value v; 
         v = (g->id_==target_fault_->gate_)?FaultEval(g):GoodEval(g); 
-        sim_->goodEval(g->id_); 
-    
-        if (v==D || v==B) 
-            v1 = (v==D)?H:L;
-        else 
-            v1 = v;
 
-        if (g->gl_!=PARA_L) v2 = L; 
-        else if (g->gh_!=PARA_L) v2 = H; 
-        else v2 = X; 
-/** 
-        if (v1!=v2) {
-            cout << "\n----------------------------------------------------------------\n"; 
-            cout << "Mismatch Found: \n"; 
-            cout << "----------------------------------------------------------------\n"; 
-            PrintGate(g->id_); 
-            printValue(v); cout << " =/= "; 
-            printValue(g->gl_, g->gh_); cout << endl;  
-            cout << "----------------------------------------------------------------\n"; 
-            v = v2; 
-        }
-*/ 
         if (GetVal(g->id_)!=v) { 
             if (!SetVal(g->id_, v)) { 
                 if (g->id_==target_fault_->gate_)
@@ -77,30 +56,36 @@ Value Implicator::GoodEval(Gate *g) const {
         case Gate::INV: 
             return EvalNot(v); 
             break; 
+        case Gate::AND: 
         case Gate::AND2: 
         case Gate::AND3: 
         case Gate::AND4: 
             return EvalAndN(vs); 
             break; 
+        case Gate::NAND: 
         case Gate::NAND2: 
         case Gate::NAND3: 
         case Gate::NAND4: 
             return EvalNandN(vs); 
             break; 
+        case Gate::OR: 
         case Gate::OR2: 
         case Gate::OR3: 
         case Gate::OR4: 
             return EvalOrN(vs); 
             break; 
+        case Gate::NOR: 
         case Gate::NOR2: 
         case Gate::NOR3: 
         case Gate::NOR4: 
             return EvalNorN(vs); 
             break; 
+        case Gate::XOR: 
         case Gate::XOR2: 
         case Gate::XOR3: 
             return EvalXorN(vs); 
             break; 
+        case Gate::XNOR: 
         case Gate::XNOR2: 
         case Gate::XNOR3: 
             return EvalXnorN(vs); 
@@ -147,30 +132,36 @@ Value Implicator::FaultEval(Gate *g) const {
             case Gate::INV: 
                 return EvalNot(v); 
                 break; 
+            case Gate::AND: 
             case Gate::AND2: 
             case Gate::AND3: 
             case Gate::AND4: 
                 return EvalAndN(vs); 
                 break; 
+            case Gate::NAND: 
             case Gate::NAND2: 
             case Gate::NAND3: 
             case Gate::NAND4: 
                 return EvalNandN(vs); 
                 break; 
+            case Gate::OR: 
             case Gate::OR2: 
             case Gate::OR3: 
             case Gate::OR4: 
                 return EvalOrN(vs); 
                 break; 
+            case Gate::NOR: 
             case Gate::NOR2: 
             case Gate::NOR3: 
             case Gate::NOR4: 
                 return EvalNorN(vs); 
                 break; 
+            case Gate::XOR: 
             case Gate::XOR2: 
             case Gate::XOR3: 
                 return EvalXorN(vs); 
                 break; 
+            case Gate::XNOR: 
             case Gate::XNOR2: 
             case Gate::XNOR3: 
                 return EvalXnorN(vs); 
@@ -190,7 +181,12 @@ Value Implicator::FaultEval(Gate *g) const {
 }
 
 void Implicator::PushEvent(int gid) {
+    Gate *g = &cir_->gates_[gid]; 
+    if (g->type_==Gate::PI || g->type_==Gate::PPI)
+        if (target_fault_->gate_!=gid) assert(0); 
+
     events_->push(gid); 
+
 }
 
 void Implicator::PushFanoutEvent(int gid) {

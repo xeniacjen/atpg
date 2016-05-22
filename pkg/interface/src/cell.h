@@ -93,6 +93,11 @@ public:
             CellSet getFanin(const size_t &i) const;
             CellSet getFanin(const char * const name) const;
 
+            PortSet getFanoutPort(const size_t &i) const;
+            PortSet getFanoutPort(const char * const name) const;
+            PortSet getFaninPort(const size_t &i) const;
+            PortSet getFaninPort(const char * const name) const;
+
             // internal nets
             size_t  getNNet() const;
             Net     *getNet(const size_t &i) const;

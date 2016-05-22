@@ -79,6 +79,73 @@ CellSet Cell::getFanin(const char * const name) const {
     return (getFanin(c->id_));
 } //}}}
 
+PortSet Cell::getFanoutPort(const size_t &i) const {
+    PortSet fo; 
+    if (i >= cells_.size()) 
+        return fo; 
+    Cell *c = cells_[i];
+    NetSet eqvs;
+    for (size_t i = 0; i < c->getNPort(); ++i) {
+        if (c->getPort(i)->type_ != Port::OUTPUT || !c->getPort(i)->exNet_)
+            continue;
+        NetSet eqv = getEqvNets(c->getPort(i)->exNet_->id_);
+        eqvs.insert(eqv.begin(), eqv.end());
+    }
+    NetSet::iterator it = eqvs.begin();
+    for ( ; it != eqvs.end(); ++it) {
+        Net *n = *it;
+        for (size_t j = 0; j < n->getNPort(); ++j) {
+            Port *p = n->getPort(j);
+            if (p->top_ == c->top_ && p->type_ == Port::OUTPUT)
+                fo.insert(p);
+        }
+    }
+
+    return fo; 
+} 
+
+PortSet Cell::getFanoutPort(const char * const name) const {
+    Cell *c = getCell(name);
+    if (!c) {
+        PortSet fo;
+        return fo;
+    }
+    return (getFanoutPort(c->id_));
+}
+
+PortSet Cell::getFaninPort(const size_t &i) const {
+    PortSet fi;
+    if (i >= cells_.size())
+        return fi;
+    Cell *c = cells_[i];
+    NetSet eqvs;
+    for (size_t i = 0; i < c->getNPort(); ++i) {
+        if (c->getPort(i)->type_ != Port::INPUT || !c->getPort(i)->exNet_)
+            continue;
+        NetSet eqv = getEqvNets(c->getPort(i)->exNet_->id_);
+        eqvs.insert(eqv.begin(), eqv.end());
+    }
+    NetSet::iterator it = eqvs.begin();
+    for ( ; it != eqvs.end(); ++it) {
+        Net *n = *it;
+        for (size_t j = 0; j < n->getNPort(); ++j) {
+            Port *p = n->getPort(j);
+            if (p->top_ == c->top_ && p->type_ == Port::INPUT)
+                fi.insert(p);
+        }
+    }
+    return fi;
+}
+
+PortSet Cell::getFaninPort(const char * const name) const {
+    Cell *c = getCell(name);
+    if (!c) {
+        PortSet fi;
+        return fi;
+    }
+    return (getFaninPort(c->id_));
+}
+
 //{{{ NetSet Cell::getEqvNets()
 NetSet Cell::getEqvNets(const size_t &i) const {
     NetSet eqvs;

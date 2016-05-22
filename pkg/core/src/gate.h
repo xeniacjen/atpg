@@ -32,17 +32,18 @@ public:
                      PI,    PO,
                      PPI,   PPO,   PPI_IN, PPO_IN,
                      INV,   BUF,
-                     AND2,  AND3,  AND4,
-                     NAND2, NAND3, NAND4,
-                     OR2,   OR3,   OR4,
-                     NOR2,  NOR3,  NOR4,
-                     XOR2,  XOR3,
-                     XNOR2, XNOR3,
+                     AND, AND2,  AND3,  AND4,
+                     NAND, NAND2, NAND3, NAND4,
+                     OR, OR2,   OR3,   OR4,
+                     NOR, NOR2,  NOR3,  NOR4,
+                     XOR, XOR2,  XOR3,
+                     XNOR, XNOR2, XNOR3,
                      MUX,
                      TIE0,   TIE1, TIEX,   TIEZ
                    };
 
     // basic info
+    std::string name_; 
     int       id_;    // position in circuit gate array
     int       cid_;   // original cell id in the netlist
     int       pmtid_; // original primitive id in the library cell
@@ -142,12 +143,15 @@ inline Value Gate::isUnary() const {
 inline Value Gate::isInverse() const {
     switch(type_) {
         case INV:
+        case NAND: 
         case NAND2:
         case NAND3:
         case NAND4:
+        case NOR: 
         case NOR2:
         case NOR3:
         case NOR4:
+        case XNOR: 
         case XNOR2:
         case XNOR3:
             return H;
@@ -166,9 +170,11 @@ inline Value Gate::getInputCtrlValue() const {
 
 inline Value Gate::getOutputCtrlValue() const {
     switch(type_) {
+        case OR: 
         case OR2:
         case OR3:
         case OR4:
+        case NAND: 
         case NAND2:
         case NAND3:
         case NAND4:
@@ -179,8 +185,10 @@ inline Value Gate::getOutputCtrlValue() const {
         case BUF: 
         case PO: 
         case PPO: 
+        case XOR: 
         case XOR2:
         case XOR3:
+        case XNOR: 
         case XNOR2:
         case XNOR3:
             return X;

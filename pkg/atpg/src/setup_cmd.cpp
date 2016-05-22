@@ -339,14 +339,22 @@ void ReportCellCmd::reportCell(const size_t &i) const {
     Cell *c = fanMgr_->nl->getTop()->getCell(i);
     cout << "#  Cell " << c->name_ << " " << c->typeName_ << endl;
     CellSet fis  = fanMgr_->nl->getTop()->getFanin(i);
-    cout << "#    fi[" << fis.size() << "]";
+    PortSet pis  = fanMgr_->nl->getTop()->getFaninPort(i);
+    cout << "#    fi[" << fis.size() + pis.size() << "]";
+    for (PortSet::iterator it = pis.begin(); it != pis.end(); ++it) {
+        cout << " " << (*it)->name_;
+    }
     for (CellSet::iterator it = fis.begin(); it != fis.end(); ++it) {
         cout << " " << (*it)->name_;
     }
     cout << endl;
     CellSet fos  = fanMgr_->nl->getTop()->getFanout(i);
-    cout << "#    fo[" << fos.size() << "]";
+    PortSet pos  = fanMgr_->nl->getTop()->getFanoutPort(i);
+    cout << "#    fo[" << fos.size() + pos.size() << "]";
     for (CellSet::iterator it = fos.begin(); it != fos.end(); ++it) {
+        cout << " " << (*it)->name_;
+    }
+    for (PortSet::iterator it = pos.begin(); it != pos.end(); ++it) {
         cout << " " << (*it)->name_;
     }
     cout << endl << endl;

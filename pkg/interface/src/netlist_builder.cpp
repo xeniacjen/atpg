@@ -314,11 +314,11 @@ void VlogNlBuilder::addCell(const char * const type, const char * const name,
                 p->type_ = Port::INPUT; 
             }
             else if (nport==1) {
-                strcpy(pname, "D_IN"); //output port 
+                strcpy(pname, "Q"); //output port 
                 p->type_ = Port::OUTPUT; 
             } 
             else if (nport==2) {
-                strcpy(pname, "Q"); //output port 
+                strcpy(pname, "D"); //output port 
                 p->type_ = Port::INPUT; 
             } 
             else {
