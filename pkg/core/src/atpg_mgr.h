@@ -21,6 +21,8 @@
 
 #include "atpg.h" 
 
+#define RPT_PER_PAT     64 
+
 namespace CoreNs {
 
 typedef std::vector<Atpg*> AtpgVec; 

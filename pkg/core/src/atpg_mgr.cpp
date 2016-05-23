@@ -17,6 +17,7 @@
  */
 
 #include <cassert>
+#include <iomanip>
 
 #include "atpg_mgr.h" 
 
@@ -34,6 +35,11 @@ void AtpgMgr::generation() {
     FaultList flist = fListExtract_->current_; 
     flist.sort(comp_fault); 
 
+    cout << "# ------------------------------------------------------------------------\n"; 
+    cout << "# #patterns  fault     #faults  #faults \n"; 
+    cout << "# simulated  coverage  in list  detected\n"; 
+    cout << "# ------------------------------------------------------------------------\n"; 
+    
     while (flist.begin()!=flist.end()) { 
         if (flist.front()->state_==Fault::DT) { 
             flist.pop_front(); 
@@ -80,6 +86,16 @@ void AtpgMgr::generation() {
         }
 
         delete atpg_; 
+
+        if (pcoll_->pats_.size()%RPT_PER_PAT==0) {
+            int fu = fListExtract_->current_.size(); 
+            int dt = fListExtract_->getNStatus(Fault::DT); 
+            cout << "# " << setw(9) << pcoll_->pats_.size(); 
+            cout << "  " << setw(8) << (float)dt / (float)fu * 100.f << "%";  
+            cout << "  " << setw(7) << fu - dt; 
+            cout << "  " << setw(8) << dt; 
+            cout << endl; 
+        }   
     }
 }
 

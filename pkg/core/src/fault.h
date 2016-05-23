@@ -74,6 +74,8 @@ public:
     FaultVec  faults_;
     FaultList current_;
     Type      type_;
+
+    int       getNStatus(Fault::State fstatus); 
 };
 
 inline Fault::Fault() {
@@ -149,6 +151,18 @@ inline FaultListExtract::FaultListExtract() {
 }
 
 inline FaultListExtract::~FaultListExtract() {}
+
+inline int FaultListExtract::getNStatus(Fault::State fstatus) {
+    int ret = 0; 
+
+    FaultListIter it = current_.begin(); 
+    for ( ; it != current_.end(); ++it) { 
+        if ((*it)->state_==fstatus) 
+            ret++; 
+    } 
+
+    return ret; 
+}
 
 };
 

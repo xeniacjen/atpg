@@ -1,28 +1,28 @@
 #                 Statistics Report
-#  Circuit name                                 s444
+#  Circuit name                                 b21s
 #  Fault model                                   SAF
-#  Pattern type                                  LOC
+#  Pattern type                                BASIC
 #  -------------------------------------------------
 #  Fault classes                             #faults
 #  ----------------------------  -------------------
-#    FU (full)                                   526
+#    FU (full)                                 28564
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
-#    AU (atpg untestable)                         18
+#    AU (atpg untestable)                         24
 #    RE (redundant)                                0
-#    AB (atpg abort)                               0
+#    AB (atpg abort)                            1421
 #    TI (tied)                                     0
 #    --------------------------  -------------------
-#    DT (detected)                               508
+#    DT (detected)                             27119
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
-#    test coverage                              100%
-#    fault coverage                           96.58%
-#    atpg effectiveness                         100%
+#    test coverage                            95.02%
+#    fault coverage                           94.94%
+#    atpg effectiveness                       95.03%
 #  -------------------------------------------------
-#  #Patterns                                      53
+#  #Patterns                                    1140
 #  -------------------------------------------------
-#  ATPG runtime                           0.007323 s
+#  ATPG runtime                              149.3 s
 #  -------------------------------------------------

@@ -1,10 +1,10 @@
 read_lib techlib/tsmc18.mdt
-read_netlist verilog/b17s_nl.v
+read_netlist verilog/b22s_nl.v
 build_circuit
 report_circuit
 set_fault_type saf
 add_fault --all
 set_X-Fill on
 run_atpg
-report_statistics > rpt/b17s_loc_t_saf.rpt
+report_statistics > rpt/b22s_loc_t_saf.rpt
 exit

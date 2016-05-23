@@ -1,28 +1,28 @@
 #                 Statistics Report
-#  Circuit name                                 s444
+#  Circuit name                                 b20s
 #  Fault model                                   SAF
-#  Pattern type                                  LOC
+#  Pattern type                                BASIC
 #  -------------------------------------------------
 #  Fault classes                             #faults
 #  ----------------------------  -------------------
-#    FU (full)                                   526
+#    FU (full)                                 27316
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
-#    AU (atpg untestable)                         18
+#    AU (atpg untestable)                         30
 #    RE (redundant)                                0
-#    AB (atpg abort)                               0
+#    AB (atpg abort)                            1710
 #    TI (tied)                                     0
 #    --------------------------  -------------------
-#    DT (detected)                               508
+#    DT (detected)                             25576
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
-#    test coverage                              100%
-#    fault coverage                           96.58%
-#    atpg effectiveness                         100%
+#    test coverage                            93.73%
+#    fault coverage                           93.63%
+#    atpg effectiveness                       93.74%
 #  -------------------------------------------------
-#  #Patterns                                      53
+#  #Patterns                                    1184
 #  -------------------------------------------------
-#  ATPG runtime                           0.007323 s
+#  ATPG runtime                              152.6 s
 #  -------------------------------------------------

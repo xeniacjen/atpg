@@ -595,9 +595,14 @@ bool ReportGateCmd::exec(const vector<string> &argv) {
         for (size_t i = 0; i < optMgr_.getNParsedArg(); ++i) {
             string name = optMgr_.getParsedArg(i);
             Cell *c = fanMgr_->nl->getTop()->getCell(name.c_str());
-            if (c)
-                for (size_t j = 0; j < c->libc_->getNCell(); ++j)
-                    reportGate(fanMgr_->atpg_mgr->cir_->cellToGate_[c->id_] + j);
+            if (c) { 
+                if (c->libc_) { 
+                    for (size_t j = 0; j < c->libc_->getNCell(); ++j)
+                        reportGate(fanMgr_->atpg_mgr->cir_->cellToGate_[c->id_] + j);
+                } 
+                else reportGate(fanMgr_->atpg_mgr->cir_->cellToGate_[c->id_]);
+            }
+
             Port *p = fanMgr_->nl->getTop()->getPort(name.c_str());
             if (p)
                 reportGate(fanMgr_->atpg_mgr->cir_->portToGate_[p->id_]);
@@ -1074,7 +1079,7 @@ bool RunAtpgCmd::exec(const vector<string> &argv) {
     if (!fanMgr_->atpg_mgr->sim_)
         fanMgr_->atpg_mgr->sim_ = new Simulator(fanMgr_->atpg_mgr->cir_);
 
-    cout << "#  Performing pattern generation ..." << endl;
+    cout << "#  Performing pattern generation ...\n";
     fanMgr_->tmusg.periodStart();
 
     fanMgr_->atpg_mgr->generation();

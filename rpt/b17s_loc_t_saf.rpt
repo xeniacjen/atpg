@@ -1,28 +1,28 @@
 #                 Statistics Report
-#  Circuit name                                 s444
+#  Circuit name                                 b17s
 #  Fault model                                   SAF
-#  Pattern type                                  LOC
+#  Pattern type                                BASIC
 #  -------------------------------------------------
 #  Fault classes                             #faults
 #  ----------------------------  -------------------
-#    FU (full)                                   526
+#    FU (full)                                 72192
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
-#    AU (atpg untestable)                         18
+#    AU (atpg untestable)                         57
 #    RE (redundant)                                0
-#    AB (atpg abort)                               0
+#    AB (atpg abort)                            8267
 #    TI (tied)                                     0
 #    --------------------------  -------------------
-#    DT (detected)                               508
+#    DT (detected)                             63868
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
-#    test coverage                              100%
-#    fault coverage                           96.58%
-#    atpg effectiveness                         100%
+#    test coverage                            88.54%
+#    fault coverage                           88.47%
+#    atpg effectiveness                       88.55%
 #  -------------------------------------------------
-#  #Patterns                                      53
+#  #Patterns                                    2264
 #  -------------------------------------------------
-#  ATPG runtime                           0.007323 s
+#  ATPG runtime                               1595 s
 #  -------------------------------------------------

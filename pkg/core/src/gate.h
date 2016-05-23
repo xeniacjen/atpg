@@ -43,7 +43,7 @@ public:
                    };
 
     // basic info
-    std::string name_; 
+    char      *name_; 
     int       id_;    // position in circuit gate array
     int       cid_;   // original cell id in the netlist
     int       pmtid_; // original primitive id in the library cell

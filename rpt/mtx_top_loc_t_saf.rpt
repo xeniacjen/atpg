@@ -1,28 +1,28 @@
 #                 Statistics Report
-#  Circuit name                                 s444
+#  Circuit name                              mtx_top
 #  Fault model                                   SAF
-#  Pattern type                                  LOC
+#  Pattern type                                BASIC
 #  -------------------------------------------------
 #  Fault classes                             #faults
 #  ----------------------------  -------------------
-#    FU (full)                                   526
+#    FU (full)                                111892
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
-#    AU (atpg untestable)                         18
+#    AU (atpg untestable)                        204
 #    RE (redundant)                                0
-#    AB (atpg abort)                               0
+#    AB (atpg abort)                              18
 #    TI (tied)                                     0
 #    --------------------------  -------------------
-#    DT (detected)                               508
+#    DT (detected)                            111670
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
-#    test coverage                              100%
-#    fault coverage                           96.58%
-#    atpg effectiveness                         100%
+#    test coverage                            99.98%
+#    fault coverage                            99.8%
+#    atpg effectiveness                       99.98%
 #  -------------------------------------------------
-#  #Patterns                                      53
+#  #Patterns                                    1921
 #  -------------------------------------------------
-#  ATPG runtime                           0.007323 s
+#  ATPG runtime                              28.54 s
 #  -------------------------------------------------

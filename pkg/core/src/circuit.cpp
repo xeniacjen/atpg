@@ -199,6 +199,7 @@ void Circuit::createPi(int &nfo) {
         int id = portToGate_[i];
         if (p->type_ != Port::INPUT || id < 0)
             continue;
+        gates_[id].name_ = p->name_; 
         gates_[id].id_ = id;
         gates_[id].cid_ = i;
         gates_[id].pmtid_ = 0;
@@ -213,7 +214,8 @@ void Circuit::createPpi(int &nfo) {
     Cell *top = nl_->getTop();
     for (int i = 0; i < nppi_; ++i) {
         Cell *c = top->getCell(i);
-        int id = cellToGate_[i];
+        int id = cellToGate_[i]; 
+        gates_[id].name_ = c->name_; 
         gates_[id].id_ = id;
         gates_[id].cid_ = i;
         gates_[id].pmtid_ = 0;
@@ -254,6 +256,7 @@ void Circuit::createComb(int &nfi, int &nfo) {
         }
         else { //TODO: XOR gate 
             int id = cellToGate_[i];
+            gates_[id].name_ = c->name_; 
             gates_[id].id_ = id;
             gates_[id].cid_ = c->id_;
     
@@ -576,6 +579,7 @@ void Circuit::createPo(int &nfi) {
         int id = portToGate_[i];
         if (p->type_ != Port::OUTPUT || id < 0)
             continue;
+        gates_[id].name_ = p->name_; 
         gates_[id].id_ = id;
         gates_[id].cid_ = i;
         gates_[id].pmtid_ = 0;
@@ -618,6 +622,7 @@ void Circuit::createPpo(int &nfi) {
     for (int i = 0; i < nppi_; ++i) {
         Cell *c = top->getCell(i);
         int id = ngate_ - nppi_ + i ;
+        gates_[id].name_ = c->name_; 
         gates_[id].id_ = id;
         gates_[id].cid_ = i;
         gates_[id].pmtid_ = 0;
