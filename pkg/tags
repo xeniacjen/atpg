@@ -215,6 +215,7 @@ BUFZ	interface/src/primitive.h	/^                AND,   NAND,  OR,     NOR,    I
 BUS_KEEPER	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	965;"	d	file:
 BUS_KEEPER	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	965;"	d	file:
 BYTE_SIZE	core/src/logic.h	/^const   size_t    BYTE_SIZE = 8;$/;"	m	namespace:CoreNs
+B_	core/src/logic-hex.h	/^    bool B_; $/;"	m	struct:CoreNs::HexValue
 BackTrack	core/src/atpg.cpp	/^bool Atpg::BackTrack() { $/;"	f	class:Atpg
 BackTrack	core/src/implicator.cpp	/^bool Implicator::BackTrack() {$/;"	f	class:Implicator
 Backtrace	core/src/atpg.cpp	/^bool Atpg::Backtrace() {$/;"	f	class:Atpg
@@ -297,6 +298,7 @@ CoreNs	core/src/decision_tree.h	/^namespace CoreNs {$/;"	n
 CoreNs	core/src/fault.h	/^namespace CoreNs {$/;"	n
 CoreNs	core/src/gate.h	/^namespace CoreNs {$/;"	n
 CoreNs	core/src/implicator.h	/^namespace CoreNs {$/;"	n
+CoreNs	core/src/logic-hex.h	/^namespace CoreNs {$/;"	n
 CoreNs	core/src/logic.h	/^namespace CoreNs {$/;"	n
 CoreNs	core/src/pattern.h	/^namespace CoreNs {$/;"	n
 CoreNs	core/src/pattern_rw.h	/^namespace CoreNs {$/;"	n
@@ -344,6 +346,7 @@ DIVIDER	interface/lib/opt/lex_n_yacc/sdf_file.tab.cpp	/^     DIVIDER = 265,$/;"	
 DIVIDER	interface/lib/opt/lex_n_yacc/sdf_file.tab.hpp	/^     DIVIDER = 265,$/;"	e	enum:yytokentype
 DLAT	interface/src/primitive.h	/^                MUX,   DFF,   DLAT,   DELAY,  INVF,   WIRE, PULL,$/;"	e	enum:IntfNs::Pmt::Type
 DT	core/src/fault.h	/^    enum  State { UD = 0, DT, PT, AU, TI, RE, AB };$/;"	e	enum:CoreNs::Fault::State
+D_	core/src/logic-hex.h	/^    bool D_; $/;"	m	struct:CoreNs::HexValue
 DecisionTree	core/src/decision_tree.h	/^class DecisionTree {$/;"	c	namespace:CoreNs
 DecisionTree	core/src/decision_tree.h	/^inline DecisionTree::DecisionTree() {$/;"	f	class:CoreNs::DecisionTree
 DecisionTreeNode	core/src/decision_tree.h	/^inline DecisionTreeNode::DecisionTreeNode(const int &gid,$/;"	f	class:CoreNs::DecisionTreeNode
@@ -447,11 +450,18 @@ E_REQ	common/src/get_opt.h	/^    enum                     Error { E_EXIST = 0, E
 EdgeType	interface/src/sdf_file.h	/^    enum        EdgeType { EDGE_NA, EDGE_01, EDGE_10, EDGE_0Z, EDGE_Z1,$/;"	g	struct:IntfNs::SdfPortSpec
 Error	common/src/cmd.h	/^    enum        Error { E_EXIST = 0, E_NOT_REG, E_INVALID_VAR };$/;"	g	class:CommonNs::CmdMgr
 Error	common/src/get_opt.h	/^    enum                     Error { E_EXIST = 0, E_NOT_REG, E_REQ };$/;"	g	class:CommonNs::OptMgr
+EvalAndHex	core/src/logic-hex.h	/^inline HexValue EvalAndHex(HexValue a, HexValue b) {$/;"	f	namespace:CoreNs
 EvalAndN	core/src/logic.h	/^inline Value EvalAndN(std::vector<Value>& vals) {$/;"	f	namespace:CoreNs
+EvalAndNHex	core/src/logic-hex.h	/^inline HexValue EvalAndNHex(std::vector<HexValue>& vals) {$/;"	f	namespace:CoreNs
 EvalNandN	core/src/logic.h	/^inline Value EvalNandN(std::vector<Value>& vals) {$/;"	f	namespace:CoreNs
+EvalNandNHex	core/src/logic-hex.h	/^inline HexValue EvalNandNHex(std::vector<HexValue>& vals) {$/;"	f	namespace:CoreNs
 EvalNorN	core/src/logic.h	/^inline Value EvalNorN(std::vector<Value>& vals) {$/;"	f	namespace:CoreNs
+EvalNorNHex	core/src/logic-hex.h	/^inline HexValue EvalNorNHex(std::vector<HexValue>& vals) {$/;"	f	namespace:CoreNs
 EvalNot	core/src/logic.h	/^inline Value EvalNot(Value v){$/;"	f	namespace:CoreNs
+EvalNotHex	core/src/logic-hex.h	/^inline HexValue EvalNotHex(HexValue a) {$/;"	f	namespace:CoreNs
+EvalOrHex	core/src/logic-hex.h	/^inline HexValue EvalOrHex(HexValue a, HexValue b) {$/;"	f	namespace:CoreNs
 EvalOrN	core/src/logic.h	/^inline Value EvalOrN(std::vector<Value>& vals) {$/;"	f	namespace:CoreNs
+EvalOrNHex	core/src/logic-hex.h	/^inline HexValue EvalOrNHex(std::vector<HexValue>& vals) {$/;"	f	namespace:CoreNs
 EvalXnorN	core/src/logic.h	/^inline Value EvalXnorN(std::vector<Value>& vals) {$/;"	f	namespace:CoreNs
 EvalXorN	core/src/logic.h	/^inline Value EvalXorN(std::vector<Value>& vals) {$/;"	f	namespace:CoreNs
 EventDrivenSim	core/src/implicator.cpp	/^bool Implicator::EventDrivenSim() {$/;"	f	class:Implicator
@@ -521,6 +531,7 @@ GateVec	core/src/implicator.h	/^typedef std::vector<Gate *> GateVec; $/;"	t	name
 GenStatus	core/src/atpg.h	/^    enum GenStatus             { TEST_FOUND = 0, UNTESTABLE, ABORT }; $/;"	g	class:CoreNs::Atpg
 Get3Val	core/src/implicator.h	/^inline Value Implicator::Get3Val(int gid) const {$/;"	f	class:CoreNs::Implicator
 GetDFrontier	core/src/implicator.cpp	/^void Implicator::GetDFrontier(GateVec& df) const {$/;"	f	class:Implicator
+GetHexVal	core/src/implicator.h	/^inline HexValue Implicator::GetHexVal(int gid) const {$/;"	f	class:CoreNs::Implicator
 GetPiPattern	core/src/atpg.h	/^inline void Atpg::GetPiPattern(Pattern *p) { $/;"	f	class:CoreNs::Atpg
 GetPiPattern	core/src/implicator.h	/^inline void Implicator::GetPiPattern(Pattern *p) const {$/;"	f	class:CoreNs::Implicator
 GetPoPattern	core/src/implicator.h	/^inline void Implicator::GetPoPattern(Pattern *p) const  {}$/;"	f	class:CoreNs::Implicator
@@ -531,6 +542,10 @@ HOLD	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     HOLD = 290,$/;"	e	enum
 HOLD	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     HOLD = 290,$/;"	e	enum:yytokentype
 HOLD	interface/lib/opt/lex_n_yacc/sdf_file.tab.cpp	/^     HOLD = 290,$/;"	e	enum:yytokentype	file:
 HOLD	interface/lib/opt/lex_n_yacc/sdf_file.tab.hpp	/^     HOLD = 290,$/;"	e	enum:yytokentype
+H_	core/src/logic-hex.h	/^    bool H_; $/;"	m	struct:CoreNs::HexValue
+HexValue	core/src/logic-hex.h	/^    HexValue() {$/;"	f	struct:CoreNs::HexValue
+HexValue	core/src/logic-hex.h	/^inline HexValue::HexValue(Value v) {$/;"	f	class:CoreNs::HexValue
+HexValue	core/src/logic-hex.h	/^struct HexValue {$/;"	s	namespace:CoreNs
 I	core/src/logic.h	/^const   Value     I         = 255;     \/\/ Invalid$/;"	m	namespace:CoreNs
 IDENTIFIER	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     IDENTIFIER = 331,$/;"	e	enum:yytokentype	file:
 IDENTIFIER	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     IDENTIFIER = 331,$/;"	e	enum:yytokentype
@@ -696,6 +711,7 @@ LESS_OR_EQU	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     LESS_OR_EQU = 3
 LESS_OR_EQU	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     LESS_OR_EQU = 318,$/;"	e	enum:yytokentype
 LESS_OR_EQU	interface/lib/opt/lex_n_yacc/sdf_file.tab.cpp	/^     LESS_OR_EQU = 318,$/;"	e	enum:yytokentype	file:
 LESS_OR_EQU	interface/lib/opt/lex_n_yacc/sdf_file.tab.hpp	/^     LESS_OR_EQU = 318,$/;"	e	enum:yytokentype
+L_	core/src/logic-hex.h	/^    bool L_; $/;"	m	struct:CoreNs::HexValue
 L_AND	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     L_AND = 316,$/;"	e	enum:yytokentype	file:
 L_AND	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     L_AND = 316,$/;"	e	enum:yytokentype
 L_AND	interface/lib/opt/lex_n_yacc/sdf_file.tab.cpp	/^     L_AND = 316,$/;"	e	enum:yytokentype	file:
@@ -1020,7 +1036,9 @@ PrintPorts	core/src/pattern.h	/^inline void PatternProcessor::PrintPorts() const
 ProcedureWriter	core/src/pattern_rw.h	/^class ProcedureWriter {$/;"	c	namespace:CoreNs
 ProcedureWriter	core/src/pattern_rw.h	/^inline ProcedureWriter::ProcedureWriter(Circuit *cir) {$/;"	f	class:CoreNs::ProcedureWriter
 PushEvent	core/src/implicator.cpp	/^void Implicator::PushEvent(int gid) {$/;"	f	class:Implicator
+PushEventHex	core/src/implicator.cpp	/^void Implicator::PushEventHex(int gid) {$/;"	f	class:Implicator
 PushFanoutEvent	core/src/implicator.cpp	/^void Implicator::PushFanoutEvent(int gid) {$/;"	f	class:Implicator
+PushFanoutEventHex	core/src/implicator.cpp	/^void Implicator::PushFanoutEventHex(int gid) {$/;"	f	class:Implicator
 QSTRING	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     QSTRING = 332,$/;"	e	enum:yytokentype	file:
 QSTRING	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     QSTRING = 332,$/;"	e	enum:yytokentype
 QSTRING	interface/lib/opt/lex_n_yacc/sdf_file.tab.cpp	/^     QSTRING = 332,$/;"	e	enum:yytokentype	file:
@@ -1075,6 +1093,7 @@ RNMOS	interface/src/primitive.h	/^                NMOS,  PMOS,  RNMOS,  RPMOS,  
 ROM	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	971;"	d	file:
 ROM	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	971;"	d	file:
 RPMOS	interface/src/primitive.h	/^                NMOS,  PMOS,  RNMOS,  RPMOS,  NMOSF,  PMOSF,$/;"	e	enum:IntfNs::Pmt::Type
+RPT_PER_PAT	core/src/atpg_mgr.h	24;"	d
 RR_CONFLICT	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	980;"	d	file:
 RR_CONFLICT	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	980;"	d	file:
 RW_CONFLICT	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	981;"	d	file:
@@ -1192,6 +1211,7 @@ SetPatternTypeCmd	atpg/src/setup_cmd.cpp	/^SetPatternTypeCmd::SetPatternTypeCmd(
 SetPatternTypeCmd	atpg/src/setup_cmd.h	/^class SetPatternTypeCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
 SetStaticCompressionCmd	atpg/src/setup_cmd.cpp	/^SetStaticCompressionCmd::SetStaticCompressionCmd(const std::string &name, FanMgr *fanMgr) :$/;"	f	class:SetStaticCompressionCmd
 SetStaticCompressionCmd	atpg/src/setup_cmd.h	/^class SetStaticCompressionCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
+SetVal	core/src/implicator.h	/^inline bool Implicator::SetVal(int gid, HexValue hv) {$/;"	f	class:CoreNs::Implicator
 SetVal	core/src/implicator.h	/^inline bool Implicator::SetVal(int gid, Value v) { $/;"	f	class:CoreNs::Implicator
 SetXFillCmd	atpg/src/setup_cmd.cpp	/^SetXFillCmd::SetXFillCmd(const std::string &name, FanMgr *fanMgr) :$/;"	f	class:SetXFillCmd
 SetXFillCmd	atpg/src/setup_cmd.h	/^class SetXFillCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
@@ -2851,6 +2871,7 @@ _CORE_DECISION_TREE_H_	core/src/decision_tree.h	9;"	d
 _CORE_FAULT_H_	core/src/fault.h	9;"	d
 _CORE_GATE_H_	core/src/gate.h	9;"	d
 _CORE_IMPL_H_	core/src/implicator.h	20;"	d
+_CORE_LOGIC_HEX_H_	core/src/logic-hex.h	20;"	d
 _CORE_LOGIC_H_	core/src/logic.h	9;"	d
 _CORE_PATTERN_H_	core/src/pattern.h	9;"	d
 _CORE_PATTERN_RW_H_	core/src/pattern_rw.h	9;"	d
@@ -3023,6 +3044,7 @@ des_	common/src/get_opt.h	/^    std::string                  des_;$/;"	m	class:C
 des_	common/src/get_opt.h	/^    std::string des_;$/;"	m	struct:CommonNs::Arg
 des_	common/src/get_opt.h	/^    std::string des_;$/;"	m	struct:CommonNs::Opt
 detGateType	core/src/circuit.cpp	/^void Circuit::detGateType(const int &id, const Cell * const c,$/;"	f	class:Circuit
+detVerilogPmtType	core/src/circuit.cpp	/^void Circuit::detVerilogPmtType(const int &id, const IntfNs::Cell * const c) {$/;"	f	class:Circuit
 det_	core/src/fault.h	/^    int   det_;   \/\/ number of detection$/;"	m	class:CoreNs::Fault
 dynamicCompression_	core/src/pattern.h	/^	State	   dynamicCompression_; \/\/ Flag; ON = need dynamic compression$/;"	m	class:CoreNs::PatternProcessor
 e_front_list_	core/src/implicator.h	/^    std::vector<int> e_front_list_; $/;"	m	class:CoreNs::Implicator
@@ -3286,6 +3308,7 @@ getNNet	interface/src/cell.h	/^inline size_t Cell::getNNet() const {$/;"	f	class
 getNParsedArg	common/src/get_opt.h	/^inline size_t OptMgr::getNParsedArg() const {$/;"	f	class:CommonNs::OptMgr
 getNPort	interface/src/cell.h	/^inline size_t Cell::getNPort() const {$/;"	f	class:IntfNs::Cell
 getNPort	interface/src/cell.h	/^inline size_t Net::getNPort() const {$/;"	f	class:IntfNs::Net
+getNStatus	core/src/fault.h	/^inline int FaultListExtract::getNStatus(Fault::State fstatus) {$/;"	f	class:CoreNs::FaultListExtract
 getName	common/src/cmd.h	/^inline std::string Cmd::getName() const {$/;"	f	class:CommonNs::Cmd
 getName	common/src/get_opt.h	/^inline std::string OptMgr::getName() const {$/;"	f	class:CommonNs::OptMgr
 getNet	interface/src/cell.h	/^inline Net *Cell::getNet(const char * const name) const {$/;"	f	class:IntfNs::Cell
@@ -3329,6 +3352,7 @@ head	interface/src/pat_file.h	/^    PatNames *head;$/;"	m	struct:IntfNs::PatName
 head	interface/src/sdf_file.h	/^    SdfDelayDef       *head;$/;"	m	struct:IntfNs::SdfDelayDef
 head	interface/src/vlog_file.h	/^    VlogNames *head;$/;"	m	struct:IntfNs::VlogNames
 head	interface/src/vlog_file.h	/^    VlogPortToNet *head;$/;"	m	struct:IntfNs::VlogPortToNet
+hevents_	core/src/implicator.h	/^    std::queue<int> *hevents_; $/;"	m	class:CoreNs::Implicator
 hier	interface/src/vlog2pmt.cpp	/^const char hier = '\/';$/;"	v
 id_	core/src/gate.h	/^    int       id_;    \/\/ position in circuit gate array$/;"	m	class:CoreNs::Gate
 id_	interface/src/cell.h	/^            int     id_;$/;"	m	class:IntfNs::Cell
@@ -3351,6 +3375,7 @@ isInverse	core/src/gate.h	/^inline Value Gate::isInverse() const {$/;"	f	class:C
 isLegalVar	common/src/cmd.h	/^inline bool CmdMgr::isLegalVar(const std::string &var) const {$/;"	f	class:CommonNs::CmdMgr
 isLegalVarChar	common/src/cmd.h	/^inline bool CmdMgr::isLegalVarChar(const char &ch) const {$/;"	f	class:CommonNs::CmdMgr
 isPmt_	interface/src/cell.h	/^            bool    isPmt_;$/;"	m	class:IntfNs::Cell
+isSubset	core/src/logic-hex.h	/^inline bool HexValue::isSubset(const HexValue& hv) const {$/;"	f	class:CoreNs::HexValue
 isTestPossible	core/src/atpg.cpp	/^bool Atpg::isTestPossible() { $/;"	f	class:Atpg
 isUnary	core/src/gate.h	/^inline Value Gate::isUnary() const {$/;"	f	class:CoreNs::Gate
 isaTest	core/src/atpg.cpp	/^bool Atpg::isaTest() { $/;"	f	class:Atpg
@@ -3613,6 +3638,7 @@ nameToModule_	interface/src/netlist.h	/^    CellMap nameToModule_;$/;"	m	class:I
 nameToNet_	interface/src/cell.h	/^    NetMap  nameToNet_;$/;"	m	class:IntfNs::Cell
 nameToPort_	interface/src/cell.h	/^    PortMap nameToPort_;$/;"	m	class:IntfNs::Cell
 name_	common/src/get_opt.h	/^    std::string                  name_;$/;"	m	class:CommonNs::OptMgr
+name_	core/src/gate.h	/^    char      *name_; $/;"	m	class:CoreNs::Gate
 name_	interface/src/cell.h	/^            char    name_[NAME_LEN];$/;"	m	class:IntfNs::Cell
 name_	interface/src/cell.h	/^    char   name_[NAME_LEN];$/;"	m	class:IntfNs::Net
 name_	interface/src/cell.h	/^    char name_[NAME_LEN];$/;"	m	class:IntfNs::Port
@@ -3644,7 +3670,10 @@ nppi_	core/src/circuit.h	/^    int             nppi_;        \/\/ number of PPIs
 nppi_	core/src/pattern.h	/^    int        nppi_;$/;"	m	class:CoreNs::PatternProcessor
 nrecover_	core/src/simulator.h	/^    int             nrecover_; \/\/ number of recovers needed $/;"	m	class:CoreNs::Simulator
 nsi_	core/src/pattern.h	/^    int        nsi_;$/;"	m	class:CoreNs::PatternProcessor
+operator !=	core/src/logic-hex.h	/^inline bool operator!=(const HexValue& lhs, const HexValue& rhs) {$/;"	f	namespace:CoreNs
 operator <	interface/src/global.h	/^inline bool NameKey::operator<(const NameKey &key) const {$/;"	f	class:IntfNs::NameKey
+operator =	core/src/logic-hex.h	/^inline HexValue& HexValue::operator=(HexValue& hv) {$/;"	f	class:CoreNs::HexValue
+operator ==	core/src/logic-hex.h	/^inline bool operator==(const HexValue& lhs, const HexValue& rhs) {$/;"	f	namespace:CoreNs
 optMgr_	common/src/cmd.h	/^            OptMgr      optMgr_;$/;"	m	class:CommonNs::Cmd
 optToSet_	common/src/get_opt.h	/^    std::map<Opt *, bool>        optToSet_;$/;"	m	class:CommonNs::OptMgr
 optToVar_	common/src/get_opt.h	/^    std::map<Opt *, std::string> optToVar_;$/;"	m	class:CommonNs::OptMgr

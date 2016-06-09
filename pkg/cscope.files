@@ -24,6 +24,7 @@
 ./core/src/pattern_rw.cpp
 ./core/src/circuit.cpp
 ./core/src/fault.h
+./core/src/logic-hex.h
 ./core/src/pattern_rw.h
 ./common/src/ascii.h
 ./common/src/tm_usage.cpp

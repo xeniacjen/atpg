@@ -13,7 +13,7 @@
 
 #include "interface/cell.h"
 
-#include "logic.h"
+#include "logic-hex.h"
 
 using namespace std; 
 

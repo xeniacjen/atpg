@@ -37,15 +37,20 @@ public:
     void Init(); 
 
     bool EventDrivenSim(); 
+    bool EventDrivenSimHex(); 
     void PushFanoutEvent(int gid); 
     void PushEvent(int gid); 
+    void PushFanoutEventHex(int gid); 
+    void PushEventHex(int gid); 
 
     bool MakeDecision(Gate *g, Value v); 
     bool BackTrack(); 
 
     Value GetVal(int gid) const; 
+    HexValue GetHexVal(int gid) const; 
     Value Get3Val(int gid) const; 
     bool  SetVal(int gid, Value v); 
+    bool  SetVal(int gid, HexValue hv); 
 
     void PrintGate(int gid) const; 
 
@@ -59,6 +64,8 @@ public:
 private: 
     Value           GoodEval(Gate *g) const; 
     Value           FaultEval(Gate* g) const; 
+    HexValue        GoodEvalHex(Gate *g) const; 
+    HexValue        FaultEvalHex(Gate *g) const; 
 
     Circuit         *cir_; 
     Simulator       *sim_;  
@@ -66,7 +73,9 @@ private:
     Fault           *target_fault_; 
 
     Value           *values_; 
+    HexValue        *hvalues_; 
     std::queue<int> *events_; 
+    std::queue<int> *hevents_; 
 
     DecisionTree    decision_tree_; 
     std::vector<int> e_front_list_; 
@@ -78,18 +87,22 @@ inline Implicator::Implicator(Circuit *cir, Fault *ftarget) {
 
     sim_    = new Simulator(cir_); 
     values_ = new Value [cir_->tgate_]; 
+    hvalues_= new HexValue [cir_->tgate_];  
     events_ = new std::queue<int>();  
+    hevents_ = new std::queue<int>();  
 }
 
 inline Implicator::~Implicator() {
     delete    sim_; 
     delete [] values_; 
     delete    events_; 
+    delete    hevents_; 
 } 
 
 inline void Implicator::Init() {
     for (int i=0; i<cir_->tgate_; i++) { 
         values_[i] = X; 
+        hvalues_[i] = HexValue(X); 
         cir_->gates_[i].gl_ = PARA_L; 
         cir_->gates_[i].gh_ = PARA_L; 
         cir_->gates_[i].fl_ = PARA_L; 
@@ -99,6 +112,10 @@ inline void Implicator::Init() {
 
 inline Value Implicator::GetVal(int gid) const {
     return values_[gid]; 
+}
+
+inline HexValue Implicator::GetHexVal(int gid) const {
+    return hvalues_[gid]; 
 }
 
 inline Value Implicator::Get3Val(int gid) const {
@@ -115,6 +132,14 @@ inline bool Implicator::SetVal(int gid, Value v) {
     return true; 
 }
 
+inline bool Implicator::SetVal(int gid, HexValue hv) {
+    if (!hv.isSubset(hvalues_[gid])) return false; 
+
+    hvalues_[gid] = hv; 
+    return true; 
+}
+
+ 
 inline void Implicator::GetPiPattern(Pattern *p) const {
     for (int i=0; i<cir_->npi_; i++)    
         p->pi1_[i] = Get3Val(i); 

@@ -46,6 +46,10 @@ bool Implicator::EventDrivenSim() {
     return true; 
 }
 
+bool Implicator::EventDrivenSimHex() {
+    // TODO 
+}
+
 Value Implicator::GoodEval(Gate *g) const { 
     Value v = GetVal(g->fis_[0]); 
     vector<Value> vs; 
@@ -79,16 +83,6 @@ Value Implicator::GoodEval(Gate *g) const {
         case Gate::NOR3: 
         case Gate::NOR4: 
             return EvalNorN(vs); 
-            break; 
-        case Gate::XOR: 
-        case Gate::XOR2: 
-        case Gate::XOR3: 
-            return EvalXorN(vs); 
-            break; 
-        case Gate::XNOR: 
-        case Gate::XNOR2: 
-        case Gate::XNOR3: 
-            return EvalXnorN(vs); 
             break; 
         case Gate::BUF: 
         case Gate::PO: 
@@ -156,16 +150,6 @@ Value Implicator::FaultEval(Gate *g) const {
             case Gate::NOR4: 
                 return EvalNorN(vs); 
                 break; 
-            case Gate::XOR: 
-            case Gate::XOR2: 
-            case Gate::XOR3: 
-                return EvalXorN(vs); 
-                break; 
-            case Gate::XNOR: 
-            case Gate::XNOR2: 
-            case Gate::XNOR3: 
-                return EvalXnorN(vs); 
-                break; 
             case Gate::PO: 
             case Gate::PPO: 
             case Gate::BUF: 
@@ -193,6 +177,21 @@ void Implicator::PushFanoutEvent(int gid) {
     Gate *g = &cir_->gates_[gid]; 
     for (int n=0; n<g->nfo_; n++) 
         PushEvent(g->fos_[n]); 
+}
+
+void Implicator::PushEventHex(int gid) {
+    Gate *g = &cir_->gates_[gid]; 
+    if (g->type_==Gate::PI || g->type_==Gate::PPI)
+        if (target_fault_->gate_!=gid) assert(0); 
+
+    hevents_->push(gid); 
+
+}
+
+void Implicator::PushFanoutEventHex(int gid) {
+    Gate *g = &cir_->gates_[gid]; 
+    for (int n=0; n<g->nfo_; n++) 
+        PushEventHex(g->fos_[n]); 
 }
 
 bool Implicator::IsFaultAtPo() const {
@@ -224,17 +223,20 @@ bool Implicator::MakeDecision(Gate *g, Value v) {
     // if (!SetVal(g->id_, v)) return false; 
     assert(g->type_==Gate::PI || g->type_==Gate::PPI); 
     if (!SetVal(g->id_, v)) assert(0); 
+    // if (!SetVal(g->id_, HexValue(v))) assert(0); 
 
-    if (v==L) g->gl_ = PARA_H; 
-    else if (v==H) g->gh_ = PARA_H; 
-
+    //TODO: HexValue backtrack functionality 
     decision_tree_.put(g->id_, e_front_list_.size()); 
     e_front_list_.push_back(g->id_); 
 
-    if (target_fault_->gate_==g->id_) 
+    if (target_fault_->gate_==g->id_) { 
         PushEvent(g->id_); 
-    else 
+        // PushEventHex(g->id_); 
+    }
+    else { 
         PushFanoutEvent(g->id_); 
+        // PushFanoutEventHex(g->id_); 
+    }
     return true; 
 }
 

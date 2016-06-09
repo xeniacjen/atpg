@@ -1,0 +1,183 @@
+diff --git a/pkg/core/src/simulator.h b/pkg/core/src/simulator.h
+index ac6bb44..3b256b3 100644
+--- a/pkg/core/src/simulator.h
++++ b/pkg/core/src/simulator.h
+@@ -9,6 +9,8 @@
+ #ifndef _CORE_SIMULATOR_H_
+ #define _CORE_SIMULATOR_H_
+ 
++#define MAX_FANIN   64 
++
+ #include <stack>
+ 
+ #include "pattern.h"
+@@ -50,8 +52,8 @@ protected:
+     int             nrecover_; // number of recovers needed 
+ 	//  this is to inject fault into the circuit
+ 	//  faultInjectL_ =1 faultInjectH_ =0 inject a stuck-at zero fault
+-    ParaValue       (*faultInjectL_)[5];  
+-    ParaValue       (*faultInjectH_)[5];
++    ParaValue       (*faultInjectL_)[MAX_FANIN + 1];  
++    ParaValue       (*faultInjectH_)[MAX_FANIN + 1];
+ 
+     // parallel fault
+     void            pfReset();
+@@ -79,8 +81,8 @@ inline Simulator::Simulator(Circuit *cir) {
+     processed_ = new bool[cir_->tgate_];
+     recover_   = new int[cir_->tgate_];
+     nrecover_  = 0;
+-    faultInjectL_     = new ParaValue[cir_->tgate_][5];
+-    faultInjectH_     = new ParaValue[cir_->tgate_][5];
++    faultInjectL_     = new ParaValue[cir_->tgate_][MAX_FANIN + 1];
++    faultInjectH_     = new ParaValue[cir_->tgate_][MAX_FANIN + 1];
+ 
+     memset(processed_, 0, cir_->tgate_ * sizeof(bool));
+     memset(faultInjectL_, 0, cir_->tgate_ * 5 * sizeof(ParaValue));
+@@ -295,6 +297,14 @@ inline void Simulator::goodEval(const int &i) {
+             cir_->gates_[i].gl_ = l1;
+             cir_->gates_[i].gh_ = h1;
+             break;
++        case Gate::AND: 
++            cir_->gates_[i].gl_ = l1; 
++            cir_->gates_[i].gh_ = h1; 
++            for (int j=1; j<cir_->gates_[i].nfi_; j++) {
++                cir_->gates_[i].gl_ |= cir_->gates_[cir_->gates_[i].fis_[j]].gl_; 
++                cir_->gates_[i].gh_ &= cir_->gates_[cir_->gates_[i].fis_[j]].gh_; 
++            }
++            break;     
+         case Gate::AND2:
+             cir_->gates_[i].gl_ = l1 | l2;
+             cir_->gates_[i].gh_ = h1 & h2;
+@@ -307,6 +317,14 @@ inline void Simulator::goodEval(const int &i) {
+             cir_->gates_[i].gl_ = l1 | l2 | l3 | l4;
+             cir_->gates_[i].gh_ = h1 & h2 & h3 & h4;
+             break;
++        case Gate::NAND: 
++            cir_->gates_[i].gl_ = h1; 
++            cir_->gates_[i].gh_ = l1; 
++            for (int j=1; j<cir_->gates_[i].nfi_; j++) {
++                cir_->gates_[i].gl_ &= cir_->gates_[cir_->gates_[i].fis_[j]].gh_; 
++                cir_->gates_[i].gh_ |= cir_->gates_[cir_->gates_[i].fis_[j]].gl_; 
++            }
++            break;     
+         case Gate::NAND2:
+             cir_->gates_[i].gl_ = h1 & h2;
+             cir_->gates_[i].gh_ = l1 | l2;
+@@ -319,6 +337,14 @@ inline void Simulator::goodEval(const int &i) {
+             cir_->gates_[i].gl_ = h1 & h2 & h3 & h4;
+             cir_->gates_[i].gh_ = l1 | l2 | l3 | l4;
+             break;
++        case Gate::OR: 
++            cir_->gates_[i].gl_ = l1; 
++            cir_->gates_[i].gh_ = h1; 
++            for (int j=1; j<cir_->gates_[i].nfi_; j++) {
++                cir_->gates_[i].gl_ &= cir_->gates_[cir_->gates_[i].fis_[j]].gl_; 
++                cir_->gates_[i].gh_ |= cir_->gates_[cir_->gates_[i].fis_[j]].gh_; 
++            }
++            break;     
+         case Gate::OR2:
+             cir_->gates_[i].gl_ = l1 & l2;
+             cir_->gates_[i].gh_ = h1 | h2;
+@@ -331,6 +357,14 @@ inline void Simulator::goodEval(const int &i) {
+             cir_->gates_[i].gl_ = l1 & l2 & l3 & l4;
+             cir_->gates_[i].gh_ = h1 | h2 | h3 | h4;
+             break;
++        case Gate::NOR: 
++            cir_->gates_[i].gl_ = h1; 
++            cir_->gates_[i].gh_ = l1; 
++            for (int j=1; j<cir_->gates_[i].nfi_; j++) {
++                cir_->gates_[i].gl_ |= cir_->gates_[cir_->gates_[i].fis_[j]].gh_; 
++                cir_->gates_[i].gh_ &= cir_->gates_[cir_->gates_[i].fis_[j]].gl_; 
++            }
++            break;     
+         case Gate::NOR2:
+             cir_->gates_[i].gl_ = h1 | h2;
+             cir_->gates_[i].gh_ = l1 & l2;
+@@ -420,6 +454,17 @@ inline void Simulator::faultEval(const int &i) {
+                         | faultInjectL_[i][4];
+     const ParaValue h4 = (cir_->gates_[fi4].fh_ & ~faultInjectL_[i][4])
+                         | faultInjectH_[i][4];
++
++    ParaValue *l = new ParaValue[cir_->gates_[i].nfi_]; 
++    ParaValue *h = new ParaValue[cir_->gates_[i].nfi_]; 
++
++    for (int j=0; j<cir_->gates_[i].nfi_; j++) {
++        l[j] = (cir_->gates_[cir_->gates_[i].fis_[j]].fl_ & ~faultInjectH_[i][j+1])
++                        | faultInjectL_[i][j+1];
++        h[j] = (cir_->gates_[cir_->gates_[i].fis_[j]].fh_ & ~faultInjectL_[i][j+1])
++                        | faultInjectH_[i][j+1];
++    }
++
+     //evaluate faulty value of gate's output
+     switch (cir_->gates_[i].type_) {
+         case Gate::INV:
+@@ -432,6 +477,14 @@ inline void Simulator::faultEval(const int &i) {
+             cir_->gates_[i].fl_ = l1;
+             cir_->gates_[i].fh_ = h1;
+             break;
++        case Gate::AND: 
++            cir_->gates_[i].fl_ = l[0]; 
++            cir_->gates_[i].fh_ = h[0];
++            for (int j=1; j<cir_->gates_[i].nfi_; j++) {
++                cir_->gates_[i].fl_ |= l[j]; 
++                cir_->gates_[i].fh_ &= h[j];
++            }
++            break; 
+         case Gate::AND2:
+             cir_->gates_[i].fl_ = l1 | l2;
+             cir_->gates_[i].fh_ = h1 & h2;
+@@ -444,6 +497,14 @@ inline void Simulator::faultEval(const int &i) {
+             cir_->gates_[i].fl_ = l1 | l2 | l3 | l4;
+             cir_->gates_[i].fh_ = h1 & h2 & h3 & h4;
+             break;
++        case Gate::NAND: 
++            cir_->gates_[i].fl_ = h[0]; 
++            cir_->gates_[i].fh_ = l[0];
++            for (int j=1; j<cir_->gates_[i].nfi_; j++) {
++                cir_->gates_[i].fl_ &= l[j]; 
++                cir_->gates_[i].fh_ |= h[j];
++            }
++            break; 
+         case Gate::NAND2:
+             cir_->gates_[i].fl_ = h1 & h2;
+             cir_->gates_[i].fh_ = l1 | l2;
+@@ -456,6 +517,14 @@ inline void Simulator::faultEval(const int &i) {
+             cir_->gates_[i].fl_ = h1 & h2 & h3 & h4;
+             cir_->gates_[i].fh_ = l1 | l2 | l3 | l4;
+             break;
++        case Gate::OR: 
++            cir_->gates_[i].fl_ = l[0]; 
++            cir_->gates_[i].fh_ = h[0];
++            for (int j=1; j<cir_->gates_[i].nfi_; j++) {
++                cir_->gates_[i].fl_ &= l[j]; 
++                cir_->gates_[i].fh_ |= h[j];
++            }
++            break; 
+         case Gate::OR2:
+             cir_->gates_[i].fl_ = l1 & l2;
+             cir_->gates_[i].fh_ = h1 | h2;
+@@ -468,6 +537,14 @@ inline void Simulator::faultEval(const int &i) {
+             cir_->gates_[i].fl_ = l1 & l2 & l3 & l4;
+             cir_->gates_[i].fh_ = h1 | h2 | h3 | h4;
+             break;
++        case Gate::NOR: 
++            cir_->gates_[i].fl_ = h[0]; 
++            cir_->gates_[i].fh_ = l[0];
++            for (int j=1; j<cir_->gates_[i].nfi_; j++) {
++                cir_->gates_[i].fl_ |= l[j]; 
++                cir_->gates_[i].fh_ &= h[j];
++            }
++            break; 
+         case Gate::NOR2:
+             cir_->gates_[i].fl_ = h1 | h2;
+             cir_->gates_[i].fh_ = l1 & l2;
+@@ -525,6 +602,9 @@ inline void Simulator::faultEval(const int &i) {
+                          | faultInjectL_[i][0];
+     cir_->gates_[i].fh_ = (cir_->gates_[i].fh_ & ~faultInjectL_[i][0])
+                          | faultInjectH_[i][0];
++
++    delete [] l; 
++    delete [] h; 
+ } //}}}
+ 
+ };

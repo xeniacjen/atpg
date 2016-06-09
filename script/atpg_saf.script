@@ -10,8 +10,11 @@
 ./bin/opt/atpg -f ./script/atpg_s9234_saf.script
 ./bin/opt/atpg -f ./script/atpg_s15850_saf.script
 ./bin/opt/atpg -f ./script/atpg_s38417_saf.script
+./bin/opt/atpg -f ./script/atpg_s35932_saf.script 
 ./bin/opt/atpg -f ./script/atpg_b15s_saf.script
 ./bin/opt/atpg -f ./script/atpg_b17s_saf.script
 ./bin/opt/atpg -f ./script/atpg_b20s_saf.script
 ./bin/opt/atpg -f ./script/atpg_b21s_saf.script
 ./bin/opt/atpg -f ./script/atpg_b22s_saf.script
+./bin/opt/atpg -f ./script/atpg_mtx_top_saf.script
+./bin/opt/atpg -f ./script/atpg_starc_top_saf.script 

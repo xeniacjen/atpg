@@ -1,4 +1,4 @@
-cscope 15 $HOME/Documents/atpg/pkg -q 0000007166 0001470897
+cscope 15 $HOME/Documents/atpg/pkg -q 0000007198 0001478223
 	@atpg/src/atpg_cmd.cpp
 
 8 
@@ -3415,9 +3415,15 @@ c_°r
 
 598 i‡(
 	gc
-)
+) {
 
-599 
+599 i‡(
+	gc
+->
+	glibc_
+) {
+
+600 
 size_t
  
 	gj
@@ -3429,7 +3435,7 @@ size_t
 gëNCñl
 (); ++j)
 
-600 
+601 
 ªp‹tG©e
 (
 ÁnMgr_
@@ -3447,7 +3453,23 @@ id_
 j
 );
 
-601 
+603 
+ªp‹tG©e
+(
+ÁnMgr_
+->
+©pg_mgr
+->
+cú_
+->
+˚ŒToG©e_
+[
+c
+->
+id_
+]);
+
+606 
 P‹t
  *
 	gp
@@ -3465,11 +3487,11 @@ gëP‹t
 c_°r
 ());
 
-602 i‡(
+607 i‡(
 	gp
 )
 
-603 
+608 
 ªp‹tG©e
 (
 ÁnMgr_
@@ -3485,17 +3507,17 @@ p
 id_
 ]);
 
-604 i‡(!
+609 i‡(!
 	gc
  && !
 	gp
 ) {
 
-605 
+610 
 	g˚º
  << "**ERROR ReportGateCmd::exec(): cell orÖort `";
 
-606 
+611 
 	g˚º
  << 
 	g«me
@@ -3503,11 +3525,11 @@ id_
 	gídl
 ;
 
-611  
+616  
 	gåue
 ;
 
-614 
+619 
 	gRï‹tG©eCmd
 ::
 	$ªp‹tG©e
@@ -3515,7 +3537,7 @@ id_
 i
 ) const {
 
-615 
+620 
 G©e
  *
 g
@@ -3531,11 +3553,11 @@ g©es_
 i
 ];
 
-616 
+621 
 cout
  << "# ";
 
-617 i‡(
+622 i‡(
 g
 ->
 ty≥_
@@ -3547,7 +3569,7 @@ PI
 PO
 )
 
-618 
+623 
 cout
  << 
 ÁnMgr_
@@ -3567,7 +3589,7 @@ cid_
 «me_
 ;
 
-620 
+625 
 cout
  << 
 ÁnMgr_
@@ -3587,13 +3609,13 @@ cid_
 «me_
 ;
 
-621 
+626 
 cout
  << " id(" << 
 i
  << ") ";
 
-622 
+627 
 cout
  << "lvl(" << 
 g
@@ -3601,7 +3623,7 @@ g
 lvl_
  << ") ";
 
-623 
+628 
 cout
  << "ty≥(" << 
 g
@@ -3609,7 +3631,7 @@ g
 ty≥_
  << ") ";
 
-624 
+629 
 cout
  << "‰ame(" << 
 g
@@ -3617,13 +3639,13 @@ g
 ‰ame_
  << ")";
 
-625 
+630 
 cout
  << 
 ídl
 ;
 
-626 
+631 
 cout
  << "# fi[" << 
 g
@@ -3631,7 +3653,7 @@ g
 nfi_
  << "]";
 
-627 
+632 
 j
  = 0; j < 
 g
@@ -3639,7 +3661,7 @@ g
 nfi_
 ; ++j)
 
-628 
+633 
 cout
  << " " << 
 g
@@ -3649,13 +3671,13 @@ fis_
 j
 ];
 
-629 
+634 
 cout
  << 
 ídl
 ;
 
-630 
+635 
 cout
  << "# fo[" << 
 g
@@ -3663,7 +3685,7 @@ g
 nfo_
  << "]";
 
-631 
+636 
 j
  = 0; j < 
 g
@@ -3671,7 +3693,7 @@ g
 nfo_
 ; ++j)
 
-632 
+637 
 cout
  << " " << 
 g
@@ -3681,17 +3703,17 @@ fos_
 j
 ];
 
-633 
+638 
 cout
  << 
 ídl
  <<Éndl;
 
-634 
+639 
 	}
 }
 
-637 
+642 
 	gRï‹tVÆueCmd
 ::
 	$Rï‹tVÆueCmd
@@ -3707,19 +3729,19 @@ F™Mgr
 ÁnMgr
 ) :
 
-638 
+643 
 	$Cmd
 (
 «me
 ) {
 
-639 
+644 
 ÁnMgr_
  = 
 ÁnMgr
 ;
 
-640 
+645 
 ›tMgr_
 .
 	`£tName
@@ -3727,19 +3749,19 @@ F™Mgr
 «me
 );
 
-641 
+646 
 ›tMgr_
 .
 	`£tSh‹tDes
 ("report gate values");
 
-642 
+647 
 ›tMgr_
 .
 	`£tDes
 ("reports GATE values inÅhe circuit");
 
-643 
+648 
 Arg
  *
 ¨g
@@ -3751,7 +3773,7 @@ Arg
 OPT_INF
 ,
 
-646 
+651 
 ›tMgr_
 .
 	`ªgArg
@@ -3759,7 +3781,7 @@ OPT_INF
 ¨g
 );
 
-647 
+652 
 O±
  *
 ›t
@@ -3771,19 +3793,19 @@ O±
 BOOL
 , "print usage", "");
 
-648 
+653 
 ›t
 ->
 	`addFœg
 ("h");
 
-649 
+654 
 ›t
 ->
 	`addFœg
 ("help");
 
-650 
+655 
 ›tMgr_
 .
 	`ªgO±
@@ -3791,11 +3813,11 @@ BOOL
 ›t
 );
 
-651 
+656 
 	}
 }
 
-652 
+657 
 	gRï‹tVÆueCmd
 ::~
 	$Rï‹tVÆueCmd
@@ -3803,7 +3825,7 @@ BOOL
 	}
 }
 
-655 
+660 
 boﬁ
  
 Rï‹tVÆueCmd
@@ -3817,7 +3839,7 @@ ve˘‹
 ¨gv
 ) {
 
-656 
+661 
 ›tMgr_
 .
 ∑r£
@@ -3825,23 +3847,23 @@ ve˘‹
 ¨gv
 );
 
-658 i‡(
+663 i‡(
 	g›tMgr_
 .
 isFœgSë
 ("h")) {
 
-659 
+664 
 	g›tMgr_
 .
 ußge
 ();
 
-660  
+665  
 	gåue
 ;
 
-663 i‡(!
+668 i‡(!
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -3849,23 +3871,23 @@ ußge
 	gcú_
 ) {
 
-664 
+669 
 	g˚º
  << "**ERROR Rï‹tVÆueCmd::exec(): cúcuôÇìded" << 
 	gídl
 ;
 
-665  
+670  
 	gÁl£
 ;
 
-668 i‡(
+673 i‡(
 	g›tMgr_
 .
 gëNP¨£dArg
 () == 0) {
 
-669 
+674 
 i
  = 0; 
 	gi
@@ -3879,13 +3901,13 @@ i
 	gtg©e_
 ; ++i)
 
-670 
+675 
 ªp‹tVÆue
 (
 i
 );
 
-673 
+678 
 size_t
  
 	gi
@@ -3895,7 +3917,7 @@ size_t
 gëNP¨£dArg
 (); ++i) {
 
-674 
+679 
 °rög
  
 	g«me
@@ -3907,7 +3929,7 @@ gëP¨£dArg
 i
 );
 
-675 
+680 
 Cñl
  *
 	gc
@@ -3925,11 +3947,11 @@ gëCñl
 c_°r
 ());
 
-676 i‡(
+681 i‡(
 	gc
 )
 
-677 
+682 
 size_t
  
 	gj
@@ -3941,7 +3963,7 @@ size_t
 gëNCñl
 (); ++j)
 
-678 
+683 
 ªp‹tVÆue
 (
 ÁnMgr_
@@ -3959,7 +3981,7 @@ id_
 j
 );
 
-679 
+684 
 P‹t
  *
 	gp
@@ -3977,11 +3999,11 @@ gëP‹t
 c_°r
 ());
 
-680 i‡(
+685 i‡(
 	gp
 )
 
-681 
+686 
 ªp‹tVÆue
 (
 ÁnMgr_
@@ -3997,17 +4019,17 @@ p
 id_
 ]);
 
-682 i‡(!
+687 i‡(!
 	gc
  && !
 	gp
 ) {
 
-683 
+688 
 	g˚º
  << "**ERROR ReportValueCmd::exec(): cell orÖort `";
 
-684 
+689 
 	g˚º
  << 
 	g«me
@@ -4015,11 +4037,11 @@ id_
 	gídl
 ;
 
-689  
+694  
 	gåue
 ;
 
-692 
+697 
 	gRï‹tVÆueCmd
 ::
 	$ªp‹tVÆue
@@ -4027,7 +4049,7 @@ id_
 i
 ) const {
 
-693 
+698 
 G©e
  *
 g
@@ -4043,11 +4065,11 @@ g©es_
 i
 ];
 
-694 
+699 
 cout
  << "# ";
 
-695 i‡(
+700 i‡(
 g
 ->
 ty≥_
@@ -4059,7 +4081,7 @@ PI
 PO
 )
 
-696 
+701 
 cout
  << 
 ÁnMgr_
@@ -4079,7 +4101,7 @@ cid_
 «me_
 ;
 
-698 
+703 
 cout
  << 
 ÁnMgr_
@@ -4099,13 +4121,13 @@ cid_
 «me_
 ;
 
-699 
+704 
 cout
  << " id(" << 
 i
  << ") ";
 
-700 
+705 
 cout
  << "lvl(" << 
 g
@@ -4113,7 +4135,7 @@ g
 lvl_
  << ") ";
 
-701 
+706 
 cout
  << "ty≥(" << 
 g
@@ -4121,7 +4143,7 @@ g
 ty≥_
  << ") ";
 
-702 
+707 
 cout
  << "‰ame(" << 
 g
@@ -4129,17 +4151,17 @@ g
 ‰ame_
  << ")";
 
-703 
+708 
 cout
  << 
 ídl
 ;
 
-704 
+709 
 cout
  << "# good: ";
 
-705 
+710 
 	`¥ötVÆue
 (
 g
@@ -4149,17 +4171,17 @@ gl_
 gh_
 );
 
-706 
+711 
 cout
  << 
 ídl
 ;
 
-707 
+712 
 cout
  << "# faulty: ";
 
-708 
+713 
 	`¥ötVÆue
 (
 g
@@ -4169,17 +4191,17 @@ g
 fh_
 );
 
-709 
+714 
 cout
  << 
 ídl
  <<Éndl;
 
-710 
+715 
 	}
 }
 
-713 
+718 
 	gRï‹tSètsCmd
 ::
 	$Rï‹tSètsCmd
@@ -4195,19 +4217,19 @@ F™Mgr
 ÁnMgr
 ) :
 
-714 
+719 
 	$Cmd
 (
 «me
 ) {
 
-715 
+720 
 ÁnMgr_
  = 
 ÁnMgr
 ;
 
-716 
+721 
 ›tMgr_
 .
 	`£tName
@@ -4215,19 +4237,19 @@ F™Mgr
 «me
 );
 
-717 
+722 
 ›tMgr_
 .
 	`£tSh‹tDes
 ("report statistics");
 
-718 
+723 
 ›tMgr_
 .
 	`£tDes
 ("reports statistics on fault coverage");
 
-719 
+724 
 O±
  *
 ›t
@@ -4239,19 +4261,19 @@ O±
 BOOL
 , "print usage", "");
 
-720 
+725 
 ›t
 ->
 	`addFœg
 ("h");
 
-721 
+726 
 ›t
 ->
 	`addFœg
 ("help");
 
-722 
+727 
 ›tMgr_
 .
 	`ªgO±
@@ -4259,11 +4281,11 @@ BOOL
 ›t
 );
 
-723 
+728 
 	}
 }
 
-724 
+729 
 	gRï‹tSètsCmd
 ::~
 	$Rï‹tSètsCmd
@@ -4271,7 +4293,7 @@ BOOL
 	}
 }
 
-727 
+732 
 boﬁ
  
 Rï‹tSètsCmd
@@ -4285,7 +4307,7 @@ ve˘‹
 ¨gv
 ) {
 
-728 
+733 
 ›tMgr_
 .
 ∑r£
@@ -4293,23 +4315,23 @@ ve˘‹
 ¨gv
 );
 
-730 i‡(
+735 i‡(
 	g›tMgr_
 .
 isFœgSë
 ("h")) {
 
-731 
+736 
 	g›tMgr_
 .
 ußge
 ();
 
-732  
+737  
 	gåue
 ;
 
-735 i‡(!
+740 i‡(!
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -4321,23 +4343,23 @@ ußge
 size
 () == 0) {
 
-736 
+741 
 ˚º
  << "**WARN Rï‹tSètsCmd::exec():Çÿ°©i°ics" << 
 ídl
 ;
 
-737  
+742  
 	gÁl£
 ;
 
-741 
+746 
 °rög
  
 	g·y≥
  = "";
 
-742 
+747 
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -4347,43 +4369,43 @@ size
 	gty≥_
 ) {
 
-743 
+748 
 	gFau…Li°Exåa˘
 ::
 SAF
 :
 
-744 
+749 
 ·y≥
  = "SAF";
 
-746 
+751 
 	gFau…Li°Exåa˘
 ::
 TDF
 :
 
-747 
+752 
 ·y≥
  = "TDF";
 
-749 
+754 
 	gFau…Li°Exåa˘
 ::
 BRF
 :
 
-750 
+755 
 ·y≥
  = "BRF";
 
-755 
+760 
 °rög
  
 	g±y≥
  = "";
 
-756 
+761 
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -4393,43 +4415,43 @@ BRF
 	gty≥_
 ) {
 
-757 
+762 
 	gP©ã∫Pro˚ss‹
 ::
 BASIC_SCAN
 :
 
-758 
+763 
 ±y≥
  = "BASIC";
 
-760 
+765 
 	gP©ã∫Pro˚ss‹
 ::
 LAUNCH_CAPTURE
 :
 
-761 
+766 
 ±y≥
  = "LOC";
 
-763 
+768 
 	gP©ã∫Pro˚ss‹
 ::
 LAUNCH_SHIFT
 :
 
-764 
+769 
 ±y≥
  = "LOS";
 
-772 
+777 
 size_t
  
 	g≈©
  = 0;
 
-774 i‡(
+779 i‡(
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -4437,7 +4459,7 @@ size_t
 	gpcﬁl_
 )
 
-775 
+780 
 	g≈©
  = 
 ÁnMgr_
@@ -4451,7 +4473,7 @@ pcﬁl_
 size
 ();
 
-777 
+782 
 size_t
  
 	gfu
@@ -4467,49 +4489,49 @@ cuºít_
 size
 ();
 
-778 
+783 
 size_t
  
 	gud
  = 0;
 
-779 
+784 
 size_t
  
 	gdt
  = 0;
 
-780 
+785 
 size_t
  
 	g±
  = 0;
 
-781 
+786 
 size_t
  
 	gau
  = 0;
 
-782 
+787 
 size_t
  
 	gti
  = 0;
 
-783 
+788 
 size_t
  
 	gª
  = 0;
 
-784 
+789 
 size_t
  
 	gab
  = 0;
 
-786 
+791 
 Fau…Li°Iãr
  
 	gô
@@ -4525,7 +4547,7 @@ cuºít_
 begö
 ();
 
-787  ; 
+792  ; 
 	gô
  !
 ÁnMgr_
@@ -4539,83 +4561,83 @@ cuºít_
 íd
 (); ++it) {
 
-788 (*
+793 (*
 	gô
 )->
 	g°©e_
 ) {
 
-789 
+794 
 	gFau…
 ::
 UD
 :
 
-791 
+796 
 ud
 ++;
 
-793 
+798 
 	gFau…
 ::
 DT
 :
 
-794 
+799 
 dt
 ++;
 
-796 
+801 
 	gFau…
 ::
 PT
 :
 
-797 
+802 
 ±
 ++;
 
-799 
+804 
 	gFau…
 ::
 AU
 :
 
-801 
+806 
 au
 ++;
 
-803 
+808 
 	gFau…
 ::
 TI
 :
 
-804 
+809 
 ti
 ++;
 
-806 
+811 
 	gFau…
 ::
 RE
 :
 
-807 
+812 
 ª
 ++;
 
-809 
+814 
 	gFau…
 ::
 AB
 :
 
-810 
+815 
 ab
 ++;
 
-815 
+820 
 	gfc
  = ()
 dt
@@ -4623,7 +4645,7 @@ dt
 fu
  * 100;
 
-816 
+821 
 	gtc
  = ()
 dt
@@ -4635,7 +4657,7 @@ ud
 ab
 ) * 100;
 
-817 
+822 
 	g´
  = ()(
 dt
@@ -4649,31 +4671,31 @@ ti
 fu
  * 100;
 
-819 
+824 
 	gcout
  << 
 	gright
 ;
 
-820 
+825 
 	gcout
  << 
 £çªcisi⁄
 (4);
 
-821 
+826 
 	gcout
  << "# Sèti°ic†Rï‹t" << 
 	gídl
 ;
 
-822 
+827 
 	gcout
  << "# CúcuôÇamê " << 
 £tw
 (19);
 
-823 
+828 
 	gcout
  << 
 	gÁnMgr_
@@ -4687,7 +4709,7 @@ gëT›
 	gídl
 ;
 
-824 
+829 
 	gcout
  << "# Fau… modñ " << 
 £tw
@@ -4697,7 +4719,7 @@ gëT›
 	gídl
 ;
 
-825 
+830 
 	gcout
  << "# P©ã∫Åy≥ " << 
 £tw
@@ -4707,25 +4729,25 @@ gëT›
 	gídl
 ;
 
-826 
+831 
 	gcout
  << "# -------------------------------------------------" << 
 	gídl
 ;
 
-827 
+832 
 	gcout
  << "# Fau… cœs£† #Áu…s" << 
 	gídl
 ;
 
-828 
+833 
 	gcout
  << "# ---------------------------- -------------------" << 
 	gídl
 ;
 
-829 
+834 
 	gcout
  << "# FU (fuŒË " << 
 £tw
@@ -4735,13 +4757,13 @@ gëT›
 	gídl
 ;
 
-830 
+835 
 	gcout
  << "# -------------------------- -------------------" << 
 	gídl
 ;
 
-831 
+836 
 	gcout
  << "# UD (undëe˘edË " << 
 £tw
@@ -4751,7 +4773,7 @@ gëT›
 	gídl
 ;
 
-832 
+837 
 	gcout
  << "# PT (possiblyÅe°abÀË " << 
 £tw
@@ -4761,7 +4783,7 @@ gëT›
 	gídl
 ;
 
-833 
+838 
 	gcout
  << "# AU (©pg u¡e°abÀË " << 
 £tw
@@ -4771,7 +4793,7 @@ gëT›
 	gídl
 ;
 
-834 
+839 
 	gcout
  << "# RE (ªdund™tË " << 
 £tw
@@ -4781,7 +4803,7 @@ gëT›
 	gídl
 ;
 
-835 
+840 
 	gcout
  << "# AB (©pgáb‹tË " << 
 £tw
@@ -4791,7 +4813,7 @@ gëT›
 	gídl
 ;
 
-836 
+841 
 	gcout
  << "# TI (tõdË " << 
 £tw
@@ -4801,13 +4823,13 @@ gëT›
 	gídl
 ;
 
-837 
+842 
 	gcout
  << "# -------------------------- -------------------" << 
 	gídl
 ;
 
-838 
+843 
 	gcout
  << "# DT (dëe˘edË " << 
 £tw
@@ -4817,29 +4839,29 @@ gëT›
 	gídl
 ;
 
-839 
+844 
 	gcout
  << "# -------------------------------------------------" << 
 	gídl
 ;
 
-840 
+845 
 	gcout
  << "# CovîagêÖî˚¡age" << 
 	gídl
 ;
 
-841 
+846 
 	gcout
  << "# -------------------------- -------------------" << 
 	gídl
 ;
 
-842 
+847 
 	gcout
  << "#Åest coverage ";
 
-843 
+848 
 	gcout
  << 
 £tw
@@ -4849,11 +4871,11 @@ gëT›
 	gídl
 ;
 
-844 
+849 
 	gcout
  << "# fault coverage ";
 
-845 
+850 
 	gcout
  << 
 £tw
@@ -4863,11 +4885,11 @@ gëT›
 	gídl
 ;
 
-846 
+851 
 	gcout
  << "#átpgÉffectiveness ";
 
-847 
+852 
 	gcout
  << 
 £tw
@@ -4877,13 +4899,13 @@ gëT›
 	gídl
 ;
 
-848 
+853 
 	gcout
  << "# -------------------------------------------------" << 
 	gídl
 ;
 
-849 
+854 
 	gcout
  << "# #P©ã∫† " << 
 £tw
@@ -4893,13 +4915,13 @@ gëT›
 	gídl
 ;
 
-850 
+855 
 	gcout
  << "# -------------------------------------------------" << 
 	gídl
 ;
 
-851 
+856 
 	gcout
  << "# ATPGÑu¡imê " << 
 £tw
@@ -4907,23 +4929,23 @@ gëT›
 	gπime
 ;
 
-852 
+857 
 	gcout
  << " s" << 
 	gídl
 ;
 
-853 
+858 
 	gcout
  << "# -------------------------------------------------" << 
 	gídl
 ;
 
-855  
+860  
 	gåue
 ;
 
-859 
+864 
 	gAddPöC⁄sCmd
 ::
 	$AddPöC⁄sCmd
@@ -4935,7 +4957,7 @@ gëT›
 «me
 ,
 
-860 
+865 
 F™Mgr
  *
 ÁnMgr
@@ -4945,13 +4967,13 @@ F™Mgr
 «me
 ) {
 
-861 
+866 
 ÁnMgr_
  = 
 ÁnMgr
 ;
 
-862 
+867 
 ›tMgr_
 .
 	`£tName
@@ -4959,19 +4981,19 @@ F™Mgr
 «me
 );
 
-863 
+868 
 ›tMgr_
 .
 	`£tSh‹tDes
 ("addÖin constraint");
 
-864 
+869 
 ›tMgr_
 .
 	`£tDes
 ("constraint PI(s)Åo 0 or 1");
 
-865 
+870 
 Arg
  *
 ¨g
@@ -4983,7 +5005,7 @@ Arg
 REQ_INF
 , "PIsÅo be constrainted", "PI");
 
-866 
+871 
 ›tMgr_
 .
 	`ªgArg
@@ -4991,7 +5013,7 @@ REQ_INF
 ¨g
 );
 
-867 
+872 
 ¨g
  = 
 √w
@@ -5003,7 +5025,7 @@ Arg
 REQ
 , "constraint value, 0 or 1", "<0|1>");
 
-868 
+873 
 ›tMgr_
 .
 	`ªgArg
@@ -5011,7 +5033,7 @@ REQ
 ¨g
 );
 
-869 
+874 
 O±
  *
 ›t
@@ -5023,19 +5045,19 @@ O±
 BOOL
 , "print usage", "");
 
-870 
+875 
 ›t
 ->
 	`addFœg
 ("h");
 
-871 
+876 
 ›t
 ->
 	`addFœg
 ("help");
 
-872 
+877 
 ›tMgr_
 .
 	`ªgO±
@@ -5043,11 +5065,11 @@ BOOL
 ›t
 );
 
-873 
+878 
 	}
 }
 
-874 
+879 
 	gAddPöC⁄sCmd
 ::~
 	$AddPöC⁄sCmd
@@ -5055,7 +5077,7 @@ BOOL
 	}
 }
 
-877 
+882 
 boﬁ
  
 AddPöC⁄sCmd
@@ -5069,7 +5091,7 @@ ve˘‹
 ¨gv
 ) {
 
-878 
+883 
 ›tMgr_
 .
 ∑r£
@@ -5077,23 +5099,23 @@ ve˘‹
 ¨gv
 );
 
-880 i‡(
+885 i‡(
 	g›tMgr_
 .
 isFœgSë
 ("h")) {
 
-881 
+886 
 	g›tMgr_
 .
 ußge
 ();
 
-882  
+887  
 	gåue
 ;
 
-885 i‡(!
+890 i‡(!
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -5101,41 +5123,41 @@ ußge
 	gcú_
 ) {
 
-886 
+891 
 	g˚º
  << "**ERROR AddPinConsCmd::exec(): circuitÇeeded";
 
-887 
+892 
 	g˚º
  << 
 	gídl
 ;
 
-888  
+893  
 	gÁl£
 ;
 
-891 i‡(
+896 i‡(
 	g›tMgr_
 .
 gëNP¨£dArg
 () < 2) {
 
-892 
+897 
 	g˚º
  << "**ERROR AddPinConsCmd::exec():ÇeedátÜeast one PI ";
 
-893 
+898 
 	g˚º
  << "™dÅhêc⁄°øöàvÆue" << 
 	gídl
 ;
 
-894  
+899  
 	gÁl£
 ;
 
-897 
+902 
 size_t
  
 	g≈i
@@ -5145,7 +5167,7 @@ size_t
 gëNP¨£dArg
 () - 1;
 
-898 
+903 
 	gc⁄s
  = 
 ©oi
@@ -5159,7 +5181,7 @@ gëP¨£dArg
 c_°r
 ());
 
-899 
+904 
 size_t
  
 	gi
@@ -5167,7 +5189,7 @@ size_t
 	g≈i
 ; ++i) {
 
-900 
+905 
 °rög
  
 	gpöame
@@ -5179,7 +5201,7 @@ gëP¨£dArg
 i
 );
 
-901 
+906 
 P‹t
  *
 	gp
@@ -5197,23 +5219,23 @@ pöame
 c_°r
 ());
 
-902 i‡(!
+907 i‡(!
 	gp
 ) {
 
-903 
+908 
 	g˚º
  << "**ERROR AddPöC⁄sCmd::exec(): P‹à`" << 
 	gpöame
 ;
 
-904 
+909 
 	g˚º
  << "'ÇŸ found" << 
 	gídl
 ;
 
-907 
+912 
 	ggid
  = 
 ÁnMgr_
@@ -5229,7 +5251,7 @@ p
 id_
 ];
 
-908 i‡(
+913 i‡(
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -5247,19 +5269,19 @@ G©e
 PI
 ) {
 
-909 
+914 
 ˚º
  << "**ERROR AddPöC⁄sCmd::exec(): P‹à`" << 
 pöame
 ;
 
-910 
+915 
 	g˚º
  << "' i†nŸ PI" << 
 	gídl
 ;
 
-913 
+918 
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -5275,11 +5297,11 @@ gid
 åue
 ;
 
-914 i‡(
+919 i‡(
 	gc⁄s
 )
 
-915 
+920 
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -5295,7 +5317,7 @@ gid
 PARA_H
 ;
 
-917 
+922 
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -5311,11 +5333,11 @@ gid
 PARA_L
 ;
 
-920  
+925  
 	gåue
 ;
 
-924 
+929 
 	gRunLogicSimCmd
 ::
 	$RunLogicSimCmd
@@ -5331,19 +5353,19 @@ F™Mgr
 ÁnMgr
 ) :
 
-925 
+930 
 	$Cmd
 (
 «me
 ) {
 
-926 
+931 
 ÁnMgr_
  = 
 ÁnMgr
 ;
 
-927 
+932 
 ›tMgr_
 .
 	`£tName
@@ -5351,19 +5373,19 @@ F™Mgr
 «me
 );
 
-928 
+933 
 ›tMgr_
 .
 	`£tSh‹tDes
 ("runÜogic simulation");
 
-929 
+934 
 ›tMgr_
 .
 	`£tDes
 ("runÜogic simulation onÅhe givenÖattern");
 
-930 
+935 
 O±
  *
 ›t
@@ -5375,19 +5397,19 @@ O±
 BOOL
 , "print usage", "");
 
-931 
+936 
 ›t
 ->
 	`addFœg
 ("h");
 
-932 
+937 
 ›t
 ->
 	`addFœg
 ("help");
 
-933 
+938 
 ›tMgr_
 .
 	`ªgO±
@@ -5395,11 +5417,11 @@ BOOL
 ›t
 );
 
-934 
+939 
 	}
 }
 
-935 
+940 
 	gRunLogicSimCmd
 ::~
 	$RunLogicSimCmd
@@ -5407,7 +5429,7 @@ BOOL
 	}
 }
 
-938 
+943 
 boﬁ
  
 RunLogicSimCmd
@@ -5421,7 +5443,7 @@ ve˘‹
 ¨gv
 ) {
 
-939 
+944 
 ›tMgr_
 .
 ∑r£
@@ -5429,38 +5451,20 @@ ve˘‹
 ¨gv
 );
 
-941 i‡(
+946 i‡(
 	g›tMgr_
 .
 isFœgSë
 ("h")) {
 
-942 
+947 
 	g›tMgr_
 .
 ußge
 ();
 
-943  
-	gåue
-;
-
-946 i‡(!
-	gÁnMgr_
-->
-	g©pg_mgr
-->
-	gcú_
-) {
-
-947 
-	g˚º
- << "**ERROR RunLogicSimCmd::exec(): cúcuôÇìded" << 
-	gídl
-;
-
 948  
-	gÁl£
+	gåue
 ;
 
 951 i‡(!
@@ -5468,12 +5472,12 @@ ußge
 ->
 	g©pg_mgr
 ->
-	gpcﬁl_
+	gcú_
 ) {
 
 952 
 	g˚º
- << "**ERROR RunLogicSimCmd::exec():Ö©ã∫Çìded" << 
+ << "**ERROR RunLogicSimCmd::exec(): cúcuôÇìded" << 
 	gídl
 ;
 
@@ -5481,7 +5485,25 @@ ußge
 	gÁl£
 ;
 
-956 
+956 i‡(!
+	gÁnMgr_
+->
+	g©pg_mgr
+->
+	gpcﬁl_
+) {
+
+957 
+	g˚º
+ << "**ERROR RunLogicSimCmd::exec():Ö©ã∫Çìded" << 
+	gídl
+;
+
+958  
+	gÁl£
+;
+
+961 
 	gÁnMgr_
 ->
 	gtmusg
@@ -5489,13 +5511,13 @@ ußge
 ≥riodSèπ
 ();
 
-957 
+962 
 	gcout
  << "# Pîf‹mögÜogi¯simuœti⁄ ..." << 
 	gídl
 ;
 
-959 
+964 
 Simuœt‹
  
 sim
@@ -5507,7 +5529,7 @@ sim
 cú_
 );
 
-960 
+965 
 	gsim
 .
 µGoodSim
@@ -5519,13 +5541,13 @@ cú_
 pcﬁl_
 );
 
-962 
+967 
 TmSèt
  
 	g°©
 ;
 
-963 
+968 
 	gÁnMgr_
 ->
 	gtmusg
@@ -5535,11 +5557,11 @@ gëPîiodUßge
 °©
 );
 
-964 
+969 
 	gcout
  << "# FinishedÜogic simulation";
 
-965 
+970 
 	gcout
  << " " << ()
 	g°©
@@ -5547,7 +5569,7 @@ gëPîiodUßge
 	grTime
  / 1000000.0 << " s";
 
-966 
+971 
 	gcout
  << " " << ()
 	g°©
@@ -5557,11 +5579,11 @@ gëPîiodUßge
 	gídl
 ;
 
-968  
+973  
 	gåue
 ;
 
-972 
+977 
 	gRunFau…SimCmd
 ::
 	$RunFau…SimCmd
@@ -5577,19 +5599,19 @@ F™Mgr
 ÁnMgr
 ) :
 
-973 
+978 
 	$Cmd
 (
 «me
 ) {
 
-974 
+979 
 ÁnMgr_
  = 
 ÁnMgr
 ;
 
-975 
+980 
 ›tMgr_
 .
 	`£tName
@@ -5597,19 +5619,19 @@ F™Mgr
 «me
 );
 
-976 
+981 
 ›tMgr_
 .
 	`£tSh‹tDes
 ("run fault simulation");
 
-977 
+982 
 ›tMgr_
 .
 	`£tDes
 ("run fault simulation onÅhe givenÖattern");
 
-978 
+983 
 O±
  *
 ›t
@@ -5621,19 +5643,19 @@ O±
 BOOL
 , "print usage", "");
 
-979 
+984 
 ›t
 ->
 	`addFœg
 ("h");
 
-980 
+985 
 ›t
 ->
 	`addFœg
 ("help");
 
-981 
+986 
 ›tMgr_
 .
 	`ªgO±
@@ -5641,7 +5663,7 @@ BOOL
 ›t
 );
 
-982 
+987 
 ›t
  = 
 √w
@@ -5653,19 +5675,19 @@ O±
 STR_REQ
 , "simulation METHOD. ChooseÉitherÖp (parallelÖattern) orÖf (parallel fault)", "METHOD");
 
-983 
+988 
 ›t
 ->
 	`addFœg
 ("m");
 
-984 
+989 
 ›t
 ->
 	`addFœg
 ("method");
 
-985 
+990 
 ›tMgr_
 .
 	`ªgO±
@@ -5673,11 +5695,11 @@ STR_REQ
 ›t
 );
 
-986 
+991 
 	}
 }
 
-987 
+992 
 	gRunFau…SimCmd
 ::~
 	$RunFau…SimCmd
@@ -5685,7 +5707,7 @@ STR_REQ
 	}
 }
 
-990 
+995 
 boﬁ
  
 RunFau…SimCmd
@@ -5699,7 +5721,7 @@ ve˘‹
 ¨gv
 ) {
 
-991 
+996 
 ›tMgr_
 .
 ∑r£
@@ -5707,38 +5729,20 @@ ve˘‹
 ¨gv
 );
 
-993 i‡(
+998 i‡(
 	g›tMgr_
 .
 isFœgSë
 ("h")) {
 
-994 
+999 
 	g›tMgr_
 .
 ußge
 ();
 
-995  
-	gåue
-;
-
-998 i‡(!
-	gÁnMgr_
-->
-	g©pg_mgr
-->
-	gcú_
-) {
-
-999 
-	g˚º
- << "**ERROR RunFau…SimCmd::exec(): cúcuôÇìded" << 
-	gídl
-;
-
 1000  
-	gÁl£
+	gåue
 ;
 
 1003 i‡(!
@@ -5746,12 +5750,12 @@ ußge
 ->
 	g©pg_mgr
 ->
-	gpcﬁl_
+	gcú_
 ) {
 
 1004 
 	g˚º
- << "**ERROR RunFau…SimCmd::exec():Ö©ã∫Çìded" << 
+ << "**ERROR RunFau…SimCmd::exec(): cúcuôÇìded" << 
 	gídl
 ;
 
@@ -5764,17 +5768,13 @@ ußge
 ->
 	g©pg_mgr
 ->
-	gfLi°Exåa˘_
- || f™Mgr_->©pg_mgr->fLi°Exåa˘_->
-	gÁu…s_
-.
-size
-() == 0) {
+	gpcﬁl_
+) {
 
 1009 
-˚º
- << "**ERROR RunFau…SimCmd::exec(): fau…Üi°Çìded" << 
-ídl
+	g˚º
+ << "**ERROR RunFau…SimCmd::exec():Ö©ã∫Çìded" << 
+	gídl
 ;
 
 1010  
@@ -5785,9 +5785,31 @@ size
 	gÁnMgr_
 ->
 	g©pg_mgr
-)
+->
+	gfLi°Exåa˘_
+ || f™Mgr_->©pg_mgr->fLi°Exåa˘_->
+	gÁu…s_
+.
+size
+() == 0) {
 
 1014 
+˚º
+ << "**ERROR RunFau…SimCmd::exec(): fau…Üi°Çìded" << 
+ídl
+;
+
+1015  
+	gÁl£
+;
+
+1018 i‡(!
+	gÁnMgr_
+->
+	g©pg_mgr
+)
+
+1019 
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -5797,7 +5819,7 @@ size
 AçgMgr
 ;
 
-1016 i‡(!
+1021 i‡(!
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -5805,7 +5827,7 @@ AçgMgr
 	gsim_
 )
 
-1017 
+1022 
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -5823,13 +5845,13 @@ Simuœt‹
 cú_
 );
 
-1019 
+1024 
 	gcout
  << "# Pîf‹mög fau… simuœti⁄ ..." << 
 	gídl
 ;
 
-1020 
+1025 
 	gÁnMgr_
 ->
 	gtmusg
@@ -5837,7 +5859,7 @@ cú_
 ≥riodSèπ
 ();
 
-1022 i‡(
+1027 i‡(
 	g›tMgr_
 .
 isFœgSë
@@ -5845,7 +5867,7 @@ isFœgSë
 gëFœgV¨
 ("m") == "pf")
 
-1023 
+1028 
 ÁnMgr_
 ->
 ©pg_mgr
@@ -5859,7 +5881,7 @@ pcﬁl_
 fLi°Exåa˘_
 );
 
-1025 
+1030 
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -5877,13 +5899,13 @@ pcﬁl_
 fLi°Exåa˘_
 );
 
-1027 
+1032 
 TmSèt
  
 	g°©
 ;
 
-1028 
+1033 
 	gÁnMgr_
 ->
 	gtmusg
@@ -5893,11 +5915,11 @@ gëPîiodUßge
 °©
 );
 
-1029 
+1034 
 	gcout
  << "# Finished fault simulation";
 
-1030 
+1035 
 	gcout
  << " " << ()
 	g°©
@@ -5905,7 +5927,7 @@ gëPîiodUßge
 	grTime
  / 1000000.0 << " s";
 
-1031 
+1036 
 	gcout
  << " " << ()
 	g°©
@@ -5915,7 +5937,7 @@ gëPîiodUßge
 	gídl
 ;
 
-1032 
+1037 
 	gπime
  = ()
 °©
@@ -5923,11 +5945,11 @@ gëPîiodUßge
 rTime
  / 1000000.0;
 
-1034  
+1039  
 	gåue
 ;
 
-1038 
+1043 
 	gRunAçgCmd
 ::
 	$RunAçgCmd
@@ -5943,19 +5965,19 @@ F™Mgr
 ÁnMgr
 ) :
 
-1039 
+1044 
 	$Cmd
 (
 «me
 ) {
 
-1040 
+1045 
 ÁnMgr_
  = 
 ÁnMgr
 ;
 
-1041 
+1046 
 ›tMgr_
 .
 	`£tName
@@ -5963,19 +5985,19 @@ F™Mgr
 «me
 );
 
-1042 
+1047 
 ›tMgr_
 .
 	`£tSh‹tDes
 ("runáutomaticÅestÖattern generation");
 
-1043 
+1048 
 ›tMgr_
 .
 	`£tDes
 ("runáutomaticÅestÖattern generation");
 
-1044 
+1049 
 O±
  *
 ›t
@@ -5987,19 +6009,19 @@ O±
 BOOL
 , "print usage", "");
 
-1045 
+1050 
 ›t
 ->
 	`addFœg
 ("h");
 
-1046 
+1051 
 ›t
 ->
 	`addFœg
 ("help");
 
-1047 
+1052 
 ›tMgr_
 .
 	`ªgO±
@@ -6007,11 +6029,11 @@ BOOL
 ›t
 );
 
-1048 
+1053 
 	}
 }
 
-1049 
+1054 
 	gRunAçgCmd
 ::~
 	$RunAçgCmd
@@ -6019,7 +6041,7 @@ BOOL
 	}
 }
 
-1052 
+1057 
 boﬁ
  
 RunAçgCmd
@@ -6033,7 +6055,7 @@ ve˘‹
 ¨gv
 ) {
 
-1053 
+1058 
 ›tMgr_
 .
 ∑r£
@@ -6041,38 +6063,20 @@ ve˘‹
 ¨gv
 );
 
-1055 i‡(
+1060 i‡(
 	g›tMgr_
 .
 isFœgSë
 ("h")) {
 
-1056 
+1061 
 	g›tMgr_
 .
 ußge
 ();
 
-1057  
-	gåue
-;
-
-1060 i‡(!
-	gÁnMgr_
-->
-	g©pg_mgr
-->
-	gcú_
-) {
-
-1061 
-	g˚º
- << "**ERROR RunFau…SimCmd::exec(): cúcuôÇìded" << 
-	gídl
-;
-
 1062  
-	gÁl£
+	gåue
 ;
 
 1065 i‡(!
@@ -6080,10 +6084,28 @@ ußge
 ->
 	g©pg_mgr
 ->
-	gpcﬁl_
+	gcú_
 ) {
 
 1066 
+	g˚º
+ << "**ERROR RunFau…SimCmd::exec(): cúcuôÇìded" << 
+	gídl
+;
+
+1067  
+	gÁl£
+;
+
+1070 i‡(!
+	gÁnMgr_
+->
+	g©pg_mgr
+->
+	gpcﬁl_
+) {
+
+1071 
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -6095,7 +6117,7 @@ ußge
 P©ã∫Pro˚ss‹
 ;
 
-1069 i‡(!
+1074 i‡(!
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -6103,7 +6125,7 @@ P©ã∫Pro˚ss‹
 	gfLi°Exåa˘_
 ) {
 
-1070 
+1075 
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -6115,7 +6137,7 @@ P©ã∫Pro˚ss‹
 Fau…Li°Exåa˘
 ;
 
-1071 
+1076 
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -6131,7 +6153,7 @@ exåa˘
 cú_
 );
 
-1074 i‡(!
+1079 i‡(!
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -6139,7 +6161,7 @@ cú_
 	gsim_
 )
 
-1075 
+1080 
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -6157,13 +6179,11 @@ Simuœt‹
 cú_
 );
 
-1077 
+1082 
 	gcout
- << "# Pîf‹mögÖ©ã∫ gíî©i⁄ ..." << 
-	gídl
-;
+ << "# PerformingÖattern generation ...\n";
 
-1078 
+1083 
 	gÁnMgr_
 ->
 	gtmusg
@@ -6171,7 +6191,7 @@ cú_
 ≥riodSèπ
 ();
 
-1080 
+1085 
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -6179,7 +6199,7 @@ cú_
 gíî©i⁄
 ();
 
-1082 
+1087 
 	gÁnMgr_
 ->
 	gtmusg
@@ -6191,11 +6211,11 @@ gëPîiodUßge
 ©pgSèt
 );
 
-1083 
+1088 
 	gcout
  << "# FinishedÖattern generation";
 
-1084 
+1089 
 	gcout
  << " " << ()
 	gÁnMgr_
@@ -6205,7 +6225,7 @@ gëPîiodUßge
 	grTime
  / 1000000.0 << " s";
 
-1085 
+1090 
 	gcout
  << " " << ()
 	gÁnMgr_
@@ -6215,13 +6235,13 @@ gëPîiodUßge
 	gvmSize
  / 1024.0 << " MB";
 
-1086 
+1091 
 	gcout
  << 
 	gídl
 ;
 
-1087 
+1092 
 	gπime
  = ()
 ÁnMgr_
@@ -6231,11 +6251,11 @@ gëPîiodUßge
 rTime
  / 1000000.0;
 
-1089  
+1094  
 	gåue
 ;
 
-1093 
+1098 
 	gWrôeP©Cmd
 ::
 	$WrôeP©Cmd
@@ -6251,19 +6271,19 @@ F™Mgr
 ÁnMgr
 ) :
 
-1094 
+1099 
 	$Cmd
 (
 «me
 ) {
 
-1095 
+1100 
 ÁnMgr_
  = 
 ÁnMgr
 ;
 
-1096 
+1101 
 ›tMgr_
 .
 	`£tName
@@ -6271,19 +6291,19 @@ F™Mgr
 «me
 );
 
-1097 
+1102 
 ›tMgr_
 .
 	`£tSh‹tDes
 ("writeÖatterns");
 
-1098 
+1103 
 ›tMgr_
 .
 	`£tDes
 ("writesÖatternsÅo FILE");
 
-1099 
+1104 
 Arg
  *
 ¨g
@@ -6295,7 +6315,7 @@ Arg
 REQ
 , "outputÖattern file", "FILE");
 
-1100 
+1105 
 ›tMgr_
 .
 	`ªgArg
@@ -6303,7 +6323,7 @@ REQ
 ¨g
 );
 
-1101 
+1106 
 O±
  *
 ›t
@@ -6315,19 +6335,19 @@ O±
 BOOL
 , "print usage", "");
 
-1102 
+1107 
 ›t
 ->
 	`addFœg
 ("h");
 
-1103 
+1108 
 ›t
 ->
 	`addFœg
 ("help");
 
-1104 
+1109 
 ›tMgr_
 .
 	`ªgO±
@@ -6335,7 +6355,7 @@ BOOL
 ›t
 );
 
-1105 
+1110 
 ›t
  = 
 √w
@@ -6347,19 +6367,19 @@ O±
 STR_REQ
 , "pattern format. Currently supports `pat'ánd `ascii'", "FORMAT");
 
-1106 
+1111 
 ›t
 ->
 	`addFœg
 ("f");
 
-1107 
+1112 
 ›t
 ->
 	`addFœg
 ("format");
 
-1108 
+1113 
 ›tMgr_
 .
 	`ªgO±
@@ -6367,11 +6387,11 @@ STR_REQ
 ›t
 );
 
-1109 
+1114 
 	}
 }
 
-1110 
+1115 
 	gWrôeP©Cmd
 ::~
 	$WrôeP©Cmd
@@ -6379,7 +6399,7 @@ STR_REQ
 	}
 }
 
-1113 
+1118 
 boﬁ
  
 WrôeP©Cmd
@@ -6393,7 +6413,7 @@ ve˘‹
 ¨gv
 ) {
 
-1114 
+1119 
 ›tMgr_
 .
 ∑r£
@@ -6401,53 +6421,35 @@ ve˘‹
 ¨gv
 );
 
-1116 i‡(
+1121 i‡(
 	g›tMgr_
 .
 isFœgSë
 ("h")) {
 
-1117 
+1122 
 	g›tMgr_
 .
 ußge
 ();
 
-1118  
+1123  
 	gåue
 ;
 
-1121 i‡(
+1126 i‡(
 	g›tMgr_
 .
 gëNP¨£dArg
 () < 1) {
 
-1122 
+1127 
 	g˚º
  << "**ERROR WritePatternCmd::exec(): output fileÇeeded";
 
-1123 
-	g˚º
- << 
-	gídl
-;
-
-1124  
-	gÁl£
-;
-
-1127 i‡(!
-	gÁnMgr_
-->
-	g©pg_mgr
-->
-	gcú_
-) {
-
 1128 
 	g˚º
- << "**ERROR WrôeP©ã∫Cmd::exec(): cúcuôÇìded" << 
+ << 
 	gídl
 ;
 
@@ -6460,12 +6462,12 @@ gëNP¨£dArg
 ->
 	g©pg_mgr
 ->
-	gpcﬁl_
+	gcú_
 ) {
 
 1133 
 	g˚º
- << "**ERROR WrôeP©ã∫Cmd::exec():Ö©ã∫Çìded" << 
+ << "**ERROR WrôeP©ã∫Cmd::exec(): cúcuôÇìded" << 
 	gídl
 ;
 
@@ -6473,7 +6475,25 @@ gëNP¨£dArg
 	gÁl£
 ;
 
-1137 
+1137 i‡(!
+	gÁnMgr_
+->
+	g©pg_mgr
+->
+	gpcﬁl_
+) {
+
+1138 
+	g˚º
+ << "**ERROR WrôeP©ã∫Cmd::exec():Ö©ã∫Çìded" << 
+	gídl
+;
+
+1139  
+	gÁl£
+;
+
+1142 
 	gcout
  << "# WrôögÖ©ã∫Åÿ`" << 
 	g›tMgr_
@@ -6481,13 +6501,13 @@ gëNP¨£dArg
 gëP¨£dArg
 (0) << "' ...";
 
-1138 
+1143 
 	gcout
  << 
 	gídl
 ;
 
-1139 
+1144 
 P©ã∫Wrôî
  
 wrôî
@@ -6501,13 +6521,13 @@ pcﬁl_
 cú_
 );
 
-1140 i‡(
+1145 i‡(
 	g›tMgr_
 .
 gëFœgV¨
 ("f") == "lht") {
 
-1141 i‡(!
+1146 i‡(!
 wrôî
 .
 wrôeLht
@@ -6519,23 +6539,23 @@ gëP¨£dArg
 c_°r
 ())) {
 
-1142 
+1147 
 ˚º
  << "**ERROR WrôeP©ã∫Cmd::exec(): wrôî faûed" << 
 ídl
 ;
 
-1143  
+1148  
 	gÁl£
 ;
 
-1146 i‡(
+1151 i‡(
 	g›tMgr_
 .
 gëFœgV¨
 ("f") == "ascii") {
 
-1147 i‡(!
+1152 i‡(!
 wrôî
 .
 wrôeAscii
@@ -6547,17 +6567,17 @@ gëP¨£dArg
 c_°r
 ())) {
 
-1148 
+1153 
 ˚º
  << "**ERROR WrôeP©ã∫Cmd::exec(): wrôî faûed" << 
 ídl
 ;
 
-1149  
+1154  
 	gÁl£
 ;
 
-1152 i‡(
+1157 i‡(
 	g›tMgr_
 .
 gëFœgV¨
@@ -6565,7 +6585,7 @@ gëFœgV¨
 ›tMgr_
 .getFlagVar("f") == "") {
 
-1153 i‡(!
+1158 i‡(!
 wrôî
 .
 wrôeP©
@@ -6577,27 +6597,27 @@ gëP¨£dArg
 c_°r
 ())) {
 
-1154 
+1159 
 ˚º
  << "**ERROR WrôeP©ã∫Cmd::exec(): wrôî faûed" << 
 ídl
 ;
 
-1155  
+1160  
 	gÁl£
 ;
 
-1159 
+1164 
 	g˚º
  << "**ERROR WrôeP©ã∫Cmd::exec(): undeföedÖ¨amëî i¿-f" << 
 	gídl
 ;
 
-1161  
+1166  
 	gåue
 ;
 
-1166 
+1171 
 	gAddSˇnChaösCmd
 ::
 	$AddSˇnChaösCmd
@@ -6613,19 +6633,19 @@ F™Mgr
 ÁnMgr
 ) :
 
-1167 
+1172 
 	$Cmd
 (
 «me
 ) {
 
-1168 
+1173 
 ÁnMgr_
  = 
 ÁnMgr
 ;
 
-1169 
+1174 
 ›tMgr_
 .
 	`£tName
@@ -6633,19 +6653,19 @@ F™Mgr
 «me
 );
 
-1170 
+1175 
 ›tMgr_
 .
 	`£tSh‹tDes
 ("Add Scan Chains");
 
-1171 
+1176 
 ›tMgr_
 .
 	`£tDes
 ("Add Scan ChainsÅo FFs");
 
-1172 
+1177 
 O±
  *
 ›t
@@ -6657,19 +6677,19 @@ O±
 BOOL
 , "print usage", "");
 
-1173 
+1178 
 ›t
 ->
 	`addFœg
 ("h");
 
-1174 
+1179 
 ›t
 ->
 	`addFœg
 ("help");
 
-1175 
+1180 
 ›tMgr_
 .
 	`ªgO±
@@ -6677,11 +6697,11 @@ BOOL
 ›t
 );
 
-1176 
+1181 
 	}
 }
 
-1177 
+1182 
 	gAddSˇnChaösCmd
 ::~
 	$AddSˇnChaösCmd
@@ -6689,7 +6709,7 @@ BOOL
 	}
 }
 
-1180 
+1185 
 boﬁ
  
 AddSˇnChaösCmd
@@ -6703,7 +6723,7 @@ ve˘‹
 ¨gv
 ) {
 
-1181 
+1186 
 ›tMgr_
 .
 ∑r£
@@ -6711,23 +6731,23 @@ ve˘‹
 ¨gv
 );
 
-1183 i‡(
+1188 i‡(
 	g›tMgr_
 .
 isFœgSë
 ("h")) {
 
-1184 
+1189 
 	g›tMgr_
 .
 ußge
 ();
 
-1185  
+1190  
 	gåue
 ;
 
-1188 i‡(!
+1193 i‡(!
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -6735,27 +6755,27 @@ ußge
 	gcú_
 ) {
 
-1189 
+1194 
 	g˚º
  << "**ERROR AddSˇnChaösCmd::exec(): cúcuôÇìded" << 
 	gídl
 ;
 
-1190  
+1195  
 	gÁl£
 ;
 
-1193 
+1198 
 	gcout
  << "# Add Sˇ¿Chaö†" << 
 	gídl
 ;
 
-1195  
+1200  
 	gåue
 ;
 
-1200 
+1205 
 	gWrôeProcCmd
 ::
 	$WrôeProcCmd
@@ -6771,19 +6791,19 @@ F™Mgr
 ÁnMgr
 ) :
 
-1201 
+1206 
 	$Cmd
 (
 «me
 ) {
 
-1202 
+1207 
 ÁnMgr_
  = 
 ÁnMgr
 ;
 
-1203 
+1208 
 ›tMgr_
 .
 	`£tName
@@ -6791,19 +6811,19 @@ F™Mgr
 «me
 );
 
-1204 
+1209 
 ›tMgr_
 .
 	`£tSh‹tDes
 ("writeÅestÖrocedure file");
 
-1205 
+1210 
 ›tMgr_
 .
 	`£tDes
 ("createÅestÖrocedure file ");
 
-1206 
+1211 
 Arg
  *
 ¨g
@@ -6815,7 +6835,7 @@ Arg
 REQ
 , "outputÅestÖrocedure file", "FILE");
 
-1207 
+1212 
 ›tMgr_
 .
 	`ªgArg
@@ -6823,7 +6843,7 @@ REQ
 ¨g
 );
 
-1208 
+1213 
 O±
  *
 ›t
@@ -6835,19 +6855,19 @@ O±
 BOOL
 , "print usage", "");
 
-1209 
+1214 
 ›t
 ->
 	`addFœg
 ("h");
 
-1210 
+1215 
 ›t
 ->
 	`addFœg
 ("help");
 
-1211 
+1216 
 ›tMgr_
 .
 	`ªgO±
@@ -6855,11 +6875,11 @@ BOOL
 ›t
 );
 
-1212 
+1217 
 	}
 }
 
-1213 
+1218 
 	gWrôeProcCmd
 ::~
 	$WrôeProcCmd
@@ -6867,7 +6887,7 @@ BOOL
 	}
 }
 
-1216 
+1221 
 boﬁ
  
 WrôeProcCmd
@@ -6881,7 +6901,7 @@ ve˘‹
 ¨gv
 ) {
 
-1217 
+1222 
 ›tMgr_
 .
 ∑r£
@@ -6889,53 +6909,35 @@ ve˘‹
 ¨gv
 );
 
-1219 i‡(
+1224 i‡(
 	g›tMgr_
 .
 isFœgSë
 ("h")) {
 
-1220 
+1225 
 	g›tMgr_
 .
 ußge
 ();
 
-1221  
+1226  
 	gåue
 ;
 
-1224 i‡(
+1229 i‡(
 	g›tMgr_
 .
 gëNP¨£dArg
 () < 1) {
 
-1225 
+1230 
 	g˚º
  << "**ERROR WritePatternCmd::exec(): output fileÇeeded";
 
-1226 
-	g˚º
- << 
-	gídl
-;
-
-1227  
-	gÁl£
-;
-
-1230 i‡(!
-	gÁnMgr_
-->
-	g©pg_mgr
-->
-	gcú_
-) {
-
 1231 
 	g˚º
- << "**ERROR WrôeP©ã∫Cmd::exec(): cúcuôÇìded" << 
+ << 
 	gídl
 ;
 
@@ -6943,17 +6945,35 @@ gëNP¨£dArg
 	gÁl£
 ;
 
+1235 i‡(!
+	gÁnMgr_
+->
+	g©pg_mgr
+->
+	gcú_
+) {
+
 1236 
+	g˚º
+ << "**ERROR WrôeP©ã∫Cmd::exec(): cúcuôÇìded" << 
+	gídl
+;
+
+1237  
+	gÁl£
+;
+
+1241 
 	gcout
  << "# WritingÅestÖrocedure file ...";
 
-1237 
+1242 
 	gcout
  << 
 	gídl
 ;
 
-1238 
+1243 
 Pro˚duªWrôî
  
 wrôî
@@ -6965,7 +6985,7 @@ wrôî
 cú_
 );
 
-1239 i‡(!
+1244 i‡(!
 	gwrôî
 .
 wrôeProc
@@ -6977,21 +6997,21 @@ gëP¨£dArg
 c_°r
 ())) {
 
-1240 
+1245 
 	g˚º
  << "**ERROR WrôeP©ã∫Cmd::exec(): wrôî faûed" << 
 	gídl
 ;
 
-1241  
+1246  
 	gÁl£
 ;
 
-1244  
+1249  
 	gåue
 ;
 
-1249 
+1254 
 	gRï‹tScﬂpCmd
 ::
 	$Rï‹tScﬂpCmd
@@ -7005,19 +7025,19 @@ F™Mgr
 ÁnMgr
 ) :
 
-1250 
+1255 
 	$Cmd
 (
 «me
 ) {
 
-1251 
+1256 
 ÁnMgr_
  = 
 ÁnMgr
 ;
 
-1252 
+1257 
 ›tMgr_
 .
 	`£tName
@@ -7025,19 +7045,19 @@ F™Mgr
 «me
 );
 
-1253 
+1258 
 ›tMgr_
 .
 	`£tSh‹tDes
 ("reportÅestabilityánd/or observability");
 
-1254 
+1259 
 ›tMgr_
 .
 	`£tDes
 ("reportÅestabilityánd/or observability forÉachÇet");
 
-1255 
+1260 
 O±
  *
 ›t
@@ -7049,19 +7069,19 @@ O±
 BOOL
 , "print usage", "");
 
-1256 
+1261 
 ›t
 ->
 	`addFœg
 ("h");
 
-1257 
+1262 
 ›t
 ->
 	`addFœg
 ("help");
 
-1258 
+1263 
 ›tMgr_
 .
 	`ªgO±
@@ -7069,7 +7089,7 @@ BOOL
 ›t
 );
 
-1259 
+1264 
 ›t
  = 
 √w
@@ -7081,13 +7101,13 @@ O±
 BOOL
 , "report option", "OPTION");
 
-1260 
+1265 
 ›t
 ->
 	`addFœg
 ("CC1");
 
-1261 
+1266 
 ›tMgr_
 .
 	`ªgO±
@@ -7095,7 +7115,7 @@ BOOL
 ›t
 );
 
-1262 
+1267 
 ›t
  = 
 √w
@@ -7107,13 +7127,13 @@ O±
 BOOL
 , "report option", "OPTION");
 
-1263 
+1268 
 ›t
 ->
 	`addFœg
 ("CC0");
 
-1264 
+1269 
 ›tMgr_
 .
 	`ªgO±
@@ -7121,7 +7141,7 @@ BOOL
 ›t
 );
 
-1265 
+1270 
 ›t
  = 
 √w
@@ -7133,13 +7153,13 @@ O±
 BOOL
 , "report option", "OPTION");
 
-1266 
+1271 
 ›t
 ->
 	`addFœg
 ("CO");
 
-1267 
+1272 
 ›tMgr_
 .
 	`ªgO±
@@ -7147,11 +7167,11 @@ BOOL
 ›t
 );
 
-1268 
+1273 
 	}
 }
 
-1271 
+1276 
 	gRï‹tScﬂpCmd
 ::~
 	$Rï‹tScﬂpCmd
@@ -7159,7 +7179,7 @@ BOOL
 	}
 }
 
-1274 
+1279 
 boﬁ
  
 Rï‹tScﬂpCmd
@@ -7173,7 +7193,7 @@ ve˘‹
 ¨gv
 ) {
 
-1275 
+1280 
 ›tMgr_
 .
 ∑r£
@@ -7181,23 +7201,23 @@ ve˘‹
 ¨gv
 );
 
-1277 i‡(
+1282 i‡(
 	g›tMgr_
 .
 isFœgSë
 ("h")) {
 
-1278 
+1283 
 	g›tMgr_
 .
 ußge
 ();
 
-1279  
+1284  
 	gåue
 ;
 
-1282 i‡(!
+1287 i‡(!
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -7205,21 +7225,21 @@ ußge
 	gcú_
 ) {
 
-1283 
+1288 
 	g˚º
  << "**ERROR AddFaultCmd::exec(): circuitÇeeded";
 
-1284 
+1289 
 	g˚º
  << 
 	gídl
 ;
 
-1285  
+1290  
 	gÁl£
 ;
 
-1289 
+1294 
 	gcout
  << "Cúcuô: " << 
 	gÁnMgr_
@@ -7233,65 +7253,65 @@ gëT›
 	gídl
 ;
 
-1290 
+1295 
 	gcout
  << "SCOAP ";
 
-1292 
+1297 
 Ty≥
  
 	gty≥
 ;
 
-1293 if(
+1298 if(
 	g›tMgr_
 .
 isFœgSë
 ("CC1")) {
 
-1294 
+1299 
 	gty≥
  = 
 CC1
 ;
 
-1295 
+1300 
 	gcout
  << "CC1 \n";
 
-1297 if(
+1302 if(
 	g›tMgr_
 .
 isFœgSë
 ("CC0")) {
 
-1298 
+1303 
 	gty≥
  = 
 CC0
 ;
 
-1299 
+1304 
 	gcout
  << "CC0 \n";
 
-1301 if(
+1306 if(
 	g›tMgr_
 .
 isFœgSë
 ("CO")) {
 
-1302 
+1307 
 	gty≥
  = 
 CO
 ;
 
-1303 
+1308 
 	gcout
  << "CO \n";
 
-1306 
+1311 
 	gcout
  << "Numbî_of_Nodes: " << 
 	gÁnMgr_
@@ -7303,7 +7323,7 @@ CO
 	g≈i_
 
 
-1307 + 
+1312 + 
 	gÁnMgr_
 ->
 	g©pg_mgr
@@ -7317,25 +7337,25 @@ CO
 	gídl
 ;
 
-1308 
+1313 
 	gcout
  << "Format: SCOAPÇode\n";
 
-1309 
+1314 
 ªp‹tScﬂp
 (
 ty≥
 );
 
-1310 
+1315 
 	gcout
  << "END\n\n";
 
-1312  
+1317  
 	gåue
 ;
 
-1316 
+1321 
 boﬁ
  
 scﬂp_cmp
@@ -7349,7 +7369,7 @@ l1
 l2
 );
 
-1317 
+1322 
 	gRï‹tScﬂpCmd
 ::
 	$ªp‹tScﬂp
@@ -7359,7 +7379,7 @@ Ty≥
 ty≥
 ) {
 
-1318 
+1323 
 li°
 <
 ∑ú
@@ -7369,7 +7389,7 @@ li°
 löesToPröt
 ;
 
-1319 
+1324 
 i
 =0; i<
 ÁnMgr_
@@ -7381,7 +7401,7 @@ cú_
 tg©e_
 
 
-1320 - 
+1325 - 
 ÁnMgr_
 ->
 ©pg_mgr
@@ -7391,7 +7411,7 @@ cú_
 ≈pi_
 
 
-1321 - 
+1326 - 
 ÁnMgr_
 ->
 ©pg_mgr
@@ -7403,7 +7423,7 @@ cú_
 i
 ) {
 
-1322 
+1327 
 ∑ú
 <, 
 °rög
@@ -7411,7 +7431,7 @@ i
 löe
 ;
 
-1323 
+1328 
 G©e
  *
 g
@@ -7427,7 +7447,7 @@ g©es_
 i
 ];
 
-1324 i‡(
+1329 i‡(
 g
 ->
 ty≥_
@@ -7439,17 +7459,17 @@ PO
 PPO
 )
 
-1327 
+1332 
 c
  = -1;
 
-1328 if(
+1333 if(
 ty≥
 ==
 CC1
 )
 
-1329 
+1334 
 c
  = 
 g
@@ -7457,13 +7477,13 @@ g
 cc1_
 ;
 
-1330 if(
+1335 if(
 ty≥
 ==
 CC0
 )
 
-1331 
+1336 
 c
  = 
 g
@@ -7471,13 +7491,13 @@ g
 cc0_
 ;
 
-1332 if(
+1337 if(
 ty≥
 ==
 CO
 )
 
-1333 
+1338 
 c
  = 
 g
@@ -7485,7 +7505,7 @@ g
 co_o_
 ;
 
-1336 
+1341 
 löe
 .
 fú°
@@ -7493,7 +7513,7 @@ fú°
 c
 ;
 
-1337 i‡(
+1342 i‡(
 g
 ->
 ty≥_
@@ -7503,7 +7523,7 @@ G©e
 PI
 )
 
-1339 
+1344 
 löe
 .
 £c⁄d
@@ -7527,7 +7547,7 @@ cid_
 «me_
 );
 
-1341 
+1346 
 Cñl
  *
 c
@@ -7547,13 +7567,13 @@ g
 cid_
 );
 
-1343 
+1348 
 P‹t
  *
 p
  = 0;
 
-1344 
+1349 
 size_t
  
 j
@@ -7563,7 +7583,7 @@ c
 	`gëNP‹t
 (); ++j)
 
-1345 if(
+1350 if(
 c
 ->
 	`gëP‹t
@@ -7577,7 +7597,7 @@ P‹t
 OUTPUT
 ) {
 
-1346 
+1351 
 p
  = 
 c
@@ -7587,7 +7607,7 @@ c
 j
 );
 
-1351 
+1356 
 löe
 .
 £c⁄d
@@ -7601,7 +7621,7 @@ exNë_
 «me_
 );
 
-1353 
+1358 
 löesToPröt
 .
 	`push_back
@@ -7609,7 +7629,7 @@ löesToPröt
 löe
 );
 
-1355 
+1360 
 löesToPröt
 .
 	`s‹t
@@ -7617,13 +7637,13 @@ löesToPröt
 scﬂp_cmp
 );
 
-1356 !
+1361 !
 löesToPröt
 .
 	`em±y
 ()) {
 
-1357 
+1362 
 cout
  << 
 löesToPröt
@@ -7633,7 +7653,7 @@ löesToPröt
 fú°
  << " ";
 
-1358 
+1363 
 cout
  << 
 löesToPröt
@@ -7645,17 +7665,17 @@ löesToPröt
 ídl
 ;
 
-1359 
+1364 
 löesToPröt
 .
 	`p›_‰⁄t
 ();
 
-1361 
+1366 
 	}
 }
 
-1363 
+1368 
 boﬁ
  
 scﬂp_cmp
@@ -7669,7 +7689,7 @@ l1
 l2
 ) {
 
-1364  
+1369  
 	gl2
 .
 	gfú°
@@ -29779,7 +29799,7 @@ _CORE_ATPG_H_
 
 22 
 	#_MAX_BACK_TRACK_LIMIT_
- 32
+ 64
 
 	)
 
@@ -30057,11 +30077,15 @@ p
 	~<ˇs£π
 >
 
-21 
+20 
+	~<iom™ù
+>
+
+22 
 	~"©pg_mgr.h
 "
 
-23 
+24 
 usög
  
 «me•a˚
@@ -30069,7 +30093,7 @@ usög
 	g°d
 ;
 
-25 
+26 
 usög
  
 «me•a˚
@@ -30077,7 +30101,7 @@ usög
 	gC‹eNs
 ;
 
-27 
+28 
 boﬁ
  
 comp_Áu…
@@ -30089,13 +30113,13 @@ f1
 f2
 );
 
-28 
+29 
 	gAçgMgr
 ::
 	$gíî©i⁄
 () {
 
-29 
+30 
 pcﬁl_
 ->
 	`öô
@@ -30103,7 +30127,7 @@ pcﬁl_
 cú_
 );
 
-30 
+31 
 Fau…
  *
 f
@@ -30111,7 +30135,7 @@ f
 NULL
 ;
 
-31 
+32 
 i
 =0; i<
 fLi°Exåa˘_
@@ -30121,7 +30145,7 @@ fLi°Exåa˘_
 	`size
 (); i++)
 
-32 
+33 
 	`ˇlc_Áu…_h¨d√ss
 (
 fLi°Exåa˘_
@@ -30131,7 +30155,7 @@ fLi°Exåa˘_
 i
 ]);
 
-34 
+35 
 Fau…Li°
  
 Êi°
@@ -30141,7 +30165,7 @@ fLi°Exåa˘_
 cuºít_
 ;
 
-35 
+36 
 Êi°
 .
 	`s‹t
@@ -30149,7 +30173,23 @@ cuºít_
 comp_Áu…
 );
 
-37 
+38 
+cout
+ << "# ------------------------------------------------------------------------\n";
+
+39 
+cout
+ << "# #patterns fault #faults #faults \n";
+
+40 
+cout
+ << "# simulated coverage inÜist detected\n";
+
+41 
+cout
+ << "# ------------------------------------------------------------------------\n";
+
+43 
 Êi°
 .
 	`begö
@@ -30157,7 +30197,7 @@ comp_Áu…
 	`íd
 ()) {
 
-38 i‡(
+44 i‡(
 Êi°
 .
 	`‰⁄t
@@ -30169,13 +30209,13 @@ Fau…
 DT
 ) {
 
-39 
+45 
 Êi°
 .
 	`p›_‰⁄t
 ();
 
-43 i‡(
+49 i‡(
 Êi°
 .
 	`‰⁄t
@@ -30189,7 +30229,7 @@ AB
 PT
 )
 
-46 i‡(
+52 i‡(
 f
 ==
 Êi°
@@ -30197,7 +30237,7 @@ f
 	`‰⁄t
 ()) {
 
-47 
+53 
 f
 ->
 °©e_
@@ -30207,7 +30247,7 @@ Fau…
 PT
 ;
 
-48 
+54 
 Êi°
 .
 	`push_back
@@ -30215,13 +30255,13 @@ PT
 	`‰⁄t
 ());
 
-49 
+55 
 Êi°
 .
 	`p›_‰⁄t
 ();
 
-52 
+58 
 f
  = 
 Êi°
@@ -30229,7 +30269,7 @@ f
 	`‰⁄t
 ();
 
-53 
+59 
 ©pg_
  = 
 √w
@@ -30241,7 +30281,7 @@ cú_
 f
 );
 
-54 
+60 
 Açg
 ::
 GíSètus
@@ -30253,7 +30293,7 @@ GíSètus
 	`Tpg
 ();
 
-56 i‡(
+62 i‡(
 ªt
 ==
 Açg
@@ -30261,7 +30301,7 @@ Açg
 TEST_FOUND
 ) {
 
-57 
+63 
 P©ã∫
  *
 p
@@ -30269,7 +30309,7 @@ p
 √w
  Pattern;
 
-58 
+64 
 p
 ->
 pi1_
@@ -30283,7 +30323,7 @@ cú_
 ≈i_
 ];
 
-59 
+65 
 p
 ->
 µi_
@@ -30297,7 +30337,7 @@ cú_
 ≈pi_
 ];
 
-60 
+66 
 p
 ->
 po1_
@@ -30311,7 +30351,7 @@ cú_
 ≈o_
 ];
 
-61 
+67 
 p
 ->
 µo_
@@ -30325,7 +30365,7 @@ cú_
 ≈pi_
 ];
 
-62 
+68 
 pcﬁl_
 ->
 ∑ts_
@@ -30335,7 +30375,7 @@ pcﬁl_
 p
 );
 
-63 
+69 
 ©pg_
 ->
 	`GëPiP©ã∫
@@ -30343,7 +30383,7 @@ p
 p
 );
 
-65 i‡((
+71 i‡((
 pcﬁl_
 ->
 °©icCom¥essi⁄_
@@ -30357,7 +30397,7 @@ XFûl_
 ON
 )){
 
-66 
+72 
 pcﬁl_
 ->
 	`øndomFûl
@@ -30367,7 +30407,7 @@ pcﬁl_
 	`back
 ());
 
-69 
+75 
 sim_
 ->
 	`pfFau…Sim
@@ -30381,7 +30421,7 @@ pcﬁl_
 Êi°
 );
 
-70 
+76 
 	`gëPoP©ã∫
 (
 pcﬁl_
@@ -30391,7 +30431,7 @@ pcﬁl_
 	`back
 ());
 
-72 i‡(
+78 i‡(
 ªt
 ==
 Açg
@@ -30399,7 +30439,7 @@ Açg
 UNTESTABLE
 ) {
 
-73 
+79 
 Êi°
 .
 	`‰⁄t
@@ -30411,13 +30451,13 @@ Fau…
 AU
 ;
 
-74 
+80 
 Êi°
 .
 	`p›_‰⁄t
 ();
 
-77 
+83 
 Êi°
 .
 	`‰⁄t
@@ -30429,7 +30469,7 @@ Fau…
 AB
 ;
 
-78 
+84 
 Êi°
 .
 	`push_back
@@ -30437,23 +30477,101 @@ AB
 	`‰⁄t
 ());
 
-79 
+85 
 Êi°
 .
 	`p›_‰⁄t
 ();
 
-82 
+88 
 dñëe
  
 ©pg_
 ;
 
-84 
+90 i‡(
+pcﬁl_
+->
+∑ts_
+.
+	`size
+()%
+RPT_PER_PAT
+==0) {
+
+91 
+fu
+ = 
+fLi°Exåa˘_
+->
+cuºít_
+.
+	`size
+();
+
+92 
+dt
+ = 
+fLi°Exåa˘_
+->
+	`gëNSètus
+(
+Fau…
+::
+DT
+);
+
+93 
+cout
+ << "# " << 
+	`£tw
+(9Ë<< 
+pcﬁl_
+->
+∑ts_
+.
+	`size
+();
+
+94 
+cout
+ << " " << 
+	`£tw
+(8Ë<< ()
+dt
+ / ()
+fu
+ * 100.f << "%";
+
+95 
+cout
+ << " " << 
+	`£tw
+(7Ë<< 
+fu
+ - 
+dt
+;
+
+96 
+cout
+ << " " << 
+	`£tw
+(8Ë<< 
+dt
+;
+
+97 
+cout
+ << 
+ídl
+;
+
+100 
 	}
 }
 
-86 
+102 
 boﬁ
  
 	$comp_Áu…
@@ -30465,7 +30583,7 @@ f1
 f2
 ) {
 
-87  
+103  
 f1
 ->
 h¨d_
@@ -30473,11 +30591,11 @@ h¨d_
 f2
 ->hard_;
 
-88 
+104 
 	}
 }
 
-90 
+106 
 	gAçgMgr
 ::
 	$ˇlc_Áu…_h¨d√ss
@@ -30487,11 +30605,11 @@ Fau…
 f1
 ) {
 
-91 
+107 
 t1
 ;
 
-93 
+109 
 t1
  = (
 f1
@@ -30515,7 +30633,7 @@ cc1_
 cc0_
 ;
 
-94 
+110 
 t1
  *(
 f1
@@ -30533,7 +30651,7 @@ co_i_
 co_o_
 ;
 
-96 
+112 
 f1
 ->
 h¨d_
@@ -30541,11 +30659,11 @@ h¨d_
 t1
 ;
 
-98 
+114 
 	}
 }
 
-101 
+117 
 	gAçgMgr
 ::
 	$gëPoP©ã∫
@@ -30555,13 +30673,13 @@ P©ã∫
 ∑t
 ) {
 
-102 
+118 
 sim_
 ->
 	`goodSim
 ();
 
-103 
+119 
 off£t
  = 
 cú_
@@ -30573,7 +30691,7 @@ ng©e_
 ≈pi_
 ;
 
-104 
+120 
 i
  = 0; i < 
 cú_
@@ -30581,7 +30699,7 @@ cú_
 ≈o_
  ; i++) {
 
-105 i‡(
+121 i‡(
 cú_
 ->
 g©es_
@@ -30595,7 +30713,7 @@ gl_
 PARA_H
 )
 
-106 
+122 
 ∑t
 ->
 po1_
@@ -30605,7 +30723,7 @@ i
 L
 ;
 
-107 i‡(
+123 i‡(
 cú_
 ->
 g©es_
@@ -30619,7 +30737,7 @@ gh_
 PARA_H
 )
 
-108 
+124 
 ∑t
 ->
 po1_
@@ -30629,7 +30747,7 @@ i
 H
 ;
 
-110 
+126 
 ∑t
 ->
 po1_
@@ -30639,7 +30757,7 @@ i
 X
 ;
 
-112 if(
+128 if(
 ∑t
 ->
 po2_
@@ -30651,7 +30769,7 @@ cú_
 n‰ame_
 >1)
 
-113  
+129  
 i
  = 0 ; i < 
 cú_
@@ -30659,7 +30777,7 @@ cú_
 ≈o_
  ; i++ ){
 
-114 i‡(
+130 i‡(
 cú_
 ->
 g©es_
@@ -30675,7 +30793,7 @@ gl_
 PARA_H
 )
 
-115 
+131 
 ∑t
 ->
 po2_
@@ -30685,7 +30803,7 @@ i
 L
 ;
 
-116 i‡(
+132 i‡(
 cú_
 ->
 g©es_
@@ -30701,7 +30819,7 @@ gh_
 PARA_H
 )
 
-117 
+133 
 ∑t
 ->
 po2_
@@ -30711,7 +30829,7 @@ i
 H
 ;
 
-119 
+135 
 ∑t
 ->
 po2_
@@ -30721,7 +30839,7 @@ i
 X
 ;
 
-122 
+138 
 off£t
  = 
 cú_
@@ -30731,13 +30849,13 @@ ng©e_
 ≈pi_
 ;
 
-123 if(
+139 if(
 cú_
 ->
 n‰ame_
 >1)
 
-124 
+140 
 off£t
  +
 cú_
@@ -30745,7 +30863,7 @@ cú_
 ng©e_
 ;
 
-125 
+141 
 i
  = 0; i < 
 cú_
@@ -30753,7 +30871,7 @@ cú_
 ≈pi_
 ; i++) {
 
-126 i‡(
+142 i‡(
 cú_
 ->
 g©es_
@@ -30767,7 +30885,7 @@ gl_
 PARA_H
 )
 
-127 
+143 
 ∑t
 ->
 µo_
@@ -30777,7 +30895,7 @@ i
 L
 ;
 
-128 i‡(
+144 i‡(
 cú_
 ->
 g©es_
@@ -30791,7 +30909,7 @@ gh_
 PARA_H
 )
 
-129 
+145 
 ∑t
 ->
 µo_
@@ -30801,7 +30919,7 @@ i
 H
 ;
 
-131 
+147 
 ∑t
 ->
 µo_
@@ -30811,7 +30929,7 @@ i
 X
 ;
 
-133 
+149 
 	}
 }
 
@@ -30831,13 +30949,19 @@ _CORE_ATPG_MGR_H_
 	~"©pg.h
 "
 
-24 
+24 
+	#RPT_PER_PAT
+ 64
+
+	)
+
+26 
 «me•a˚
  
 	gC‹eNs
  {
 
-26 
+28 
 	g°d
 ::
 	tve˘‹
@@ -30847,55 +30971,55 @@ _CORE_ATPG_MGR_H_
 	tAçgVec
 ;
 
-28 ˛as†
+30 ˛as†
 	cAçgMgr
  {
 
-29 
+31 
 	gpublic
 :
 
-30 
+32 
 AçgMgr
 ();
 
-31 ~
+33 ~
 AçgMgr
 ();
 
-33 
+35 
 gíî©i⁄
 ();
 
-35 
+37 
 Fau…Li°Exåa˘
  *
 	gfLi°Exåa˘_
 ;
 
-36 
+38 
 P©ã∫Pro˚ss‹
  *
 	gpcﬁl_
 ;
 
-37 
+39 
 Cúcuô
  *
 	gcú_
 ;
 
-38 
+40 
 Simuœt‹
  *
 	gsim_
 ;
 
-39 
+41 
 	g¥iv©e
 :
 
-40 
+42 
 gëPoP©ã∫
 (
 P©ã∫
@@ -30903,7 +31027,7 @@ P©ã∫
 ∑t
 );
 
-42 
+44 
 ˇlc_Áu…_h¨d√ss
 (
 Fau…
@@ -30911,13 +31035,13 @@ Fau…
 f1
 );
 
-44 
+46 
 Açg
  *
 	g©pg_
 ;
 
-49 
+51 
 ölöe
  
 	gAçgMgr
@@ -30925,41 +31049,41 @@ Açg
 	$AçgMgr
 () {
 
-50 
+52 
 fLi°Exåa˘_
  = 
 NULL
 ;
 
-51 
+53 
 pcﬁl_
  = 
 NULL
 ;
 
-52 
+54 
 cú_
  = 
 NULL
 ;
 
-53 
+55 
 sim_
  = 
 NULL
 ;
 
-54 
+56 
 ©pg_
  = 
 NULL
 ;
 
-55 
+57 
 	}
 }
 
-57 
+59 
 ölöe
  
 	gAçgMgr
@@ -31780,10 +31904,20 @@ g©es_
 [
 id
 ].
+«me_
+ = 
+p
+->name_;
+
+203 
+g©es_
+[
+id
+].
 id_
  = id;
 
-203 
+204 
 g©es_
 [
 id
@@ -31793,7 +31927,7 @@ cid_
 i
 ;
 
-204 
+205 
 g©es_
 [
 id
@@ -31801,7 +31935,7 @@ id
 pmtid_
  = 0;
 
-205 
+206 
 g©es_
 [
 id
@@ -31809,7 +31943,7 @@ id
 lvl_
  = 0;
 
-206 
+207 
 g©es_
 [
 id
@@ -31821,7 +31955,7 @@ G©e
 PI
 ;
 
-207 
+208 
 g©es_
 [
 id
@@ -31831,7 +31965,7 @@ fos_
 nfo
 ];
 
-208 
+209 
 nfo
  +
 t›
@@ -31847,11 +31981,11 @@ id_
 	`size
 () - 1;
 
-210 
+211 
 	}
 }
 
-212 
+213 
 	gCúcuô
 ::
 	$¸óãPpi
@@ -31859,7 +31993,7 @@ id_
 nfo
 ) {
 
-213 
+214 
 Cñl
  *
 t›
@@ -31869,13 +32003,13 @@ t›
 	`gëT›
 ();
 
-214 
+215 
 i
  = 0; i < 
 ≈pi_
 ; ++i) {
 
-215 
+216 
 Cñl
  *
 c
@@ -31887,7 +32021,7 @@ t›
 i
 );
 
-216 
+217 
 id
  = 
 ˚ŒToG©e_
@@ -31895,7 +32029,17 @@ id
 i
 ];
 
-217 
+218 
+g©es_
+[
+id
+].
+«me_
+ = 
+c
+->name_;
+
+219 
 g©es_
 [
 id
@@ -31903,7 +32047,7 @@ id
 id_
  = id;
 
-218 
+220 
 g©es_
 [
 id
@@ -31913,7 +32057,7 @@ cid_
 i
 ;
 
-219 
+221 
 g©es_
 [
 id
@@ -31921,7 +32065,7 @@ id
 pmtid_
  = 0;
 
-220 
+222 
 g©es_
 [
 id
@@ -31929,7 +32073,7 @@ id
 lvl_
  = 0;
 
-221 
+223 
 g©es_
 [
 id
@@ -31941,7 +32085,7 @@ G©e
 PPI
 ;
 
-222 
+224 
 g©es_
 [
 id
@@ -31951,11 +32095,11 @@ fos_
 nfo
 ];
 
-223 
+225 
 qid
  = 0;
 
-224 
+226 
 	`°rcmp
 (
 c
@@ -31967,7 +32111,7 @@ qid
 «me_
 ,"Q"))++qid;
 
-225 
+227 
 nfo
  +
 t›
@@ -31987,17 +32131,17 @@ id_
 	`size
 () - 2;
 
-226 i‡(!
+228 i‡(!
 c
 ->
 libc_
 )
 
-227 
+229 
 nfo
 ++;
 
-229 if(
+231 if(
 n‰ame_
  > 1 && 
 c⁄nTy≥_
@@ -32011,11 +32155,11 @@ i
 nfo
 ;
 
-233 
+235 
 	}
 }
 
-236 
+238 
 	gCúcuô
 ::
 	$¸óãComb
@@ -32025,7 +32169,7 @@ nfi
 nfo
 ) {
 
-237 
+239 
 Cñl
  *
 t›
@@ -32035,7 +32179,7 @@ t›
 	`gëT›
 ();
 
-239 
+241 
 i
  = 
 ≈pi_
@@ -32045,7 +32189,7 @@ t›
 	`gëNCñl
 (); ++i) {
 
-240 
+242 
 Cñl
  *
 c
@@ -32057,13 +32201,13 @@ t›
 i
 );
 
-241 i‡(
+243 i‡(
 c
 ->
 libc_
 ) {
 
-242 
+244 
 j
  = 0; j < ()
 c
@@ -32073,7 +32217,7 @@ libc_
 	`gëNCñl
 (); ++j) {
 
-243 
+245 
 id
  = 
 ˚ŒToG©e_
@@ -32083,7 +32227,7 @@ i
 j
 ;
 
-244 
+246 
 g©es_
 [
 id
@@ -32091,7 +32235,7 @@ id
 id_
  = id;
 
-245 
+247 
 g©es_
 [
 id
@@ -32103,7 +32247,7 @@ c
 id_
 ;
 
-246 
+248 
 g©es_
 [
 id
@@ -32113,7 +32257,7 @@ pmtid_
 j
 ;
 
-248 
+250 
 Pmt
  *
 pmt
@@ -32127,7 +32271,7 @@ libc_
 j
 );
 
-249 
+251 
 	`¸óãPmt
 (
 id
@@ -32141,7 +32285,7 @@ nfi
 nfo
 );
 
-250 
+252 
 g©es_
 [
 id
@@ -32153,7 +32297,7 @@ co_i_
 nfi_
 ];
 
-251 
+253 
 pid
 =0;Öid<
 g©es_
@@ -32163,7 +32307,7 @@ id
 nfi_
 ;Öid++)
 
-252 
+254 
 g©es_
 [
 id
@@ -32173,7 +32317,7 @@ co_i_
 pid
 ] = 0;
 
-256 
+258 
 id
  = 
 ˚ŒToG©e_
@@ -32181,7 +32325,17 @@ id
 i
 ];
 
-257 
+259 
+g©es_
+[
+id
+].
+«me_
+ = 
+c
+->name_;
+
+260 
 g©es_
 [
 id
@@ -32189,7 +32343,7 @@ id
 id_
  = id;
 
-258 
+261 
 g©es_
 [
 id
@@ -32201,7 +32355,7 @@ c
 id_
 ;
 
-260 
+263 
 	`¸óãVîûogPmt
 (
 id
@@ -32213,7 +32367,7 @@ nfi
 nfo
 );
 
-261 
+264 
 g©es_
 [
 id
@@ -32225,7 +32379,7 @@ co_i_
 nfi_
 ];
 
-262 
+265 
 pid
 =0;Öid<
 g©es_
@@ -32235,7 +32389,7 @@ id
 nfi_
 ;Öid++)
 
-263 
+266 
 g©es_
 [
 id
@@ -32245,13 +32399,13 @@ co_i_
 pid
 ] = 0;
 
-266 i‡(
+269 i‡(
 t›
 ->
 	`gëNCñl
 () > 0)
 
-267 
+270 
 lvl_
  = 
 g©es_
@@ -32263,11 +32417,11 @@ t›
 	`gëNCñl
 () - 1]].lvl_ + 2;
 
-268 
+271 
 	}
 }
 
-270 
+273 
 	gCúcuô
 ::
 	$¸óãVîûogPmt
@@ -32279,199 +32433,21 @@ Cñl
 c
 ,
 
-271 &
+274 &
 nfi
 , &
 nfo
 ) {
 
-273 i‡(!
-	`°rcmp
-(
-c
-->
-ty≥Name_
-, "and"))
-
-274 
-g©es_
-[
-id
-].
-ty≥_
- = 
-G©e
-::
-AND
-;
-
-275 i‡(!
-	`°rcmp
-(
-c
-->
-ty≥Name_
-, "nand"))
-
 276 
-g©es_
-[
+	`dëVîûogPmtTy≥
+(
 id
-].
-ty≥_
- = 
-G©e
-::
-NAND
-;
-
-277 i‡(!
-	`°rcmp
-(
+, 
 c
-->
-ty≥Name_
-, "or"))
-
-278 
-g©es_
-[
-id
-].
-ty≥_
- = 
-G©e
-::
-OR
-;
-
-279 i‡(!
-	`°rcmp
-(
-c
-->
-ty≥Name_
-, "nor"))
-
-280 
-g©es_
-[
-id
-].
-ty≥_
- = 
-G©e
-::
-NOR
-;
-
-281 i‡(!
-	`°rcmp
-(
-c
-->
-ty≥Name_
-, "xor"))
-
-282 
-g©es_
-[
-id
-].
-ty≥_
- = 
-G©e
-::
-XOR
-;
-
-283 i‡(!
-	`°rcmp
-(
-c
-->
-ty≥Name_
-, "xnor"))
-
-284 
-g©es_
-[
-id
-].
-ty≥_
- = 
-G©e
-::
-XNOR
-;
-
-285 i‡(!
-	`°rcmp
-(
-c
-->
-ty≥Name_
-, "not"))
-
-286 
-g©es_
-[
-id
-].
-ty≥_
- = 
-G©e
-::
-INV
-;
-
-287 i‡(!
-	`°rcmp
-(
-c
-->
-ty≥Name_
-, "buf"))
-
-288 
-g©es_
-[
-id
-].
-ty≥_
- = 
-G©e
-::
-BUF
-;
-
-290 
-	`Ârötf
-(
-°dîr
-, "**ERROR Circuit::createVerilogPmt(): cellÅype");
-
-291 
-	`Ârötf
-(
-°dîr
-, " `%s/ ", 
-c
-->
-ty≥Name_
 );
 
-292 
-	`Ârötf
-(
-°dîr
-, "notÑecognized cellÅype\n");
-
-293 
-	`as£π
-(0);
-
-296 
+278 
 g©es_
 [
 id
@@ -32481,11 +32457,11 @@ fis_
 nfi
 ];
 
-297 
+279 
 maxLvl
  = -1;
 
-298 
+280 
 size_t
  
 i
@@ -32495,7 +32471,7 @@ c
 	`gëNP‹t
 (); ++i) {
 
-299 i‡(
+281 i‡(
 c
 ->
 	`gëP‹t
@@ -32509,7 +32485,7 @@ P‹t
 INPUT
 )
 
-302 
+284 
 Në
  *
 nö
@@ -32523,7 +32499,7 @@ i
 exNë_
 ;
 
-303 
+285 
 size_t
  
 j
@@ -32533,7 +32509,7 @@ nö
 	`gëNP‹t
 (); j++) {
 
-304 
+286 
 P‹t
  *
 p
@@ -32545,7 +32521,7 @@ nö
 j
 );
 
-305 i‡(
+287 i‡(
 p
 ==
 c
@@ -32555,11 +32531,11 @@ c
 i
 ))
 
-308 
+290 
 öId
  = 0;
 
-310 i‡(
+292 i‡(
 p
 ->
 ty≥_
@@ -32573,7 +32549,7 @@ t›_
 c
 ->top_)
 
-311 
+293 
 öId
  = 
 ˚ŒToG©e_
@@ -32585,7 +32561,7 @@ t›_
 id_
 ];
 
-312 i‡(
+294 i‡(
 p
 ->
 ty≥_
@@ -32599,7 +32575,7 @@ t›_
 c
 ->top_)
 
-313 
+295 
 öId
  = 
 p‹tToG©e_
@@ -32609,7 +32585,7 @@ p
 id_
 ];
 
-316 
+298 
 g©es_
 [
 id
@@ -32621,7 +32597,7 @@ nfi_
 öId
 ;
 
-317 
+299 
 g©es_
 [
 id
@@ -32629,11 +32605,11 @@ id
 nfi_
 ++;
 
-318 
+300 
 nfi
 ++;
 
-320 
+302 
 g©es_
 [
 öId
@@ -32645,7 +32621,7 @@ nfo_
 id
 ;
 
-321 
+303 
 g©es_
 [
 öId
@@ -32653,7 +32629,7 @@ g©es_
 nfo_
 ++;
 
-323 i‡(
+305 i‡(
 g©es_
 [
 öId
@@ -32663,7 +32639,7 @@ lvl_
 maxLvl
 )
 
-324 
+306 
 maxLvl
  = 
 g©es_
@@ -32673,7 +32649,7 @@ g©es_
 lvl_
 ;
 
-328 
+310 
 g©es_
 [
 id
@@ -32683,7 +32659,7 @@ lvl_
 maxLvl
  + 1;
 
-330 
+312 
 g©es_
 [
 id
@@ -32693,7 +32669,7 @@ fos_
 nfo
 ];
 
-331 
+313 
 P‹t
  *
 ouç
@@ -32701,7 +32677,7 @@ ouç
 NULL
 ;
 
-332 
+314 
 size_t
  
 i
@@ -32713,7 +32689,7 @@ c
 ouç
 ; ++i) {
 
-333 i‡(
+315 i‡(
 c
 ->
 	`gëP‹t
@@ -32727,7 +32703,7 @@ P‹t
 OUTPUT
 )
 
-334 
+316 
 ouç
  = 
 c
@@ -32737,7 +32713,7 @@ c
 i
 );
 
-336 
+318 
 P‹tSë
  
 ps
@@ -32755,7 +32731,7 @@ exNë_
 id_
 );
 
-337 
+319 
 P‹tSë
 ::
 ôî©‹
@@ -32767,7 +32743,7 @@ ps
 	`begö
 ();
 
-338  ; 
+320  ; 
 ô
  !
 ps
@@ -32775,7 +32751,7 @@ ps
 	`íd
 (); ++it) {
 
-339 i‡((*
+321 i‡((*
 ô
 )->
 t›_
@@ -32783,11 +32759,11 @@ t›_
 c
 ->top_ && (*it)->top_ != c) {
 
-340 
+322 
 nfo
  += 1;
 
-342 i‡((*
+324 i‡((*
 ô
 )->
 t›_
@@ -32795,15 +32771,523 @@ t›_
 c
 ->top_) {
 
-343 
+325 
 nfo
  += 1;
 
-346 
+328 
 	}
 }
 
-352 
+330 
+	gCúcuô
+::
+	$dëVîûogPmtTy≥
+(c⁄° &
+id
+, c⁄° 
+I¡fNs
+::
+Cñl
+ * c⁄° 
+c
+) {
+
+331 i‡(!
+	`°rcmp
+(
+c
+->
+ty≥Name_
+, "and")) {
+
+332 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+AND
+;
+
+333 i‡(
+c
+->
+	`gëNP‹t
+() == 3)
+
+334 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+AND2
+;
+
+335 i‡(
+c
+->
+	`gëNP‹t
+() == 4)
+
+336 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+AND3
+;
+
+337 i‡(
+c
+->
+	`gëNP‹t
+() == 5)
+
+338 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+AND4
+;
+
+340 
+	`Ârötf
+(
+°dîr
+, "**WARN Circuit::detVerilogPmtType(): cell ");
+
+341 
+	`Ârötf
+(
+°dîr
+, " `%†", 
+c
+->
+«me_
+);
+
+342 
+	`Ârötf
+(
+°dîr
+, "hasÜarger fan-in countsÅhanÇormal\n");
+
+345 i‡(!
+	`°rcmp
+(
+c
+->
+ty≥Name_
+, "nand")) {
+
+346 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+NAND
+;
+
+347 i‡(
+c
+->
+	`gëNP‹t
+() == 3)
+
+348 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+NAND2
+;
+
+349 i‡(
+c
+->
+	`gëNP‹t
+() == 4)
+
+350 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+NAND3
+;
+
+351 i‡(
+c
+->
+	`gëNP‹t
+() == 5)
+
+352 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+NAND4
+;
+
+354 
+	`Ârötf
+(
+°dîr
+, "**WARN Circuit::detVerilogPmtType(): cell ");
+
+355 
+	`Ârötf
+(
+°dîr
+, " `%†", 
+c
+->
+«me_
+);
+
+356 
+	`Ârötf
+(
+°dîr
+, "hasÜarger fan-in countsÅhanÇormal\n");
+
+359 i‡(!
+	`°rcmp
+(
+c
+->
+ty≥Name_
+, "or")) {
+
+360 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+OR
+;
+
+361 i‡(
+c
+->
+	`gëNP‹t
+() == 3)
+
+362 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+OR2
+;
+
+363 i‡(
+c
+->
+	`gëNP‹t
+() == 4)
+
+364 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+OR3
+;
+
+365 i‡(
+c
+->
+	`gëNP‹t
+() == 5)
+
+366 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+OR4
+;
+
+368 
+	`Ârötf
+(
+°dîr
+, "**WARN Circuit::detVerilogPmtType(): cell ");
+
+369 
+	`Ârötf
+(
+°dîr
+, " `%†", 
+c
+->
+«me_
+);
+
+370 
+	`Ârötf
+(
+°dîr
+, "hasÜarger fan-in countsÅhanÇormal\n");
+
+373 i‡(!
+	`°rcmp
+(
+c
+->
+ty≥Name_
+, "nor")) {
+
+374 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+NOR
+;
+
+375 i‡(
+c
+->
+	`gëNP‹t
+() == 3)
+
+376 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+NOR2
+;
+
+377 i‡(
+c
+->
+	`gëNP‹t
+() == 4)
+
+378 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+NOR3
+;
+
+379 i‡(
+c
+->
+	`gëNP‹t
+() == 5)
+
+380 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+NOR4
+;
+
+382 
+	`Ârötf
+(
+°dîr
+, "**WARN Circuit::detVerilogPmtType(): cell ");
+
+383 
+	`Ârötf
+(
+°dîr
+, " `%†", 
+c
+->
+«me_
+);
+
+384 
+	`Ârötf
+(
+°dîr
+, "hasÜarger fan-in countsÅhanÇormal\n");
+
+387 i‡(!
+	`°rcmp
+(
+c
+->
+ty≥Name_
+, "xor"))
+
+388 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+XOR
+;
+
+389 i‡(!
+	`°rcmp
+(
+c
+->
+ty≥Name_
+, "xnor"))
+
+390 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+XNOR
+;
+
+391 i‡(!
+	`°rcmp
+(
+c
+->
+ty≥Name_
+, "not"))
+
+392 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+INV
+;
+
+393 i‡(!
+	`°rcmp
+(
+c
+->
+ty≥Name_
+, "buf"))
+
+394 
+g©es_
+[
+id
+].
+ty≥_
+ = 
+G©e
+::
+BUF
+;
+
+396 
+	`Ârötf
+(
+°dîr
+, "**ERROR Circuit::createVerilogPmt(): cellÅype");
+
+397 
+	`Ârötf
+(
+°dîr
+, " `%s/ ", 
+c
+->
+ty≥Name_
+);
+
+398 
+	`Ârötf
+(
+°dîr
+, "notÑecognized cellÅype\n");
+
+399 
+	`as£π
+(0);
+
+401 
+	}
+}
+
+407 
 	gCúcuô
 ::
 	$¸óãPmt
@@ -32815,7 +33299,7 @@ Cñl
 c
 ,
 
-353 c⁄° 
+408 c⁄° 
 Pmt
  * c⁄° 
 pmt
@@ -32825,7 +33309,7 @@ nfi
 nfo
 ) {
 
-355 
+410 
 	`dëG©eTy≥
 (
 id
@@ -32835,7 +33319,7 @@ c
 pmt
 );
 
-358 
+413 
 g©es_
 [
 id
@@ -32845,11 +33329,11 @@ fis_
 nfi
 ];
 
-359 
+414 
 maxLvl
  = -1;
 
-360 
+415 
 size_t
  
 i
@@ -32859,7 +33343,7 @@ pmt
 	`gëNP‹t
 (); ++i) {
 
-361 i‡(
+416 i‡(
 pmt
 ->
 	`gëP‹t
@@ -32873,7 +33357,7 @@ P‹t
 INPUT
 )
 
-363 
+418 
 Në
  *
 nö
@@ -32887,7 +33371,7 @@ i
 exNë_
 ;
 
-364 
+419 
 size_t
  
 j
@@ -32897,7 +33381,7 @@ nö
 	`gëNP‹t
 (); ++j) {
 
-365 
+420 
 P‹t
  *
 p
@@ -32909,7 +33393,7 @@ nö
 j
 );
 
-366 i‡(
+421 i‡(
 p
  =
 pmt
@@ -32919,11 +33403,11 @@ pmt
 i
 ))
 
-369 
+424 
 öId
  = 0;
 
-371 i‡(
+426 i‡(
 p
 ->
 ty≥_
@@ -32939,7 +33423,7 @@ c
 libc_
 )
 
-372 
+427 
 öId
  = 
 ˚ŒToG©e_
@@ -32953,7 +33437,7 @@ p
 t›_
 ->id_;
 
-375 i‡(
+430 i‡(
 p
 ->
 ty≥_
@@ -32969,7 +33453,7 @@ c
 libc_
 ) {
 
-376 
+431 
 Në
  *
 √x
@@ -32985,7 +33469,7 @@ id_
 exNë_
 ;
 
-377 
+432 
 P‹tSë
  
 ps
@@ -33001,7 +33485,7 @@ t›_
 id_
 );
 
-378 
+433 
 P‹tSë
 ::
 ôî©‹
@@ -33013,7 +33497,7 @@ ps
 	`begö
 ();
 
-379  ; 
+434  ; 
 ô
  !
 ps
@@ -33021,7 +33505,7 @@ ps
 	`íd
 (); ++it) {
 
-380 
+435 
 Cñl
  *
 cö
@@ -33031,7 +33515,7 @@ cö
 t›_
 ;
 
-381 i‡((*
+436 i‡((*
 ô
 )->
 ty≥_
@@ -33047,7 +33531,7 @@ c
 t›_
 ) {
 
-382 
+437 
 CñlSë
  
 cs
@@ -33063,7 +33547,7 @@ libc_
 id_
 );
 
-383 
+438 
 öId
  = 
 ˚ŒToG©e_
@@ -33073,7 +33557,7 @@ cö
 id_
 ];
 
-384 i‡(
+439 i‡(
 ∆_
 ->
 	`gëTechlib
@@ -33091,7 +33575,7 @@ Pmt
 DFF
 ))
 
-386 
+441 
 öId
  +(*
 cs
@@ -33101,7 +33585,7 @@ cs
 id_
 ;
 
-389 i‡((*
+444 i‡((*
 ô
 )->
 ty≥_
@@ -33117,7 +33601,7 @@ c
 t›_
 ) {
 
-390 
+445 
 öId
  = 
 p‹tToG©e_
@@ -33127,7 +33611,7 @@ p‹tToG©e_
 id_
 ];
 
-397 
+452 
 g©es_
 [
 id
@@ -33139,7 +33623,7 @@ nfi_
 öId
 ;
 
-398 
+453 
 g©es_
 [
 id
@@ -33147,11 +33631,11 @@ id
 nfi_
 ++;
 
-399 
+454 
 nfi
 ++;
 
-401 
+456 
 g©es_
 [
 öId
@@ -33163,7 +33647,7 @@ nfo_
 id
 ;
 
-402 
+457 
 g©es_
 [
 öId
@@ -33171,7 +33655,7 @@ g©es_
 nfo_
 ++;
 
-404 i‡(
+459 i‡(
 g©es_
 [
 öId
@@ -33181,7 +33665,7 @@ lvl_
 maxLvl
 )
 
-405 
+460 
 maxLvl
  = 
 g©es_
@@ -33191,7 +33675,7 @@ g©es_
 lvl_
 ;
 
-408 
+463 
 g©es_
 [
 id
@@ -33201,7 +33685,7 @@ lvl_
 maxLvl
  + 1;
 
-412 
+467 
 g©es_
 [
 id
@@ -33211,7 +33695,7 @@ fos_
 nfo
 ];
 
-413 
+468 
 P‹t
  *
 ouç
@@ -33219,7 +33703,7 @@ ouç
 NULL
 ;
 
-414 
+469 
 size_t
  
 i
@@ -33231,7 +33715,7 @@ pmt
 ouç
 ; ++i) {
 
-415 i‡(
+470 i‡(
 pmt
 ->
 	`gëP‹t
@@ -33245,7 +33729,7 @@ P‹t
 OUTPUT
 )
 
-416 
+471 
 ouç
  = 
 pmt
@@ -33255,7 +33739,7 @@ pmt
 i
 );
 
-418 
+473 
 P‹tSë
  
 ps
@@ -33273,7 +33757,7 @@ exNë_
 id_
 );
 
-419 
+474 
 P‹tSë
 ::
 ôî©‹
@@ -33285,7 +33769,7 @@ ps
 	`begö
 ();
 
-420  ; 
+475  ; 
 ô
  !
 ps
@@ -33293,7 +33777,7 @@ ps
 	`íd
 (); ++it) {
 
-421 i‡((*
+476 i‡((*
 ô
 )->
 t›_
@@ -33305,11 +33789,11 @@ libc_
 pmt
 ) {
 
-422 
+477 
 nfo
  += 1;
 
-424 i‡((*
+479 i‡((*
 ô
 )->
 t›_
@@ -33319,7 +33803,7 @@ c
 libc_
 ) {
 
-425 
+480 
 nid
  = 
 c
@@ -33333,7 +33817,7 @@ id_
 exNë_
 ->id_;
 
-426 
+481 
 nfo
  +
 c
@@ -33347,11 +33831,11 @@ nid
 	`size
 () - 1;
 
-429 
+484 
 	}
 }
 
-431 
+486 
 	gCúcuô
 ::
 	$dëG©eTy≥
@@ -33363,25 +33847,25 @@ Cñl
 c
 ,
 
-432 c⁄° 
+487 c⁄° 
 Pmt
  * c⁄° 
 pmt
 ) {
 
-433 
+488 
 pmt
 ->
 ty≥_
 ) {
 
-434 
+489 
 Pmt
 ::
 BUF
 :
 
-435 
+490 
 g©es_
 [
 id
@@ -33393,19 +33877,19 @@ G©e
 BUF
 ;
 
-437 
+492 
 Pmt
 ::
 INV
 :
 
-438 
+493 
 Pmt
 ::
 INVF
 :
 
-439 
+494 
 g©es_
 [
 id
@@ -33417,13 +33901,13 @@ G©e
 INV
 ;
 
-441 
+496 
 Pmt
 ::
 MUX
 :
 
-442 
+497 
 g©es_
 [
 id
@@ -33435,19 +33919,19 @@ G©e
 MUX
 ;
 
-444 
+499 
 Pmt
 ::
 AND
 :
 
-445 i‡(
+500 i‡(
 c
 ->
 	`gëNP‹t
 () == 3)
 
-446 
+501 
 g©es_
 [
 id
@@ -33459,13 +33943,13 @@ G©e
 AND2
 ;
 
-447 i‡(
+502 i‡(
 c
 ->
 	`gëNP‹t
 () == 4)
 
-448 
+503 
 g©es_
 [
 id
@@ -33477,13 +33961,13 @@ G©e
 AND3
 ;
 
-449 i‡(
+504 i‡(
 c
 ->
 	`gëNP‹t
 () == 5)
 
-450 
+505 
 g©es_
 [
 id
@@ -33495,7 +33979,7 @@ G©e
 AND4
 ;
 
-452 
+507 
 g©es_
 [
 id
@@ -33507,19 +33991,19 @@ G©e
 AND
 ;
 
-454 
+509 
 Pmt
 ::
 NAND
 :
 
-455 i‡(
+510 i‡(
 c
 ->
 	`gëNP‹t
 () == 3)
 
-456 
+511 
 g©es_
 [
 id
@@ -33531,13 +34015,13 @@ G©e
 NAND2
 ;
 
-457 i‡(
+512 i‡(
 c
 ->
 	`gëNP‹t
 () == 4)
 
-458 
+513 
 g©es_
 [
 id
@@ -33549,13 +34033,13 @@ G©e
 NAND3
 ;
 
-459 i‡(
+514 i‡(
 c
 ->
 	`gëNP‹t
 () == 5)
 
-460 
+515 
 g©es_
 [
 id
@@ -33567,7 +34051,7 @@ G©e
 NAND4
 ;
 
-462 
+517 
 g©es_
 [
 id
@@ -33579,19 +34063,19 @@ G©e
 NAND
 ;
 
-464 
+519 
 Pmt
 ::
 OR
 :
 
-465 i‡(
+520 i‡(
 c
 ->
 	`gëNP‹t
 () == 3)
 
-466 
+521 
 g©es_
 [
 id
@@ -33603,13 +34087,13 @@ G©e
 OR2
 ;
 
-467 i‡(
+522 i‡(
 c
 ->
 	`gëNP‹t
 () == 4)
 
-468 
+523 
 g©es_
 [
 id
@@ -33621,13 +34105,13 @@ G©e
 OR3
 ;
 
-469 i‡(
+524 i‡(
 c
 ->
 	`gëNP‹t
 () == 5)
 
-470 
+525 
 g©es_
 [
 id
@@ -33639,7 +34123,7 @@ G©e
 OR4
 ;
 
-472 
+527 
 g©es_
 [
 id
@@ -33651,19 +34135,19 @@ G©e
 OR
 ;
 
-474 
+529 
 Pmt
 ::
 NOR
 :
 
-475 i‡(
+530 i‡(
 c
 ->
 	`gëNP‹t
 () == 3)
 
-476 
+531 
 g©es_
 [
 id
@@ -33675,13 +34159,13 @@ G©e
 NOR2
 ;
 
-477 i‡(
+532 i‡(
 c
 ->
 	`gëNP‹t
 () == 4)
 
-478 
+533 
 g©es_
 [
 id
@@ -33693,13 +34177,13 @@ G©e
 NOR3
 ;
 
-479 i‡(
+534 i‡(
 c
 ->
 	`gëNP‹t
 () == 5)
 
-480 
+535 
 g©es_
 [
 id
@@ -33711,7 +34195,7 @@ G©e
 NOR4
 ;
 
-482 
+537 
 g©es_
 [
 id
@@ -33723,19 +34207,19 @@ G©e
 NOR
 ;
 
-484 
+539 
 Pmt
 ::
 XOR
 :
 
-485 i‡(
+540 i‡(
 c
 ->
 	`gëNP‹t
 () == 3)
 
-486 
+541 
 g©es_
 [
 id
@@ -33747,13 +34231,13 @@ G©e
 XOR2
 ;
 
-487 i‡(
+542 i‡(
 c
 ->
 	`gëNP‹t
 () == 4)
 
-488 
+543 
 g©es_
 [
 id
@@ -33765,7 +34249,7 @@ G©e
 XOR3
 ;
 
-490 
+545 
 g©es_
 [
 id
@@ -33777,19 +34261,19 @@ G©e
 XOR
 ;
 
-492 
+547 
 Pmt
 ::
 XNOR
 :
 
-493 i‡(
+548 i‡(
 c
 ->
 	`gëNP‹t
 () == 3)
 
-494 
+549 
 g©es_
 [
 id
@@ -33801,13 +34285,13 @@ G©e
 XNOR2
 ;
 
-495 i‡(
+550 i‡(
 c
 ->
 	`gëNP‹t
 () == 4)
 
-496 
+551 
 g©es_
 [
 id
@@ -33819,7 +34303,7 @@ G©e
 XNOR3
 ;
 
-498 
+553 
 g©es_
 [
 id
@@ -33831,13 +34315,13 @@ G©e
 XNOR
 ;
 
-500 
+555 
 Pmt
 ::
 TIE1
 :
 
-501 
+556 
 g©es_
 [
 id
@@ -33849,13 +34333,13 @@ G©e
 TIE1
 ;
 
-503 
+558 
 Pmt
 ::
 TIE0
 :
 
-504 
+559 
 g©es_
 [
 id
@@ -33867,13 +34351,13 @@ G©e
 TIE0
 ;
 
-506 
+561 
 Pmt
 ::
 TIEX
 :
 
-507 
+562 
 g©es_
 [
 id
@@ -33885,13 +34369,13 @@ G©e
 TIE0
 ;
 
-509 
+564 
 Pmt
 ::
 TIEZ
 :
 
-510 
+565 
 g©es_
 [
 id
@@ -33903,7 +34387,7 @@ G©e
 TIEZ
 ;
 
-513 
+568 
 g©es_
 [
 id
@@ -33915,11 +34399,11 @@ G©e
 NA
 ;
 
-515 
+570 
 	}
 }
 
-517 
+572 
 	gCúcuô
 ::
 	$¸óãPo
@@ -33927,7 +34411,7 @@ NA
 nfi
 ) {
 
-518 
+573 
 Cñl
  *
 t›
@@ -33937,7 +34421,7 @@ t›
 	`gëT›
 ();
 
-520 
+575 
 size_t
  
 i
@@ -33947,7 +34431,7 @@ t›
 	`gëNP‹t
 (); ++i) {
 
-521 
+576 
 P‹t
  *
 p
@@ -33959,7 +34443,7 @@ t›
 i
 );
 
-522 if(!
+577 if(!
 	`°rcmp
 (
 p
@@ -33967,7 +34451,7 @@ p
 «me_
 ,"test_so"))
 
-524 
+579 
 id
  = 
 p‹tToG©e_
@@ -33975,7 +34459,7 @@ p‹tToG©e_
 i
 ];
 
-525 i‡(
+580 i‡(
 p
 ->
 ty≥_
@@ -33987,7 +34471,17 @@ OUTPUT
 id
  < 0)
 
-527 
+582 
+g©es_
+[
+id
+].
+«me_
+ = 
+p
+->name_;
+
+583 
 g©es_
 [
 id
@@ -33995,7 +34489,7 @@ id
 id_
  = id;
 
-528 
+584 
 g©es_
 [
 id
@@ -34005,7 +34499,7 @@ cid_
 i
 ;
 
-529 
+585 
 g©es_
 [
 id
@@ -34013,7 +34507,7 @@ id
 pmtid_
  = 0;
 
-530 
+586 
 g©es_
 [
 id
@@ -34021,7 +34515,7 @@ id
 lvl_
  =Üvl_ - 1;
 
-531 
+587 
 g©es_
 [
 id
@@ -34033,7 +34527,7 @@ G©e
 PO
 ;
 
-532 
+588 
 g©es_
 [
 id
@@ -34043,7 +34537,7 @@ fis_
 nfi
 ];
 
-533 
+589 
 P‹tSë
  
 ps
@@ -34059,7 +34553,7 @@ p
 id_
 );
 
-534 
+590 
 P‹tSë
 ::
 ôî©‹
@@ -34071,7 +34565,7 @@ ps
 	`begö
 ();
 
-535  ; 
+591  ; 
 ô
  !
 ps
@@ -34079,17 +34573,17 @@ ps
 	`íd
 (); ++it) {
 
-536 i‡((*
+592 i‡((*
 ô
 Ë=
 p
 )
 
-538 
+594 
 öId
  = 0;
 
-539 i‡((*
+595 i‡((*
 ô
 )->
 t›_
@@ -34103,7 +34597,7 @@ P‹t
 INPUT
 )
 
-540 
+596 
 öId
  = 
 p‹tToG©e_
@@ -34113,7 +34607,7 @@ p‹tToG©e_
 id_
 ];
 
-541 i‡((*
+597 i‡((*
 ô
 )->
 t›_
@@ -34127,7 +34621,7 @@ P‹t
 OUTPUT
 ) {
 
-542 
+598 
 öId
  = 
 ˚ŒToG©e_
@@ -34139,7 +34633,7 @@ t›_
 id_
 ];
 
-543 
+599 
 Cñl
  *
 libc
@@ -34151,11 +34645,11 @@ t›_
 libc_
 ;
 
-544 i‡(
+600 i‡(
 libc
 )
 
-545 i‡(!
+601 i‡(!
 ∆_
 ->
 	`gëTechlib
@@ -34171,7 +34665,7 @@ Pmt
 DFF
 ))
 
-546 
+602 
 öId
  +(*
 libc
@@ -34185,7 +34679,7 @@ id_
 	`begö
 ())->id_;
 
-550 
+606 
 g©es_
 [
 id
@@ -34197,7 +34691,7 @@ nfi_
 öId
 ;
 
-551 
+607 
 g©es_
 [
 id
@@ -34205,7 +34699,7 @@ id
 nfi_
 ++;
 
-553 
+609 
 g©es_
 [
 öId
@@ -34217,7 +34711,7 @@ nfo_
 id
 ;
 
-554 
+610 
 g©es_
 [
 öId
@@ -34225,11 +34719,11 @@ g©es_
 nfo_
 ++;
 
-556 
+612 
 nfi
 ++;
 
-558 
+614 
 g©es_
 [
 id
@@ -34241,7 +34735,7 @@ co_i_
 nfi_
 ];
 
-559 
+615 
 pid
 =0;Öid<
 g©es_
@@ -34251,7 +34745,7 @@ id
 nfi_
 ;Öid++)
 
-560 
+616 
 g©es_
 [
 id
@@ -34261,11 +34755,11 @@ co_i_
 pid
 ] = 0;
 
-562 
+618 
 	}
 }
 
-564 
+620 
 	gCúcuô
 ::
 	$¸óãPpo
@@ -34273,7 +34767,7 @@ pid
 nfi
 ) {
 
-565 
+621 
 Cñl
  *
 t›
@@ -34283,13 +34777,13 @@ t›
 	`gëT›
 ();
 
-566 
+622 
 i
  = 0; i < 
 ≈pi_
 ; ++i) {
 
-567 
+623 
 Cñl
  *
 c
@@ -34301,7 +34795,7 @@ t›
 i
 );
 
-568 
+624 
 id
  = 
 ng©e_
@@ -34311,7 +34805,17 @@ ng©e_
 i
  ;
 
-569 
+625 
+g©es_
+[
+id
+].
+«me_
+ = 
+c
+->name_;
+
+626 
 g©es_
 [
 id
@@ -34319,7 +34823,7 @@ id
 id_
  = id;
 
-570 
+627 
 g©es_
 [
 id
@@ -34329,7 +34833,7 @@ cid_
 i
 ;
 
-571 
+628 
 g©es_
 [
 id
@@ -34337,7 +34841,7 @@ id
 pmtid_
  = 0;
 
-572 
+629 
 g©es_
 [
 id
@@ -34345,7 +34849,7 @@ id
 lvl_
  =Üvl_ - 1;
 
-573 
+630 
 g©es_
 [
 id
@@ -34357,7 +34861,7 @@ G©e
 PPO
 ;
 
-574 
+631 
 g©es_
 [
 id
@@ -34367,11 +34871,11 @@ fis_
 nfi
 ];
 
-575 
+632 
 did
  = 0;
 
-576 
+633 
 	`°rcmp
 (
 c
@@ -34383,7 +34887,7 @@ did
 «me_
 ,"D"))++did;
 
-577 
+634 
 P‹t
  *
 öp
@@ -34395,7 +34899,7 @@ c
 did
 );
 
-579 
+636 
 P‹tSë
  
 ps
@@ -34415,7 +34919,7 @@ id_
 exNë_
 ->id_);
 
-580 
+637 
 P‹tSë
 ::
 ôî©‹
@@ -34427,7 +34931,7 @@ ps
 	`begö
 ();
 
-581  ; 
+638  ; 
 ô
  !
 ps
@@ -34435,17 +34939,17 @@ ps
 	`íd
 (); ++it) {
 
-582 i‡((*
+639 i‡((*
 ô
 Ë=
 öp
 )
 
-584 
+641 
 öId
  = 0;
 
-585 i‡((*
+642 i‡((*
 ô
 )->
 t›_
@@ -34459,7 +34963,7 @@ P‹t
 INPUT
 )
 
-586 
+643 
 öId
  = 
 p‹tToG©e_
@@ -34469,7 +34973,7 @@ p‹tToG©e_
 id_
 ];
 
-587 i‡((*
+644 i‡((*
 ô
 )->
 t›_
@@ -34483,7 +34987,7 @@ P‹t
 OUTPUT
 ) {
 
-588 
+645 
 öId
  = 
 ˚ŒToG©e_
@@ -34495,7 +34999,7 @@ t›_
 id_
 ];
 
-589 
+646 
 Cñl
  *
 libc
@@ -34507,11 +35011,11 @@ t›_
 libc_
 ;
 
-590 i‡(
+647 i‡(
 libc
 )
 
-591 i‡(!
+648 i‡(!
 ∆_
 ->
 	`gëTechlib
@@ -34527,7 +35031,7 @@ Pmt
 DFF
 ))
 
-592 
+649 
 öId
  +(*
 libc
@@ -34541,7 +35045,7 @@ id_
 	`begö
 ())->id_;
 
-596 
+653 
 g©es_
 [
 id
@@ -34553,7 +35057,7 @@ nfi_
 öId
 ;
 
-597 
+654 
 g©es_
 [
 id
@@ -34561,7 +35065,7 @@ id
 nfi_
 ++;
 
-599 
+656 
 g©es_
 [
 öId
@@ -34573,7 +35077,7 @@ nfo_
 id
 ;
 
-600 
+657 
 g©es_
 [
 öId
@@ -34581,11 +35085,11 @@ g©es_
 nfo_
 ++;
 
-602 
+659 
 nfi
 ++;
 
-604 
+661 
 g©es_
 [
 id
@@ -34597,7 +35101,7 @@ co_i_
 nfi_
 ];
 
-605 
+662 
 pid
 =0;Öid<
 g©es_
@@ -34607,7 +35111,7 @@ id
 nfi_
 ;Öid++)
 
-606 
+663 
 g©es_
 [
 id
@@ -34617,35 +35121,35 @@ co_i_
 pid
 ] = 0;
 
-608 
+665 
 	}
 }
 
-622 
+679 
 	gCúcuô
 ::
 	$c⁄√˘Føme
 () {
 
-623 
+680 
 nfo
  = 
 ¬ë_
 ;
 
-624 
+681 
 nfi
  = 
 ¬ë_
 ;
 
-625 
+682 
 i
  = 1; i < 
 n‰ame_
 ; ++i) {
 
-626 
+683 
 off£t
  = 
 ng©e_
@@ -34653,19 +35157,19 @@ ng©e_
 i
 ;
 
-627 if(
+684 if(
 c⁄nTy≥_
  =
 CAPTURE
 )
 
-628 
+685 
 j
  = 0; j < 
 ≈pi_
 ; ++j){
 
-629 
+686 
 id
  = 
 off£t
@@ -34675,7 +35179,7 @@ off£t
 j
 ;
 
-630 
+687 
 g©es_
 [
 id
@@ -34683,7 +35187,7 @@ id
 nfo_
  = 1;
 
-631 
+688 
 g©es_
 [
 id
@@ -34693,7 +35197,7 @@ fos_
 nfo
 ];
 
-632 
+689 
 nfo
  +
 g©es_
@@ -34703,13 +35207,13 @@ id
 nfo_
 ;
 
-634 
+691 
 j
  = 0; j < 
 ng©e_
 ; ++j) {
 
-635 
+692 
 id
  = 
 off£t
@@ -34717,7 +35221,7 @@ off£t
 j
 ;
 
-636 
+693 
 g©es_
 [
 id
@@ -34725,7 +35229,7 @@ id
 id_
  = id;
 
-637 
+694 
 g©es_
 [
 id
@@ -34735,7 +35239,7 @@ cid_
 j
 ].cid_;
 
-638 
+695 
 g©es_
 [
 id
@@ -34747,7 +35251,7 @@ i
 j
 ].lvl_;
 
-639 
+696 
 g©es_
 [
 id
@@ -34757,7 +35261,7 @@ ty≥_
 j
 ].type_;
 
-640 
+697 
 g©es_
 [
 id
@@ -34767,7 +35271,7 @@ id
 i
 ;
 
-641 if(
+698 if(
 g©es_
 [
 id
@@ -34781,7 +35285,7 @@ PPI
 PPO
 ){
 
-642 
+699 
 g©es_
 [
 id
@@ -34791,7 +35295,7 @@ nfo_
 j
 ].nfo_;
 
-643 
+700 
 g©es_
 [
 id
@@ -34801,7 +35305,7 @@ fos_
 nfo
 ];
 
-644 
+701 
 k
  = 0; k < 
 g©es_
@@ -34811,7 +35315,7 @@ j
 nfo_
 ; ++k)
 
-645 
+702 
 g©es_
 [
 id
@@ -34825,7 +35329,7 @@ j
 off£t
 ;
 
-646 
+703 
 nfo
  +
 g©es_
@@ -34835,7 +35339,7 @@ id
 nfo_
 ;
 
-647 
+704 
 g©es_
 [
 id
@@ -34845,7 +35349,7 @@ nfi_
 j
 ].nfi_;
 
-648 
+705 
 g©es_
 [
 id
@@ -34855,7 +35359,7 @@ fis_
 nfi
 ];
 
-649 
+706 
 k
  = 0; k < 
 g©es_
@@ -34865,7 +35369,7 @@ j
 nfi_
 ; ++k)
 
-650 
+707 
 g©es_
 [
 id
@@ -34879,7 +35383,7 @@ j
 off£t
 ;
 
-651 
+708 
 nfi
  +
 g©es_
@@ -34889,7 +35393,7 @@ id
 nfi_
 ;
 
-653 i‡(
+710 i‡(
 g©es_
 [
 id
@@ -34901,7 +35405,7 @@ G©e
 PPI
 ){
 
-654 
+711 
 g©es_
 [
 id
@@ -34911,7 +35415,7 @@ nfo_
 j
 ].nfo_;
 
-656 
+713 
 g©es_
 [
 id
@@ -34921,7 +35425,7 @@ fos_
 nfo
 ];
 
-657 
+714 
 k
  = 0; k < 
 g©es_
@@ -34931,7 +35435,7 @@ j
 nfo_
 ; ++k)
 
-658 
+715 
 g©es_
 [
 id
@@ -34945,7 +35449,7 @@ j
 off£t
 ;
 
-659 
+716 
 nfo
  +
 g©es_
@@ -34955,7 +35459,7 @@ id
 nfo_
 ;
 
-660 
+717 
 g©es_
 [
 id
@@ -34963,7 +35467,7 @@ id
 nfi_
  = 1;
 
-661 
+718 
 g©es_
 [
 id
@@ -34973,13 +35477,13 @@ fis_
 nfi
 ];
 
-662 if(
+719 if(
 c⁄nTy≥_
  =
 CAPTURE
 ){
 
-663 
+720 
 g©es_
 [
 id
@@ -34991,7 +35495,7 @@ fis_
 ≈pi_
  ;
 
-664 
+721 
 g©es_
 [
 id
@@ -35003,7 +35507,7 @@ G©e
 BUF
 ;
 
-665 
+722 
 g©es_
 [
 id
@@ -35015,7 +35519,7 @@ id
 fos_
 [0] = id ;
 
-668 if(
+725 if(
 id
  !(
 off£t
@@ -35023,7 +35527,7 @@ off£t
 ≈i_
 )){
 
-669 
+726 
 g©es_
 [
 id
@@ -35033,7 +35537,7 @@ fis_
 ng©e_
  - 1 ;
 
-670 
+727 
 g©es_
 [
 id
@@ -35045,7 +35549,7 @@ G©e
 BUF
 ;
 
-671 
+728 
 g©es_
 [
 id
@@ -35057,7 +35561,7 @@ fos_
 nfo_
 ] = id ;
 
-672 ++
+729 ++
 g©es_
 [
 id
@@ -35067,7 +35571,7 @@ ng©e_
 nfo_
  ;
 
-675 
+732 
 g©es_
 [
 id
@@ -35075,7 +35579,7 @@ id
 nfi_
  = 0;
 
-677 
+734 
 nfi
  +
 g©es_
@@ -35085,7 +35589,7 @@ id
 nfi_
 ;
 
-680 
+737 
 g©es_
 [
 id
@@ -35093,7 +35597,7 @@ id
 nfo_
  = 0;
 
-681 
+738 
 g©es_
 [
 id
@@ -35103,7 +35607,7 @@ fos_
 nfo
 ];
 
-682 
+739 
 g©es_
 [
 id
@@ -35113,7 +35617,7 @@ nfi_
 j
 ].nfi_;
 
-683 
+740 
 g©es_
 [
 id
@@ -35123,7 +35627,7 @@ fis_
 nfi
 ];
 
-684 
+741 
 k
  = 0; k < 
 g©es_
@@ -35133,7 +35637,7 @@ j
 nfi_
 ; ++k)
 
-685 
+742 
 g©es_
 [
 id
@@ -35147,7 +35651,7 @@ j
 off£t
 ;
 
-686 
+743 
 nfi
  +
 g©es_
@@ -35157,19 +35661,19 @@ id
 nfi_
 ;
 
-689 if(
+746 if(
 c⁄nTy≥_
  =
 CAPTURE
 )
 
-690 
+747 
 j
  = 0; j < 
 ≈pi_
 ; ++j){
 
-691 
+748 
 id
  = 
 off£t
@@ -35179,7 +35683,7 @@ off£t
 j
 ;
 
-692 
+749 
 g©es_
 [
 id
@@ -35191,7 +35695,7 @@ G©e
 BUF
 ;
 
-695 
+752 
 évl_
  = 
 lvl_
@@ -35199,7 +35703,7 @@ lvl_
 n‰ame_
 ;
 
-696 
+753 
 tg©e_
  = 
 ng©e_
@@ -35207,23 +35711,23 @@ ng©e_
 n‰ame_
 ;
 
-697 
+754 
 	}
 }
 
-711 
+768 
 	gCúcuô
 ::
 	$assignFiMöLvl
 (){
 
-712 
+769 
 i
  = 0; i < 
 tg©e_
  ; ++i){
 
-713 
+770 
 G©e
 * 
 g
@@ -35233,7 +35737,7 @@ g©es_
 i
 ];
 
-714 
+771 
 möLvl
  = 
 g
@@ -35241,7 +35745,7 @@ g
 lvl_
 ;
 
-715 
+772 
 j
  = 0; j < 
 g
@@ -35249,7 +35753,7 @@ g
 nfi_
 ; ++j)
 
-716 if(
+773 if(
 g©es_
 [
 g
@@ -35263,7 +35767,7 @@ lvl_
 möLvl
 ){
 
-717 
+774 
 möLvl
  = 
 g©es_
@@ -35277,7 +35781,7 @@ j
 lvl_
 ;
 
-718 
+775 
 g
 ->
 fiMöLvl_
@@ -35287,23 +35791,23 @@ fis_
 j
 ];
 
-727 
+784 
 	}
 }
 
-730 
+787 
 	gCúcuô
 ::
 	$runScﬂp
 () {
 
-732 
+789 
 i
 =0; i<
 tg©e_
 ; ++i) {
 
-733 
+790 
 G©e
 & 
 g
@@ -35313,25 +35817,25 @@ g©es_
 i
 ];
 
-734 
+791 
 g
 .
 ty≥_
 ) {
 
-735 
+792 
 G©e
 ::
 PI
 :
 
-736 
+793 
 G©e
 ::
 PPI
 :
 
-737 
+794 
 g
 .
 cc0_
@@ -35339,19 +35843,19 @@ cc0_
 cc1_
 =1;
 
-739 
+796 
 G©e
 ::
 PO
 :
 
-740 
+797 
 G©e
 ::
 PPO
 :
 
-741 
+798 
 g
 .
 cc0_
@@ -35361,7 +35865,7 @@ g©es_
 fis_
 [0]].cc0_;
 
-742 
+799 
 g
 .
 cc1_
@@ -35371,19 +35875,19 @@ g©es_
 fis_
 [0]].cc1_;
 
-744 
+801 
 G©e
 ::
 INV
 :
 
-745 
+802 
 G©e
 ::
 BUF
 :
 
-747 
+804 
 G©e
  
 fi
@@ -35395,7 +35899,7 @@ g
 fis_
 [0]];
 
-748 
+805 
 g
 .
 cc0_
@@ -35407,7 +35911,7 @@ fi
 cc1_
 ;
 
-749 
+806 
 g
 .
 cc1_
@@ -35419,77 +35923,77 @@ fi
 cc0_
 ;
 
-751 
+808 
 g
 .
 cc0_
 +=1;
 
-752 
+809 
 g
 .
 cc1_
 +=1;
 
-755 
+812 
 G©e
 ::
 AND
+:
 
-
-756 
+813 
 G©e
 ::
 AND2
 :
 
-757 
+814 
 G©e
 ::
 AND3
 :
 
-758 
+815 
 G©e
 ::
 AND4
 :
 
-759 
+816 
 G©e
 ::
 NAND
 :
 
-760 
+817 
 G©e
 ::
 NAND2
 :
 
-761 
+818 
 G©e
 ::
 NAND3
 :
 
-762 
+819 
 G©e
 ::
 NAND4
 :
 
-764 
+821 
 cc1_sum
  = 0;
 
-765 
+822 
 cc0_mö
  = 
 INT_MAX
 ;
 
-766 
+823 
 i
 =0; i<
 g
@@ -35497,7 +36001,7 @@ g
 nfi_
 ; i++) {
 
-767 
+824 
 G©e
  
 fi
@@ -35511,7 +36015,7 @@ fis_
 i
 ]];
 
-768 
+825 
 cc1_sum
 +=
 fi
@@ -35519,7 +36023,7 @@ fi
 cc1_
 ;
 
-769 if(
+826 if(
 fi
 .
 cc0_
@@ -35527,7 +36031,7 @@ cc0_
 cc0_mö
 )
 
-770 
+827 
 cc0_mö
  = 
 fi
@@ -35535,7 +36039,7 @@ fi
 cc0_
 ;
 
-773 
+830 
 g
 .
 cc0_
@@ -35547,7 +36051,7 @@ cc0_mö
 cc1_sum
 ;
 
-774 
+831 
 g
 .
 cc1_
@@ -35559,77 +36063,77 @@ cc1_sum
 cc0_mö
 ;
 
-776 
+833 
 g
 .
 cc0_
 +=1;
 
-777 
+834 
 g
 .
 cc1_
 +=1;
 
-780 
+837 
 G©e
 ::
 OR
 :
 
-781 
+838 
 G©e
 ::
 OR2
 :
 
-782 
+839 
 G©e
 ::
 OR3
 :
 
-783 
+840 
 G©e
 ::
 OR4
 :
 
-784 
+841 
 G©e
 ::
 NOR
 :
 
-785 
+842 
 G©e
 ::
 NOR2
 :
 
-786 
+843 
 G©e
 ::
 NOR3
 :
 
-787 
+844 
 G©e
 ::
 NOR4
 :
 
-789 
+846 
 cc0_sum
  = 0;
 
-790 
+847 
 cc1_mö
  = 
 INT_MAX
 ;
 
-791 
+848 
 i
 =0; i<
 g
@@ -35637,7 +36141,7 @@ g
 nfi_
 ; i++) {
 
-792 
+849 
 G©e
  
 fi
@@ -35651,7 +36155,7 @@ fis_
 i
 ]];
 
-793 
+850 
 cc0_sum
 +=
 fi
@@ -35659,7 +36163,7 @@ fi
 cc0_
 ;
 
-794 if(
+851 if(
 fi
 .
 cc1_
@@ -35667,7 +36171,7 @@ cc1_
 cc1_mö
 )
 
-795 
+852 
 cc1_mö
  = 
 fi
@@ -35675,7 +36179,7 @@ fi
 cc1_
 ;
 
-798 
+855 
 g
 .
 cc0_
@@ -35687,7 +36191,7 @@ cc0_sum
 cc1_mö
 ;
 
-799 
+856 
 g
 .
 cc1_
@@ -35699,23 +36203,23 @@ cc1_mö
 cc0_sum
 ;
 
-801 
+858 
 g
 .
 cc0_
 +=1;
 
-802 
+859 
 g
 .
 cc1_
 +=1;
 
-806 
+863 
 cout
  << "***WARNNING: Circuit::runScoap(): gateÅype ";
 
-807 
+864 
 cout
  << 
 g
@@ -35723,17 +36227,17 @@ g
 ty≥_
 ;
 
-808 
+865 
 cout
  << " currentlyÇot supported...\n";
 
-814 
+871 
 n
 =
 tg©e_
 -1;Ç>=0; --n) {
 
-815 
+872 
 G©e
  *
 g
@@ -35743,7 +36247,7 @@ g©es_
 n
 ];
 
-817 
+874 
 boﬁ
  
 co_o_£t
@@ -35751,13 +36255,13 @@ co_o_£t
 Ál£
 ;
 
-818 
+875 
 co_o_mö
  = 
 INT_MAX
 ;
 
-819 
+876 
 i
 =0; i<
 g
@@ -35765,7 +36269,7 @@ g
 nfo_
 ; ++i) {
 
-820 
+877 
 G©e
  *
 fo
@@ -35779,7 +36283,7 @@ fos_
 i
 ]];
 
-821 
+878 
 j
 =0; j<
 fo
@@ -35787,7 +36291,7 @@ fo
 nfi_
 ; ++j) {
 
-822 if(
+879 if(
 fo
 ->
 fis_
@@ -35799,7 +36303,7 @@ g
 id_
  &&
 
-823 
+880 
 fo
 ->
 co_i_
@@ -35809,7 +36313,7 @@ j
 co_o_mö
 ) {
 
-824 
+881 
 co_o_mö
  = 
 fo
@@ -35819,13 +36323,13 @@ co_i_
 j
 ];
 
-825 
+882 
 co_o_£t
  = 
 åue
 ;
 
-829 
+886 
 g
 ->
 co_o_
@@ -35835,55 +36339,55 @@ co_o_£t
 co_o_mö
 ;
 
-832 
+889 
 g
 ->
 ty≥_
 ) {
 
-833 
+890 
 G©e
 ::
 PI
 :
 
-834 
+891 
 G©e
 ::
 PPI
 :
 
-836 
+893 
 G©e
 ::
 PO
 :
 
-837 
+894 
 G©e
 ::
 PPO
 :
 
-838 
+895 
 g
 ->
 co_i_
 [0] = 0;
 
-840 
+897 
 G©e
 ::
 INV
 :
 
-841 
+898 
 G©e
 ::
 BUF
 :
 
-842 
+899 
 g
 ->
 co_i_
@@ -35891,103 +36395,103 @@ co_i_
 co_o_
 +1;
 
-844 
+901 
 G©e
 ::
 AND
 :
 
-845 
+902 
 G©e
 ::
 AND2
 :
 
-846 
+903 
 G©e
 ::
 AND3
 :
 
-847 
+904 
 G©e
 ::
 AND4
 :
 
-848 
+905 
 G©e
 ::
 NAND
 :
 
-849 
+906 
 G©e
 ::
 NAND2
 :
 
-850 
+907 
 G©e
 ::
 NAND3
 :
 
-851 
+908 
 G©e
 ::
 NAND4
 :
 
-852 
+909 
 G©e
 ::
 OR
 :
 
-853 
+910 
 G©e
 ::
 OR2
 :
 
-854 
+911 
 G©e
 ::
 OR3
 :
 
-855 
+912 
 G©e
 ::
 OR4
 :
 
-856 
+913 
 G©e
 ::
 NOR
 :
 
-857 
+914 
 G©e
 ::
 NOR2
 :
 
-858 
+915 
 G©e
 ::
 NOR3
 :
 
-859 
+916 
 G©e
 ::
 NOR4
 :
 
-861 
+918 
 i
 =0; i<
 g
@@ -35995,7 +36499,7 @@ g
 nfi_
 ; ++i) {
 
-862 
+919 
 g
 ->
 co_i_
@@ -36005,7 +36509,7 @@ i
 co_o_
  + 1;
 
-863 
+920 
 j
 =0; j<
 g
@@ -36013,13 +36517,13 @@ g
 nfi_
 ; ++j) {
 
-864 if(
+921 if(
 j
 ==
 i
 ) ;
 
-865 
+922 
 cc
  = (
 g
@@ -36039,7 +36543,7 @@ cc0_
 cc1_
 ;
 
-866 
+923 
 g
 ->
 co_i_
@@ -36049,11 +36553,11 @@ i
 cc
 ;
 
-872 
+929 
 cout
  << "***WARNNING: Circuit::runScoap(): gateÅype ";
 
-873 
+930 
 cout
  << 
 g
@@ -36061,11 +36565,11 @@ g
 ty≥_
 ;
 
-874 
+931 
 cout
  << " currentlyÇot supported...\n";
 
-878 
+935 
 	}
 }
 
@@ -36304,6 +36808,18 @@ nfo
 );
 
 74 
+dëVîûogPmtTy≥
+(c⁄° &
+id
+, c⁄° 
+I¡fNs
+::
+Cñl
+ * c⁄° 
+c
+);
+
+75 
 dëG©eTy≥
 (c⁄° &
 id
@@ -36315,7 +36831,7 @@ Cñl
 c
 ,
 
-75 c⁄° 
+76 c⁄° 
 I¡fNs
 ::
 Pmt
@@ -36323,31 +36839,31 @@ Pmt
 pmt
 );
 
-76 
+77 
 ¸óãPo
 (&
 nfi
 );
 
-77 
+78 
 ¸óãPpo
 (&
 nfi
 );
 
-78 
+79 
 c⁄√˘Føme
 ();
 
-79 
+80 
 assignFiMöLvl
 ();
 
-81 
+82 
 runScﬂp
 ();
 
-84 
+85 
 ölöe
  
 	gCúcuô
@@ -36355,73 +36871,73 @@ runScﬂp
 	$Cúcuô
 () {
 
-85 
+86 
 ∆_
  = 
 NULL
 ;
 
-86 
+87 
 ≈i_
  = 0;
 
-87 
+88 
 ≈pi_
  = 0;
 
-88 
+89 
 ≈o_
  = 0;
 
-89 
+90 
 ncomb_
  = 0;
 
-90 
+91 
 ng©e_
  = 0;
 
-91 
+92 
 ¬ë_
  = 0;
 
-92 
+93 
 lvl_
  = -1;
 
-93 
+94 
 n‰ame_
  = 1;
 
-94 
+95 
 c⁄nTy≥_
  = 
 CAPTURE
 ;
 
-95 
+96 
 g©es_
  = 
 NULL
 ;
 
-96 
+97 
 ˚ŒToG©e_
  = 
 NULL
 ;
 
-97 
+98 
 p‹tToG©e_
  = 
 NULL
 ;
 
-98 
+99 
 	}
 }
 
-100 
+101 
 ölöe
  
 	gCúcuô
@@ -36429,37 +36945,37 @@ NULL
 	$Cúcuô
 () {
 
-101 
+102 
 dñëe
  [] 
 g©es_
 ;
 
-102 
+103 
 dñëe
  [] 
 fis_
 ;
 
-103 
+104 
 dñëe
  [] 
 fos_
 ;
 
-104 
+105 
 dñëe
  [] 
 ˚ŒToG©e_
 ;
 
-105 
+106 
 dñëe
  [] 
 p‹tToG©e_
 ;
 
-106 
+107 
 	}
 }
 
@@ -38017,7 +38533,17 @@ Ty≥
 	gty≥_
 ;
 
-79 
+78 
+gëNSètus
+(
+Fau…
+::
+Sèã
+ 
+f°©us
+);
+
+81 
 ölöe
  
 	gFau…
@@ -38025,43 +38551,43 @@ Ty≥
 	$Fau…
 () {
 
-80 
+82 
 aggr_
  = -1;
 
-81 
+83 
 g©e_
  = -1;
 
-82 
+84 
 ty≥_
  = 
 SA0
 ;
 
-83 
+85 
 löe_
  = -1;
 
-84 
+86 
 dë_
  = 0;
 
-85 
+87 
 °©e_
  = 
 UD
 ;
 
-86 
+88 
 h¨d_
  = -1;
 
-87 
+89 
 	}
 }
 
-89 
+91 
 ölöe
  
 	gFau…
@@ -38079,45 +38605,45 @@ löe
 aggr
 ) {
 
-90 
+92 
 aggr_
  = 
 aggr
 ;
 
-91 
+93 
 g©e_
  = 
 g©e
 ;
 
-92 
+94 
 ty≥_
  = 
 ty≥
 ;
 
-93 
+95 
 löe_
  = 
 löe
 ;
 
-94 
+96 
 dë_
  = 0;
 
-95 
+97 
 °©e_
  = 
 UD
 ;
 
-96 
+98 
 	}
 }
 
-98 
+100 
 ölöe
  
 	gFau…
@@ -38127,7 +38653,7 @@ UD
 	}
 }
 
-100 
+102 
 ölöe
  
 Fau…
@@ -38135,139 +38661,139 @@ Fau…
 	$¥öt
 () const
 
-102 
+104 
 cout
  << "# ";
 
-103 
+105 
 ty≥_
 ) {
 
-104 
+106 
 Fau…
 ::
 SA0
 :
 
-105 
+107 
 cout
  << "SA0 ";
 
-107 
+109 
 Fau…
 ::
 SA1
 :
 
-108 
+110 
 cout
  << "SA1 ";
 
-110 
+112 
 Fau…
 ::
 STR
 :
 
-111 
+113 
 cout
  << "STR ";
 
-113 
+115 
 Fau…
 ::
 STF
 :
 
-114 
+116 
 cout
  << "STF ";
 
-116 
+118 
 Fau…
 ::
 BR
 :
 
-117 
+119 
 cout
  << "BR ";
 
-120 
+122 
 °©e_
 ) {
 
-121 
+123 
 Fau…
 ::
 UD
 :
 
-122 
+124 
 cout
  << " UD ";
 
-124 
+126 
 Fau…
 ::
 DT
 :
 
-125 
+127 
 cout
  << " DT ";
 
-127 
+129 
 Fau…
 ::
 PT
 :
 
-128 
+130 
 cout
  << " PT ";
 
-130 
+132 
 Fau…
 ::
 AU
 :
 
-131 
+133 
 cout
  << " AU ";
 
-133 
+135 
 Fau…
 ::
 TI
 :
 
-134 
+136 
 cout
  << " TI ";
 
-136 
+138 
 Fau…
 ::
 RE
 :
 
-137 
+139 
 cout
  << " RE ";
 
-139 
+141 
 Fau…
 ::
 AB
 :
 
-140 
+142 
 cout
  << " AB ";
 
-143 
+145 
 cout
  << 
 g©e_
@@ -38277,11 +38803,11 @@ löe_
 ídl
 ;
 
-144 
+146 
 	}
 }
 
-146 
+148 
 ölöe
  
 	gFau…Li°Exåa˘
@@ -38289,29 +38815,85 @@ löe_
 	$Fau…Li°Exåa˘
 () {
 
-147 
+149 
 g©eToFau…_
  = 
 NULL
 ;
 
-148 
+150 
 ty≥_
  = 
 SAF
 ;
 
-149 
+151 
 	}
 }
 
-151 
+153 
 ölöe
  
 	gFau…Li°Exåa˘
 ::~
 	$Fau…Li°Exåa˘
 (Ë{
+	}
+}
+
+155 
+ölöe
+ 
+Fau…Li°Exåa˘
+::
+	$gëNSètus
+(
+Fau…
+::
+Sèã
+ 
+f°©us
+) {
+
+156 
+ªt
+ = 0;
+
+158 
+Fau…Li°Iãr
+ 
+ô
+ = 
+cuºít_
+.
+	`begö
+();
+
+159  ; 
+ô
+ !
+cuºít_
+.
+	`íd
+(); ++it) {
+
+160 i‡((*
+ô
+)->
+°©e_
+==
+f°©us
+)
+
+161 
+ªt
+++;
+
+164  
+ªt
+;
+
+165 
 	}
 }
 
@@ -38340,7 +38922,7 @@ _CORE_GATE_H_
 "
 
 16 
-	~"logic.h
+	~"logic-hex.h
 "
 
 18 
@@ -38487,143 +39069,147 @@ G©e
 	gTIEZ
 
 
-46 
-	gid_
+46 *
+	g«me_
 ;
 
 47 
-	gcid_
+	gid_
 ;
 
 48 
-	gpmtid_
+	gcid_
 ;
 
 49 
-	glvl_
+	gpmtid_
 ;
 
 50 
+	glvl_
+;
+
+51 
 	g‰ame_
 ;
 
-51 
+52 
 Ty≥
  
 	gty≥_
 ;
 
-54 
+55 
 	gnfi_
 ;
 
-55 *
+56 *
 	gfis_
 ;
 
-56 
+57 
 	gnfo_
 ;
 
-57 *
+58 *
 	gfos_
-;
-
-61 
-P¨aVÆue
- 
-	ggl_
 ;
 
 62 
 P¨aVÆue
  
-	ggh_
+	ggl_
 ;
 
 63 
 P¨aVÆue
  
-	gÊ_
+	ggh_
 ;
 
 64 
 P¨aVÆue
  
+	gÊ_
+;
+
+65 
+P¨aVÆue
+ 
 	gfh_
 ;
 
-68 
+69 
 boﬁ
  
 	ghasC⁄s_
 ;
 
-69 
+70 
 P¨aVÆue
  
 	gc⁄s_
 ;
 
-72 
+73 
 	gcc0_
 ;
 
-73 
+74 
 	gcc1_
 ;
 
-74 
+75 
 	gco_o_
 ;
 
-75 *
+76 *
 	gco_i_
 ;
 
-77 
+78 
 	gdïthFromPo_
 ;
 
-78 
+79 
 	gfiMöLvl_
 ;
 
-80 
+81 
 ¥öt
-() const;
-
-82 
-VÆue
- 
-isU«ry
 () const;
 
 83 
 VÆue
  
-isInvî£
+isU«ry
 () const;
 
 84 
 VÆue
  
-gëI≈utN⁄CålVÆue
+isInvî£
 () const;
 
 85 
 VÆue
  
-gëI≈utCålVÆue
+gëI≈utN⁄CålVÆue
 () const;
 
 86 
 VÆue
  
+gëI≈utCålVÆue
+() const;
+
+87 
+VÆue
+ 
 gëOuçutCålVÆue
 () const;
 
-90 
+91 
 ölöe
  
 	gG©e
@@ -38631,117 +39217,117 @@ gëOuçutCålVÆue
 	$G©e
 () {
 
-91 
+92 
 id_
  = -1;
 
-92 
+93 
 cid_
  = -1;
 
-93 
+94 
 pmtid_
  = 0;
 
-94 
+95 
 lvl_
  = -1;
 
-95 
+96 
 ‰ame_
  = 0;
 
-96 
+97 
 ty≥_
  = 
 NA
 ;
 
-97 
+98 
 nfi_
  = 0;
 
-98 
+99 
 fis_
  = 
 NULL
 ;
 
-99 
+100 
 nfo_
  = 0;
 
-100 
+101 
 fos_
  = 
 NULL
 ;
 
-101 
+102 
 gl_
  = 
 PARA_L
 ;
 
-102 
+103 
 gh_
  = 
 PARA_L
 ;
 
-103 
+104 
 Ê_
  = 
 PARA_L
 ;
 
-104 
+105 
 fh_
  = 
 PARA_L
 ;
 
-105 
+106 
 hasC⁄s_
  = 
 Ál£
 ;
 
-106 
+107 
 c⁄s_
  = 
 PARA_L
 ;
 
-108 
+109 
 cc0_
  = 0;
 
-109 
+110 
 cc1_
  = 0;
 
-110 
+111 
 co_o_
  = 0;
 
-111 
+112 
 co_i_
  = 0;
 
-113 
+114 
 dïthFromPo_
  = -1;
 
-114 
+115 
 fiMöLvl_
  = -1;
 
-115 
+116 
 	}
 }
 
-117 
+118 
 ölöe
  
 	gG©e
@@ -38749,17 +39335,17 @@ fiMöLvl_
 	$G©e
 () {
 
-118 if(!
+119 if(!
 co_i_
 Ë
 dñëe
  co_i_;
 
-119 
+120 
 	}
 }
 
-121 
+122 
 ölöe
  
 	gG©e
@@ -38767,53 +39353,53 @@ dñëe
 	$¥öt
 () const {
 
-122 
+123 
 cout
  << "# ";
 
-123 
+124 
 cout
  << "id(" << 
 id_
  << ") ";
 
-124 
+125 
 cout
  << "lvl(" << 
 lvl_
  << ") ";
 
-125 
+126 
 cout
  << "ty≥(" << 
 ty≥_
  << ") ";
 
-126 
+127 
 cout
  << "‰ame(" << 
 ‰ame_
  << ")";
 
-127 
+128 
 cout
  << 
 ídl
 ;
 
-128 
+129 
 cout
  << "# fi[" << 
 nfi_
  << "]";
 
-129 
+130 
 j
  = 0; j < 
 nfi_
 ; ++j)
 
-130 
+131 
 cout
  << " " << 
 fis_
@@ -38821,25 +39407,25 @@ fis_
 j
 ];
 
-131 
+132 
 cout
  << 
 ídl
 ;
 
-132 
+133 
 cout
  << "# fo[" << 
 nfo_
  << "]";
 
-133 
+134 
 j
  = 0; j < 
 nfo_
 ; ++j)
 
-134 
+135 
 cout
  << " " << 
 fos_
@@ -38847,17 +39433,17 @@ fos_
 j
 ];
 
-135 
+136 
 cout
  << 
 ídl
  <<Éndl;
 
-136 
+137 
 	}
 }
 
-138 
+139 
 ölöe
  
 VÆue
@@ -38867,7 +39453,7 @@ VÆue
 	$isU«ry
 () const {
 
-139  
+140  
 nfi_
  =1 ? 
 H
@@ -38875,11 +39461,11 @@ H
 L
 ;
 
-140 
+141 
 	}
 }
 
-142 
+143 
 ölöe
  
 VÆue
@@ -38889,71 +39475,71 @@ VÆue
 	$isInvî£
 () const {
 
-143 
+144 
 ty≥_
 ) {
 
-144 
+145 
 INV
 :
 
-145 
+146 
 NAND
 :
 
-146 
+147 
 NAND2
 :
 
-147 
+148 
 NAND3
 :
 
-148 
+149 
 NAND4
 :
 
-149 
+150 
 NOR
 :
 
-150 
+151 
 NOR2
 :
 
-151 
+152 
 NOR3
 :
 
-152 
+153 
 NOR4
 :
 
-153 
+154 
 XNOR
 :
 
-154 
+155 
 XNOR2
 :
 
-155 
+156 
 XNOR3
 :
 
-156  
+157  
 H
 ;
 
-158  
+159  
 L
 ;
 
-160 
+161 
 	}
 }
 
-162 
+163 
 ölöe
  
 VÆue
@@ -38963,7 +39549,7 @@ VÆue
 	$gëI≈utN⁄CålVÆue
 () const {
 
-163  
+164  
 	`isInvî£
 (Ë=
 	`gëOuçutCålVÆue
@@ -38973,11 +39559,11 @@ L
 H
 ;
 
-164 
+165 
 	}
 }
 
-166 
+167 
 ölöe
  
 VÆue
@@ -38987,7 +39573,7 @@ VÆue
 	$gëI≈utCålVÆue
 () const {
 
-167  
+168  
 	`gëI≈utN⁄CålVÆue
 (Ë=
 H
@@ -38995,11 +39581,11 @@ H
 L
  : H;
 
-168 
+169 
 	}
 }
 
-170 
+171 
 ölöe
  
 VÆue
@@ -39009,103 +39595,103 @@ VÆue
 	$gëOuçutCålVÆue
 () const {
 
-171 
+172 
 ty≥_
 ) {
 
-172 
+173 
 OR
 :
 
-173 
+174 
 OR2
 :
 
-174 
+175 
 OR3
 :
 
-175 
+176 
 OR4
 :
 
-176 
+177 
 NAND
 :
 
-177 
+178 
 NAND2
 :
 
-178 
+179 
 NAND3
 :
 
-179 
+180 
 NAND4
 :
 
-180  
+181  
 L
 ;
 
-181 
+182 
 PI
 :
 
-182 
+183 
 PPI
 :
 
-183 
+184 
 INV
 :
 
-184 
+185 
 BUF
 :
 
-185 
+186 
 PO
 :
 
-186 
+187 
 PPO
 :
 
-187 
+188 
 XOR
 :
 
-188 
+189 
 XOR2
 :
 
-189 
+190 
 XOR3
 :
 
-190 
+191 
 XNOR
 :
 
-191 
+192 
 XNOR2
 :
 
-192 
+193 
 XNOR3
 :
 
-193  
+194  
 X
 ;
 
-195  
+196  
 H
 ;
 
-197 
+198 
 	}
 }
 
@@ -39456,86 +40042,38 @@ vs
 83 
 G©e
 ::
-XOR
+BUF
 :
 
 84 
 G©e
 ::
-XOR2
+PO
 :
 
 85 
 G©e
 ::
-XOR3
-:
-
-86  
-	`EvÆX‹N
-(
-vs
-);
-
-88 
-G©e
-::
-XNOR
-:
-
-89 
-G©e
-::
-XNOR2
-:
-
-90 
-G©e
-::
-XNOR3
-:
-
-91  
-	`EvÆXn‹N
-(
-vs
-);
-
-93 
-G©e
-::
-BUF
-:
-
-94 
-G©e
-::
-PO
-:
-
-95 
-G©e
-::
 PPO
 :
 
-96  
+86  
 v
 ;
 
-99 
+89 
 	`as£π
 (0);
 
-102  
+92  
 X
 ;
 
-103 
+93 
 	}
 }
 
-105 
+95 
 VÆue
  
 	gIm∂iˇt‹
@@ -39547,19 +40085,19 @@ G©e
 g
 ) const {
 
-106 i‡(
+96 i‡(
 èrgë_Áu…_
 ->
 löe_
 ==0) {
 
-107 
+97 
 VÆue
  
 v
 ;
 
-108 i‡(
+98 i‡(
 g
 ->
 ty≥_
@@ -39571,7 +40109,7 @@ PI
 PPI
 )
 
-109 
+99 
 v
  = 
 vÆues_
@@ -39581,7 +40119,7 @@ g
 id_
 ];
 
-111 
+101 
 v
  = 
 	`GoodEvÆ
@@ -39589,7 +40127,7 @@ v
 g
 );
 
-112 i‡(
+102 i‡(
 v
 ==
 L
@@ -39603,7 +40141,7 @@ Fau…
 SA1
 
 
-113 || 
+103 || 
 èrgë_Áu…_
 ->
 ty≥_
@@ -39617,7 +40155,7 @@ v
 B
 ;
 
-114 i‡(
+104 i‡(
 v
 ==
 H
@@ -39631,7 +40169,7 @@ Fau…
 SA0
 
 
-115 || 
+105 || 
 èrgë_Áu…_
 ->
 ty≥_
@@ -39645,11 +40183,11 @@ v
 D
 ;
 
-116  
+106  
 v
 ;
 
-119 
+109 
 löe
  = 
 èrgë_Áu…_
@@ -39657,7 +40195,7 @@ löe
 löe_
 ;
 
-120 
+110 
 VÆue
  
 v
@@ -39671,7 +40209,7 @@ fis_
 löe
 -1]);
 
-121 i‡(
+111 i‡(
 v
 ==
 L
@@ -39685,7 +40223,7 @@ Fau…
 SA1
 
 
-122 || 
+112 || 
 èrgë_Áu…_
 ->
 ty≥_
@@ -39699,7 +40237,7 @@ v
 B
 ;
 
-123 i‡(
+113 i‡(
 v
 ==
 H
@@ -39713,7 +40251,7 @@ Fau…
 SA0
 
 
-124 || 
+114 || 
 èrgë_Áu…_
 ->
 ty≥_
@@ -39727,7 +40265,7 @@ v
 D
 ;
 
-126 
+116 
 ve˘‹
 <
 VÆue
@@ -39739,7 +40277,7 @@ vs
 v
 );
 
-127 
+117 
 n
 =0;Ç<
 g
@@ -39747,13 +40285,13 @@ g
 nfi_
 ;Ç++)
 
-128 i‡(
+118 i‡(
 n
 !=
 löe
 -1)
 
-129 
+119 
 vs
 .
 	`push_back
@@ -39767,227 +40305,179 @@ fis_
 n
 ]));
 
-131 
+121 
 g
 ->
 ty≥_
 ) {
 
-132 
+122 
 G©e
 ::
 INV
 :
 
-133  
+123  
 	`EvÆNŸ
 (
 v
 );
 
-135 
+125 
 G©e
 ::
 AND
 :
 
-136 
+126 
 G©e
 ::
 AND2
 :
 
-137 
+127 
 G©e
 ::
 AND3
 :
 
-138 
+128 
 G©e
 ::
 AND4
 :
 
-139  
+129  
 	`EvÆAndN
 (
 vs
 );
 
-141 
+131 
 G©e
 ::
 NAND
 :
 
-142 
+132 
 G©e
 ::
 NAND2
 :
 
-143 
+133 
 G©e
 ::
 NAND3
 :
 
-144 
+134 
 G©e
 ::
 NAND4
 :
 
-145  
+135  
 	`EvÆN™dN
 (
 vs
 );
 
-147 
+137 
 G©e
 ::
 OR
 :
 
-148 
+138 
 G©e
 ::
 OR2
 :
 
-149 
+139 
 G©e
 ::
 OR3
 :
 
-150 
+140 
 G©e
 ::
 OR4
 :
 
-151  
+141  
 	`EvÆOrN
 (
 vs
 );
 
-153 
+143 
 G©e
 ::
 NOR
 :
 
-154 
+144 
 G©e
 ::
 NOR2
 :
 
-155 
+145 
 G©e
 ::
 NOR3
 :
 
-156 
+146 
 G©e
 ::
 NOR4
 :
 
-157  
+147  
 	`EvÆN‹N
 (
 vs
 );
 
-159 
-G©e
-::
-XOR
-:
-
-160 
-G©e
-::
-XOR2
-:
-
-161 
-G©e
-::
-XOR3
-:
-
-162  
-	`EvÆX‹N
-(
-vs
-);
-
-164 
-G©e
-::
-XNOR
-:
-
-165 
-G©e
-::
-XNOR2
-:
-
-166 
-G©e
-::
-XNOR3
-:
-
-167  
-	`EvÆXn‹N
-(
-vs
-);
-
-169 
+149 
 G©e
 ::
 PO
 :
 
-170 
+150 
 G©e
 ::
 PPO
 :
 
-171 
+151 
 G©e
 ::
 BUF
 :
 
-172  
+152  
 v
 ;
 
-175 
+155 
 	`as£π
 (0);
 
-180  
+160  
 X
 ;
 
-181 
+161 
 	}
 }
 
-183 
+163 
 	gIm∂iˇt‹
 ::
 	$PushEvít
@@ -39995,8 +40485,138 @@ X
 gid
 ) {
 
-184 
+164 
+G©e
+ *
+g
+ = &
+cú_
+->
+g©es_
+[
+gid
+];
+
+165 i‡(
+g
+->
+ty≥_
+==
+G©e
+::
+PI
+ || g->ty≥_==G©e::
+PPI
+)
+
+166 i‡(
+èrgë_Áu…_
+->
+g©e_
+!=
+gid
+Ë
+	`as£π
+(0);
+
+168 
 evíts_
+->
+	`push
+(
+gid
+);
+
+170 
+	}
+}
+
+172 
+	gIm∂iˇt‹
+::
+	$PushF™outEvít
+(
+gid
+) {
+
+173 
+G©e
+ *
+g
+ = &
+cú_
+->
+g©es_
+[
+gid
+];
+
+174 
+n
+=0;Ç<
+g
+->
+nfo_
+;Ç++)
+
+175 
+	`PushEvít
+(
+g
+->
+fos_
+[
+n
+]);
+
+176 
+	}
+}
+
+178 
+	gIm∂iˇt‹
+::
+	$PushEvítHex
+(
+gid
+) {
+
+179 
+G©e
+ *
+g
+ = &
+cú_
+->
+g©es_
+[
+gid
+];
+
+180 i‡(
+g
+->
+ty≥_
+==
+G©e
+::
+PI
+ || g->ty≥_==G©e::
+PPI
+)
+
+181 i‡(
+èrgë_Áu…_
+->
+g©e_
+!=
+gid
+Ë
+	`as£π
+(0);
+
+183 
+hevíts_
 ->
 	`push
 (
@@ -40010,7 +40630,7 @@ gid
 187 
 	gIm∂iˇt‹
 ::
-	$PushF™outEvít
+	$PushF™outEvítHex
 (
 gid
 ) {
@@ -40036,7 +40656,7 @@ nfo_
 ;Ç++)
 
 190 
-	`PushEvít
+	`PushEvítHex
 (
 g
 ->
@@ -40223,31 +40843,21 @@ v
 	`as£π
 (0);
 
-223 i‡(
-v
-==
-L
-Ë
+222 i‡(!
+	`SëVÆ
+(
 g
 ->
-gl_
- = 
-PARA_H
-;
-
-224 i‡(
+id_
+, 
+	`HexVÆue
+(
 v
-==
-H
-Ë
-g
-->
-gh_
- = 
-PARA_H
-;
+))Ë
+	`as£π
+(0);
 
-226 
+225 
 decisi⁄_åì_
 .
 	`put
@@ -40261,7 +40871,7 @@ e_‰⁄t_li°_
 	`size
 ());
 
-227 
+226 
 e_‰⁄t_li°_
 .
 	`push_back
@@ -40271,7 +40881,7 @@ g
 id_
 );
 
-229 i‡(
+228 i‡(
 èrgë_Áu…_
 ->
 g©e_
@@ -40279,9 +40889,9 @@ g©e_
 g
 ->
 id_
-)
+) {
 
-230 
+229 
 	`PushEvít
 (
 g
@@ -40289,7 +40899,15 @@ g
 id_
 );
 
-232 
+230 
+	`PushEvítHex
+(
+g
+->
+id_
+);
+
+233 
 	`PushF™outEvít
 (
 g
@@ -40297,15 +40915,23 @@ g
 id_
 );
 
-233  
+234 
+	`PushF™outEvítHex
+(
+g
+->
+id_
+);
+
+236  
 åue
 ;
 
-234 
+237 
 	}
 }
 
-236 
+239 
 boﬁ
  
 	gIm∂iˇt‹
@@ -40313,21 +40939,21 @@ boﬁ
 	$BackTøck
 () {
 
-237 
+240 
 gid
  = -1;
 
-238 
+241 
 back_åack_poöt
  = 0;
 
-240 !
+243 !
 decisi⁄_åì_
 .
 	`em±y
 ()) {
 
-241 i‡(
+244 i‡(
 decisi⁄_åì_
 .
 	`gë
@@ -40337,13 +40963,13 @@ gid
 back_åack_poöt
 ))
 
-244 
+247 
 VÆue
  
 Êù≥d_vÆ
 ;
 
-245 i‡(
+248 i‡(
 	`GëVÆ
 (
 gid
@@ -40355,7 +40981,7 @@ D
 L
 ;
 
-246 i‡(
+249 i‡(
 	`GëVÆ
 (
 gid
@@ -40367,7 +40993,7 @@ B
 H
 ;
 
-247 i‡(
+250 i‡(
 	`GëVÆ
 (
 gid
@@ -40377,7 +41003,7 @@ X
 	`as£π
 (0);
 
-248 
+251 
 Êù≥d_vÆ
  = 
 	`EvÆNŸ
@@ -40387,7 +41013,7 @@ X
 gid
 ));
 
-250 
+253 
 i
 =
 back_åack_poöt
@@ -40397,7 +41023,7 @@ e_‰⁄t_li°_
 	`size
 (); i++)
 
-251 
+254 
 vÆues_
 [
 e_‰⁄t_li°_
@@ -40407,7 +41033,7 @@ i
 X
 ;
 
-253 
+256 
 e_‰⁄t_li°_
 .
 	`ªsize
@@ -40415,7 +41041,7 @@ e_‰⁄t_li°_
 back_åack_poöt
 +1);
 
-254 
+257 
 vÆues_
 [
 gid
@@ -40423,7 +41049,7 @@ gid
 Êù≥d_vÆ
 ;
 
-256 i‡(
+259 i‡(
 èrgë_Áu…_
 ->
 g©e_
@@ -40431,27 +41057,27 @@ g©e_
 gid
 )
 
-257 
+260 
 	`PushEvít
 (
 gid
 );
 
-259 
+262 
 	`PushF™outEvít
 (
 gid
 );
 
-260  
+263  
 åue
 ;
 
-263  
+266  
 Ál£
 ;
 
-264 
+267 
 	}
 }
 
@@ -40479,13 +41105,17 @@ _CORE_IMPL_H_
 	~"∑âîn.h
 "
 
-27 
+26 
+	~"simuœt‹.h
+"
+
+28 
 «me•a˚
  
 	gC‹eNs
  {
 
-29 
+30 
 	g°d
 ::
 	tve˘‹
@@ -40495,15 +41125,15 @@ _CORE_IMPL_H_
 	tG©eVec
 ;
 
-31 ˛as†
+32 ˛as†
 	cIm∂iˇt‹
  {
 
-32 
+33 
 	gpublic
 :
 
-33 
+34 
 Im∂iˇt‹
 (
 Cúcuô
@@ -40515,33 +41145,51 @@ Fau…
 ·¨gë
 );
 
-34 ~
+35 ~
 Im∂iˇt‹
 ();
 
-36 
+37 
 Inô
 ();
 
-38 
+39 
 boﬁ
  
 EvítDrivíSim
 ();
 
-39 
+40 
+boﬁ
+ 
+EvítDrivíSimHex
+();
+
+41 
 PushF™outEvít
 (
 gid
 );
 
-40 
+42 
 PushEvít
 (
 gid
 );
 
-42 
+43 
+PushF™outEvítHex
+(
+gid
+);
+
+44 
+PushEvítHex
+(
+gid
+);
+
+46 
 boﬁ
  
 MakeDecisi⁄
@@ -40555,13 +41203,13 @@ VÆue
 v
 );
 
-43 
+47 
 boﬁ
  
 BackTøck
 ();
 
-45 
+49 
 VÆue
  
 GëVÆ
@@ -40569,7 +41217,15 @@ GëVÆ
 gid
 ) const;
 
-46 
+50 
+HexVÆue
+ 
+GëHexVÆ
+(
+gid
+) const;
+
+51 
 VÆue
  
 Gë3VÆ
@@ -40577,7 +41233,7 @@ Gë3VÆ
 gid
 ) const;
 
-47 
+52 
 boﬁ
  
 SëVÆ
@@ -40589,7 +41245,25 @@ VÆue
 v
 );
 
-49 
+53 
+boﬁ
+ 
+SëVÆ
+(
+gid
+, 
+HexVÆue
+ 
+hv
+);
+
+55 
+PrötG©e
+(
+gid
+) const;
+
+57 
 GëDFr⁄tõr
 (
 G©eVec
@@ -40597,13 +41271,13 @@ G©eVec
 df
 ) const;
 
-51 
+59 
 boﬁ
  
 IsFau…AtPo
 () const;
 
-53 
+61 
 GëPiP©ã∫
 (
 P©ã∫
@@ -40611,7 +41285,7 @@ P©ã∫
 p
 ) const;
 
-54 
+62 
 GëPoP©ã∫
 (
 P©ã∫
@@ -40619,11 +41293,11 @@ P©ã∫
 p
 ) const;
 
-56 
+64 
 	g¥iv©e
 :
 
-57 
+65 
 VÆue
  
 GoodEvÆ
@@ -40633,7 +41307,7 @@ G©e
 g
 ) const;
 
-58 
+66 
 VÆue
  
 Fau…EvÆ
@@ -40643,25 +41317,57 @@ G©e
 g
 ) const;
 
-60 
+67 
+HexVÆue
+ 
+GoodEvÆHex
+(
+G©e
+ *
+g
+) const;
+
+68 
+HexVÆue
+ 
+Fau…EvÆHex
+(
+G©e
+ *
+g
+) const;
+
+70 
 Cúcuô
  *
 	gcú_
 ;
 
-61 
+71 
+Simuœt‹
+ *
+	gsim_
+;
+
+73 
 Fau…
  *
 	gèrgë_Áu…_
 ;
 
-63 
+75 
 VÆue
  *
 	gvÆues_
 ;
 
-64 
+76 
+HexVÆue
+ *
+hvÆues_
+
+
+77 
 	g°d
 ::
 queue
@@ -40669,13 +41375,21 @@ queue
 evíts_
 ;
 
-66 
+78 
+	g°d
+::
+queue
+<> *
+hevíts_
+;
+
+80 
 Decisi⁄Tªe
  
 	gdecisi⁄_åì_
 ;
 
-67 
+81 
 	g°d
 ::
 ve˘‹
@@ -40683,7 +41397,7 @@ ve˘‹
 e_‰⁄t_li°_
 ;
 
-70 
+84 
 ölöe
  
 	gIm∂iˇt‹
@@ -40699,19 +41413,29 @@ Fau…
 ·¨gë
 ) {
 
-71 
+85 
 cú_
  = 
 cú
 ;
 
-72 
+86 
 èrgë_Áu…_
  = 
 ·¨gë
 ;
 
-74 
+88 
+sim_
+ = 
+√w
+ 
+	`Simuœt‹
+(
+cú_
+);
+
+89 
 vÆues_
  = 
 √w
@@ -40723,7 +41447,19 @@ cú_
 tg©e_
 ];
 
-75 
+90 
+hvÆues_
+
+√w
+ 
+HexVÆue
+ [
+cú_
+->
+tg©e_
+];
+
+91 
 evíts_
  = 
 √w
@@ -40733,11 +41469,21 @@ evíts_
 queue
 <>();
 
-76 
+92 
+hevíts_
+ = 
+√w
+ 
+°d
+::
+queue
+<>();
+
+93 
 	}
 }
 
-78 
+95 
 ölöe
  
 	gIm∂iˇt‹
@@ -40745,23 +41491,35 @@ queue
 	$Im∂iˇt‹
 () {
 
-79 
+96 
+dñëe
+ 
+sim_
+;
+
+97 
 dñëe
  [] 
 vÆues_
 ;
 
-80 
+98 
 dñëe
  
 evíts_
 ;
 
-81 
+99 
+dñëe
+ 
+hevíts_
+;
+
+100 
 	}
 }
 
-83 
+102 
 ölöe
  
 	gIm∂iˇt‹
@@ -40769,15 +41527,15 @@ evíts_
 	$Inô
 () {
 
-84 
+103 
 i
 =0; i<
 cú_
 ->
 tg©e_
-; i++)
+; i++) {
 
-85 
+104 
 vÆues_
 [
 i
@@ -40785,11 +41543,69 @@ i
 X
 ;
 
-86 
+105 
+hvÆues_
+[
+i
+] = 
+	`HexVÆue
+(
+X
+);
+
+106 
+cú_
+->
+g©es_
+[
+i
+].
+gl_
+ = 
+PARA_L
+;
+
+107 
+cú_
+->
+g©es_
+[
+i
+].
+gh_
+ = 
+PARA_L
+;
+
+108 
+cú_
+->
+g©es_
+[
+i
+].
+Ê_
+ = 
+PARA_L
+;
+
+109 
+cú_
+->
+g©es_
+[
+i
+].
+fh_
+ = 
+PARA_L
+;
+
+111 
 	}
 }
 
-88 
+113 
 ölöe
  
 VÆue
@@ -40801,17 +41617,39 @@ VÆue
 gid
 ) const {
 
-89  
+114  
 vÆues_
 [
 gid
 ];
 
-90 
+115 
 	}
 }
 
-92 
+117 
+ölöe
+ 
+HexVÆue
+ 
+	gIm∂iˇt‹
+::
+	$GëHexVÆ
+(
+gid
+) const {
+
+118  
+hvÆues_
+[
+gid
+];
+
+119 
+	}
+}
+
+121 
 ölöe
  
 VÆue
@@ -40823,7 +41661,7 @@ VÆue
 gid
 ) const {
 
-93 i‡(
+122 i‡(
 vÆues_
 [
 gid
@@ -40833,7 +41671,7 @@ D
 B
 )
 
-94  (
+123  (
 vÆues_
 [
 gid
@@ -40845,17 +41683,17 @@ H
 L
 ;
 
-96  
+125  
 vÆues_
 [
 gid
 ];
 
-97 
+126 
 	}
 }
 
-99 
+128 
 ölöe
  
 boﬁ
@@ -40871,7 +41709,7 @@ VÆue
 v
 ) {
 
-100 i‡(
+129 i‡(
 vÆues_
 [
 gid
@@ -40883,7 +41721,7 @@ v
 Ál£
 ;
 
-102 
+131 
 vÆues_
 [
 gid
@@ -40891,15 +41729,59 @@ gid
 v
 ;
 
-103  
+132  
 åue
 ;
 
-104 
+133 
 	}
 }
 
-106 
+135 
+ölöe
+ 
+boﬁ
+ 
+	gIm∂iˇt‹
+::
+	$SëVÆ
+(
+gid
+, 
+HexVÆue
+ 
+hv
+) {
+
+136 i‡(!
+hv
+.
+	`isSub£t
+(
+hvÆues_
+[
+gid
+])Ë 
+Ál£
+;
+
+138 
+hvÆues_
+[
+gid
+] = 
+hv
+;
+
+139  
+åue
+;
+
+140 
+	}
+}
+
+143 
 ölöe
  
 	gIm∂iˇt‹
@@ -40911,7 +41793,7 @@ P©ã∫
 p
 ) const {
 
-107 
+144 
 i
 =0; i<
 cú_
@@ -40919,7 +41801,7 @@ cú_
 ≈i_
 ; i++)
 
-108 
+145 
 p
 ->
 pi1_
@@ -40929,7 +41811,7 @@ i
 	`Gë3VÆ
 (i);
 
-109 if(
+146 if(
 p
 ->
 pi2_
@@ -40941,7 +41823,7 @@ cú_
 n‰ame_
 >1)
 
-110  
+147  
 i
  = 0 ; i < 
 cú_
@@ -40949,7 +41831,7 @@ cú_
 ≈i_
  ; i++ )
 
-111 
+148 
 p
 ->
 pi2_
@@ -40963,7 +41845,7 @@ cú_
 ng©e_
 );
 
-112  
+149  
 i
  = 0 ; i < 
 cú_
@@ -40971,7 +41853,7 @@ cú_
 ≈pi_
  ; i++ )
 
-113 
+150 
 p
 ->
 µi_
@@ -40985,11 +41867,11 @@ cú_
 ≈i_
 );
 
-114 
+151 
 	}
 }
 
-116 
+153 
 ölöe
  
 	gIm∂iˇt‹
@@ -41002,6 +41884,960 @@ p
 Ëc⁄° {
 	}
 }
+
+156 
+ölöe
+ 
+Im∂iˇt‹
+::
+	$PrötG©e
+(
+gid
+) const {
+
+157 
+G©e
+ *
+g
+ = &
+cú_
+->
+g©es_
+[
+gid
+];
+
+159 
+cout
+ << "# ";
+
+160 
+cout
+ << "id(" << 
+g
+->
+id_
+ << ") ";
+
+161 
+cout
+ << "lvl(" << 
+g
+->
+lvl_
+ << ") ";
+
+162 
+cout
+ << "ty≥(" << 
+g
+->
+ty≥_
+ << ") ";
+
+163 
+cout
+ << "‰ame(" << 
+g
+->
+‰ame_
+ << ")";
+
+164 
+cout
+ << 
+ídl
+;
+
+165 
+cout
+ << "# fi[" << 
+g
+->
+nfi_
+ << "]";
+
+166 
+j
+ = 0; j < 
+g
+->
+nfi_
+; ++j) {
+
+167 
+cout
+ << " " << 
+g
+->
+fis_
+[
+j
+] << "(";
+
+168 
+	`¥ötVÆue
+(
+	`GëVÆ
+(
+g
+->
+fis_
+[
+j
+]));
+
+169 
+cout
+ << ")";
+
+171 
+cout
+ << 
+ídl
+;
+
+172 
+cout
+ << "# fo[" << 
+g
+->
+nfo_
+ << "]";
+
+173 
+j
+ = 0; j < 
+g
+->
+nfo_
+; ++j)
+
+174 
+cout
+ << " " << 
+g
+->
+fos_
+[
+j
+];
+
+175 
+cout
+ << 
+ídl
+ <<Éndl;
+
+176 
+	}
+}
+
+	@core/src/logic-hex.h
+
+19 #i‚de‡
+_CORE_LOGIC_HEX_H_
+
+
+20 
+	#_CORE_LOGIC_HEX_H_
+
+
+	)
+
+22 
+	~"logic.h
+"
+
+24 
+«me•a˚
+ 
+	gC‹eNs
+ {
+
+25 
+	sHexVÆue
+ {
+
+26 
+boﬁ
+ 
+	gL_
+;
+
+27 
+boﬁ
+ 
+	gB_
+;
+
+28 
+boﬁ
+ 
+	gD_
+;
+
+29 
+boﬁ
+ 
+	gH_
+;
+
+31 
+HexVÆue
+() {
+
+32 
+	gL_
+ = 
+åue
+;
+
+33 
+	gB_
+ = 
+åue
+;
+
+34 
+	gD_
+ = 
+åue
+;
+
+35 
+	gH_
+ = 
+åue
+;
+
+38 
+HexVÆue
+(
+VÆue
+ 
+v
+);
+
+40 
+boﬁ
+ 
+isSub£t
+(c⁄° 
+HexVÆue
+& 
+hv
+) const;
+
+42 
+	gHexVÆue
+& 
+	g›î©‹
+=(
+HexVÆue
+& 
+hv
+);
+
+43 
+‰õnd
+ 
+boﬁ
+ 
+	g›î©‹
+==(c⁄° 
+HexVÆue
+& 
+lhs
+, c⁄° 
+	gHexVÆue
+& 
+	grhs
+);
+
+44 
+‰õnd
+ 
+boﬁ
+ 
+	g›î©‹
+!=(c⁄° 
+HexVÆue
+& 
+lhs
+, c⁄° 
+	gHexVÆue
+& 
+	grhs
+);
+
+47 
+ölöe
+ 
+HexVÆue
+ 
+EvÆNŸHex
+(HexVÆuê
+a
+) {
+
+48 
+HexVÆue
+ 
+	gªt
+;
+
+50 
+	gªt
+.
+	gL_
+ = 
+a
+.
+H_
+;
+
+51 
+	gªt
+.
+	gB_
+ = 
+a
+.
+D_
+;
+
+52 
+	gªt
+.
+	gD_
+ = 
+a
+.
+B_
+;
+
+53 
+	gªt
+.
+	gH_
+ = 
+a
+.
+L_
+;
+
+55  
+	gªt
+;
+
+58 
+ölöe
+ 
+HexVÆue
+ 
+EvÆAndHex
+(HexVÆuê
+a
+, HexVÆuê
+b
+) {
+
+59 
+HexVÆue
+ 
+	gªt
+;
+
+61 
+	gªt
+.
+	gL_
+ = 
+a
+.
+L_
+ | 
+b
+.L_ | (a.
+D_
+&b.
+B_
+) | (a.B_&b.D_);
+
+62 
+	gªt
+.
+	gB_
+ = (
+a
+.
+H_
+&
+b
+.
+B_
+) | (a.B_&b.H_) | (a.B_&b.B_);
+
+63 
+	gªt
+.
+	gD_
+ = (
+a
+.
+H_
+&
+b
+.
+D_
+) | (a.D_&b.H_) | (a.D_&b.D_);
+
+64 
+	gªt
+.
+	gH_
+ = 
+a
+.
+H_
+&
+b
+.H_;
+
+66  
+	gªt
+;
+
+69 
+ölöe
+ 
+HexVÆue
+ 
+EvÆOrHex
+(HexVÆuê
+a
+, HexVÆuê
+b
+) {
+
+70 
+HexVÆue
+ 
+	gªt
+;
+
+72 
+	gªt
+.
+	gL_
+ = 
+a
+.
+L_
+&
+b
+.L_;
+
+73 
+	gªt
+.
+	gB_
+ = (
+a
+.
+L_
+&
+b
+.
+B_
+) | (a.B_&b.L_) | (a.B_&b.B_);
+
+74 
+	gªt
+.
+	gD_
+ = (
+a
+.
+L_
+&
+b
+.
+D_
+) | (a.D_&b.L_) | (a.D_&b.D_);
+
+75 
+	gªt
+.
+	gH_
+ = 
+a
+.
+H_
+ | 
+b
+.H_ | (a.
+D_
+&b.
+B_
+) | (a.B_&b.D_);
+
+77  
+	gªt
+;
+
+80 
+ölöe
+ 
+HexVÆue
+ 
+EvÆAndNHex
+(
+°d
+::
+ve˘‹
+<HexVÆue>& 
+vÆs
+) {
+
+81 if(
+vÆs
+.
+size
+()<2Ë
+as£π
+(0);
+
+83 
+HexVÆue
+ 
+	gªt
+ = 
+EvÆAndHex
+(
+vÆs
+[0], vals[1]);
+
+84 
+size_t
+ 
+	gn
+=2;Ç<
+	gvÆs
+.
+size
+();Ç++)
+
+85 
+	gªt
+ = 
+EvÆAndHex
+(
+ªt
+, 
+vÆs
+[
+n
+]);
+
+87  
+	gªt
+;
+
+90 
+ölöe
+ 
+HexVÆue
+ 
+EvÆN™dNHex
+(
+°d
+::
+ve˘‹
+<HexVÆue>& 
+vÆs
+) {
+
+91  
+EvÆNŸHex
+(
+EvÆAndNHex
+(
+vÆs
+));
+
+94 
+ölöe
+ 
+HexVÆue
+ 
+EvÆOrNHex
+(
+°d
+::
+ve˘‹
+<HexVÆue>& 
+vÆs
+) {
+
+95 if(
+vÆs
+.
+size
+()<2Ë
+as£π
+(0);
+
+97 
+HexVÆue
+ 
+	gªt
+ = 
+EvÆOrHex
+(
+vÆs
+[0], vals[1]);
+
+98 
+size_t
+ 
+	gn
+=2;Ç<
+	gvÆs
+.
+size
+();Ç++)
+
+99 
+	gªt
+ = 
+EvÆOrHex
+(
+ªt
+, 
+vÆs
+[
+n
+]);
+
+101  
+	gªt
+;
+
+104 
+ölöe
+ 
+HexVÆue
+ 
+EvÆN‹NHex
+(
+°d
+::
+ve˘‹
+<HexVÆue>& 
+vÆs
+) {
+
+105  
+EvÆNŸHex
+(
+EvÆOrNHex
+(
+vÆs
+));
+
+108 
+ölöe
+ 
+	gHexVÆue
+::
+HexVÆue
+(
+VÆue
+ 
+v
+) {
+
+109 
+L_
+ = 
+Ál£
+;
+
+110 
+	gB_
+ = 
+Ál£
+;
+
+111 
+	gD_
+ = 
+Ál£
+;
+
+112 
+	gH_
+ = 
+Ál£
+;
+
+114 
+	gv
+) {
+
+115 
+	gL
+:
+
+116 
+L_
+ = 
+åue
+;
+
+118 
+	gB
+:
+
+119 
+B_
+ = 
+åue
+;
+
+121 
+	gD
+:
+
+122 
+D_
+ = 
+åue
+;
+
+124 
+	gH
+:
+
+125 
+H_
+ = 
+åue
+;
+
+128 
+L_
+ = 
+åue
+;
+
+129 
+	gB_
+ = 
+åue
+;
+
+130 
+	gD_
+ = 
+åue
+;
+
+131 
+	gH_
+ = 
+åue
+;
+
+136 
+ölöe
+ 
+	gHexVÆue
+& HexVÆue::
+›î©‹
+=(
+HexVÆue
+& 
+hv
+) {
+
+137 
+L_
+ = 
+hv
+.L_;
+
+138 
+	gB_
+ = 
+hv
+.
+B_
+;
+
+139 
+	gD_
+ = 
+hv
+.
+D_
+;
+
+140 
+	gH_
+ = 
+hv
+.
+H_
+;
+
+142  *
+	gthis
+;
+
+146 
+ölöe
+ 
+boﬁ
+ 
+	g›î©‹
+==(c⁄° 
+HexVÆue
+& 
+lhs
+, c⁄° 
+	gHexVÆue
+& 
+	grhs
+) {
+
+147 i‡((
+	glhs
+.
+	gL_
+!=
+rhs
+.
+L_
+)
+
+148 ||(
+lhs
+.
+B_
+!=
+rhs
+.B_)
+
+149 ||(
+lhs
+.
+D_
+!=
+rhs
+.D_)
+
+150 ||(
+lhs
+.
+H_
+!=
+rhs
+.H_))
+
+151  
+Ál£
+;
+
+153  
+	gåue
+;
+
+156 
+ölöe
+ 
+boﬁ
+ 
+	g›î©‹
+!=(c⁄° 
+HexVÆue
+& 
+lhs
+, c⁄° 
+	gHexVÆue
+& 
+	grhs
+) {
+
+157  !(
+	glhs
+ =
+rhs
+);
+
+160 
+ölöe
+ 
+boﬁ
+ 
+	gHexVÆue
+::
+isSub£t
+(c⁄° 
+HexVÆue
+& 
+hv
+) const {
+
+161 i‡((
+hv
+.
+L_
+==
+Ál£
+ && L_==
+åue
+)
+
+162 ||(
+hv
+.
+B_
+==
+Ál£
+ && B_==
+åue
+)
+
+163 ||(
+hv
+.
+D_
+==
+Ál£
+ && D_==
+åue
+)
+
+164 ||(
+hv
+.
+H_
+==
+Ál£
+ && H_==
+åue
+))
+
+165  
+Ál£
+;
+
+167  
+	gåue
+;
 
 	@core/src/logic.cpp
 
@@ -51548,7 +53384,7 @@ h1
 298 
 G©e
 ::
-AND
+AND2
 :
 
 299 
@@ -51561,6 +53397,8 @@ i
 gl_
  = 
 l1
+ | 
+l2
 ;
 
 300 
@@ -51573,33 +53411,15 @@ i
 gh_
  = 
 h1
+ & 
+h2
 ;
 
-301 
-j
-=1; j<
-cú_
-->
-g©es_
-[
-i
-].
-nfi_
-; j++) {
-
-302 
-cú_
-->
-g©es_
-[
-i
-].
-gl_
- |cú_->g©es_[cú_->g©es_[i].
-fis_
-[
-j
-]].gl_;
+302 
+G©e
+::
+AND3
+:
 
 303 
 cú_
@@ -51608,17 +53428,35 @@ g©es_
 [
 i
 ].
-gh_
- &cú_->g©es_[cú_->g©es_[i].
-fis_
+gl_
+ = 
+l1
+ | 
+l2
+ | 
+l3
+;
+
+304 
+cú_
+->
+g©es_
 [
-j
-]].gh_;
+i
+].
+gh_
+ = 
+h1
+ & 
+h2
+ & 
+h3
+;
 
 306 
 G©e
 ::
-AND2
+AND4
 :
 
 307 
@@ -51633,6 +53471,10 @@ gl_
 l1
  | 
 l2
+ | 
+l3
+ | 
+l4
 ;
 
 308 
@@ -51647,12 +53489,16 @@ gh_
 h1
  & 
 h2
+ & 
+h3
+ & 
+h4
 ;
 
 310 
 G©e
 ::
-AND3
+NAND2
 :
 
 311 
@@ -51664,11 +53510,9 @@ i
 ].
 gl_
  = 
-l1
- | 
-l2
- | 
-l3
+h1
+ & 
+h2
 ;
 
 312 
@@ -51680,17 +53524,15 @@ i
 ].
 gh_
  = 
-h1
- & 
-h2
- & 
-h3
+l1
+ | 
+l2
 ;
 
 314 
 G©e
 ::
-AND4
+NAND3
 :
 
 315 
@@ -51702,13 +53544,11 @@ i
 ].
 gl_
  = 
-l1
- | 
-l2
- | 
-l3
- | 
-l4
+h1
+ & 
+h2
+ & 
+h3
 ;
 
 316 
@@ -51720,19 +53560,17 @@ i
 ].
 gh_
  = 
-h1
- & 
-h2
- & 
-h3
- & 
-h4
+l1
+ | 
+l2
+ | 
+l3
 ;
 
 318 
 G©e
 ::
-NAND
+NAND4
 :
 
 319 
@@ -51745,6 +53583,12 @@ i
 gl_
  = 
 h1
+ & 
+h2
+ & 
+h3
+ & 
+h4
 ;
 
 320 
@@ -51757,35 +53601,19 @@ i
 gh_
  = 
 l1
+ | 
+l2
+ | 
+l3
+ | 
+l4
 ;
 
-321 
-j
-=1; j<
-cú_
-->
-g©es_
-[
-i
-].
-nfi_
-; j++) {
-
-322 
-cú_
-->
-g©es_
-[
-i
-].
-gl_
- &cú_->g©es_[cú_->g©es_[i].
-fis_
-[
-j
-]].
-gh_
-;
+322 
+G©e
+::
+OR2
+:
 
 323 
 cú_
@@ -51794,19 +53622,31 @@ g©es_
 [
 i
 ].
-gh_
- |cú_->g©es_[cú_->g©es_[i].
-fis_
-[
-j
-]].
 gl_
+ = 
+l1
+ & 
+l2
+;
+
+324 
+cú_
+->
+g©es_
+[
+i
+].
+gh_
+ = 
+h1
+ | 
+h2
 ;
 
 326 
 G©e
 ::
-NAND2
+OR3
 :
 
 327 
@@ -51818,9 +53658,11 @@ i
 ].
 gl_
  = 
-h1
+l1
  & 
-h2
+l2
+ & 
+l3
 ;
 
 328 
@@ -51832,15 +53674,17 @@ i
 ].
 gh_
  = 
-l1
+h1
  | 
-l2
+h2
+ | 
+h3
 ;
 
 330 
 G©e
 ::
-NAND3
+OR4
 :
 
 331 
@@ -51852,11 +53696,13 @@ i
 ].
 gl_
  = 
-h1
+l1
  & 
-h2
+l2
  & 
-h3
+l3
+ & 
+l4
 ;
 
 332 
@@ -51868,17 +53714,19 @@ i
 ].
 gh_
  = 
-l1
+h1
  | 
-l2
+h2
  | 
-l3
+h3
+ | 
+h4
 ;
 
 334 
 G©e
 ::
-NAND4
+NOR2
 :
 
 335 
@@ -51891,12 +53739,8 @@ i
 gl_
  = 
 h1
- & 
+ | 
 h2
- & 
-h3
- & 
-h4
 ;
 
 336 
@@ -51909,18 +53753,14 @@ i
 gh_
  = 
 l1
- | 
+ & 
 l2
- | 
-l3
- | 
-l4
 ;
 
 338 
 G©e
 ::
-OR
+NOR3
 :
 
 339 
@@ -51932,7 +53772,11 @@ i
 ].
 gl_
  = 
-l1
+h1
+ | 
+h2
+ | 
+h3
 ;
 
 340 
@@ -51944,34 +53788,18 @@ i
 ].
 gh_
  = 
-h1
+l1
+ & 
+l2
+ & 
+l3
 ;
 
-341 
-j
-=1; j<
-cú_
-->
-g©es_
-[
-i
-].
-nfi_
-; j++) {
-
-342 
-cú_
-->
-g©es_
-[
-i
-].
-gl_
- &cú_->g©es_[cú_->g©es_[i].
-fis_
-[
-j
-]].gl_;
+342 
+G©e
+::
+NOR4
+:
 
 343 
 cú_
@@ -51980,117 +53808,7 @@ g©es_
 [
 i
 ].
-gh_
- |cú_->g©es_[cú_->g©es_[i].
-fis_
-[
-j
-]].gh_;
-
-346 
-G©e
-::
-OR2
-:
-
-347 
-cú_
-->
-g©es_
-[
-i
-].
 gl_
- = 
-l1
- & 
-l2
-;
-
-348 
-cú_
-->
-g©es_
-[
-i
-].
-gh_
- = 
-h1
- | 
-h2
-;
-
-350 
-G©e
-::
-OR3
-:
-
-351 
-cú_
-->
-g©es_
-[
-i
-].
-gl_
- = 
-l1
- & 
-l2
- & 
-l3
-;
-
-352 
-cú_
-->
-g©es_
-[
-i
-].
-gh_
- = 
-h1
- | 
-h2
- | 
-h3
-;
-
-354 
-G©e
-::
-OR4
-:
-
-355 
-cú_
-->
-g©es_
-[
-i
-].
-gl_
- = 
-l1
- & 
-l2
- & 
-l3
- & 
-l4
-;
-
-356 
-cú_
-->
-g©es_
-[
-i
-].
-gh_
  = 
 h1
  | 
@@ -52101,101 +53819,7 @@ h3
 h4
 ;
 
-358 
-G©e
-::
-NOR
-:
-
-359 
-cú_
-->
-g©es_
-[
-i
-].
-gl_
- = 
-h1
-;
-
-360 
-cú_
-->
-g©es_
-[
-i
-].
-gh_
- = 
-l1
-;
-
-361 
-j
-=1; j<
-cú_
-->
-g©es_
-[
-i
-].
-nfi_
-; j++) {
-
-362 
-cú_
-->
-g©es_
-[
-i
-].
-gl_
- |cú_->g©es_[cú_->g©es_[i].
-fis_
-[
-j
-]].
-gh_
-;
-
-363 
-cú_
-->
-g©es_
-[
-i
-].
-gh_
- &cú_->g©es_[cú_->g©es_[i].
-fis_
-[
-j
-]].
-gl_
-;
-
-366 
-G©e
-::
-NOR2
-:
-
-367 
-cú_
-->
-g©es_
-[
-i
-].
-gl_
- = 
-h1
- | 
-h2
-;
-
-368 
+344 
 cú_
 ->
 g©es_
@@ -52207,12 +53831,284 @@ gh_
 l1
  & 
 l2
+ & 
+l3
+ & 
+l4
 ;
+
+346 
+G©e
+::
+XOR2
+:
+
+347 
+cú_
+->
+g©es_
+[
+i
+].
+gl_
+ = (
+l1
+ & 
+l2
+Ë| (
+h1
+ & 
+h2
+);
+
+348 
+cú_
+->
+g©es_
+[
+i
+].
+gh_
+ = (
+l1
+ & 
+h2
+Ë| (
+h1
+ & 
+l2
+);
+
+350 
+G©e
+::
+XOR3
+:
+
+351 
+cú_
+->
+g©es_
+[
+i
+].
+gl_
+ = (
+l1
+ & 
+l2
+Ë| (
+h1
+ & 
+h2
+);
+
+352 
+cú_
+->
+g©es_
+[
+i
+].
+gl_
+ = (cú_->g©es_[i].gl_ & 
+l3
+)
+
+353 | (
+cú_
+->
+g©es_
+[
+i
+].
+gh_
+ & 
+h3
+);
+
+354 
+cú_
+->
+g©es_
+[
+i
+].
+gh_
+ = (
+l1
+ & 
+h2
+Ë| (
+h1
+ & 
+l2
+);
+
+355 
+cú_
+->
+g©es_
+[
+i
+].
+gh_
+ = (cú_->g©es_[i].
+gl_
+ & 
+h3
+)
+
+356 | (
+cú_
+->
+g©es_
+[
+i
+].
+gh_
+ & 
+l3
+);
+
+358 
+G©e
+::
+XNOR2
+:
+
+359 
+cú_
+->
+g©es_
+[
+i
+].
+gl_
+ = (
+l1
+ & 
+h2
+Ë| (
+h1
+ & 
+l2
+);
+
+360 
+cú_
+->
+g©es_
+[
+i
+].
+gh_
+ = (
+l1
+ & 
+l2
+Ë| (
+h1
+ & 
+h2
+);
+
+362 
+G©e
+::
+XNOR3
+:
+
+363 
+cú_
+->
+g©es_
+[
+i
+].
+gl_
+ = (
+l1
+ & 
+l2
+Ë| (
+h1
+ & 
+h2
+);
+
+364 
+cú_
+->
+g©es_
+[
+i
+].
+gl_
+ = (cú_->g©es_[i].gl_ & 
+h3
+)
+
+365 | (
+cú_
+->
+g©es_
+[
+i
+].
+gh_
+ & 
+l3
+);
+
+366 
+cú_
+->
+g©es_
+[
+i
+].
+gh_
+ = (
+l1
+ & 
+h2
+Ë| (
+h1
+ & 
+l2
+);
+
+367 
+cú_
+->
+g©es_
+[
+i
+].
+gh_
+ = (cú_->g©es_[i].
+gl_
+ & 
+l3
+)
+
+368 | (
+cú_
+->
+g©es_
+[
+i
+].
+gh_
+ & 
+h3
+);
 
 370 
 G©e
 ::
-NOR3
+TIE1
 :
 
 371 
@@ -52224,11 +54120,7 @@ i
 ].
 gl_
  = 
-h1
- | 
-h2
- | 
-h3
+PARA_L
 ;
 
 372 
@@ -52240,17 +54132,13 @@ i
 ].
 gh_
  = 
-l1
- & 
-l2
- & 
-l3
+PARA_H
 ;
 
 374 
 G©e
 ::
-NOR4
+TIE0
 :
 
 375 
@@ -52262,13 +54150,7 @@ i
 ].
 gl_
  = 
-h1
- | 
-h2
- | 
-h3
- | 
-h4
+PARA_H
 ;
 
 376 
@@ -52280,350 +54162,16 @@ i
 ].
 gh_
  = 
-l1
- & 
-l2
- & 
-l3
- & 
-l4
+PARA_L
 ;
 
 378 
 G©e
 ::
-XOR2
-:
-
-379 
-cú_
-->
-g©es_
-[
-i
-].
-gl_
- = (
-l1
- & 
-l2
-Ë| (
-h1
- & 
-h2
-);
-
-380 
-cú_
-->
-g©es_
-[
-i
-].
-gh_
- = (
-l1
- & 
-h2
-Ë| (
-h1
- & 
-l2
-);
-
-382 
-G©e
-::
-XOR3
-:
-
-383 
-cú_
-->
-g©es_
-[
-i
-].
-gl_
- = (
-l1
- & 
-l2
-Ë| (
-h1
- & 
-h2
-);
-
-384 
-cú_
-->
-g©es_
-[
-i
-].
-gl_
- = (cú_->g©es_[i].gl_ & 
-l3
-)
-
-385 | (
-cú_
-->
-g©es_
-[
-i
-].
-gh_
- & 
-h3
-);
-
-386 
-cú_
-->
-g©es_
-[
-i
-].
-gh_
- = (
-l1
- & 
-h2
-Ë| (
-h1
- & 
-l2
-);
-
-387 
-cú_
-->
-g©es_
-[
-i
-].
-gh_
- = (cú_->g©es_[i].
-gl_
- & 
-h3
-)
-
-388 | (
-cú_
-->
-g©es_
-[
-i
-].
-gh_
- & 
-l3
-);
-
-390 
-G©e
-::
-XNOR2
-:
-
-391 
-cú_
-->
-g©es_
-[
-i
-].
-gl_
- = (
-l1
- & 
-h2
-Ë| (
-h1
- & 
-l2
-);
-
-392 
-cú_
-->
-g©es_
-[
-i
-].
-gh_
- = (
-l1
- & 
-l2
-Ë| (
-h1
- & 
-h2
-);
-
-394 
-G©e
-::
-XNOR3
-:
-
-395 
-cú_
-->
-g©es_
-[
-i
-].
-gl_
- = (
-l1
- & 
-l2
-Ë| (
-h1
- & 
-h2
-);
-
-396 
-cú_
-->
-g©es_
-[
-i
-].
-gl_
- = (cú_->g©es_[i].gl_ & 
-h3
-)
-
-397 | (
-cú_
-->
-g©es_
-[
-i
-].
-gh_
- & 
-l3
-);
-
-398 
-cú_
-->
-g©es_
-[
-i
-].
-gh_
- = (
-l1
- & 
-h2
-Ë| (
-h1
- & 
-l2
-);
-
-399 
-cú_
-->
-g©es_
-[
-i
-].
-gh_
- = (cú_->g©es_[i].
-gl_
- & 
-l3
-)
-
-400 | (
-cú_
-->
-g©es_
-[
-i
-].
-gh_
- & 
-h3
-);
-
-402 
-G©e
-::
-TIE1
-:
-
-403 
-cú_
-->
-g©es_
-[
-i
-].
-gl_
- = 
-PARA_L
-;
-
-404 
-cú_
-->
-g©es_
-[
-i
-].
-gh_
- = 
-PARA_H
-;
-
-406 
-G©e
-::
-TIE0
-:
-
-407 
-cú_
-->
-g©es_
-[
-i
-].
-gl_
- = 
-PARA_H
-;
-
-408 
-cú_
-->
-g©es_
-[
-i
-].
-gh_
- = 
-PARA_L
-;
-
-410 
-G©e
-::
 PPI
 :
 
-411 if(
+379 if(
 cú_
 ->
 c⁄nTy≥_
@@ -52639,7 +54187,7 @@ i
 ‰ame_
  > 0){
 
-412 
+380 
 cú_
 ->
 g©es_
@@ -52651,7 +54199,7 @@ gl_
 l1
 ;
 
-413 
+381 
 cú_
 ->
 g©es_
@@ -52663,11 +54211,11 @@ gh_
 h1
 ;
 
-419 
+387 
 	}
 }
 
-432 
+400 
 ölöe
  
 	gSimuœt‹
@@ -52677,7 +54225,7 @@ h1
 i
 ) {
 
-434 c⁄° 
+402 c⁄° 
 fi1
  = 
 cú_
@@ -52691,7 +54239,7 @@ nfi_
 fis_
 [0] : 0;
 
-435 c⁄° 
+403 c⁄° 
 fi2
  = 
 cú_
@@ -52705,7 +54253,7 @@ nfi_
 fis_
 [1] : 0;
 
-436 c⁄° 
+404 c⁄° 
 fi3
  = 
 cú_
@@ -52719,7 +54267,7 @@ nfi_
 fis_
 [2] : 0;
 
-437 c⁄° 
+405 c⁄° 
 fi4
  = 
 cú_
@@ -52733,7 +54281,7 @@ nfi_
 fis_
 [3] : 0;
 
-439 c⁄° 
+407 c⁄° 
 P¨aVÆue
  
 l1
@@ -52751,13 +54299,13 @@ fi1
 i
 ][1])
 
-440 | 
+408 | 
 Áu…Inje˘L_
 [
 i
 ][1];
 
-441 c⁄° 
+409 c⁄° 
 P¨aVÆue
  
 h1
@@ -52775,13 +54323,13 @@ fh_
 i
 ][1])
 
-442 | 
+410 | 
 Áu…Inje˘H_
 [
 i
 ][1];
 
-443 c⁄° 
+411 c⁄° 
 P¨aVÆue
  
 l2
@@ -52799,13 +54347,13 @@ fi2
 i
 ][2])
 
-444 | 
+412 | 
 Áu…Inje˘L_
 [
 i
 ][2];
 
-445 c⁄° 
+413 c⁄° 
 P¨aVÆue
  
 h2
@@ -52823,13 +54371,13 @@ fh_
 i
 ][2])
 
-446 | 
+414 | 
 Áu…Inje˘H_
 [
 i
 ][2];
 
-447 c⁄° 
+415 c⁄° 
 P¨aVÆue
  
 l3
@@ -52847,13 +54395,13 @@ fi3
 i
 ][3])
 
-448 | 
+416 | 
 Áu…Inje˘L_
 [
 i
 ][3];
 
-449 c⁄° 
+417 c⁄° 
 P¨aVÆue
  
 h3
@@ -52871,13 +54419,13 @@ fh_
 i
 ][3])
 
-450 | 
+418 | 
 Áu…Inje˘H_
 [
 i
 ][3];
 
-451 c⁄° 
+419 c⁄° 
 P¨aVÆue
  
 l4
@@ -52895,13 +54443,13 @@ fi4
 i
 ][4])
 
-452 | 
+420 | 
 Áu…Inje˘L_
 [
 i
 ][4];
 
-453 c⁄° 
+421 c⁄° 
 P¨aVÆue
  
 h4
@@ -52919,13 +54467,13 @@ fh_
 i
 ][4])
 
-454 | 
+422 | 
 Áu…Inje˘H_
 [
 i
 ][4];
 
-456 
+424 
 cú_
 ->
 g©es_
@@ -52935,13 +54483,13 @@ i
 ty≥_
 ) {
 
-457 
+425 
 G©e
 ::
 INV
 :
 
-458 
+426 
 cú_
 ->
 g©es_
@@ -52953,7 +54501,7 @@ i
 h1
 ;
 
-459 
+427 
 cú_
 ->
 g©es_
@@ -52965,22 +54513,314 @@ fh_
 l1
 ;
 
-461 
+429 
 G©e
 ::
 PO
 :
 
-462 
+430 
 G©e
 ::
 PPO
 :
 
-463 
+431 
 G©e
 ::
 BUF
+:
+
+432 
+cú_
+->
+g©es_
+[
+i
+].
+Ê_
+ = 
+l1
+;
+
+433 
+cú_
+->
+g©es_
+[
+i
+].
+fh_
+ = 
+h1
+;
+
+435 
+G©e
+::
+AND2
+:
+
+436 
+cú_
+->
+g©es_
+[
+i
+].
+Ê_
+ = 
+l1
+ | 
+l2
+;
+
+437 
+cú_
+->
+g©es_
+[
+i
+].
+fh_
+ = 
+h1
+ & 
+h2
+;
+
+439 
+G©e
+::
+AND3
+:
+
+440 
+cú_
+->
+g©es_
+[
+i
+].
+Ê_
+ = 
+l1
+ | 
+l2
+ | 
+l3
+;
+
+441 
+cú_
+->
+g©es_
+[
+i
+].
+fh_
+ = 
+h1
+ & 
+h2
+ & 
+h3
+;
+
+443 
+G©e
+::
+AND4
+:
+
+444 
+cú_
+->
+g©es_
+[
+i
+].
+Ê_
+ = 
+l1
+ | 
+l2
+ | 
+l3
+ | 
+l4
+;
+
+445 
+cú_
+->
+g©es_
+[
+i
+].
+fh_
+ = 
+h1
+ & 
+h2
+ & 
+h3
+ & 
+h4
+;
+
+447 
+G©e
+::
+NAND2
+:
+
+448 
+cú_
+->
+g©es_
+[
+i
+].
+Ê_
+ = 
+h1
+ & 
+h2
+;
+
+449 
+cú_
+->
+g©es_
+[
+i
+].
+fh_
+ = 
+l1
+ | 
+l2
+;
+
+451 
+G©e
+::
+NAND3
+:
+
+452 
+cú_
+->
+g©es_
+[
+i
+].
+Ê_
+ = 
+h1
+ & 
+h2
+ & 
+h3
+;
+
+453 
+cú_
+->
+g©es_
+[
+i
+].
+fh_
+ = 
+l1
+ | 
+l2
+ | 
+l3
+;
+
+455 
+G©e
+::
+NAND4
+:
+
+456 
+cú_
+->
+g©es_
+[
+i
+].
+Ê_
+ = 
+h1
+ & 
+h2
+ & 
+h3
+ & 
+h4
+;
+
+457 
+cú_
+->
+g©es_
+[
+i
+].
+fh_
+ = 
+l1
+ | 
+l2
+ | 
+l3
+ | 
+l4
+;
+
+459 
+G©e
+::
+OR2
+:
+
+460 
+cú_
+->
+g©es_
+[
+i
+].
+Ê_
+ = 
+l1
+ & 
+l2
+;
+
+461 
+cú_
+->
+g©es_
+[
+i
+].
+fh_
+ = 
+h1
+ | 
+h2
+;
+
+463 
+G©e
+::
+OR3
 :
 
 464 
@@ -52993,6 +54833,10 @@ i
 Ê_
  = 
 l1
+ & 
+l2
+ & 
+l3
 ;
 
 465 
@@ -53005,12 +54849,16 @@ i
 fh_
  = 
 h1
+ | 
+h2
+ | 
+h3
 ;
 
 467 
 G©e
 ::
-AND2
+OR4
 :
 
 468 
@@ -53023,8 +54871,12 @@ i
 Ê_
  = 
 l1
- | 
+ & 
 l2
+ & 
+l3
+ & 
+l4
 ;
 
 469 
@@ -53037,14 +54889,18 @@ i
 fh_
  = 
 h1
- & 
+ | 
 h2
+ | 
+h3
+ | 
+h4
 ;
 
 471 
 G©e
 ::
-AND3
+NOR2
 :
 
 472 
@@ -53056,11 +54912,9 @@ i
 ].
 Ê_
  = 
-l1
+h1
  | 
-l2
- | 
-l3
+h2
 ;
 
 473 
@@ -53072,17 +54926,15 @@ i
 ].
 fh_
  = 
-h1
+l1
  & 
-h2
- & 
-h3
+l2
 ;
 
 475 
 G©e
 ::
-AND4
+NOR3
 :
 
 476 
@@ -53094,13 +54946,11 @@ i
 ].
 Ê_
  = 
-l1
+h1
  | 
-l2
+h2
  | 
-l3
- | 
-l4
+h3
 ;
 
 477 
@@ -53112,19 +54962,17 @@ i
 ].
 fh_
  = 
-h1
+l1
  & 
-h2
+l2
  & 
-h3
- & 
-h4
+l3
 ;
 
 479 
 G©e
 ::
-NAND2
+NOR4
 :
 
 480 
@@ -53137,8 +54985,12 @@ i
 Ê_
  = 
 h1
- & 
+ | 
 h2
+ | 
+h3
+ | 
+h4
 ;
 
 481 
@@ -53151,14 +55003,18 @@ i
 fh_
  = 
 l1
- | 
+ & 
 l2
+ & 
+l3
+ & 
+l4
 ;
 
 483 
 G©e
 ::
-NAND3
+XOR2
 :
 
 484 
@@ -53169,13 +55025,15 @@ g©es_
 i
 ].
 Ê_
- = 
+ = (
+l1
+ & 
+l2
+Ë| (
 h1
  & 
 h2
- & 
-h3
-;
+);
 
 485 
 cú_
@@ -53185,18 +55043,20 @@ g©es_
 i
 ].
 fh_
- = 
+ = (
 l1
- | 
+ & 
+h2
+Ë| (
+h1
+ & 
 l2
- | 
-l3
-;
+);
 
 487 
 G©e
 ::
-NAND4
+XOR3
 :
 
 488 
@@ -53207,15 +55067,15 @@ g©es_
 i
 ].
 Ê_
- = 
+ = (
+l1
+ & 
+l2
+Ë| (
 h1
  & 
 h2
- & 
-h3
- & 
-h4
-;
+);
 
 489 
 cú_
@@ -53224,22 +55084,40 @@ g©es_
 [
 i
 ].
-fh_
- = 
-l1
- | 
-l2
- | 
+Ê_
+ = (cú_->g©es_[i].Ê_ & 
 l3
- | 
-l4
-;
+)
 
-491 
-G©e
-::
-OR2
-:
+490 | (
+cú_
+->
+g©es_
+[
+i
+].
+fh_
+ & 
+h3
+);
+
+491 
+cú_
+->
+g©es_
+[
+i
+].
+fh_
+ = (
+l1
+ & 
+h2
+Ë| (
+h1
+ & 
+l2
+);
 
 492 
 cú_
@@ -53248,14 +55126,14 @@ g©es_
 [
 i
 ].
+fh_
+ = (cú_->g©es_[i].
 Ê_
- = 
-l1
  & 
-l2
-;
+h3
+)
 
-493 
+493 | (
 cú_
 ->
 g©es_
@@ -53263,16 +55141,14 @@ g©es_
 i
 ].
 fh_
- = 
-h1
- | 
-h2
-;
+ & 
+l3
+);
 
 495 
 G©e
 ::
-OR3
+XNOR2
 :
 
 496 
@@ -53283,13 +55159,15 @@ g©es_
 i
 ].
 Ê_
- = 
+ = (
 l1
  & 
-l2
+h2
+Ë| (
+h1
  & 
-l3
-;
+l2
+);
 
 497 
 cú_
@@ -53299,18 +55177,20 @@ g©es_
 i
 ].
 fh_
- = 
+ = (
+l1
+ & 
+l2
+Ë| (
 h1
- | 
+ & 
 h2
- | 
-h3
-;
+);
 
 499 
 G©e
 ::
-OR4
+XNOR3
 :
 
 500 
@@ -53321,15 +55201,15 @@ g©es_
 i
 ].
 Ê_
- = 
+ = (
 l1
  & 
 l2
+Ë| (
+h1
  & 
-l3
- & 
-l4
-;
+h2
+);
 
 501 
 cú_
@@ -53338,22 +55218,40 @@ g©es_
 [
 i
 ].
-fh_
- = 
-h1
- | 
-h2
- | 
+Ê_
+ = (cú_->g©es_[i].Ê_ & 
 h3
- | 
-h4
-;
+)
 
-503 
-G©e
-::
-NOR2
-:
+502 | (
+cú_
+->
+g©es_
+[
+i
+].
+fh_
+ & 
+l3
+);
+
+503 
+cú_
+->
+g©es_
+[
+i
+].
+fh_
+ = (
+l1
+ & 
+h2
+Ë| (
+h1
+ & 
+l2
+);
 
 504 
 cú_
@@ -53362,14 +55260,14 @@ g©es_
 [
 i
 ].
+fh_
+ = (cú_->g©es_[i].
 Ê_
- = 
-h1
- | 
-h2
-;
+ & 
+l3
+)
 
-505 
+505 | (
 cú_
 ->
 g©es_
@@ -53377,16 +55275,14 @@ g©es_
 i
 ].
 fh_
- = 
-l1
  & 
-l2
-;
+h3
+);
 
 507 
 G©e
 ::
-NOR3
+TIE1
 :
 
 508 
@@ -53398,11 +55294,7 @@ i
 ].
 Ê_
  = 
-h1
- | 
-h2
- | 
-h3
+PARA_L
 ;
 
 509 
@@ -53414,17 +55306,13 @@ i
 ].
 fh_
  = 
-l1
- & 
-l2
- & 
-l3
+PARA_H
 ;
 
 511 
 G©e
 ::
-NOR4
+TIE0
 :
 
 512 
@@ -53436,13 +55324,7 @@ i
 ].
 Ê_
  = 
-h1
- | 
-h2
- | 
-h3
- | 
-h4
+PARA_H
 ;
 
 513 
@@ -53454,350 +55336,16 @@ i
 ].
 fh_
  = 
-l1
- & 
-l2
- & 
-l3
- & 
-l4
+PARA_L
 ;
 
 515 
 G©e
 ::
-XOR2
-:
-
-516 
-cú_
-->
-g©es_
-[
-i
-].
-Ê_
- = (
-l1
- & 
-l2
-Ë| (
-h1
- & 
-h2
-);
-
-517 
-cú_
-->
-g©es_
-[
-i
-].
-fh_
- = (
-l1
- & 
-h2
-Ë| (
-h1
- & 
-l2
-);
-
-519 
-G©e
-::
-XOR3
-:
-
-520 
-cú_
-->
-g©es_
-[
-i
-].
-Ê_
- = (
-l1
- & 
-l2
-Ë| (
-h1
- & 
-h2
-);
-
-521 
-cú_
-->
-g©es_
-[
-i
-].
-Ê_
- = (cú_->g©es_[i].Ê_ & 
-l3
-)
-
-522 | (
-cú_
-->
-g©es_
-[
-i
-].
-fh_
- & 
-h3
-);
-
-523 
-cú_
-->
-g©es_
-[
-i
-].
-fh_
- = (
-l1
- & 
-h2
-Ë| (
-h1
- & 
-l2
-);
-
-524 
-cú_
-->
-g©es_
-[
-i
-].
-fh_
- = (cú_->g©es_[i].
-Ê_
- & 
-h3
-)
-
-525 | (
-cú_
-->
-g©es_
-[
-i
-].
-fh_
- & 
-l3
-);
-
-527 
-G©e
-::
-XNOR2
-:
-
-528 
-cú_
-->
-g©es_
-[
-i
-].
-Ê_
- = (
-l1
- & 
-h2
-Ë| (
-h1
- & 
-l2
-);
-
-529 
-cú_
-->
-g©es_
-[
-i
-].
-fh_
- = (
-l1
- & 
-l2
-Ë| (
-h1
- & 
-h2
-);
-
-531 
-G©e
-::
-XNOR3
-:
-
-532 
-cú_
-->
-g©es_
-[
-i
-].
-Ê_
- = (
-l1
- & 
-l2
-Ë| (
-h1
- & 
-h2
-);
-
-533 
-cú_
-->
-g©es_
-[
-i
-].
-Ê_
- = (cú_->g©es_[i].Ê_ & 
-h3
-)
-
-534 | (
-cú_
-->
-g©es_
-[
-i
-].
-fh_
- & 
-l3
-);
-
-535 
-cú_
-->
-g©es_
-[
-i
-].
-fh_
- = (
-l1
- & 
-h2
-Ë| (
-h1
- & 
-l2
-);
-
-536 
-cú_
-->
-g©es_
-[
-i
-].
-fh_
- = (cú_->g©es_[i].
-Ê_
- & 
-l3
-)
-
-537 | (
-cú_
-->
-g©es_
-[
-i
-].
-fh_
- & 
-h3
-);
-
-539 
-G©e
-::
-TIE1
-:
-
-540 
-cú_
-->
-g©es_
-[
-i
-].
-Ê_
- = 
-PARA_L
-;
-
-541 
-cú_
-->
-g©es_
-[
-i
-].
-fh_
- = 
-PARA_H
-;
-
-543 
-G©e
-::
-TIE0
-:
-
-544 
-cú_
-->
-g©es_
-[
-i
-].
-Ê_
- = 
-PARA_H
-;
-
-545 
-cú_
-->
-g©es_
-[
-i
-].
-fh_
- = 
-PARA_L
-;
-
-547 
-G©e
-::
 PPI
 :
 
-548 if(
+516 if(
 cú_
 ->
 c⁄nTy≥_
@@ -53813,7 +55361,7 @@ i
 ‰ame_
  > 0){
 
-549 
+517 
 cú_
 ->
 g©es_
@@ -53825,7 +55373,7 @@ i
 l1
 ;
 
-550 
+518 
 cú_
 ->
 g©es_
@@ -53837,7 +55385,7 @@ fh_
 h1
 ;
 
-556 
+524 
 cú_
 ->
 g©es_
@@ -53849,13 +55397,13 @@ i
 Áu…Inje˘H_
 [i][0])
 
-557 | 
+525 | 
 Áu…Inje˘L_
 [
 i
 ][0];
 
-558 
+526 
 cú_
 ->
 g©es_
@@ -53867,13 +55415,13 @@ fh_
 Áu…Inje˘L_
 [i][0])
 
-559 | 
+527 | 
 Áu…Inje˘H_
 [
 i
 ][0];
 
-560 
+528 
 	}
 }
 
@@ -267928,8 +269476,8 @@ __END_DECLS
 .
 1
 /usr/include
-194
-5577
+195
+5598
 atpg/src/atpg_cmd.cpp
 atpg/src/atpg_cmd.h
 atpg/src/fan_mgr.h
@@ -267964,6 +269512,7 @@ core/src/fault.h
 core/src/gate.h
 core/src/implicator.cpp
 core/src/implicator.h
+core/src/logic-hex.h
 core/src/logic.cpp
 core/src/logic.h
 core/src/pattern.h
