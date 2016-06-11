@@ -87,7 +87,7 @@ void AtpgMgr::generation() {
 
         delete atpg_; 
 
-        if (pcoll_->pats_.size()%RPT_PER_PAT==0) {
+        if (ret==Atpg::TEST_FOUND && pcoll_->pats_.size()%RPT_PER_PAT==0) {
             int fu = fListExtract_->current_.size(); 
             int dt = fListExtract_->getNStatus(Fault::DT); 
             cout << "# " << setw(9) << pcoll_->pats_.size(); 

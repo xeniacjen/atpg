@@ -34,19 +34,22 @@ public:
         Atpg(Circuit *cir, Fault *f); 
         ~Atpg(); 
 
-    GenStatus Tpg(); 
+    virtual GenStatus Tpg(); 
     void      GetPiPattern(Pattern *p); 
 
 private: 
     bool isTestPossible(); 
     bool isaTest(); 
 
+    Objective   current_obj_; 
+
 protected:
+    virtual bool FaultActivate(); 
+    virtual bool DDrive(); 
+    virtual bool Backtrace(); 
+
     void init(); 
     bool Imply(); 
-    bool FaultActivate(); 
-    bool DDrive(); 
-    bool Backtrace(); 
     bool BackTrack(); 
     Gate *FindHardestToSetFanIn(Gate *g, Value obj) const; 
     Gate *FindEasiestToSetFanIn(Gate *g, Value obj) const; 
@@ -58,8 +61,6 @@ protected:
 
     unsigned    back_track_count; 
     unsigned    back_track_limit; 
-
-    Objective   current_obj_; 
 }; //Atpg 
 
 inline Atpg::Atpg(Circuit *cir, Fault *f) { 

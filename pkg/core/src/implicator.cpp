@@ -46,6 +46,15 @@ bool Implicator::EventDrivenSim() {
     return true; 
 }
 
+bool Implicator::EventDrivenSimB() { 
+    while (!events_b->empty()) {
+        Gate *g = &cir_->gates_[events_b->front()]; 
+        events_b->pop(); 
+
+        if (g->)
+    }   
+}
+
 bool Implicator::EventDrivenSimHex() {
     // TODO 
 }
@@ -166,8 +175,9 @@ Value Implicator::FaultEval(Gate *g) const {
 
 void Implicator::PushEvent(int gid) {
     Gate *g = &cir_->gates_[gid]; 
-    if (g->type_==Gate::PI || g->type_==Gate::PPI)
+    if (g->type_==Gate::PI || g->type_==Gate::PPI) { 
         if (target_fault_->gate_!=gid) assert(0); 
+    } 
 
     events_->push(gid); 
 
@@ -177,6 +187,16 @@ void Implicator::PushFanoutEvent(int gid) {
     Gate *g = &cir_->gates_[gid]; 
     for (int n=0; n<g->nfo_; n++) 
         PushEvent(g->fos_[n]); 
+}
+
+void Implicator::PushFaninEvent(int gid) {
+    Gate *g = &cir_->gates_[gid]; 
+    for (int n=0; n<g->nfi_; n++) 
+        PushBEvent(gid); 
+}
+
+void Implicator::PushBEvent(int gid) {
+    events_b->push(g->fis_[n]); 
 }
 
 void Implicator::PushEventHex(int gid) {
@@ -221,7 +241,7 @@ void Implicator::GetDFrontier(GateVec& df) const {
 
 bool Implicator::MakeDecision(Gate *g, Value v) {
     // if (!SetVal(g->id_, v)) return false; 
-    assert(g->type_==Gate::PI || g->type_==Gate::PPI); 
+    assert(g->type_==Gate::PI || g->type_==Gate::PPI || g->isFanoutStem()); 
     if (!SetVal(g->id_, v)) assert(0); 
     // if (!SetVal(g->id_, HexValue(v))) assert(0); 
 
@@ -236,6 +256,9 @@ bool Implicator::MakeDecision(Gate *g, Value v) {
     else { 
         PushFanoutEvent(g->id_); 
         // PushFanoutEventHex(g->id_); 
+
+        if (g->isFanoutStem()) 
+            PushBEvent(g->id_); 
     }
     return true; 
 }

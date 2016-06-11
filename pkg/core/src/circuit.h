@@ -41,7 +41,7 @@ public:
 
     // info for multiple time frames
     int             nframe_;      // number of time frame
-    tfConnectType        connType_;    // time frame connection type
+    tfConnectType   connType_;    // time frame connection type
     int             tgate_;       // number of total gates
     int             tlvl_;        // total level
 
@@ -57,6 +57,9 @@ public:
     int             *fos_;        // fanout net array
     int             *cellToGate_; // map cells in netlist to gates
     int             *portToGate_; // map ports in netlist to gates
+
+    int             *headLines_; // array of headlines
+    int             nHeadLine_;  // number of headlines
 
 protected:
     // for circuit building
@@ -80,6 +83,8 @@ protected:
     void assignFiMinLvl();
 
     void runScoap(); 
+    void setupCircuitParameter();
+    void identifyLineParameter();
 };
 
 inline Circuit::Circuit() {

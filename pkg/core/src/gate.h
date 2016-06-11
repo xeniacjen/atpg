@@ -42,6 +42,8 @@ public:
                      TIE0,   TIE1, TIEX,   TIEZ
                    };
 
+    enum LINE_TYPE { FREE_LINE  = 0, HEAD_LINE,  BOUND_LINE };
+
     // basic info
     char      *name_; 
     int       id_;    // position in circuit gate array
@@ -50,6 +52,7 @@ public:
     int       lvl_;   // level number after levelization
     int       frame_; // time frame of the gate, for 2-pattern test
     Type      type_;  // type of the gate
+    LINE_TYPE ltype_; // line type of the gate 
 
     // connection
     int       nfi_;   // number of fanin
@@ -80,6 +83,8 @@ public:
 
     void      print() const; 
     
+    bool      isFanoutStem() const; 
+
     Value     isUnary() const;
     Value     isInverse() const;
     Value     getInputNonCtrlValue() const;
@@ -134,6 +139,10 @@ inline void Gate::print() const {
     for (int j = 0; j < nfo_; ++j)
         cout << " " << fos_[j];
     cout << endl << endl;
+}
+
+inline bool Gate::isFanoutStem() const {
+    return (nfo_ > 1); 
 }
 
 inline Value Gate::isUnary() const {

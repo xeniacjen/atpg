@@ -37,9 +37,12 @@ public:
     void Init(); 
 
     bool EventDrivenSim(); 
+    bool EventDrivenSimB(); // backward event-driven sim. 
     bool EventDrivenSimHex(); 
     void PushFanoutEvent(int gid); 
+    void PushFaninEvent(int gid); 
     void PushEvent(int gid); 
+    void PushBEvent(int gid); 
     void PushFanoutEventHex(int gid); 
     void PushEventHex(int gid); 
 
@@ -75,6 +78,7 @@ private:
     Value           *values_; 
     HexValue        *hvalues_; 
     std::queue<int> *events_; 
+    std::queue<int> *events_b; // backward implication events 
     std::queue<int> *hevents_; 
 
     DecisionTree    decision_tree_; 
@@ -89,6 +93,7 @@ inline Implicator::Implicator(Circuit *cir, Fault *ftarget) {
     values_ = new Value [cir_->tgate_]; 
     hvalues_= new HexValue [cir_->tgate_];  
     events_ = new std::queue<int>();  
+    events_b = new std::queue<int>();  
     hevents_ = new std::queue<int>();  
 }
 
@@ -96,6 +101,7 @@ inline Implicator::~Implicator() {
     delete    sim_; 
     delete [] values_; 
     delete    events_; 
+    delete    events_b; 
     delete    hevents_; 
 } 
 

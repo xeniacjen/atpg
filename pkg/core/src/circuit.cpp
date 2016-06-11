@@ -50,6 +50,7 @@ bool Circuit::build(Netlist * const nl, const int &nframe,
 	assignFiMinLvl();
     
     runScoap(); 
+    setupCircuitParameter(); 
 
     return true;
 }
@@ -772,7 +773,7 @@ void Circuit::assignFiMinLvl(){
 		for(int j = 0; j < g->nfi_; ++j)
 			if(gates_[g->fis_[j]].lvl_ < minLvl){
 				minLvl = gates_[g->fis_[j]].lvl_;
-				g->fiMinLvl_ = g->fis_[j];
+				g->fiMinLvl_ = minLvl;
 //          find the minimum among g->fis_[j] and replace g->fiMinLvl with it.
 //                                *********
 //                       g->nfi_  *       *
@@ -930,6 +931,59 @@ void Circuit::runScoap() {
             cout << g->type_; 
             cout << " currently not supported...\n"; 
             break; 
+        }
+    }
+}
+
+void Circuit::setupCircuitParameter() {
+    identifyLineParameter(); 
+}
+
+void Circuit::identifyLineParameter() {
+    nHeadLine_ = 0;// number of head line
+
+	// go through all the gates
+    for(int i = 0 ; i < tgate_ ; i++ ){
+
+		// get ith gate from gate array in cir_
+        Gate &g = gates_[i];
+
+		// assign as FREE_LINE first
+        g.ltype_ = Gate::FREE_LINE;
+
+		// check it is BOUND_LINE or not
+        if (g.type_ != Gate::PI && g.type_ != Gate::PPI)
+            for (int j = 0 ; j < g.nfi_ ; j++ )//g.nfi_  number of fanin
+
+				// if one of fanin is not FREE_LINE, then set lineType as BOUND_LINE
+                if ( g.ltype_!= Gate::FREE_LINE ) {
+                    g.ltype_ = Gate::BOUND_LINE;
+                    break;
+                }
+		// check it is HEAD_LINE or not(rule 1)
+        if( g.ltype_== Gate::FREE_LINE && g.nfo_ != 1){//g.nfo_  number of fanout
+            g.ltype_ = Gate::HEAD_LINE;
+            nHeadLine_++;//number of head line + 1
+        }
+
+		// check it is HEAD_LINE or not(rule 2)
+        if( g.ltype_ == Gate::BOUND_LINE )
+            for ( int j = 0 ; j < g.nfi_ ; j++ )//g.nfi_  number of fanin
+                if ( g.ltype_== Gate::FREE_LINE ){
+                    g.ltype_ = Gate::HEAD_LINE;
+                    nHeadLine_++;
+                }
+    }
+
+	// store all head lines to array  headLines_
+    headLines_ = new int[nHeadLine_];
+    int inHead = 0;
+    for(int i = 0 ; i < tgate_ ; i++ ) { 
+        Gate &g = gates_[i];
+        if( g.ltype_ == Gate::HEAD_LINE){
+            headLines_[inHead++] = g.id_;
+            if( inHead == nHeadLine_ )
+                break;
         }
     }
 }

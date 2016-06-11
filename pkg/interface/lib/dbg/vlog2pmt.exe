@@ -1,0 +1,7 @@
+bin/dbg/vlog2pmt : lib/dbg/vlog2pmt.o $(LIBOBJS) $(REQLIBS)
+	@if [ ! -d $(BINDIR)/$(MODE) ]; then \
+		mkdir -p $(BINDIR)/$(MODE); \
+	fi
+	@echo "    LD    $(notdir $@)"
+	@$(CXX) $(CFLAGS) $(PKGFLAGS) $(INCLOC) $< $(LIBOBJS) $(LIBLOC) $(LNKLIBS) -o $@
+
