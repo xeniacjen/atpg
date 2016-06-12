@@ -218,20 +218,36 @@ bool Implicator::IsFaultAtPo() const {
     return false; 
 }
 
-void Implicator::GetDFrontier(GateVec& df) const {
+bool Implicator::GetDFrontier(GateVec& df) {
+    bool d_front_flag_ = false; 
+
     for (int n=0; n<cir_->tgate_; n++) { 
-        if (GetVal(n)!=X) 
-            continue; 
+        GateSet::iterator it = d_front_.find(n); 
+        if (it!=d_front_.end()) {
+            if (GetVal(n)!=X) { 
+                d_front_.erase(it); 
+                d_front_flag_ = true; 
+            }
+        } 
+        else { 
+            if (GetVal(n)!=X) 
+                continue; 
         
-        Gate *g = &cir_->gates_[n]; 
-        for (int m=0; m<g->nfi_; m++) { 
-            Value v = GetVal(g->fis_[m]); 
-            if(v==D||v==B) { 
-                df.push_back(g); 
-                break; 
+            Gate *g = &cir_->gates_[n]; 
+            for (int m=0; m<g->nfi_; m++) { 
+                Value v = GetVal(g->fis_[m]); 
+                if(v==D||v==B) { 
+                    d_front_.insert(n); 
+                    d_front_flag_ = true; 
+                    break; 
+                }
             }
         }
     }
+    for (GateSet::iterator it = d_front_.begin(); it!=d_front_.end(); ++it) 
+        df.push_back(&cir_->gates_[*it]); 
+
+    return d_front_flag_; 
 }
 
 bool Implicator::MakeDecision(Gate *g, Value v) {

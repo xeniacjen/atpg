@@ -59,7 +59,8 @@ public:
 
     void PrintGate(int gid) const; 
 
-    bool GetDFrontier(GateVec& df) const; 
+    bool GetDFrontier(GateVec& df); 
+    bool GetJFrontier(GateVec& jf); 
 
     bool IsFaultAtPo() const; 
 
@@ -83,8 +84,6 @@ private:
     std::queue<int> *events_b; // backward implication events 
     std::queue<int> *hevents_; 
 
-    bool            d_front_flag_; // true if d-frontier changed 
-    bool            j_front_flag_; // true if j-frontier changed 
     GateSet         d_front_; 
     GateSet         j_front_; 
 
@@ -113,8 +112,6 @@ inline Implicator::~Implicator() {
 } 
 
 inline void Implicator::Init() {
-    d_front_flag_ = false; 
-
     for (int i=0; i<cir_->tgate_; i++) { 
         values_[i] = X; 
         hvalues_[i] = HexValue(X); 
