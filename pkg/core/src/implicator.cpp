@@ -47,12 +47,7 @@ bool Implicator::EventDrivenSim() {
 }
 
 bool Implicator::EventDrivenSimB() { 
-    while (!events_b->empty()) {
-        Gate *g = &cir_->gates_[events_b->front()]; 
-        events_b->pop(); 
-
-        if (g->)
-    }   
+    // TODO 
 }
 
 bool Implicator::EventDrivenSimHex() {
@@ -192,11 +187,11 @@ void Implicator::PushFanoutEvent(int gid) {
 void Implicator::PushFaninEvent(int gid) {
     Gate *g = &cir_->gates_[gid]; 
     for (int n=0; n<g->nfi_; n++) 
-        PushBEvent(gid); 
+        PushBEvent(g->fis_[n]); 
 }
 
 void Implicator::PushBEvent(int gid) {
-    events_b->push(g->fis_[n]); 
+    events_b->push(gid); 
 }
 
 void Implicator::PushEventHex(int gid) {
@@ -257,8 +252,8 @@ bool Implicator::MakeDecision(Gate *g, Value v) {
         PushFanoutEvent(g->id_); 
         // PushFanoutEventHex(g->id_); 
 
-        if (g->isFanoutStem()) 
-            PushBEvent(g->id_); 
+        // if (g->isFanoutStem()) 
+        //    PushBEvent(g->id_); 
     }
     return true; 
 }

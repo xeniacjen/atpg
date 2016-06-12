@@ -25,7 +25,7 @@ Atpg::GenStatus Fan::Tpg() {
     if (!FaultActivate()) return UNTESTABLE ; 
     back_trace_flag = false; 
     while (true) {
-
+        Imply(); 
     }
 }
 

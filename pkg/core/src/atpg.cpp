@@ -163,7 +163,6 @@ bool Atpg::Backtrace() {
     return impl_->MakeDecision(g, objv); 
 }
 
-
 Gate *Atpg::FindHardestToSetFanIn(Gate *g, Value obj) const {
     Gate *ret = 0; 
     int ctr_ablility = INT_MIN; 

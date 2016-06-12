@@ -20,6 +20,7 @@
 #define _CORE_IMPL_H_ 
 
 #include <queue> 
+#include <set>
 
 #include "decision_tree.h"
 #include "pattern.h"
@@ -28,6 +29,7 @@
 namespace CoreNs {
 
 typedef std::vector<Gate *> GateVec; 
+typedef std::set<int> GateSet; 
 
 class Implicator { 
 public: 
@@ -57,7 +59,7 @@ public:
 
     void PrintGate(int gid) const; 
 
-    void GetDFrontier(GateVec& df) const; 
+    bool GetDFrontier(GateVec& df) const; 
 
     bool IsFaultAtPo() const; 
 
@@ -80,6 +82,11 @@ private:
     std::queue<int> *events_; 
     std::queue<int> *events_b; // backward implication events 
     std::queue<int> *hevents_; 
+
+    bool            d_front_flag_; // true if d-frontier changed 
+    bool            j_front_flag_; // true if j-frontier changed 
+    GateSet         d_front_; 
+    GateSet         j_front_; 
 
     DecisionTree    decision_tree_; 
     std::vector<int> e_front_list_; 
@@ -106,6 +113,8 @@ inline Implicator::~Implicator() {
 } 
 
 inline void Implicator::Init() {
+    d_front_flag_ = false; 
+
     for (int i=0; i<cir_->tgate_; i++) { 
         values_[i] = X; 
         hvalues_[i] = HexValue(X); 
