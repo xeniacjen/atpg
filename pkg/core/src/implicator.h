@@ -51,6 +51,8 @@ public:
     bool MakeDecision(Gate *g, Value v); 
     bool BackTrack(); 
 
+    bool  isPossiblyToSetVal(int gid, Value v) const; 
+    bool  isPossiblyToSetDorB(int gid) const; 
     Value GetVal(int gid) const; 
     HexValue GetHexVal(int gid) const; 
     Value Get3Val(int gid) const; 
@@ -66,6 +68,8 @@ public:
 
     void GetPiPattern(Pattern *p) const; 
     void GetPoPattern(Pattern *p) const; 
+
+    bool isUnjustified(int gid) const; 
 
 private: 
     Value           GoodEval(Gate *g) const; 
@@ -89,6 +93,8 @@ private:
 
     DecisionTree    decision_tree_; 
     std::vector<int> e_front_list_; 
+
+    bool            *is_possibly_D; 
 }; // Implicator 
 
 inline Implicator::Implicator(Circuit *cir, Fault *ftarget) {
@@ -96,6 +102,7 @@ inline Implicator::Implicator(Circuit *cir, Fault *ftarget) {
     target_fault_ = ftarget;     
 
     sim_    = new Simulator(cir_); 
+    is_possibly_D = new bool [cir_->tgate_]; 
     values_ = new Value [cir_->tgate_]; 
     hvalues_= new HexValue [cir_->tgate_];  
     events_ = new std::queue<int>();  
@@ -105,7 +112,9 @@ inline Implicator::Implicator(Circuit *cir, Fault *ftarget) {
 
 inline Implicator::~Implicator() {
     delete    sim_; 
+    delete [] is_possibly_D; 
     delete [] values_; 
+    delete [] hvalues_; 
     delete    events_; 
     delete    events_b; 
     delete    hevents_; 
@@ -120,6 +129,19 @@ inline void Implicator::Init() {
         cir_->gates_[i].fl_ = PARA_L; 
         cir_->gates_[i].fh_ = PARA_L; 
     }
+
+    std::queue<int> possibly_D_queue; 
+    possibly_D_queue.push(target_fault_->gate_); 
+
+    while (!possibly_D_queue.empty()) { 
+        int gid = possibly_D_queue.back(); 
+        possibly_D_queue.pop(); 
+        is_possibly_D[gid] = true; 
+
+        Gate *g = &cir_->gates_[gid]; 
+        for (int i=0; i<g->nfo_; i++) 
+            possibly_D_queue.push(g->fos_[i]); 
+    } 
 }
 
 inline Value Implicator::GetVal(int gid) const {
@@ -137,6 +159,10 @@ inline Value Implicator::Get3Val(int gid) const {
         return values_[gid]; 
 }
 
+inline bool Implicator::isPossiblyToSetDorB(int gid) const { 
+    return is_possibly_D[gid]; 
+} 
+
 inline bool Implicator::SetVal(int gid, Value v) { 
     if (values_[gid]!=X && values_[gid]!=v) return false; 
 
@@ -151,6 +177,11 @@ inline bool Implicator::SetVal(int gid, HexValue hv) {
     return true; 
 }
 
+inline bool Implicator::isUnjustified(int gid) const { 
+    Gate *g = &cir_->gates_[gid]; 
+    Value v = (g->id_==target_fault_->gate_)?FaultEval(g):GoodEval(g); 
+    return (v!=GetVal(gid)); 
+}
  
 inline void Implicator::GetPiPattern(Pattern *p) const {
     for (int i=0; i<cir_->npi_; i++)    

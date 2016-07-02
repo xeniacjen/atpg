@@ -220,6 +220,7 @@ bool Implicator::IsFaultAtPo() const {
 
 bool Implicator::GetDFrontier(GateVec& df) {
     bool d_front_flag_ = false; 
+    df.clear(); 
 
     for (int n=0; n<cir_->tgate_; n++) { 
         GateSet::iterator it = d_front_.find(n); 
@@ -248,6 +249,34 @@ bool Implicator::GetDFrontier(GateVec& df) {
         df.push_back(&cir_->gates_[*it]); 
 
     return d_front_flag_; 
+}
+
+bool Implicator::GetJFrontier(GateVec& jf) { 
+    bool j_front_flag_ = false; 
+    jf.clear(); 
+
+    for (int i=0; i<cir_->tgate_; i++) { 
+        GateSet::iterator it = j_front_.find(i); 
+        if (it!=j_front_.end()) { 
+            if (!isUnjustified(i)) { 
+                j_front_.erase(it); 
+                j_front_flag_ = true; 
+            }
+        } 
+        else { 
+            if (GetVal(i)==X) 
+                continue; 
+
+            if (isUnjustified(i)) { 
+                j_front_.insert(i); 
+                j_front_flag_ = true; 
+            }
+        }
+    }
+    for (GateSet::iterator it = j_front_.begin(); it!=j_front_.end(); ++it) 
+        jf.push_back(&cir_->gates_[*it]); 
+
+    return j_front_flag_; 
 }
 
 bool Implicator::MakeDecision(Gate *g, Value v) {
