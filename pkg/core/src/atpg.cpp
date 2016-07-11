@@ -103,27 +103,49 @@ bool Atpg::FaultActivate() { // TODO: TDF support
 }
 
 bool Atpg::DDrive() { 
-    GateVec dfront; 
-    impl_->GetDFrontier(dfront); 
-
-    if (dfront.size()==0) return false; 
-
-    Gate *fg = &cir_->gates_[current_fault_->gate_]; 
-    assert(impl_->GetVal(fg->id_)==D || impl_->GetVal(fg->id_)==B); 
+    GateVec dpath; 
+    d_tree_.GetPath(dpath); 
+    Value v = impl_->GetVal(current_obj_.first); 
+    Gate *gtoprop; 
+    if (CheckPath(dpath)) { 
+        if (v==D || v==B) { // D-frontier pushed forward 
+            GateVec dfront; 
+            impl_->GetDFrontier(dfront); 
     
-    Gate *gtoprop = NULL; 
-    int observ = INT_MAX; 
-    for (size_t i=0; i<dfront.size(); i++) 
-        if(dfront[i]->co_o_<observ) { 
-            gtoprop = dfront[i]; 
-            observ = dfront[i]->co_o_; 
+            if (dfront.empty()) return false;
+    
+            // TODO: sort the D-frontier 
+            gtoprop = dfront.back(); 
+            // Gate *gtoprop = NULL; 
+            // int observ = INT_MAX; 
+            // for (size_t i=0; i<dfront.size(); i++) 
+            //     if(dfront[i]->co_o_<observ) { 
+            //        gtoprop = dfront[i]; 
+            //        observ = dfront[i]->co_o_; 
+            //    }
+    
+            assert(gtoprop->isUnary()==L); 
+            d_tree_.push(dfront, 
+                impl_->GetEFrontierSize(), 
+                impl_->getDecisionTree()); 
+            impl_->ClearDecisionTree();  
+            current_obj_.first = gtoprop->id_; 
+            current_obj_.second = gtoprop->getOutputCtrlValue(); 
+            return true; 
+        } 
+        else if (v!=X) { // D-frontier compromised 
+            // int gid; 
+    
+            // DBackTrack(gid); gtoprop = &cir_->gates_[gid]; 
+            // current_obj_.first = gid; 
+            // current_obj_.second = gtoprop->getOutputCtrlValue(); 
+         
+            return false; 
         }
+        else return true; // initial objective unchanged 
+    }
 
-    assert(gtoprop->isUnary()==L); 
-    current_obj_.first = gtoprop->id_; 
-    current_obj_.second = gtoprop->getOutputCtrlValue(); 
-
-    return true; 
+    return false; // D-path justification failed 
 }
 
 bool Atpg::Backtrace() {
@@ -205,5 +227,23 @@ bool Atpg::BackTrack() {
     back_track_count++; 
     if (back_track_count>=back_track_limit) return false; 
 
-    return impl_->BackTrack(); 
+    if (!impl_->BackTrack()) 
+        return DBackTrack(); 
+
+    return true; 
 }
+
+bool Atpg::DBackTrack() { 
+    while (!d_tree_.empty()) { 
+        if (d_tree_.pop()) continue; 
+        // TODO 
+        int gid; unsigned dummy; 
+        d_tree_.top(gid, dummy); 
+        Gate* gtoprop = &cir_->gates_[gid]; 
+        current_obj_.first = gtoprop->id_; 
+        current_obj_.second = gtoprop->getOutputCtrlValue(); 
+        return true; 
+    }
+
+    return false; 
+} 

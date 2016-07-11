@@ -46,7 +46,9 @@ void AtpgMgr::generation() {
             continue; 
         }
         // if (flist.front()->state_==Fault::AB) 
-        if (flist.front()->state_==Fault::AB || flist.front()->state_==Fault::PT) 
+        if (flist.front()->state_==Fault::AB 
+          || flist.front()->state_==Fault::PT 
+          || flist.front()->state_==Fault::AU) 
             break; 
 
         if (f==flist.front()) { 
@@ -77,6 +79,7 @@ void AtpgMgr::generation() {
         }
         else if (ret==Atpg::UNTESTABLE) { 
             flist.front()->state_ = Fault::AU; 
+            flist.push_back(flist.front()); 
             flist.pop_front(); 
         }
         else { // ABORT 

@@ -34,6 +34,8 @@ public:
     bool empty() const;
     bool lastNodeMark() const;
 
+    DecisionTree &operator= (const DecisionTree &rhs); 
+
 private:
     std::vector<DecisionTreeNode> tree_;
 };
@@ -84,9 +86,16 @@ inline bool DecisionTree::empty() const {
 inline bool DecisionTree::lastNodeMark() const {
     return tree_.empty() ? false : tree_.back().mark_;
 }
-//}}}
 
-};
+inline DecisionTree &DecisionTree::operator= (const DecisionTree &rhs) { 
+    tree_ = rhs.tree_; 
+    
+    return *this; 
+}
+
+//}}}
+ 
+}; // CoreNs 
 
 #endif
 

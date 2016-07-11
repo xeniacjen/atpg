@@ -239,8 +239,10 @@ Cell	interface/src/cell.h	/^inline Cell::Cell(const char * const name) {$/;"	f	c
 CellMap	interface/src/cell.h	/^typedef std::map<NameKey, Cell *> CellMap;$/;"	t	namespace:IntfNs
 CellSet	interface/src/cell.h	/^typedef std::set<Cell *>          CellSet;$/;"	t	namespace:IntfNs
 CellVec	interface/src/cell.h	/^typedef std::vector<Cell *>       CellVec;$/;"	t	namespace:IntfNs
+CheckPath	core/src/atpg.h	/^inline bool Atpg::CheckPath(const GateVec &path) const { $/;"	f	class:CoreNs::Atpg
 Circuit	core/src/circuit.h	/^class Circuit {$/;"	c	namespace:CoreNs
 Circuit	core/src/circuit.h	/^inline Circuit::Circuit() {$/;"	f	class:CoreNs::Circuit
+ClearDecisionTree	core/src/implicator.h	/^inline void Implicator::ClearDecisionTree() { $/;"	f	class:CoreNs::Implicator
 Cmd	common/src/cmd.h	/^class Cmd {$/;"	c	namespace:CommonNs
 Cmd	common/src/cmd.h	/^inline Cmd::Cmd(const std::string &name) {$/;"	f	class:CommonNs::Cmd
 CmdMap	common/src/cmd.h	/^typedef std::map<std::string, Cmd *>                  CmdMap;$/;"	t	namespace:CommonNs
@@ -258,6 +260,7 @@ CommonNs	common/src/vt100.h	/^namespace CommonNs {$/;"	n
 CoreNs	core/src/atpg.h	/^namespace CoreNs { $/;"	n
 CoreNs	core/src/atpg_mgr.h	/^namespace CoreNs {$/;"	n
 CoreNs	core/src/circuit.h	/^namespace CoreNs {$/;"	n
+CoreNs	core/src/d_decision_tree.h	/^namespace CoreNs { $/;"	n
 CoreNs	core/src/decision_tree.h	/^namespace CoreNs {$/;"	n
 CoreNs	core/src/fan.h	/^namespace CoreNs { $/;"	n
 CoreNs	core/src/fault.h	/^namespace CoreNs {$/;"	n
@@ -272,6 +275,11 @@ D	core/src/logic.h	/^const   Value     D         = 3;       \/\/ D (good 1 \/ fa
 DATA_SIZE	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	969;"	d	file:
 DATE	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     DATE = 261,$/;"	e	enum:yytokentype	file:
 DATE	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     DATE = 261,$/;"	e	enum:yytokentype
+DBackTrack	core/src/atpg.cpp	/^bool Atpg::DBackTrack() { $/;"	f	class:Atpg
+DDNode	core/src/d_decision_tree.h	/^inline DDNode::DDNode(const GateVec &df, $/;"	f	class:CoreNs::DDNode
+DDNode	core/src/d_decision_tree.h	/^struct DDNode { $/;"	s	namespace:CoreNs
+DDTree	core/src/d_decision_tree.h	/^        DDTree() { }; $/;"	f	class:CoreNs::DDTree
+DDTree	core/src/d_decision_tree.h	/^class DDTree {$/;"	c	namespace:CoreNs
 DDrive	core/src/atpg.cpp	/^bool Atpg::DDrive() { $/;"	f	class:Atpg
 DDrive	core/src/fan.cpp	/^bool Fan::DDrive() { $/;"	f	class:Fan
 DELAY	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     DELAY = 273,$/;"	e	enum:yytokentype	file:
@@ -402,6 +410,9 @@ FanNs	atpg/src/atpg_cmd.h	/^namespace FanNs {$/;"	n
 FanNs	atpg/src/fan_mgr.h	/^namespace FanNs {$/;"	n
 FanNs	atpg/src/misc_cmd.h	/^namespace FanNs {$/;"	n
 FanNs	atpg/src/setup_cmd.h	/^namespace FanNs {$/;"	n
+FanObjective	core/src/fan.h	/^    FanObjective() { $/;"	f	struct:CoreNs::FanObjective
+FanObjective	core/src/fan.h	/^struct FanObjective { $/;"	s	namespace:CoreNs
+FanObjectiveMap	core/src/fan.h	/^typedef std::map<int, FanObjective> FanObjectiveMap; $/;"	t	namespace:CoreNs
 Fault	core/src/fault.h	/^class Fault {$/;"	c	namespace:CoreNs
 Fault	core/src/fault.h	/^inline Fault::Fault() {$/;"	f	class:CoreNs::Fault
 Fault	core/src/fault.h	/^inline Fault::Fault(int gate, Type type, int line, int aggr) {$/;"	f	class:CoreNs::Fault
@@ -429,8 +440,10 @@ GenInitJObjectives	core/src/fan.cpp	/^bool Fan::GenInitJObjectives() { $/;"	f	cl
 GenStatus	core/src/atpg.h	/^    enum GenStatus             { TEST_FOUND = 0, UNTESTABLE, ABORT }; $/;"	g	class:CoreNs::Atpg
 Get3Val	core/src/implicator.h	/^inline Value Implicator::Get3Val(int gid) const {$/;"	f	class:CoreNs::Implicator
 GetDFrontier	core/src/implicator.cpp	/^bool Implicator::GetDFrontier(GateVec& df) {$/;"	f	class:Implicator
+GetEFrontierSize	core/src/implicator.h	/^inline size_t Implicator::GetEFrontierSize() const { $/;"	f	class:CoreNs::Implicator
 GetHexVal	core/src/implicator.h	/^inline HexValue Implicator::GetHexVal(int gid) const {$/;"	f	class:CoreNs::Implicator
 GetJFrontier	core/src/implicator.cpp	/^bool Implicator::GetJFrontier(GateVec& jf) { $/;"	f	class:Implicator
+GetPath	core/src/d_decision_tree.h	/^inline void DDTree::GetPath(GateVec &path) const { $/;"	f	class:CoreNs::DDTree
 GetPiPattern	core/src/atpg.h	/^inline void Atpg::GetPiPattern(Pattern *p) { $/;"	f	class:CoreNs::Atpg
 GetPiPattern	core/src/implicator.h	/^inline void Implicator::GetPiPattern(Pattern *p) const {$/;"	f	class:CoreNs::Implicator
 GetPoPattern	core/src/implicator.h	/^inline void Implicator::GetPoPattern(Pattern *p) const  {}$/;"	f	class:CoreNs::Implicator
@@ -568,7 +581,7 @@ MODULE	interface/lib/dbg/lex_n_yacc/vlog_file.tab.hpp	/^     MODULE = 258,$/;"	e
 MUX	core/src/gate.h	/^                     MUX,$/;"	e	enum:CoreNs::Gate::Type
 MUX	interface/src/primitive.h	/^                MUX,   DFF,   DLAT,   DELAY,  INVF,   WIRE, PULL,$/;"	e	enum:IntfNs::Pmt::Type
 MakeDecision	core/src/implicator.cpp	/^bool Implicator::MakeDecision(Gate *g, Value v) {$/;"	f	class:Implicator
-MapObjective	core/src/fan.cpp	/^bool Fan::MapObjective() { $/;"	f	class:Fan
+MapObjectives	core/src/fan.cpp	/^bool Fan::MapObjectives() { $/;"	f	class:Fan
 MdtFile	interface/src/mdt_file.h	/^class MdtFile {$/;"	c	namespace:IntfNs
 MdtFile	interface/src/mdt_file.h	/^inline MdtFile::MdtFile() {$/;"	f	class:IntfNs::MdtFile
 MdtLibBuilder	interface/src/techlib_builder.h	/^class MdtLibBuilder : public MdtFile {$/;"	c	namespace:IntfNs
@@ -1027,7 +1040,7 @@ U_XNOR	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     U_XNOR = 324,$/;"	e	
 U_XNOR	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     U_XNOR = 324,$/;"	e	enum:yytokentype
 U_XNOR_ALT	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     U_XNOR_ALT = 325,$/;"	e	enum:yytokentype	file:
 U_XNOR_ALT	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     U_XNOR_ALT = 325,$/;"	e	enum:yytokentype
-UniquePathSensitize	core/src/fan.cpp	/^bool Fan::UniquePathSensitize(Objective obj) { $/;"	f	class:Fan
+UniquePathSensitize	core/src/fan.cpp	/^bool Fan::UniquePathSensitize(Gate *g) { $/;"	f	class:Fan
 VALUE	interface/lib/dbg/lex_n_yacc/lht_pat_file.tab.cpp	/^     VALUE = 259,$/;"	e	enum:yytokentype	file:
 VALUE	interface/lib/dbg/lex_n_yacc/lht_pat_file.tab.hpp	/^     VALUE = 259,$/;"	e	enum:yytokentype
 VENDOR	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     VENDOR = 262,$/;"	e	enum:yytokentype	file:
@@ -1960,6 +1973,7 @@ cir_	core/src/pattern_rw.h	/^            Circuit *cir_;$/;"	m	class:CoreNs::Proc
 cir_	core/src/pattern_rw.h	/^    Circuit         *cir_;$/;"	m	class:CoreNs::PatternReader
 cir_	core/src/pattern_rw.h	/^    Circuit     *cir_;$/;"	m	class:CoreNs::PatternWriter
 cir_	core/src/simulator.h	/^    Circuit         *cir_;$/;"	m	class:CoreNs::Simulator
+clear	core/src/d_decision_tree.h	/^inline void DDTree::clear() { $/;"	f	class:CoreNs::DDTree
 clear	core/src/decision_tree.h	/^inline void DecisionTree::clear() {$/;"	f	class:CoreNs::DecisionTree
 clearObjList	core/src/fan.h	/^inline void Fan::clearObjList() { $/;"	f	class:CoreNs::Fan
 clearPorts	interface/src/cell.h	/^inline void Cell::clearPorts() {$/;"	f	class:IntfNs::Cell
@@ -1995,11 +2009,12 @@ csrPos_	common/src/cmd.h	/^    size_t                   csrPos_;    \/\/ cursor 
 curCell_	interface/src/techlib_builder.h	/^    Cell    *curCell_;$/;"	m	class:IntfNs::MdtLibBuilder
 curModule_	interface/src/netlist_builder.h	/^    Cell    *curModule_;$/;"	m	class:IntfNs::VlogNlBuilder
 curPat_	core/src/pattern_rw.h	/^    int             curPat_;$/;"	m	class:CoreNs::PatternReader
-curr_objs_	core/src/fan.h	/^    std::vector<Objective> curr_objs_; $/;"	m	class:CoreNs::Fan
+curr_objs_	core/src/fan.h	/^    std::vector<FanObjective> curr_objs_; $/;"	m	class:CoreNs::Fan
 current_	core/src/fault.h	/^    FaultList current_;$/;"	m	class:CoreNs::FaultListExtract
 current_fault_	core/src/atpg.h	/^    Fault       *current_fault_;$/;"	m	class:CoreNs::Atpg
 current_obj_	core/src/atpg.h	/^    Objective   current_obj_; $/;"	m	class:CoreNs::Atpg
 d_front_	core/src/implicator.h	/^    GateSet         d_front_; $/;"	m	class:CoreNs::Implicator
+d_tree_	core/src/atpg.h	/^    DDTree      d_tree_; $/;"	m	class:CoreNs::Atpg
 data_	core/src/pattern.h	/^    Value *data_;$/;"	m	class:CoreNs::Vertex
 decision_tree_	core/src/implicator.h	/^    DecisionTree    decision_tree_; $/;"	m	class:CoreNs::Implicator
 depthFromPo_	core/src/gate.h	/^    int       depthFromPo_; \/\/ depth from po, this is for fault effect propagation$/;"	m	class:CoreNs::Gate
@@ -2009,9 +2024,12 @@ des_	common/src/get_opt.h	/^    std::string des_;$/;"	m	struct:CommonNs::Opt
 detGateType	core/src/circuit.cpp	/^void Circuit::detGateType(const int &id, const Cell * const c,$/;"	f	class:Circuit
 detVerilogPmtType	core/src/circuit.cpp	/^void Circuit::detVerilogPmtType(const int &id, const IntfNs::Cell * const c) {$/;"	f	class:Circuit
 det_	core/src/fault.h	/^    int   det_;   \/\/ number of detection$/;"	m	class:CoreNs::Fault
+dfront_	core/src/d_decision_tree.h	/^    GateVec      dfront_; $/;"	m	struct:CoreNs::DDNode
 dfront_	core/src/fan.h	/^    GateVec dfront_; $/;"	m	class:CoreNs::Fan
 dynamicCompression_	core/src/pattern.h	/^	State	   dynamicCompression_; \/\/ Flag; ON = need dynamic compression$/;"	m	class:CoreNs::PatternProcessor
 e_front_list_	core/src/implicator.h	/^    std::vector<int> e_front_list_; $/;"	m	class:CoreNs::Implicator
+empty	core/src/d_decision_tree.h	/^inline bool DDNode::empty() const { $/;"	f	class:CoreNs::DDNode
+empty	core/src/d_decision_tree.h	/^inline bool DDTree::empty() const { $/;"	f	class:CoreNs::DDTree
 empty	core/src/decision_tree.h	/^inline bool DecisionTree::empty() const {$/;"	f	class:CoreNs::DecisionTree
 eqvs_	interface/src/cell.h	/^    NetVec  eqvs_;$/;"	m	class:IntfNs::Net
 errorStr_	common/src/cmd.h	/^    std::string              errorStr_; \/\/ error related string$/;"	m	class:CommonNs::CmdMgr
@@ -2094,7 +2112,7 @@ fanMgr_	atpg/src/setup_cmd.h	/^    FanMgr *fanMgr_;$/;"	m	class:FanNs::SetFaultT
 fanMgr_	atpg/src/setup_cmd.h	/^    FanMgr *fanMgr_;$/;"	m	class:FanNs::SetPatternTypeCmd
 fanMgr_	atpg/src/setup_cmd.h	/^    FanMgr *fanMgr_;$/;"	m	class:FanNs::SetStaticCompressionCmd
 fanMgr_	atpg/src/setup_cmd.h	/^    FanMgr *fanMgr_;$/;"	m	class:FanNs::SetXFillCmd
-fanout_objs_	core/src/fan.h	/^    std::vector<Objective> fanout_objs_; $/;"	m	class:CoreNs::Fan
+fanout_objs_	core/src/fan.h	/^    FanObjectiveMap fanout_objs_; $/;"	m	class:CoreNs::Fan
 faultEval	core/src/simulator.h	/^inline void Simulator::faultEval(const int &i) {$/;"	f	class:CoreNs::Simulator
 faultInjectH_	core/src/simulator.h	/^    ParaValue       (*faultInjectH_)[5];$/;"	m	class:CoreNs::Simulator
 faultInjectL_	core/src/simulator.h	/^    ParaValue       (*faultInjectL_)[5];  $/;"	m	class:CoreNs::Simulator
@@ -2185,6 +2203,7 @@ getCell	interface/src/techlib.h	/^inline Cell *Techlib::getCell(const char * con
 getCell	interface/src/techlib.h	/^inline Cell *Techlib::getCell(const size_t &i) const {$/;"	f	class:IntfNs::Techlib
 getCells	interface/src/cell.h	/^inline CellVec *Cell::getCells() {$/;"	f	class:IntfNs::Cell
 getCmd	common/src/cmd.cpp	/^Cmd *CmdMgr::getCmd(const string &name) const {$/;"	f	class:CmdMgr
+getDecisionTree	core/src/implicator.h	/^inline const DecisionTree &Implicator::getDecisionTree() const { $/;"	f	class:CoreNs::Implicator
 getDirCts	common/src/cmd.cpp	/^vector<string> CmdMgr::getDirCts(const string &dirStr) const {$/;"	f	class:CmdMgr
 getEqv	interface/src/cell.h	/^inline Net *Net::getEqv(const size_t &i) const {$/;"	f	class:IntfNs::Net
 getEqvNets	interface/src/cell.cpp	/^NetSet Cell::getEqvNets(const char *const name) const {$/;"	f	class:Cell
@@ -2204,6 +2223,7 @@ getFlag	common/src/get_opt.h	/^inline std::string OptMgr::getFlag(const size_t &
 getFlagVar	common/src/get_opt.h	/^inline std::string OptMgr::getFlagVar(const std::string &f) const {$/;"	f	class:CommonNs::OptMgr
 getInputCtrlValue	core/src/gate.h	/^inline Value Gate::getInputCtrlValue() const {$/;"	f	class:CoreNs::Gate
 getInputNonCtrlValue	core/src/gate.h	/^inline Value Gate::getInputNonCtrlValue() const {$/;"	f	class:CoreNs::Gate
+getJTree	core/src/d_decision_tree.h	/^inline void DDNode::getJTree(DecisionTree &tree) const { $/;"	f	class:CoreNs::DDNode
 getModule	interface/src/netlist.h	/^inline Cell *Netlist::getModule(const char * const name) const {$/;"	f	class:IntfNs::Netlist
 getModule	interface/src/netlist.h	/^inline Cell *Netlist::getModule(const size_t &i) const {$/;"	f	class:IntfNs::Netlist
 getNCell	interface/src/cell.h	/^inline size_t Cell::getNCell() const {$/;"	f	class:IntfNs::Cell
@@ -2244,6 +2264,7 @@ getTotalUsage	common/src/tm_usage.cpp	/^bool TmUsage::getTotalUsage(TmStat &st) 
 getTotalUsage	common/src/tm_usage/tm_usage.cpp	/^bool TmUsage::getTotalUsage(TmStat &st) const {$/;"	f	class:TmUsage
 getVars	common/src/cmd.h	/^inline VarMap CmdMgr::getVars() const {$/;"	f	class:CommonNs::CmdMgr
 gh_	core/src/gate.h	/^    ParaValue gh_;    \/\/ good high$/;"	m	class:CoreNs::Gate
+gid	core/src/fan.h	/^    int gid; $/;"	m	struct:CoreNs::FanObjective
 gid_	core/src/decision_tree.h	/^    int      gid_;   \/\/  the gate ID of the decision$/;"	m	struct:CoreNs::DecisionTreeNode
 gl_	core/src/gate.h	/^    ParaValue gl_;    \/\/ good low$/;"	m	class:CoreNs::Gate
 goodEval	core/src/simulator.h	/^inline void Simulator::goodEval(const int &i) {$/;"	f	class:CoreNs::Simulator
@@ -2288,11 +2309,15 @@ isInverse	core/src/gate.h	/^inline Value Gate::isInverse() const {$/;"	f	class:C
 isLegalVar	common/src/cmd.h	/^inline bool CmdMgr::isLegalVar(const std::string &var) const {$/;"	f	class:CommonNs::CmdMgr
 isLegalVarChar	common/src/cmd.h	/^inline bool CmdMgr::isLegalVarChar(const char &ch) const {$/;"	f	class:CommonNs::CmdMgr
 isPmt_	interface/src/cell.h	/^            bool    isPmt_;$/;"	m	class:IntfNs::Cell
+isPossiblyToSetDorB	core/src/implicator.h	/^inline bool Implicator::isPossiblyToSetDorB(int gid) const { $/;"	f	class:CoreNs::Implicator
 isSubset	core/src/logic-hex.h	/^inline bool HexValue::isSubset(const HexValue& hv) const {$/;"	f	class:CoreNs::HexValue
 isTestPossible	core/src/atpg.cpp	/^bool Atpg::isTestPossible() { $/;"	f	class:Atpg
 isUnary	core/src/gate.h	/^inline Value Gate::isUnary() const {$/;"	f	class:CoreNs::Gate
+isUnjustified	core/src/implicator.h	/^inline bool Implicator::isUnjustified(int gid) const { $/;"	f	class:CoreNs::Implicator
+is_possibly_D	core/src/implicator.h	/^    bool            *is_possibly_D; $/;"	m	class:CoreNs::Implicator
 isaTest	core/src/atpg.cpp	/^bool Atpg::isaTest() { $/;"	f	class:Atpg
 j_front_	core/src/implicator.h	/^    GateSet         j_front_; $/;"	m	class:CoreNs::Implicator
+j_tree_	core/src/d_decision_tree.h	/^    DecisionTree j_tree_; $/;"	m	struct:CoreNs::DDNode
 jfront_	core/src/fan.h	/^    GateVec jfront_; $/;"	m	class:CoreNs::Fan
 keepFirstArg_	common/src/get_opt.h	/^    bool                         keepFirstArg_;$/;"	m	class:CommonNs::OptMgr
 lastNodeMark	core/src/decision_tree.h	/^inline bool DecisionTree::lastNodeMark() const {$/;"	f	class:CoreNs::DecisionTree
@@ -2435,6 +2460,8 @@ modules_	interface/src/netlist.h	/^    CellVec modules_;$/;"	m	class:IntfNs::Net
 n	interface/src/sdf_file.h	/^    int           n;$/;"	m	struct:IntfNs::SdfDelayValueList
 n	interface/src/sdf_file.h	/^    int      n;$/;"	m	struct:IntfNs::SdfDelayValue
 n	interface/src/sdf_file.h	/^    int   n;$/;"	m	struct:IntfNs::SdfValue
+n0	core/src/fan.h	/^    int n0; $/;"	m	struct:CoreNs::FanObjective
+n1	core/src/fan.h	/^    int n1; $/;"	m	struct:CoreNs::FanObjective
 nHeadLine_	core/src/circuit.h	/^    int             nHeadLine_;  \/\/ number of headlines$/;"	m	class:CoreNs::Circuit
 name	interface/src/mdt_file.h	/^    char     name[NAME_LEN];$/;"	m	struct:IntfNs::MdtNames
 name	interface/src/pat_file.h	/^    char     name[NAME_LEN];$/;"	m	struct:IntfNs::PatNames
@@ -2479,6 +2506,7 @@ nrecover_	core/src/simulator.h	/^    int             nrecover_; \/\/ number of r
 nsi_	core/src/pattern.h	/^    int        nsi_;$/;"	m	class:CoreNs::PatternProcessor
 operator !=	core/src/logic-hex.h	/^inline bool operator!=(const HexValue& lhs, const HexValue& rhs) {$/;"	f	namespace:CoreNs
 operator <	interface/src/global.h	/^inline bool NameKey::operator<(const NameKey &key) const {$/;"	f	class:IntfNs::NameKey
+operator =	core/src/decision_tree.h	/^inline DecisionTree &DecisionTree::operator= (const DecisionTree &rhs) { $/;"	f	class:CoreNs::DecisionTree
 operator =	core/src/logic-hex.h	/^inline HexValue& HexValue::operator=(HexValue hv) {$/;"	f	class:CoreNs::HexValue
 operator ==	core/src/logic-hex.h	/^inline bool operator==(const HexValue& lhs, const HexValue& rhs) {$/;"	f	namespace:CoreNs
 optMgr_	common/src/cmd.h	/^            OptMgr      optMgr_;$/;"	m	class:CommonNs::Cmd
@@ -2552,6 +2580,8 @@ pmtid_	core/src/gate.h	/^    int       pmtid_; \/\/ original primitive id in the
 po1_	core/src/pattern.h	/^    Value *po1_;$/;"	m	class:CoreNs::Pattern
 po2_	core/src/pattern.h	/^    Value *po2_;$/;"	m	class:CoreNs::Pattern
 poOrder_	core/src/pattern.h	/^    int        *poOrder_;$/;"	m	class:CoreNs::PatternProcessor
+pop	core/src/d_decision_tree.h	/^inline bool DDTree::pop() { $/;"	f	class:CoreNs::DDTree
+pop	core/src/d_decision_tree.h	/^inline void DDNode::pop() { $/;"	f	class:CoreNs::DDNode
 port	interface/src/mdt_file.h	/^    char         port[NAME_LEN];$/;"	m	struct:IntfNs::MdtPortToNet
 port	interface/src/sdf_file.h	/^    char        port[NAME_LEN];$/;"	m	struct:IntfNs::SdfPortSpec
 port	interface/src/vlog_file.h	/^    char          port[NAME_LEN];$/;"	m	struct:IntfNs::VlogPortToNet
@@ -2583,6 +2613,7 @@ printWelcome	atpg/src/main.cpp	/^void printWelcome() {$/;"	f
 processed_	core/src/simulator.h	/^    bool            *processed_; \/\/ array of processed flags.  TRUE means this gate is processed$/;"	m	class:CoreNs::Simulator
 prompt_	common/src/cmd.h	/^    std::string              prompt_;   \/\/ command line prompt$/;"	m	class:CommonNs::CmdMgr
 pspec	interface/src/sdf_file.h	/^    SdfPortSpec       pspec;$/;"	m	struct:IntfNs::SdfDelayDef
+push	core/src/d_decision_tree.h	/^inline void DDTree::push(const GateVec &df, $/;"	f	class:CoreNs::DDTree
 pushSideInputObj	core/src/fan.h	/^inline void Fan::pushSideInputObj(Gate* g) { $/;"	f	class:CoreNs::Fan
 put	core/src/decision_tree.h	/^inline void DecisionTree::put(const int &gid, const unsigned &startPoint) {$/;"	f	class:CoreNs::DecisionTree
 rTime	common/src/tm_usage.h	/^    long rTime;  \/\/ in micro seconds$/;"	m	struct:CommonNs::TmStat
@@ -2660,6 +2691,7 @@ sdf_filewrap	interface/lib/dbg/lex_n_yacc/sdf_file.yy.cpp	355;"	d	file:
 setBitValue	core/src/logic.h	/^inline void setBitValue(ParaValue &pv, const size_t &i, const Value &v) {$/;"	f	namespace:CoreNs
 setColor	common/src/cmd.h	/^inline void CmdMgr::setColor(const Color &color) {$/;"	f	class:CommonNs::CmdMgr
 setComment	common/src/cmd.h	/^inline void CmdMgr::setComment(const char &ch) {$/;"	f	class:CommonNs::CmdMgr
+setDecisionTree	core/src/implicator.h	/^inline void Implicator::setDecisionTree(const DecisionTree &tree) { $/;"	f	class:CoreNs::Implicator
 setDes	common/src/get_opt.h	/^inline void OptMgr::setDes(const std::string &des) {$/;"	f	class:CommonNs::OptMgr
 setExit	common/src/cmd.h	/^inline void CmdMgr::setExit(const bool &exit) {$/;"	f	class:CommonNs::CmdMgr
 setInoutNets	interface/src/mdt_file.cpp	/^void MdtFile::setInoutNets(MdtNames * const nets) {$/;"	f	class:MdtFile
@@ -2717,6 +2749,7 @@ si_	core/src/pattern.h	/^    Value *si_;$/;"	m	class:CoreNs::Pattern
 sim_	core/src/atpg_mgr.h	/^    Simulator           *sim_;$/;"	m	class:CoreNs::AtpgMgr
 sim_	core/src/implicator.h	/^    Simulator       *sim_;  $/;"	m	class:CoreNs::Implicator
 splitString	common/src/get_opt.cpp	/^vector<string> OptMgr::splitString(const string &input,$/;"	f	class:OptMgr
+startPoint_	core/src/d_decision_tree.h	/^    unsigned     startPoint_; $/;"	m	struct:CoreNs::DDNode
 startPoint_	core/src/decision_tree.h	/^    unsigned startPoint_; \/\/ starting point in backtrackList of gid_ ;$/;"	m	struct:CoreNs::DecisionTreeNode
 state_	core/src/fault.h	/^    State state_; \/\/ fault state$/;"	m	class:CoreNs::Fault
 staticCompression_	core/src/pattern.h	/^	State	   staticCompression_; \/\/ Flag; ON = need static compression$/;"	m	class:CoreNs::PatternProcessor
@@ -2733,6 +2766,8 @@ tfConnectType	core/src/circuit.h	/^    enum            tfConnectType { CAPTURE =
 tgate_	core/src/circuit.h	/^    int             tgate_;       \/\/ number of total gates$/;"	m	class:CoreNs::Circuit
 tlvl_	core/src/circuit.h	/^    int             tlvl_;        \/\/ total level$/;"	m	class:CoreNs::Circuit
 tmusg	atpg/src/fan_mgr.h	/^    CommonNs::TmUsage   tmusg;$/;"	m	class:FanNs::FanMgr
+top	core/src/d_decision_tree.h	/^inline Gate *DDNode::top() const { $/;"	f	class:CoreNs::DDNode
+top	core/src/d_decision_tree.h	/^inline void DDTree::top(int &gid, unsigned& startPoint) const { $/;"	f	class:CoreNs::DDTree
 top_	interface/src/cell.h	/^            Cell    *top_;$/;"	m	class:IntfNs::Cell
 top_	interface/src/cell.h	/^    Cell   *top_;$/;"	m	class:IntfNs::Net
 top_	interface/src/cell.h	/^    Cell *top_;$/;"	m	class:IntfNs::Port
@@ -2740,6 +2775,7 @@ top_	interface/src/netlist.h	/^    Cell    *top_;$/;"	m	class:IntfNs::Netlist
 totalStart	common/src/tm_usage.cpp	/^bool TmUsage::totalStart() {$/;"	f	class:TmUsage
 totalStart	common/src/tm_usage/tm_usage.cpp	/^bool TmUsage::totalStart() {$/;"	f	class:TmUsage
 tree_	core/src/decision_tree.h	/^    std::vector<DecisionTreeNode> tree_;$/;"	m	class:CoreNs::DecisionTree
+trees_	core/src/d_decision_tree.h	/^    std::vector<DDNode*> trees_; $/;"	m	class:CoreNs::DDTree
 type	interface/src/sdf_file.h	/^    EdgeType    type;$/;"	m	struct:IntfNs::SdfPortSpec
 type	interface/src/sdf_file.h	/^    Type              type;$/;"	m	struct:IntfNs::SdfDelayDef
 typeName_	interface/src/cell.h	/^            char    typeName_[NAME_LEN];$/;"	m	class:IntfNs::Cell
@@ -3536,6 +3572,7 @@ yywrap	interface/lib/dbg/lex_n_yacc/vlog_file.yy.cpp	23;"	d	file:
 ~Circuit	core/src/circuit.h	/^inline Circuit::~Circuit() {$/;"	f	class:CoreNs::Circuit
 ~Cmd	common/src/cmd.h	/^inline Cmd::~Cmd() {}$/;"	f	class:CommonNs::Cmd
 ~CmdMgr	common/src/cmd.h	/^inline CmdMgr::~CmdMgr() {}$/;"	f	class:CommonNs::CmdMgr
+~DDTree	core/src/d_decision_tree.h	/^inline DDTree::~DDTree() { $/;"	f	class:CoreNs::DDTree
 ~DecisionTree	core/src/decision_tree.h	/^inline DecisionTree::~DecisionTree() {}$/;"	f	class:CoreNs::DecisionTree
 ~FanMgr	atpg/src/fan_mgr.h	/^    ~FanMgr() {}$/;"	f	class:FanNs::FanMgr
 ~Fault	core/src/fault.h	/^inline Fault::~Fault() {}$/;"	f	class:CoreNs::Fault

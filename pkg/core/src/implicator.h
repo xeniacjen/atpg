@@ -71,6 +71,11 @@ public:
 
     bool isUnjustified(int gid) const; 
 
+    size_t GetEFrontierSize() const; 
+    void ClearDecisionTree();    
+    const DecisionTree &getDecisionTree() const; 
+    void setDecisionTree(const DecisionTree &tree); 
+
 private: 
     Value           GoodEval(Gate *g) const; 
     Value           FaultEval(Gate* g) const; 
@@ -218,6 +223,22 @@ inline void Implicator::PrintGate(int gid) const {
     cout << endl << endl;
 } 
 
+inline size_t Implicator::GetEFrontierSize() const { 
+    return e_front_list_.size(); 
+}
+
+inline void Implicator::ClearDecisionTree() { 
+   decision_tree_.clear();  
+}
+
+inline const DecisionTree &Implicator::getDecisionTree() const { 
+    return decision_tree_; 
+}
+ 
+inline void Implicator::setDecisionTree(const DecisionTree &tree) { 
+    decision_tree_ = tree; 
+} 
+ 
 }; // CoreNs
 
 #endif // _CORE_IMPL_H_

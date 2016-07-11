@@ -22,6 +22,7 @@
 #define _MAX_BACK_TRACK_LIMIT_  64
 
 #include "implicator.h" 
+#include "d_decision_tree.h"
 
 namespace CoreNs { 
 
@@ -48,6 +49,9 @@ protected:
     virtual bool DDrive(); 
     virtual bool Backtrace(); 
 
+    bool DBackTrack(); 
+    bool CheckPath(const GateVec &path) const;  
+
     void init(); 
     bool Imply(); 
     bool BackTrack(); 
@@ -61,6 +65,8 @@ protected:
 
     unsigned    back_track_count; 
     unsigned    back_track_limit; 
+
+    DDTree      d_tree_; 
 }; //Atpg 
 
 inline Atpg::Atpg(Circuit *cir, Fault *f) { 
@@ -78,6 +84,24 @@ inline Atpg::~Atpg() {
 inline void Atpg::GetPiPattern(Pattern *p) { 
     impl_->GetPiPattern(p);    
 }
+
+
+inline bool Atpg::CheckPath(const GateVec &path) const { 
+    if (path.empty()) return true; 
+
+    GateVec p = path; 
+
+    p.pop_back(); // pass the currently justifying gate 
+    while (!p.empty()) { 
+        Value v = impl_->GetVal(p.back()->id_); 
+        if (v!=D || v!=B) return false; 
+
+        p.pop_back(); 
+    } 
+    
+    return true; 
+}
+  
 }; //CoreNs 
 
 #endif //_CORE_ATPG_H_

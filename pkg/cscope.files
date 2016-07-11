@@ -25,6 +25,7 @@
 ./core/src/decision_tree.h
 ./core/src/pattern_rw.cpp
 ./core/src/circuit.cpp
+./core/src/d_decision_tree.h
 ./core/src/fault.h
 ./core/src/logic-hex.h
 ./core/src/pattern_rw.h
