@@ -36,8 +36,9 @@ bool Implicator::EventDrivenSim() {
             if (!SetVal(g->id_, v)) { 
                 if (g->id_==target_fault_->gate_)
                     values_[g->id_] = v; 
-                else 
+                else { 
                     assert(0); 
+                }
             }
             e_front_list_.push_back(g->id_); 
             PushFanoutEvent(g->id_); 

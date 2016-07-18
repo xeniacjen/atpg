@@ -48,8 +48,8 @@ class DDTree {
     void push(const GateVec &df, 
            const unsigned &startPoint, 
            const DecisionTree &tree); 
-    bool pop(); 
-    void top(int &gid, unsigned &startPoint) const; 
+    bool pop(DecisionTree &tree); 
+    unsigned top(int &gid) const; 
     bool empty() const;  
 
     void GetPath(GateVec &path) const; // retuen path by reference  
@@ -100,7 +100,8 @@ inline void DDTree::push(const GateVec &df,
     trees_.push_back(n); 
 }
 
-inline bool DDTree::pop() { 
+inline bool DDTree::pop(DecisionTree &tree) { 
+    trees_.back()->getJTree(tree); 
     trees_.back()->pop(); 
 
     if (trees_.back()->empty()) { 
@@ -111,9 +112,10 @@ inline bool DDTree::pop() {
     return false; 
 } 
 
-inline void DDTree::top(int &gid, unsigned& startPoint) const { 
+inline unsigned DDTree::top(int &gid) const { 
     gid = trees_.back()->top()->id_; 
-    startPoint = trees_.back()->startPoint_; 
+    
+    return trees_.back()->startPoint_; 
 }
 
 inline bool DDTree::empty() const { 

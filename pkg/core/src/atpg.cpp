@@ -31,7 +31,7 @@ Atpg::GenStatus Atpg::Tpg() {
             Backtrace(); // Make a decision 
         } 
         else { 
-            if(!BackTrack()) 
+            if(!DBackTrack()) 
                 return (back_track_count>=back_track_limit)?ABORT:UNTESTABLE; 
         }
         Imply(); 
@@ -224,22 +224,31 @@ Gate *Atpg::FindEasiestToSetFanIn(Gate *g, Value obj) const {
 } 
 
 bool Atpg::BackTrack() { 
-    back_track_count++; 
-    if (back_track_count>=back_track_limit) return false; 
-
-    if (!impl_->BackTrack()) 
-        return DBackTrack(); 
-
-    return true; 
+    return impl_->BackTrack(); 
 }
 
 bool Atpg::DBackTrack() { 
+    back_track_count++; 
+    if (back_track_count>=back_track_limit) return false; 
+
+    int gid; 
+    Gate* gtoprop; 
+    DecisionTree tree; 
     while (!d_tree_.empty()) { 
-        if (d_tree_.pop()) continue; 
-        // TODO 
-        int gid; unsigned dummy; 
-        d_tree_.top(gid, dummy); 
-        Gate* gtoprop = &cir_->gates_[gid]; 
+        if (BackTrack()) return true; 
+        if (d_tree_.pop(tree)) { 
+            // TODO: recover the decision tree  
+            if(d_tree_.empty()) return false; 
+            d_tree_.top(gid); 
+            impl_->setDecisionTree(tree); 
+            gtoprop = &cir_->gates_[gid]; 
+            current_obj_.first = gtoprop->id_; 
+            current_obj_.second = gtoprop->getOutputCtrlValue(); 
+            
+            continue; 
+        } 
+        d_tree_.top(gid); 
+        gtoprop = &cir_->gates_[gid]; 
         current_obj_.first = gtoprop->id_; 
         current_obj_.second = gtoprop->getOutputCtrlValue(); 
         return true; 

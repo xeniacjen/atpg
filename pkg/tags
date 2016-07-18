@@ -2767,7 +2767,7 @@ tgate_	core/src/circuit.h	/^    int             tgate_;       \/\/ number of tot
 tlvl_	core/src/circuit.h	/^    int             tlvl_;        \/\/ total level$/;"	m	class:CoreNs::Circuit
 tmusg	atpg/src/fan_mgr.h	/^    CommonNs::TmUsage   tmusg;$/;"	m	class:FanNs::FanMgr
 top	core/src/d_decision_tree.h	/^inline Gate *DDNode::top() const { $/;"	f	class:CoreNs::DDNode
-top	core/src/d_decision_tree.h	/^inline void DDTree::top(int &gid, unsigned& startPoint) const { $/;"	f	class:CoreNs::DDTree
+top	core/src/d_decision_tree.h	/^inline unsigned DDTree::top(int &gid, DecisionTree &tree) const { $/;"	f	class:CoreNs::DDTree
 top_	interface/src/cell.h	/^            Cell    *top_;$/;"	m	class:IntfNs::Cell
 top_	interface/src/cell.h	/^    Cell   *top_;$/;"	m	class:IntfNs::Net
 top_	interface/src/cell.h	/^    Cell *top_;$/;"	m	class:IntfNs::Port
