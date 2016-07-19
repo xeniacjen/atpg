@@ -1,5 +1,7 @@
+./bin/dbg/atpg -f ./script/atpg_b01_saf.script
 ./bin/dbg/atpg -f ./script/atpg_s27_saf.script
 ./bin/dbg/atpg -f ./script/atpg_s208_saf.script
+./bin/dbg/atpg -f ./script/atpg_s298_saf.script
 ./bin/dbg/atpg -f ./script/atpg_s444_saf.script
 # ./bin/dbg/atpg -f ./script/atpg_c432_saf.script
 ./bin/dbg/atpg -f ./script/atpg_s1238_saf.script
@@ -11,3 +13,4 @@
 ./bin/dbg/atpg -f ./script/atpg_s38417_saf.script
 ./bin/dbg/atpg -f ./script/atpg_s35932_saf.script 
 ./bin/dbg/atpg -f ./script/atpg_mtx_top_saf.script
+

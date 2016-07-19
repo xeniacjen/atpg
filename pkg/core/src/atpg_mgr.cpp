@@ -46,9 +46,9 @@ void AtpgMgr::generation() {
             continue; 
         }
         // if (flist.front()->state_==Fault::AB) 
+          // || flist.front()->state_==Fault::AU) 
         if (flist.front()->state_==Fault::AB 
-          || flist.front()->state_==Fault::PT 
-          || flist.front()->state_==Fault::AU) 
+          || flist.front()->state_==Fault::PT) 
             break; 
 
         if (f==flist.front()) { 
@@ -74,12 +74,13 @@ void AtpgMgr::generation() {
 			pcoll_->randomFill(pcoll_->pats_.back());
 		}
 
-            sim_->pfFaultSim(pcoll_->pats_.back(), flist); 
+            // sim_->pfFaultSim(pcoll_->pats_.back(), flist); 
+            flist.pop_front(); 
             getPoPattern(pcoll_->pats_.back()); 
         }
         else if (ret==Atpg::UNTESTABLE) { 
             flist.front()->state_ = Fault::AU; 
-            flist.push_back(flist.front()); 
+            // flist.push_back(flist.front()); 
             flist.pop_front(); 
         }
         else { // ABORT 

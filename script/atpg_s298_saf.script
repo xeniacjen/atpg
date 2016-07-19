@@ -1,5 +1,5 @@
 read_lib techlib/tsmc18.mdt
-read_netlist netlist/s208.v
+read_netlist verilog/s298_nl.v
 report_netlist
 build_circuit
 report_circuit
@@ -8,6 +8,6 @@ add_fault --all
 set_X-Fill on
 set_pattern_type LOC   // no need for combinational circuit
 run_atpg
-report_statistics > rpt/s208_loc_t_saf.rpt
-write_pattern pat/s208_loc_t.pat
-write_pattern -f ascii pat/s208_safloc_t.ascii  // for fastscan
+report_statistics > rpt/s298_loc_t_saf.rpt
+write_pattern pat/s298_loc_t.pat
+write_pattern -f ascii pat/s298_safloc_t.ascii  // for fastscan
