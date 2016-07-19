@@ -94,7 +94,7 @@ inline bool Atpg::CheckPath(const GateVec &path) const {
     p.pop_back(); // pass the currently justifying gate 
     while (!p.empty()) { 
         Value v = impl_->GetVal(p.back()->id_); 
-        if (v!=D || v!=B) return false; 
+        if (v!=D && v!=B) return false; 
 
         p.pop_back(); 
     } 
