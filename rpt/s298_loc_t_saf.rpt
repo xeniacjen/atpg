@@ -1,11 +1,11 @@
 #                 Statistics Report
-#  Circuit name                                 s208
+#  Circuit name                                 s298
 #  Fault model                                   SAF
 #  Pattern type                                  LOC
 #  -------------------------------------------------
 #  Fault classes                             #faults
 #  ----------------------------  -------------------
-#    FU (full)                                   224
+#    FU (full)                                   358
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
@@ -14,15 +14,15 @@
 #    AB (atpg abort)                               0
 #    TI (tied)                                     0
 #    --------------------------  -------------------
-#    DT (detected)                               220
+#    DT (detected)                               354
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
 #    test coverage                              100%
-#    fault coverage                           98.21%
+#    fault coverage                           98.88%
 #    atpg effectiveness                         100%
 #  -------------------------------------------------
-#  #Patterns                                      40
+#  #Patterns                                      56
 #  -------------------------------------------------
-#  ATPG runtime                           0.009742 s
+#  ATPG runtime                            0.01622 s
 #  -------------------------------------------------
