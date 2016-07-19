@@ -1,0 +1,10 @@
+read_lib techlib/tsmc18.mdt
+read_netlist verilog/b01_nl.v
+build_circuit
+report_circuit
+set_fault_type saf
+add_fault --all
+set_X-Fill on
+run_atpg
+report_statistics > rpt/b01_loc_t_saf.rpt
+exit
