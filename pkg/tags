@@ -2580,7 +2580,7 @@ pmtid_	core/src/gate.h	/^    int       pmtid_; \/\/ original primitive id in the
 po1_	core/src/pattern.h	/^    Value *po1_;$/;"	m	class:CoreNs::Pattern
 po2_	core/src/pattern.h	/^    Value *po2_;$/;"	m	class:CoreNs::Pattern
 poOrder_	core/src/pattern.h	/^    int        *poOrder_;$/;"	m	class:CoreNs::PatternProcessor
-pop	core/src/d_decision_tree.h	/^inline bool DDTree::pop() { $/;"	f	class:CoreNs::DDTree
+pop	core/src/d_decision_tree.h	/^inline bool DDTree::pop(DecisionTree &tree) { $/;"	f	class:CoreNs::DDTree
 pop	core/src/d_decision_tree.h	/^inline void DDNode::pop() { $/;"	f	class:CoreNs::DDNode
 port	interface/src/mdt_file.h	/^    char         port[NAME_LEN];$/;"	m	struct:IntfNs::MdtPortToNet
 port	interface/src/sdf_file.h	/^    char        port[NAME_LEN];$/;"	m	struct:IntfNs::SdfPortSpec
@@ -2767,7 +2767,7 @@ tgate_	core/src/circuit.h	/^    int             tgate_;       \/\/ number of tot
 tlvl_	core/src/circuit.h	/^    int             tlvl_;        \/\/ total level$/;"	m	class:CoreNs::Circuit
 tmusg	atpg/src/fan_mgr.h	/^    CommonNs::TmUsage   tmusg;$/;"	m	class:FanNs::FanMgr
 top	core/src/d_decision_tree.h	/^inline Gate *DDNode::top() const { $/;"	f	class:CoreNs::DDNode
-top	core/src/d_decision_tree.h	/^inline unsigned DDTree::top(int &gid, DecisionTree &tree) const { $/;"	f	class:CoreNs::DDTree
+top	core/src/d_decision_tree.h	/^inline unsigned DDTree::top(int &gid) const { $/;"	f	class:CoreNs::DDTree
 top_	interface/src/cell.h	/^            Cell    *top_;$/;"	m	class:IntfNs::Cell
 top_	interface/src/cell.h	/^    Cell   *top_;$/;"	m	class:IntfNs::Net
 top_	interface/src/cell.h	/^    Cell *top_;$/;"	m	class:IntfNs::Port

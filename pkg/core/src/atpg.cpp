@@ -26,6 +26,10 @@ using namespace std;
 using namespace CoreNs; 
 
 Atpg::GenStatus Atpg::Tpg() { 
+    // GateVec f; f.push_back(&cir_->gates_[current_fault_->gate_]); 
+    // DecisionTree tree_dummy; tree_dummy.clear(); 
+    // d_tree_.push(f, 0, tree_dummy); 
+
     while (true) { 
         if (isTestPossible()) { 
             Backtrace(); // Make a decision 
@@ -238,13 +242,14 @@ bool Atpg::DBackTrack() {
         if (BackTrack()) return true; 
         if (d_tree_.pop(tree)) { 
             // TODO: recover the decision tree  
-            if(d_tree_.empty()) return false; 
-            d_tree_.top(gid); 
             impl_->setDecisionTree(tree); 
-            gtoprop = &cir_->gates_[gid]; 
-            current_obj_.first = gtoprop->id_; 
-            current_obj_.second = gtoprop->getOutputCtrlValue(); 
-            
+            if(!d_tree_.empty()) {  
+                d_tree_.top(gid); 
+                gtoprop = &cir_->gates_[gid]; 
+                current_obj_.first = gtoprop->id_; 
+                current_obj_.second = gtoprop->getOutputCtrlValue(); 
+            }
+            else return false; 
             continue; 
         } 
         d_tree_.top(gid); 
