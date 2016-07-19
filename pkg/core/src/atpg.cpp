@@ -26,9 +26,9 @@ using namespace std;
 using namespace CoreNs; 
 
 Atpg::GenStatus Atpg::Tpg() { 
-    // GateVec f; f.push_back(&cir_->gates_[current_fault_->gate_]); 
-    // DecisionTree tree_dummy; tree_dummy.clear(); 
-    // d_tree_.push(f, 0, tree_dummy); 
+    GateVec f; f.push_back(&cir_->gates_[current_fault_->gate_]); 
+    DecisionTree tree_dummy; tree_dummy.clear(); 
+    d_tree_.push(f, 0, tree_dummy); 
 
     while (true) { 
         if (isTestPossible()) { 
