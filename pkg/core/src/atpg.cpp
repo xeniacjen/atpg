@@ -108,9 +108,14 @@ bool Atpg::FaultActivate() { // TODO: TDF support
 
 bool Atpg::DDrive() { 
     GateVec dpath; 
+    int gid; 
+    Gate *gtoprop; 
+    d_tree_.top(gid); 
+    gtoprop = &cir_->gates_[gid]; 
+    current_obj_.first = gtoprop->id_; 
+    current_obj_.second = gtoprop->getOutputCtrlValue(); 
     d_tree_.GetPath(dpath); 
     Value v = impl_->GetVal(current_obj_.first); 
-    Gate *gtoprop; 
     if (CheckPath(dpath)) { 
         if (v==D || v==B) { // D-frontier pushed forward 
             GateVec dfront; 
@@ -235,27 +240,16 @@ bool Atpg::DBackTrack() {
     back_track_count++; 
     if (back_track_count>=back_track_limit) return false; 
 
-    int gid; 
+    // int gid; 
     Gate* gtoprop; 
     DecisionTree tree; 
     while (!d_tree_.empty()) { 
         if (BackTrack()) return true; 
         if (d_tree_.pop(tree)) { 
-            // TODO: recover the decision tree  
             impl_->setDecisionTree(tree); 
-            if(!d_tree_.empty()) {  
-                d_tree_.top(gid); 
-                gtoprop = &cir_->gates_[gid]; 
-                current_obj_.first = gtoprop->id_; 
-                current_obj_.second = gtoprop->getOutputCtrlValue(); 
-            }
-            else return false; 
+            if(!d_tree_.empty()) return false; 
             continue; 
         } 
-        d_tree_.top(gid); 
-        gtoprop = &cir_->gates_[gid]; 
-        current_obj_.first = gtoprop->id_; 
-        current_obj_.second = gtoprop->getOutputCtrlValue(); 
         return true; 
     }
 

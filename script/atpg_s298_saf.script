@@ -11,3 +11,4 @@ run_atpg
 report_statistics > rpt/s298_loc_t_saf.rpt
 write_pattern pat/s298_loc_t.pat
 write_pattern -f ascii pat/s298_safloc_t.ascii  // for fastscan
+exit 

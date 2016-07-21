@@ -7,22 +7,22 @@
 #  ----------------------------  -------------------
 #    FU (full)                                    22
 #    --------------------------  -------------------
-#    UD (undetected)                              22
+#    UD (undetected)                               0
 #    PT (possibly testable)                        0
 #    AU (atpg untestable)                          0
 #    RE (redundant)                                0
 #    AB (atpg abort)                               0
 #    TI (tied)                                     0
 #    --------------------------  -------------------
-#    DT (detected)                                 0
+#    DT (detected)                                22
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
-#    test coverage                                0%
-#    fault coverage                               0%
-#    atpg effectiveness                           0%
+#    test coverage                              100%
+#    fault coverage                             100%
+#    atpg effectiveness                         100%
 #  -------------------------------------------------
-#  #Patterns                                      22
+#  #Patterns                                       8
 #  -------------------------------------------------
-#  ATPG runtime                           0.001474 s
+#  ATPG runtime                           0.000627 s
 #  -------------------------------------------------

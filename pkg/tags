@@ -434,7 +434,6 @@ Gate	core/src/gate.h	/^class Gate {$/;"	c	namespace:CoreNs
 Gate	core/src/gate.h	/^inline Gate::Gate() {$/;"	f	class:CoreNs::Gate
 GateSet	core/src/implicator.h	/^typedef std::set<int> GateSet; $/;"	t	namespace:CoreNs
 GateVec	core/src/gate.h	/^typedef std::vector<Gate *> GateVec;  $/;"	t	namespace:CoreNs
-GateVec	core/src/implicator.h	/^typedef std::vector<Gate *> GateVec; $/;"	t	namespace:CoreNs
 GenInitDObjectives	core/src/fan.cpp	/^bool Fan::GenInitDObjectives() { $/;"	f	class:Fan
 GenInitJObjectives	core/src/fan.cpp	/^bool Fan::GenInitJObjectives() { $/;"	f	class:Fan
 GenStatus	core/src/atpg.h	/^    enum GenStatus             { TEST_FOUND = 0, UNTESTABLE, ABORT }; $/;"	g	class:CoreNs::Atpg

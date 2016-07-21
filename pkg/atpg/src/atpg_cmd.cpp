@@ -625,7 +625,7 @@ void ReportGateCmd::reportGate(const int &i) const {
         cout << fanMgr_->nl->getTop()->getCell((size_t)g->cid_)->name_;
     cout << " id(" << i << ") ";
     cout << "lvl(" << g->lvl_ << ") ";
-    cout << "type(" << g->type_ << ") ";
+    cout << "type(" << g->getTypeName() << ") ";
     cout << "frame(" << g->frame_ << ")";
     cout << endl;
     cout << "#    fi[" << g->nfi_ << "]";

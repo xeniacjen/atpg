@@ -7,4 +7,4 @@ add_fault --all
 set_X-Fill on
 run_atpg
 report_statistics > rpt/b01_loc_t_saf.rpt
-// exit
+exit

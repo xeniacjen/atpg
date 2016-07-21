@@ -19,7 +19,7 @@
 #ifndef _CORE_ATPG_H_ 
 #define _CORE_ATPG_H_ 
 
-#define _MAX_BACK_TRACK_LIMIT_  64
+#define _MAX_BACK_TRACK_LIMIT_  256
 
 #include "implicator.h" 
 #include "d_decision_tree.h"

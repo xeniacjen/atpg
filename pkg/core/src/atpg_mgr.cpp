@@ -74,8 +74,9 @@ void AtpgMgr::generation() {
 			pcoll_->randomFill(pcoll_->pats_.back());
 		}
 
-            // sim_->pfFaultSim(pcoll_->pats_.back(), flist); 
-            flist.pop_front(); 
+            sim_->pfFaultSim(pcoll_->pats_.back(), flist); 
+            // flist.front()->state_ = Fault::DT; 
+            // flist.pop_front(); 
             getPoPattern(pcoll_->pats_.back()); 
         }
         else if (ret==Atpg::UNTESTABLE) { 

@@ -22,6 +22,7 @@ namespace CoreNs {
 class Gate; 
 
 typedef std::vector<Gate *> GateVec;  
+void PrintGateVec(const GateVec& gs); // helper function for GDB  
 
 class Gate {
 public:
@@ -82,6 +83,7 @@ public:
     int       fiMinLvl_;    // the minimum level of the fanin gates, this is to justify the headline cone, (in atpg.cpp)
 
     void      print() const; 
+    string    getTypeName() const; 
     
     bool      isFanoutStem() const; 
 
@@ -122,6 +124,37 @@ inline Gate::Gate() {
 
 inline Gate::~Gate() {
     if(!co_i_) delete co_i_;    
+}
+
+inline string Gate::getTypeName() const { 
+    switch(type_) {
+        case PI: return string("PI"); 
+        case PO: return string("PO"); 
+        case PPI: return string("PPI"); 
+        case PPO: return string("PPO"); 
+        case INV: return string("INV"); 
+        case BUF: return string("BUF"); 
+        case AND: return string("AND"); 
+        case AND2: return string("AND2"); 
+        case AND3: return string("AND3"); 
+        case AND4: return string("AND4"); 
+        case NAND: return string("NAND"); 
+        case NAND2: return string("NAND2"); 
+        case NAND3: return string("NAND3"); 
+        case NAND4: return string("NAND4"); 
+        case OR: return string("OR"); 
+        case OR2: return string("OR2"); 
+        case OR3: return string("OR3"); 
+        case OR4: return string("OR4"); 
+        case NOR: return string("NOR"); 
+        case NOR2: return string("NOR2"); 
+        case NOR3: return string("NOR3"); 
+        case NOR4: return string("NOR4"); 
+        default: { 
+           assert(0); 
+           return string("");  
+        }
+    }
 }
 
 inline void Gate::print() const {
@@ -204,6 +237,12 @@ inline Value Gate::getOutputCtrlValue() const {
         default:
             return H;
     }
+}
+
+inline void PrintGateVec(const GateVec& gs) { // helper function for GDB  
+    for (size_t i=0; i<gs.size(); i++) 
+        cout << gs[i]->id_ << " "; 
+    cout << endl; 
 }
 
 }; // CoreNs

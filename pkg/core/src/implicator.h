@@ -28,7 +28,6 @@
 
 namespace CoreNs {
 
-typedef std::vector<Gate *> GateVec; 
 typedef std::set<int> GateSet; 
 
 class Implicator { 
