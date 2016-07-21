@@ -219,7 +219,23 @@ bool Implicator::IsFaultAtPo() const {
     return false; 
 }
 
-bool Implicator::GetDFrontier(GateVec& df) {
+void Implicator::GetDFrontier(GateVec& df) const { 
+    for (int n=0; n<cir_->tgate_; n++) { 
+        if (GetVal(n)!=X) 
+            continue; 
+        
+        Gate *g = &cir_->gates_[n]; 
+        for (int m=0; m<g->nfi_; m++) { 
+            Value v = GetVal(g->fis_[m]); 
+            if(v==D||v==B) { 
+                df.push_back(g); 
+                break; 
+            }
+        }
+    }
+} 
+ 
+bool Implicator::GetDFrontierNCheck(GateVec& df) {
     bool d_front_flag_ = false; 
     df.clear(); 
 

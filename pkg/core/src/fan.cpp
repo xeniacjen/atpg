@@ -53,7 +53,7 @@ bool Fan::FaultActivate() {
 
 bool Fan::DDrive() { 
     if (!impl_->IsFaultAtPo()) { // if fault effect not prop. to P/PO 
-        back_trace_flag = impl_->GetDFrontier(dfront_);  
+        back_trace_flag = impl_->GetDFrontierNCheck(dfront_);  
         impl_->GetJFrontier(jfront_); 
         if (dfront_.size()>=1) return true; 
         else return false; 

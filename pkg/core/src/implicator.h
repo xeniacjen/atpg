@@ -60,7 +60,8 @@ public:
 
     void PrintGate(int gid) const; 
 
-    bool GetDFrontier(GateVec& df); 
+    void GetDFrontier(GateVec& df) const; 
+    bool GetDFrontierNCheck(GateVec& df); 
     bool GetJFrontier(GateVec& jf); 
 
     bool IsFaultAtPo() const; 
