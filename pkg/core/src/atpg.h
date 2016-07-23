@@ -50,7 +50,9 @@ protected:
     virtual bool Backtrace(); 
 
     bool DBackTrack(); 
-    bool CheckPath(const GateVec &path) const;  
+    bool CheckPath(const GateVec &path) const; // TODO: change name to 'CheckDPath' 
+
+    bool CheckXPath(Gate *g) const; 
 
     void init(); 
     bool Imply(); 
@@ -100,6 +102,18 @@ inline bool Atpg::CheckPath(const GateVec &path) const {
     } 
     
     return true; 
+}
+
+inline bool Atpg::CheckXPath(Gate *g) const { // TODO: keep the X-path status 
+    if (impl_->GetVal(g->id_)!=X) return false; 
+    if (g->type_==Gate::PO || g->type_==Gate::PPO) return true; 
+
+    for (int i=0; i<g->nfo_; i++) { 
+        Gate *fo = &cir_->gates_[g->fos_[i]]; 
+        if (CheckXPath(fo)) return true; 
+    }
+    
+    return false; 
 }
   
 }; //CoreNs 

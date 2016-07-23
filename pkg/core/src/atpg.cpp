@@ -109,13 +109,16 @@ bool Atpg::FaultActivate() { // TODO: TDF support
 bool Atpg::DDrive() { 
     GateVec dpath; 
     int gid; 
-    Gate *gtoprop; 
+
+    // get the previous object 
     d_tree_.top(gid); 
-    gtoprop = &cir_->gates_[gid]; 
+    Gate *gtoprop = &cir_->gates_[gid]; 
     current_obj_.first = gtoprop->id_; 
     current_obj_.second = gtoprop->getOutputCtrlValue(); 
-    d_tree_.GetPath(dpath); 
     Value v = impl_->GetVal(current_obj_.first); 
+
+    // Check path is sensitized 
+    d_tree_.GetPath(dpath); 
     if (CheckPath(dpath)) { 
         if (v==D || v==B) { // D-frontier pushed forward 
             GateVec dfront; 
@@ -143,12 +146,6 @@ bool Atpg::DDrive() {
             return true; 
         } 
         else if (v!=X) { // D-frontier compromised 
-            // int gid; 
-    
-            // DBackTrack(gid); gtoprop = &cir_->gates_[gid]; 
-            // current_obj_.first = gid; 
-            // current_obj_.second = gtoprop->getOutputCtrlValue(); 
-         
             return false; 
         }
         else return true; // initial objective unchanged 
