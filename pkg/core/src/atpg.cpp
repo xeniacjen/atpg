@@ -106,6 +106,16 @@ bool Atpg::FaultActivate() { // TODO: TDF support
     }
 }
 
+bool Atpg::CheckDFrontier(GateVec &dfront) const { 
+   for (int i=dfront.size()-1; i>=0; i--) 
+        if (!CheckXPath(dfront[i])) { 
+            dfront[i] = dfront.back(); 
+            dfront.pop_back(); 
+        }
+
+    return (!dfront.empty()); 
+} 
+
 bool Atpg::DDrive() { 
     GateVec dpath; 
     int gid; 
@@ -124,7 +134,7 @@ bool Atpg::DDrive() {
             GateVec dfront; 
             impl_->GetDFrontier(dfront); 
     
-            if (dfront.empty()) return false;
+            if (!CheckDFrontier(dfront)) return false;
     
             // TODO: sort the D-frontier 
             gtoprop = dfront.back(); 
@@ -141,6 +151,7 @@ bool Atpg::DDrive() {
                 impl_->GetEFrontierSize(), 
                 impl_->getDecisionTree()); 
             impl_->ClearDecisionTree();  
+
             current_obj_.first = gtoprop->id_; 
             current_obj_.second = gtoprop->getOutputCtrlValue(); 
             return true; 

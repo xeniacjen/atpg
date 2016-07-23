@@ -53,6 +53,7 @@ protected:
     bool CheckPath(const GateVec &path) const; // TODO: change name to 'CheckDPath' 
 
     bool CheckXPath(Gate *g) const; 
+    bool CheckDFrontier(GateVec &dfront) const; 
 
     void init(); 
     bool Imply(); 
@@ -86,7 +87,6 @@ inline Atpg::~Atpg() {
 inline void Atpg::GetPiPattern(Pattern *p) { 
     impl_->GetPiPattern(p);    
 }
-
 
 inline bool Atpg::CheckPath(const GateVec &path) const { 
     if (path.empty()) return true; 
