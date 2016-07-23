@@ -108,6 +108,12 @@ bool Atpg::FaultActivate() { // TODO: TDF support
 
 bool Atpg::CheckDFrontier(GateVec &dfront) const { 
    for (int i=dfront.size()-1; i>=0; i--) 
+        if (!CheckDPath(dfront[i])) { 
+            dfront[i] = dfront.back(); 
+            dfront.pop_back(); 
+        }
+
+   for (int i=dfront.size()-1; i>=0; i--) 
         if (!CheckXPath(dfront[i])) { 
             dfront[i] = dfront.back(); 
             dfront.pop_back(); 
