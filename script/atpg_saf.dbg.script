@@ -2,6 +2,9 @@
 ./bin/dbg/atpg -f ./script/atpg_s27_saf.script
 ./bin/dbg/atpg -f ./script/atpg_s208_saf.script
 ./bin/dbg/atpg -f ./script/atpg_s298_saf.script
+./bin/dbg/atpg -f ./script/atpg_s344_saf.script
+./bin/dbg/atpg -f ./script/atpg_s349_saf.script
+./bin/dbg/atpg -f ./script/atpg_s382_saf.script
 ./bin/dbg/atpg -f ./script/atpg_s444_saf.script
 # ./bin/dbg/atpg -f ./script/atpg_c432_saf.script
 ./bin/dbg/atpg -f ./script/atpg_s1238_saf.script

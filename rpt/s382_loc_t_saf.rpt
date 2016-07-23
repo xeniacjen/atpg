@@ -1,28 +1,28 @@
 #                 Statistics Report
-#  Circuit name                                 c432
-#  Fault model                                   TDF
+#  Circuit name                                 s382
+#  Fault model                                   SAF
 #  Pattern type                                  LOC
 #  -------------------------------------------------
 #  Fault classes                             #faults
 #  ----------------------------  -------------------
-#    FU (full)                                  1110
+#    FU (full)                                   448
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
-#    AU (atpg untestable)                          1
+#    AU (atpg untestable)                         22
 #    RE (redundant)                                0
-#    AB (atpg abort)                              28
+#    AB (atpg abort)                               0
 #    TI (tied)                                     0
 #    --------------------------  -------------------
-#    DT (detected)                              1081
+#    DT (detected)                               426
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
-#    test coverage                            97.48%
-#    fault coverage                           97.39%
-#    atpg effectiveness                       97.48%
+#    test coverage                              100%
+#    fault coverage                           95.09%
+#    atpg effectiveness                         100%
 #  -------------------------------------------------
-#  #Patterns                                     141
+#  #Patterns                                     426
 #  -------------------------------------------------
-#  ATPG runtime                             0.8297 s
+#  ATPG runtime                            0.07308 s
 #  -------------------------------------------------

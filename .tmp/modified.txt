@@ -1,6 +1,0 @@
-./core/src/atpg_mgr.cpp
-./core/src/implicator.cpp
-./core/src/circuit.cpp
-./core/src/gate.h
-./core/src/circuit.h
-./core/src/simulator.h

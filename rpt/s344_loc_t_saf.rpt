@@ -1,11 +1,11 @@
 #                 Statistics Report
-#  Circuit name                                  c17
+#  Circuit name                                 s344
 #  Fault model                                   SAF
 #  Pattern type                                  LOC
 #  -------------------------------------------------
 #  Fault classes                             #faults
 #  ----------------------------  -------------------
-#    FU (full)                                    22
+#    FU (full)                                   350
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
@@ -14,7 +14,7 @@
 #    AB (atpg abort)                               0
 #    TI (tied)                                     0
 #    --------------------------  -------------------
-#    DT (detected)                                22
+#    DT (detected)                               350
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
@@ -22,7 +22,7 @@
 #    fault coverage                             100%
 #    atpg effectiveness                         100%
 #  -------------------------------------------------
-#  #Patterns                                       7
+#  #Patterns                                     350
 #  -------------------------------------------------
-#  ATPG runtime                           0.000103 s
+#  ATPG runtime                            0.05919 s
 #  -------------------------------------------------
