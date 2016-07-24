@@ -331,7 +331,7 @@ inline void PatternProcessor::StaticCompression()
 }
 
 inline void PatternProcessor::randomFill(Pattern *pat){
-    srand(0);
+    // srand(0);
     for( int i = 0 ; i < npi_ ; i++ )
         if( pat->pi1_[i] == X )
             pat->pi1_[i] = rand()%2;
