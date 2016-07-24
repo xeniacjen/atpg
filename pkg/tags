@@ -202,6 +202,7 @@ CellMap	interface/src/cell.h	/^typedef std::map<NameKey, Cell *> CellMap;$/;"	t	
 CellSet	interface/src/cell.h	/^typedef std::set<Cell *>          CellSet;$/;"	t	namespace:IntfNs
 CellVec	interface/src/cell.h	/^typedef std::vector<Cell *>       CellVec;$/;"	t	namespace:IntfNs
 CheckDFrontier	core/src/atpg.cpp	/^bool Atpg::CheckDFrontier(GateVec &dfront) const { $/;"	f	class:Atpg
+CheckDPath	core/src/atpg.h	/^inline bool Atpg::CheckDPath(Gate *g) const { $/;"	f	class:CoreNs::Atpg
 CheckPath	core/src/atpg.h	/^inline bool Atpg::CheckPath(const GateVec &path) const { $/;"	f	class:CoreNs::Atpg
 CheckXPath	core/src/atpg.h	/^inline bool Atpg::CheckXPath(Gate *g) const { \/\/ TODO: keep the X-path status $/;"	f	class:CoreNs::Atpg
 Circuit	core/src/circuit.h	/^class Circuit {$/;"	c	namespace:CoreNs

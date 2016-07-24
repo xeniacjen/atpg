@@ -70,6 +70,8 @@ public:
     int        nppi_;
     int        nsi_;
     int        npo_;
+
+    size_t     nbit_spec_; // total specified bit counts
     PatternVec pats_;
     // for debug 
     PatternVec pats_dbg;
@@ -121,6 +123,8 @@ inline PatternProcessor::PatternProcessor() {
     piOrder_  = NULL;
     ppiOrder_ = NULL;
     poOrder_  = NULL;
+    
+    nbit_spec_= 0; 
 }
 
 inline PatternProcessor::~PatternProcessor() {
@@ -331,21 +335,33 @@ inline void PatternProcessor::StaticCompression()
 }
 
 inline void PatternProcessor::randomFill(Pattern *pat){
-    // srand(0);
-    for( int i = 0 ; i < npi_ ; i++ )
-        if( pat->pi1_[i] == X )
-            pat->pi1_[i] = rand()%2;
-    for( int i = 0 ; i < nppi_ ; i++ )
-        if( pat->ppi_[i] == X )
-            pat->ppi_[i] = rand()%2;
-	if(pat->pi2_!=NULL)
-		for( int i = 0 ; i < npi_ ; i++ )
-			if( pat->pi2_[i] == X )
+    srand(0);
+    for( int i = 0 ; i < npi_ ; i++ ) { 
+        if( pat->pi1_[i] == X ) { 
+            pat->pi1_[i] = rand()%2; 
+        }
+        else nbit_spec_++; 
+    } 
+    for( int i = 0 ; i < nppi_ ; i++ ) { 
+        if( pat->ppi_[i] == X ) { 
+            pat->ppi_[i] = rand()%2; 
+        }
+        else nbit_spec_++; 
+    }
+	if(pat->pi2_!=NULL) { 
+		for( int i = 0 ; i < npi_ ; i++ ) { 
+			if( pat->pi2_[i] == X ) { 
 				pat->pi2_[i] = rand()%2;
-	if(pat->si_!=NULL)
-		if( pat->si_[0] == X )
-			pat->si_[0] = rand()%2;
-
+            } 
+            else nbit_spec_++; 
+        }
+    }
+	if(pat->si_!=NULL) { 
+		if( pat->si_[0] == X ) { 
+			pat->si_[0] = rand()%2; 
+        }
+        else nbit_spec_++; 
+    }
 }
 
 //This is for static compression using compatibility graph

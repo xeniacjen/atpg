@@ -72,7 +72,6 @@ void AtpgMgr::generation() {
             atpg_->GetPiPattern(p); 
 
 		if ((pcoll_->staticCompression_ == PatternProcessor::OFF) && (pcoll_->XFill_ == PatternProcessor::ON)){
-            srand(0);
 			pcoll_->randomFill(pcoll_->pats_.back());
 		}
 

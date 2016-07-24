@@ -1,4 +1,5 @@
 ./bin/dbg/atpg -f ./script/atpg_b01_saf.script
+./bin/dbg/atpg -f ./script/atpg_c17_saf.script
 ./bin/dbg/atpg -f ./script/atpg_s27_saf.script
 ./bin/dbg/atpg -f ./script/atpg_s208_saf.script
 ./bin/dbg/atpg -f ./script/atpg_s298_saf.script
