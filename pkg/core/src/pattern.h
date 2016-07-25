@@ -162,7 +162,6 @@ inline void PatternProcessor::init(Circuit *cir) {
         ppiOrder_[i] = cir->npi_ + i;
 }
 
-
 inline void PatternProcessor::PrintPorts() const {
     cout << "#    pi order: ";
     for (int i = 0; i < npi_; ++i)

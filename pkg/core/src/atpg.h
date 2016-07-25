@@ -36,12 +36,15 @@ public:
         ~Atpg(); 
 
     virtual GenStatus Tpg(); 
-    void      GetPiPattern(Pattern *p); 
+    void    GetPiPattern(Pattern *p); 
+    bool    TurnOnPoMode(); 
 
 private: 
+    bool DDDrive(); 
     bool isTestPossible(); 
     bool isaTest(); 
 
+    bool        is_path_oriented_mode_; 
     Objective   current_obj_; 
 
 protected:
@@ -76,6 +79,7 @@ protected:
 inline Atpg::Atpg(Circuit *cir, Fault *f) { 
     cir_ = cir;
     current_fault_ = f; 
+    is_path_oriented_mode_ = false; 
 
     impl_ = new Implicator(cir, f); 
     init(); 
@@ -128,6 +132,12 @@ inline bool Atpg::CheckDPath(Gate *g) const {
     }
     
     return false; 
+}
+
+inline bool Atpg::TurnOnPoMode() { 
+    is_path_oriented_mode_ = true; 
+
+    return is_path_oriented_mode_; 
 }
   
 }; //CoreNs 

@@ -37,6 +37,8 @@ void AtpgMgr::generation() {
     flist.sort(comp_fault); 
 
     cout << "# ------------------------------------------------------------------------\n"; 
+    cout << "# Phase 1: drop faults need no back-track \n"; 
+    cout << "# ------------------------------------------------------------------------\n"; 
     cout << "# #patterns  fault     #faults  #faults \n"; 
     cout << "# simulated  coverage  in list  detected\n"; 
     cout << "# ------------------------------------------------------------------------\n"; 
@@ -49,6 +51,7 @@ void AtpgMgr::generation() {
         // if (flist.front()->state_==Fault::AB) 
           // || flist.front()->state_==Fault::AU) 
         if (flist.front()->state_==Fault::AB 
+          || flist.front()->state_==Fault::AU  
           || flist.front()->state_==Fault::PT) 
             break; 
 
@@ -82,7 +85,83 @@ void AtpgMgr::generation() {
         }
         else if (ret==Atpg::UNTESTABLE) { 
             flist.front()->state_ = Fault::AU; 
-            // flist.push_back(flist.front()); 
+            flist.push_back(flist.front()); 
+            flist.pop_front(); 
+        }
+        else { // ABORT 
+            flist.front()->state_ = Fault::AB; 
+            flist.push_back(flist.front()); 
+            flist.pop_front(); 
+        }
+
+        delete atpg_; 
+
+        if (ret==Atpg::TEST_FOUND && pcoll_->pats_.size()%RPT_PER_PAT==0) {
+            int fu = fListExtract_->current_.size(); 
+            int dt = fListExtract_->getNStatus(Fault::DT); 
+            cout << "# " << setw(9) << pcoll_->pats_.size(); 
+            cout << "  " << setw(8) << (float)dt / (float)fu * 100.f << "%";  
+            cout << "  " << setw(7) << fu - dt; 
+            cout << "  " << setw(8) << dt; 
+            cout << endl; 
+        }   
+    }
+
+    pcoll_->nbit_spec_ = 0; 
+    for (FaultList::iterator it=flist.begin(); it!=flist.end(); ++it) 
+        (*it)->state_ = Fault::UD; 
+    flist.sort(comp_fault); 
+
+    cout << "\n\n# ------------------------------------------------------------------------\n"; 
+    cout << "# Phase 2: hard-to-detect fault \n"; 
+    cout << "# ------------------------------------------------------------------------\n"; 
+    cout << "# #patterns  fault     #faults  #faults \n"; 
+    cout << "# simulated  coverage  in list  detected\n"; 
+    cout << "# ------------------------------------------------------------------------\n"; 
+    while (flist.begin()!=flist.end()) { 
+        if (flist.front()->state_==Fault::DT) { 
+            flist.pop_front(); 
+            continue; 
+        }
+        // if (flist.front()->state_==Fault::AB) 
+          // || flist.front()->state_==Fault::AU) 
+        if (flist.front()->state_==Fault::AB 
+          || flist.front()->state_==Fault::AU  
+          || flist.front()->state_==Fault::PT) 
+            break; 
+
+        if (f==flist.front()) { 
+            f->state_ = Fault::PT; 
+            flist.push_back(flist.front()); 
+            flist.pop_front(); 
+        }
+
+        f = flist.front();  
+        atpg_ = new Atpg(cir_, f); 
+        atpg_->TurnOnPoMode(); 
+        Atpg::GenStatus ret = atpg_->Tpg(); 
+
+        if (ret==Atpg::TEST_FOUND) { 
+            Pattern *p = new Pattern; 
+		    p->pi1_ = new Value[cir_->npi_];
+		    p->ppi_ = new Value[cir_->nppi_];
+		    p->po1_ = new Value[cir_->npo_];
+		    p->ppo_ = new Value[cir_->nppi_];
+		    pcoll_->pats_.push_back(p);
+            atpg_->GetPiPattern(p); 
+
+		if ((pcoll_->staticCompression_ == PatternProcessor::OFF) && (pcoll_->XFill_ == PatternProcessor::ON)){
+			pcoll_->randomFill(pcoll_->pats_.back());
+		}
+
+            sim_->pfFaultSim(pcoll_->pats_.back(), flist); 
+            // flist.front()->state_ = Fault::DT; 
+            // flist.pop_front(); 
+            getPoPattern(pcoll_->pats_.back()); 
+        }
+        else if (ret==Atpg::UNTESTABLE) { 
+            flist.front()->state_ = Fault::AU; 
+            flist.push_back(flist.front()); 
             flist.pop_front(); 
         }
         else { // ABORT 

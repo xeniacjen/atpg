@@ -861,7 +861,8 @@ bool ReportStatsCmd::exec(const vector<string> &argv) {
     cout << setw(5) << ae << "%" << endl;
     cout << "#  -------------------------------------------------"   << endl;
     cout << "#  #Patterns                     " << setw(19) << npat  << endl;
-    cout << "#  Spec.rate                     " << setw(19) << sr    << endl; 
+    //cout << "#  Spec-rate                    " << setw(19) << sr << "%" << endl; 
+    cout << "#  Spec-bit                      " << setw(19) << nbit  << endl; 
     cout << "#  -------------------------------------------------"   << endl;
     cout << "#  ATPG runtime                  " << setw(17) << rtime;
     cout << " s"                                                     << endl;

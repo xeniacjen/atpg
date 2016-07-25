@@ -26,16 +26,19 @@ using namespace std;
 using namespace CoreNs; 
 
 Atpg::GenStatus Atpg::Tpg() { 
-    GateVec f; f.push_back(&cir_->gates_[current_fault_->gate_]); 
-    DecisionTree tree_dummy; tree_dummy.clear(); 
-    d_tree_.push(f, 0, tree_dummy); 
+    if (is_path_oriented_mode_) { 
+        GateVec f; f.push_back(&cir_->gates_[current_fault_->gate_]); 
+        DecisionTree tree_dummy; tree_dummy.clear(); 
+        d_tree_.push(f, 0, tree_dummy); 
+    }
 
     while (true) { 
         if (isTestPossible()) { 
             Backtrace(); // Make a decision 
         } 
         else { 
-            if(!DBackTrack()) 
+            bool tpg_fail = (is_path_oriented_mode_)?!DBackTrack():!BackTrack();
+            if(tpg_fail) // TPG process failed  
                 return (back_track_count>=back_track_limit)?ABORT:UNTESTABLE; 
         }
         Imply(); 
@@ -107,11 +110,11 @@ bool Atpg::FaultActivate() { // TODO: TDF support
 }
 
 bool Atpg::CheckDFrontier(GateVec &dfront) const { 
-   for (int i=dfront.size()-1; i>=0; i--) 
-        if (!CheckDPath(dfront[i])) { 
-            dfront[i] = dfront.back(); 
-            dfront.pop_back(); 
-        }
+   // for (int i=dfront.size()-1; i>=0; i--) 
+   //     if (!CheckDPath(dfront[i])) { 
+   //         dfront[i] = dfront.back(); 
+   //         dfront.pop_back(); 
+   //     }
 
    for (int i=dfront.size()-1; i>=0; i--) 
         if (!CheckXPath(dfront[i])) { 
@@ -122,7 +125,7 @@ bool Atpg::CheckDFrontier(GateVec &dfront) const {
     return (!dfront.empty()); 
 } 
 
-bool Atpg::DDrive() { 
+bool Atpg::DDDrive() { 
     GateVec dpath; 
     int gid; 
 
@@ -169,6 +172,32 @@ bool Atpg::DDrive() {
     }
 
     return false; // D-path justification failed 
+}
+
+bool Atpg::DDrive() { 
+    if (is_path_oriented_mode_) return DDDrive(); 
+
+    GateVec dfront; 
+    impl_->GetDFrontier(dfront); 
+
+    if (!CheckDFrontier(dfront)) return false;
+
+    Gate *fg = &cir_->gates_[current_fault_->gate_]; 
+    assert(impl_->GetVal(fg->id_)==D || impl_->GetVal(fg->id_)==B); 
+    
+    Gate *gtoprop = NULL; 
+    int observ = INT_MAX; 
+    for (size_t i=0; i<dfront.size(); i++) 
+        if(dfront[i]->co_o_<observ) { 
+            gtoprop = dfront[i]; 
+            observ = dfront[i]->co_o_; 
+        }
+
+    assert(gtoprop->isUnary()==L); 
+    current_obj_.first = gtoprop->id_; 
+    current_obj_.second = gtoprop->getOutputCtrlValue(); 
+
+    return true; 
 }
 
 bool Atpg::Backtrace() {
@@ -247,6 +276,12 @@ Gate *Atpg::FindEasiestToSetFanIn(Gate *g, Value obj) const {
 } 
 
 bool Atpg::BackTrack() { 
+    if (!is_path_oriented_mode_) { // in normal mode 
+        // back_track_count++; 
+        //    if (back_track_count>=back_track_limit) return false; 
+        return false; 
+    }
+
     return impl_->BackTrack(); 
 }
 
