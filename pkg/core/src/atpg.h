@@ -19,7 +19,7 @@
 #ifndef _CORE_ATPG_H_ 
 #define _CORE_ATPG_H_ 
 
-#define _MAX_BACK_TRACK_LIMIT_  256
+#define _MAX_BACK_TRACK_LIMIT_  64
 
 #include "implicator.h" 
 #include "d_decision_tree.h"
@@ -57,7 +57,8 @@ protected:
 
     bool CheckXPath(Gate *g) const; 
     bool CheckDPath(Gate *g) const; 
-    bool CheckDFrontier(GateVec &dfront) const; 
+    bool CheckDFrontier(GateVec &dfront); 
+    void ResetXPath(); 
 
     void init(); 
     bool Imply(); 
@@ -65,15 +66,16 @@ protected:
     Gate *FindHardestToSetFanIn(Gate *g, Value obj) const; 
     Gate *FindEasiestToSetFanIn(Gate *g, Value obj) const; 
 
-    Circuit     *cir_;
-    Implicator  *impl_; 
+    Circuit    *cir_;
+    Implicator *impl_; 
 
-    Fault       *current_fault_;
+    Fault      *current_fault_;
 
     unsigned    back_track_count; 
     unsigned    back_track_limit; 
 
     DDTree      d_tree_; 
+    Value      *x_path_; // keep the x-path search status 
 }; //Atpg 
 
 inline Atpg::Atpg(Circuit *cir, Fault *f) { 
@@ -82,11 +84,13 @@ inline Atpg::Atpg(Circuit *cir, Fault *f) {
     is_path_oriented_mode_ = false; 
 
     impl_ = new Implicator(cir, f); 
+    x_path_ = new Value[cir_->tgate_]; 
     init(); 
 }
 
 inline Atpg::~Atpg() { 
-    delete impl_; 
+    delete    impl_; 
+    delete [] x_path_; 
 }
 
 inline void Atpg::GetPiPattern(Pattern *p) { 
@@ -110,34 +114,55 @@ inline bool Atpg::CheckPath(const GateVec &path) const {
 }
 
 inline bool Atpg::CheckXPath(Gate *g) const { // TODO: keep the X-path status 
-    if (impl_->GetVal(g->id_)!=X) return false; 
-    if (g->type_==Gate::PO || g->type_==Gate::PPO) return true; 
+    if (impl_->GetVal(g->id_)!=X || x_path_[g->id_]==L) { 
+        x_path_[g->id_] = L; 
+        return false; 
+    }
+
+    if (g->type_==Gate::PO || g->type_==Gate::PPO || x_path_[g->id_]==H) { 
+        x_path_[g->id_] = H; 
+        return true; 
+    }
 
     for (int i=0; i<g->nfo_; i++) { 
         Gate *fo = &cir_->gates_[g->fos_[i]]; 
-        if (CheckXPath(fo)) return true; 
+        if (CheckXPath(fo)) { 
+            x_path_[g->id_] = H; 
+            return true; 
+        }
     }
     
+    x_path_[g->id_] = L; 
     return false; 
 }
   
 inline bool Atpg::CheckDPath(Gate *g) const { 
-    if (g->id_==current_obj_.first) return true; 
+    if (g->id_==current_obj_.first) { 
+        return true; 
+    }
 
     for (int i=0; i<g->nfi_; i++) { 
         Gate *fi = &cir_->gates_[g->fis_[i]]; 
         Value vi = impl_->GetVal(fi->id_); 
         if (vi!=D && vi!=B) continue; 
-        if (CheckDPath(fi)) return true; 
+        if (CheckDPath(fi)) { 
+            return true; 
+        }
     }
     
     return false; 
 }
 
 inline bool Atpg::TurnOnPoMode() { 
-    is_path_oriented_mode_ = true; 
+    // is_path_oriented_mode_ = true; 
+    back_track_limit = _MAX_BACK_TRACK_LIMIT_; 
 
     return is_path_oriented_mode_; 
+}
+
+inline void Atpg::ResetXPath() { 
+    for (int i=0; i<cir_->tgate_; i++) 
+        x_path_[i] = X; 
 }
   
 }; //CoreNs 

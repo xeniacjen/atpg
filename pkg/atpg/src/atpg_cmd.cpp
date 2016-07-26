@@ -775,11 +775,13 @@ bool ReportStatsCmd::exec(const vector<string> &argv) {
 
 
     size_t npat = 0;
+    size_t npat_hard = 0; 
     size_t nbit = 0; 
     size_t ntbit = 0; 
 
     if (fanMgr_->atpg_mgr->pcoll_) { 
         npat = fanMgr_->atpg_mgr->pcoll_->pats_.size();
+        npat_hard =  fanMgr_->atpg_mgr->pcoll_->npat_hard_;
         nbit = fanMgr_->atpg_mgr->pcoll_->nbit_spec_;
         ntbit= fanMgr_->atpg_mgr->pcoll_->npi_ 
           + fanMgr_->atpg_mgr->pcoll_->nppi_ 
@@ -828,7 +830,7 @@ bool ReportStatsCmd::exec(const vector<string> &argv) {
     float tc = (float)dt / (float)(ud + dt + pt + ab) * 100;
     float ae = (float)(dt + au + ti + re) / (float)fu * 100;
 
-    float sr = (float)nbit / (float)npat / (float)ntbit * 100; 
+    float sr = (float)nbit / (float)npat_hard / (float)ntbit * 100; 
 
     cout << right;
     cout << setprecision(4);
@@ -861,8 +863,7 @@ bool ReportStatsCmd::exec(const vector<string> &argv) {
     cout << setw(5) << ae << "%" << endl;
     cout << "#  -------------------------------------------------"   << endl;
     cout << "#  #Patterns                     " << setw(19) << npat  << endl;
-    //cout << "#  Spec-rate                    " << setw(19) << sr << "%" << endl; 
-    cout << "#  Spec-bit                      " << setw(19) << nbit  << endl; 
+    cout << "#  Ave.Spec-rate                " << setw(19) << sr << "%" << endl; 
     cout << "#  -------------------------------------------------"   << endl;
     cout << "#  ATPG runtime                  " << setw(17) << rtime;
     cout << " s"                                                     << endl;

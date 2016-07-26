@@ -77,9 +77,9 @@ chain "chain1" = "00000000";
 end;
 pattern = 3;
 apply  "group1_load" 0 =
-chain "chain1" = "10010000";
+chain "chain1" = "11100000";
 end;
-force "PI" "00011101011100" 1;
+force "PI" "00011011011100" 1;
 measure "PO" "X00" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
@@ -87,10 +87,10 @@ chain "chain1" = "00000000";
 end;
 pattern = 4;
 apply  "group1_load" 0 =
-chain "chain1" = "11110101";
+chain "chain1" = "10110101";
 end;
 force "PI" "00001011111001" 1;
-measure "PO" "X10" 4;
+measure "PO" "X00" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
 chain "chain1" = "00000000";
@@ -107,9 +107,9 @@ chain "chain1" = "00010000";
 end;
 pattern = 6;
 apply  "group1_load" 0 =
-chain "chain1" = "00011011";
+chain "chain1" = "01101011";
 end;
-force "PI" "00001101111001" 1;
+force "PI" "00001011111001" 1;
 measure "PO" "X00" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
@@ -117,13 +117,13 @@ chain "chain1" = "00000000";
 end;
 pattern = 7;
 apply  "group1_load" 0 =
-chain "chain1" = "10001111";
+chain "chain1" = "10101111";
 end;
 force "PI" "00010011110011" 1;
 measure "PO" "X01" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
-chain "chain1" = "01000000";
+chain "chain1" = "01100000";
 end;
 pattern = 8;
 apply  "group1_load" 0 =
@@ -137,9 +137,9 @@ chain "chain1" = "11100000";
 end;
 pattern = 9;
 apply  "group1_load" 0 =
-chain "chain1" = "00010110";
+chain "chain1" = "10101110";
 end;
-force "PI" "00001101111001" 1;
+force "PI" "00001011111000" 1;
 measure "PO" "X00" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
@@ -167,9 +167,9 @@ chain "chain1" = "00000000";
 end;
 pattern = 12;
 apply  "group1_load" 0 =
-chain "chain1" = "00010100";
+chain "chain1" = "10110110";
 end;
-force "PI" "00011101111000" 1;
+force "PI" "00011011111000" 1;
 measure "PO" "X00" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
@@ -207,9 +207,9 @@ chain "chain1" = "00100000";
 end;
 pattern = 16;
 apply  "group1_load" 0 =
-chain "chain1" = "00010000";
+chain "chain1" = "10110000";
 end;
-force "PI" "00011101111000" 1;
+force "PI" "00011011111000" 1;
 measure "PO" "X01" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
@@ -217,9 +217,9 @@ chain "chain1" = "00000000";
 end;
 pattern = 17;
 apply  "group1_load" 0 =
-chain "chain1" = "00010000";
+chain "chain1" = "11010101";
 end;
-force "PI" "00001101111001" 1;
+force "PI" "00001011110101" 1;
 measure "PO" "X00" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
@@ -227,13 +227,13 @@ chain "chain1" = "00000000";
 end;
 pattern = 18;
 apply  "group1_load" 0 =
-chain "chain1" = "10101001";
+chain "chain1" = "01011010";
 end;
 force "PI" "00010101111001" 1;
 measure "PO" "X01" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
-chain "chain1" = "00000101";
+chain "chain1" = "00000110";
 end;
 pattern = 19;
 apply  "group1_load" 0 =
@@ -257,6 +257,26 @@ chain "chain1" = "00001101";
 end;
 pattern = 21;
 apply  "group1_load" 0 =
+chain "chain1" = "00110000";
+end;
+force "PI" "00011011111000" 1;
+measure "PO" "X01" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "00000000";
+end;
+pattern = 22;
+apply  "group1_load" 0 =
+chain "chain1" = "00010000";
+end;
+force "PI" "00011101111000" 1;
+measure "PO" "X01" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "00000000";
+end;
+pattern = 23;
+apply  "group1_load" 0 =
 chain "chain1" = "00000000";
 end;
 force "PI" "00011101111000" 1;
@@ -265,32 +285,12 @@ pulse "/CK" 5;
 apply  "group1_unload" 6 =
 chain "chain1" = "00000000";
 end;
-pattern = 22;
-apply  "group1_load" 0 =
-chain "chain1" = "11010011";
-end;
-force "PI" "00010101111001" 1;
-measure "PO" "X01" 4;
-pulse "/CK" 5;
-apply  "group1_unload" 6 =
-chain "chain1" = "00001011";
-end;
-pattern = 23;
-apply  "group1_load" 0 =
-chain "chain1" = "01010000";
-end;
-force "PI" "00011100111100" 1;
-measure "PO" "X00" 4;
-pulse "/CK" 5;
-apply  "group1_unload" 6 =
-chain "chain1" = "00000000";
-end;
 pattern = 24;
 apply  "group1_load" 0 =
-chain "chain1" = "00110000";
+chain "chain1" = "01100000";
 end;
-force "PI" "00011011111000" 1;
-measure "PO" "X01" 4;
+force "PI" "00011010111100" 1;
+measure "PO" "X00" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
 chain "chain1" = "00000000";
@@ -317,9 +317,9 @@ chain "chain1" = "00000000";
 end;
 pattern = 27;
 apply  "group1_load" 0 =
-chain "chain1" = "00101101";
+chain "chain1" = "01011101";
 end;
-force "PI" "00010011110011" 1;
+force "PI" "00010101111001" 1;
 measure "PO" "X01" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
@@ -337,7 +337,7 @@ chain "chain1" = "00000000";
 end;
 pattern = 29;
 apply  "group1_load" 0 =
-chain "chain1" = "10110000";
+chain "chain1" = "01110000";
 end;
 force "PI" "00011011111000" 1;
 measure "PO" "X01" 4;
@@ -347,35 +347,25 @@ chain "chain1" = "00000000";
 end;
 pattern = 30;
 apply  "group1_load" 0 =
-chain "chain1" = "01110000";
+chain "chain1" = "11100001";
 end;
-force "PI" "00011011111000" 1;
-measure "PO" "X01" 4;
+force "PI" "00011011101100" 1;
+measure "PO" "X00" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
 chain "chain1" = "00000000";
 end;
 pattern = 31;
 apply  "group1_load" 0 =
-chain "chain1" = "00010001";
+chain "chain1" = "01100011";
 end;
-force "PI" "00011101101100" 1;
+force "PI" "00011011110100" 1;
 measure "PO" "X00" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
 chain "chain1" = "00000000";
 end;
 pattern = 32;
-apply  "group1_load" 0 =
-chain "chain1" = "00010010";
-end;
-force "PI" "00011101110100" 1;
-measure "PO" "X00" 4;
-pulse "/CK" 5;
-apply  "group1_unload" 6 =
-chain "chain1" = "00000000";
-end;
-pattern = 33;
 apply  "group1_load" 0 =
 chain "chain1" = "01010011";
 end;
@@ -385,17 +375,17 @@ pulse "/CK" 5;
 apply  "group1_unload" 6 =
 chain "chain1" = "00000000";
 end;
-pattern = 34;
+pattern = 33;
 apply  "group1_load" 0 =
-chain "chain1" = "00011000";
+chain "chain1" = "01011110";
 end;
-force "PI" "00011101111000" 1;
+force "PI" "00011011110100" 1;
 measure "PO" "X00" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
 chain "chain1" = "00000000";
 end;
-pattern = 35;
+pattern = 34;
 apply  "group1_load" 0 =
 chain "chain1" = "11011011";
 end;
@@ -405,7 +395,7 @@ pulse "/CK" 5;
 apply  "group1_unload" 6 =
 chain "chain1" = "00000000";
 end;
-pattern = 36;
+pattern = 35;
 apply  "group1_load" 0 =
 chain "chain1" = "00101111";
 end;
@@ -414,6 +404,16 @@ measure "PO" "X01" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
 chain "chain1" = "10100000";
+end;
+pattern = 36;
+apply  "group1_load" 0 =
+chain "chain1" = "10101011";
+end;
+force "PI" "00010101111001" 1;
+measure "PO" "X01" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "00000111";
 end;
 pattern = 37;
 apply  "group1_load" 0 =
@@ -437,23 +437,23 @@ chain "chain1" = "00000000";
 end;
 pattern = 39;
 apply  "group1_load" 0 =
-chain "chain1" = "00101011";
+chain "chain1" = "10100111";
 end;
-force "PI" "00010011110011" 1;
-measure "PO" "X01" 4;
-pulse "/CK" 5;
-apply  "group1_unload" 6 =
-chain "chain1" = "00000111";
-end;
-pattern = 40;
-apply  "group1_load" 0 =
-chain "chain1" = "00100111";
-end;
-force "PI" "00010011110011" 1;
+force "PI" "00010101111001" 1;
 measure "PO" "X01" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
 chain "chain1" = "00001111";
+end;
+pattern = 40;
+apply  "group1_load" 0 =
+chain "chain1" = "11010001";
+end;
+force "PI" "00010101111001" 1;
+measure "PO" "X01" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "00001001";
 end;
 pattern = 41;
 apply  "group1_load" 0 =
@@ -467,7 +467,7 @@ chain "chain1" = "00000010";
 end;
 pattern = 42;
 apply  "group1_load" 0 =
-chain "chain1" = "11010101";
+chain "chain1" = "01100101";
 end;
 force "PI" "00000101111001" 1;
 measure "PO" "X00" 4;

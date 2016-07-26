@@ -71,6 +71,7 @@ public:
     int        nsi_;
     int        npo_;
 
+    size_t     npat_hard_; // #pattern detecting hard-to-detect fault 
     size_t     nbit_spec_; // total specified bit counts
     PatternVec pats_;
     // for debug 
@@ -125,6 +126,7 @@ inline PatternProcessor::PatternProcessor() {
     poOrder_  = NULL;
     
     nbit_spec_= 0; 
+    npat_hard_ = 0; 
 }
 
 inline PatternProcessor::~PatternProcessor() {

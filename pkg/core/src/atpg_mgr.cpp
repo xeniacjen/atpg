@@ -148,6 +148,7 @@ void AtpgMgr::generation() {
 		    p->po1_ = new Value[cir_->npo_];
 		    p->ppo_ = new Value[cir_->nppi_];
 		    pcoll_->pats_.push_back(p);
+            pcoll_->npat_hard_++; 
             atpg_->GetPiPattern(p); 
 
 		if ((pcoll_->staticCompression_ == PatternProcessor::OFF) && (pcoll_->XFill_ == PatternProcessor::ON)){

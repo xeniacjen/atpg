@@ -68,10 +68,8 @@ bool Atpg::isaTest() {
 
 void Atpg::init() { 
     back_track_count = 0; 
-    back_track_limit = _MAX_BACK_TRACK_LIMIT_; 
-
-    // debug 
-    // atpg_debug = false; 
+    // back_track_limit = _MAX_BACK_TRACK_LIMIT_; 
+    back_track_limit = 0; 
 
     impl_->Init(); 
 }
@@ -109,13 +107,16 @@ bool Atpg::FaultActivate() { // TODO: TDF support
     }
 }
 
-bool Atpg::CheckDFrontier(GateVec &dfront) const { 
-   // for (int i=dfront.size()-1; i>=0; i--) 
-   //     if (!CheckDPath(dfront[i])) { 
-   //         dfront[i] = dfront.back(); 
-   //         dfront.pop_back(); 
-   //     }
+bool Atpg::CheckDFrontier(GateVec &dfront) { 
+    if (is_path_oriented_mode_) { 
+        for (int i=dfront.size()-1; i>=0; i--) 
+            if (!CheckDPath(dfront[i])) { 
+                dfront[i] = dfront.back(); 
+                dfront.pop_back(); 
+            }
+   }
 
+   ResetXPath(); 
    for (int i=dfront.size()-1; i>=0; i--) 
         if (!CheckXPath(dfront[i])) { 
             dfront[i] = dfront.back(); 
@@ -277,9 +278,9 @@ Gate *Atpg::FindEasiestToSetFanIn(Gate *g, Value obj) const {
 
 bool Atpg::BackTrack() { 
     if (!is_path_oriented_mode_) { // in normal mode 
-        // back_track_count++; 
-        //    if (back_track_count>=back_track_limit) return false; 
-        return false; 
+        back_track_count++; 
+           if (back_track_count>=back_track_limit) return false; 
+        // return false; 
     }
 
     return impl_->BackTrack(); 
