@@ -108,6 +108,7 @@ void AtpgMgr::generation() {
     }
 
     pcoll_->nbit_spec_ = 0; 
+    pcoll_->nbit_spec_max = 0; 
     for (FaultList::iterator it=flist.begin(); it!=flist.end(); ++it) 
         (*it)->state_ = Fault::UD; 
     flist.sort(comp_fault); 

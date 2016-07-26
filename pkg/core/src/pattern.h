@@ -73,6 +73,7 @@ public:
 
     size_t     npat_hard_; // #pattern detecting hard-to-detect fault 
     size_t     nbit_spec_; // total specified bit counts
+    size_t     nbit_spec_max; // max. specified bit counts among patterns 
     PatternVec pats_;
     // for debug 
     PatternVec pats_dbg;
@@ -126,6 +127,7 @@ inline PatternProcessor::PatternProcessor() {
     poOrder_  = NULL;
     
     nbit_spec_= 0; 
+    nbit_spec_max = 0; 
     npat_hard_ = 0; 
 }
 
@@ -336,33 +338,39 @@ inline void PatternProcessor::StaticCompression()
 }
 
 inline void PatternProcessor::randomFill(Pattern *pat){
+    size_t nbit_spec = 0; 
+
     srand(0);
     for( int i = 0 ; i < npi_ ; i++ ) { 
         if( pat->pi1_[i] == X ) { 
             pat->pi1_[i] = rand()%2; 
         }
-        else nbit_spec_++; 
+        else nbit_spec++; 
     } 
     for( int i = 0 ; i < nppi_ ; i++ ) { 
         if( pat->ppi_[i] == X ) { 
             pat->ppi_[i] = rand()%2; 
         }
-        else nbit_spec_++; 
+        else nbit_spec++; 
     }
 	if(pat->pi2_!=NULL) { 
 		for( int i = 0 ; i < npi_ ; i++ ) { 
 			if( pat->pi2_[i] == X ) { 
 				pat->pi2_[i] = rand()%2;
             } 
-            else nbit_spec_++; 
+            else nbit_spec++; 
         }
     }
 	if(pat->si_!=NULL) { 
 		if( pat->si_[0] == X ) { 
 			pat->si_[0] = rand()%2; 
         }
-        else nbit_spec_++; 
+        else nbit_spec++; 
     }
+
+    nbit_spec_+=nbit_spec; 
+    if (nbit_spec>nbit_spec_max) 
+        nbit_spec_max = nbit_spec; 
 }
 
 //This is for static compression using compatibility graph

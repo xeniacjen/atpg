@@ -777,12 +777,14 @@ bool ReportStatsCmd::exec(const vector<string> &argv) {
     size_t npat = 0;
     size_t npat_hard = 0; 
     size_t nbit = 0; 
+    size_t nbit_max = 0; 
     size_t ntbit = 0; 
 
     if (fanMgr_->atpg_mgr->pcoll_) { 
         npat = fanMgr_->atpg_mgr->pcoll_->pats_.size();
         npat_hard =  fanMgr_->atpg_mgr->pcoll_->npat_hard_;
         nbit = fanMgr_->atpg_mgr->pcoll_->nbit_spec_;
+        nbit_max = fanMgr_->atpg_mgr->pcoll_->nbit_spec_max;
         ntbit= fanMgr_->atpg_mgr->pcoll_->npi_ 
           + fanMgr_->atpg_mgr->pcoll_->nppi_ 
           + fanMgr_->atpg_mgr->pcoll_->nsi_; 
@@ -831,6 +833,7 @@ bool ReportStatsCmd::exec(const vector<string> &argv) {
     float ae = (float)(dt + au + ti + re) / (float)fu * 100;
 
     float sr = (float)nbit / (float)npat_hard / (float)ntbit * 100; 
+    float sr_max = (float)nbit_max / (float)ntbit * 100; 
 
     cout << right;
     cout << setprecision(4);
@@ -864,6 +867,7 @@ bool ReportStatsCmd::exec(const vector<string> &argv) {
     cout << "#  -------------------------------------------------"   << endl;
     cout << "#  #Patterns                     " << setw(19) << npat  << endl;
     cout << "#  Ave.Spec-rate                " << setw(19) << sr << "%" << endl; 
+    cout << "#  Max.Spec-rate                " << setw(19) << sr_max << "%" << endl; 
     cout << "#  -------------------------------------------------"   << endl;
     cout << "#  ATPG runtime                  " << setw(17) << rtime;
     cout << " s"                                                     << endl;
