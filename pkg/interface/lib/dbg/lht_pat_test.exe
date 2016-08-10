@@ -1,0 +1,7 @@
+bin/dbg/lht_pat_test : lib/dbg/lht_pat_test.o $(LIBOBJS) $(REQLIBS)
+	@if [ ! -d $(BINDIR)/$(MODE) ]; then \
+		mkdir -p $(BINDIR)/$(MODE); \
+	fi
+	@echo "    LD    $(notdir $@)"
+	@$(CXX) $(CFLAGS) $(PKGFLAGS) $(INCLOC) $< $(LIBOBJS) $(LIBLOC) $(LNKLIBS) -o $@
+

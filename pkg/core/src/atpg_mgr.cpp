@@ -79,8 +79,6 @@ void AtpgMgr::generation() {
 		}
 
             sim_->pfFaultSim(pcoll_->pats_.back(), flist); 
-            // flist.front()->state_ = Fault::DT; 
-            // flist.pop_front(); 
             getPoPattern(pcoll_->pats_.back()); 
         }
         else if (ret==Atpg::UNTESTABLE) { 
@@ -106,6 +104,32 @@ void AtpgMgr::generation() {
             cout << endl; 
         }   
     }
+
+ /** DEBUG: flag the AU faults 
+   * for (FaultList::iterator it=flist.begin(); it!=flist.end(); ++it) 
+   *     (*it)->state_ = Fault::UD; 
+   * flist.sort(comp_fault); 
+   * while (flist.begin()!=flist.end()) { 
+   *     if (flist.front()->state_==Fault::AU 
+   *       || flist.front()->state_==Fault::AB)  
+   *         break; 
+   *
+   *     f = flist.front();  
+   *     atpg_ = new Atpg(cir_, f); 
+   *     atpg_->TurnOnPoMode(); 
+   *     Atpg::GenStatus ret = atpg_->Tpg(); 
+   *
+   *     if (ret==Atpg::UNTESTABLE)  
+   *         flist.front()->state_ = Fault::AU; 
+   *     else 
+   *         flist.front()->state_ = Fault::AB; 
+   *     flist.push_back(flist.front()); 
+   *     flist.pop_front(); 
+   *
+   *     delete atpg_; 
+   * }
+   *
+   **/ 
 
     pcoll_->nbit_spec_ = 0; 
     pcoll_->nbit_spec_max = 0; 
@@ -157,8 +181,6 @@ void AtpgMgr::generation() {
 		}
 
             sim_->pfFaultSim(pcoll_->pats_.back(), flist); 
-            // flist.front()->state_ = Fault::DT; 
-            // flist.pop_front(); 
             getPoPattern(pcoll_->pats_.back()); 
         }
         else if (ret==Atpg::UNTESTABLE) { 
