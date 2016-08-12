@@ -277,7 +277,7 @@ Cell	interface/src/cell.h	/^inline Cell::Cell(const char * const name) {$/;"	f	c
 CellMap	interface/src/cell.h	/^typedef std::map<NameKey, Cell *> CellMap;$/;"	t	namespace:IntfNs
 CellSet	interface/src/cell.h	/^typedef std::set<Cell *>          CellSet;$/;"	t	namespace:IntfNs
 CellVec	interface/src/cell.h	/^typedef std::vector<Cell *>       CellVec;$/;"	t	namespace:IntfNs
-CheckDFrontier	core/src/atpg.cpp	/^bool Atpg::CheckDFrontier(GateVec &dfront) const { $/;"	f	class:Atpg
+CheckDFrontier	core/src/atpg.cpp	/^bool Atpg::CheckDFrontier(GateVec &dfront) { $/;"	f	class:Atpg
 CheckDPath	core/src/atpg.h	/^inline bool Atpg::CheckDPath(Gate *g) const { $/;"	f	class:CoreNs::Atpg
 CheckPath	core/src/atpg.h	/^inline bool Atpg::CheckPath(const GateVec &path) const { $/;"	f	class:CoreNs::Atpg
 CheckXPath	core/src/atpg.h	/^inline bool Atpg::CheckXPath(Gate *g) const { \/\/ TODO: keep the X-path status $/;"	f	class:CoreNs::Atpg
@@ -879,6 +879,7 @@ OUTPUT	interface/lib/opt/lex_n_yacc/vlog_file.tab.hpp	/^     OUTPUT = 264,$/;"	e
 OUTPUT	interface/src/cell.h	/^    enum Type { NA = -1, INPUT, OUTPUT, INOUT };$/;"	e	enum:IntfNs::Port::Type
 OVERWRITE	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	983;"	d	file:
 OVERWRITE	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	983;"	d	file:
+ObjList	core/src/atpg.h	/^typedef std::map<int, Value> ObjList; $/;"	t	namespace:CoreNs
 Objective	core/src/atpg.h	/^typedef std::pair<int, Value> Objective; $/;"	t	namespace:CoreNs
 Opt	common/src/get_opt.h	/^inline Opt::Opt(const Type &type,$/;"	f	class:CommonNs::Opt
 Opt	common/src/get_opt.h	/^struct Opt {$/;"	s	namespace:CommonNs
@@ -1166,6 +1167,7 @@ ReportStatsCmd	atpg/src/atpg_cmd.cpp	/^ReportStatsCmd::ReportStatsCmd(const std:
 ReportStatsCmd	atpg/src/atpg_cmd.h	/^class ReportStatsCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
 ReportValueCmd	atpg/src/atpg_cmd.cpp	/^ReportValueCmd::ReportValueCmd(const std::string &name, FanMgr *fanMgr) :$/;"	f	class:ReportValueCmd
 ReportValueCmd	atpg/src/atpg_cmd.h	/^class ReportValueCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
+ResetXPath	core/src/atpg.h	/^inline void Atpg::ResetXPath() { $/;"	f	class:CoreNs::Atpg
 Result	common/src/cmd.h	/^    enum        Result { EXIT = -1, SUCCESS, FAIL, NOT_EXIST, NOP };$/;"	g	class:CommonNs::CmdMgr
 RunAtpgCmd	atpg/src/atpg_cmd.cpp	/^RunAtpgCmd::RunAtpgCmd(const std::string &name, FanMgr *fanMgr) :$/;"	f	class:RunAtpgCmd
 RunAtpgCmd	atpg/src/atpg_cmd.h	/^class RunAtpgCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
@@ -3036,7 +3038,7 @@ checkInstances	interface/src/techlib_builder.cpp	/^bool MdtLibBuilder::checkInst
 checkUsage	common/src/tm_usage.cpp	/^bool TmUsage::checkUsage(TmStat &st) const {$/;"	f	class:TmUsage
 checkUsage	common/src/tm_usage/tm_usage.cpp	/^bool TmUsage::checkUsage(TmStat &st) const {$/;"	f	class:TmUsage
 cid_	core/src/gate.h	/^    int       cid_;   \/\/ original cell id in the netlist$/;"	m	class:CoreNs::Gate
-cir_	core/src/atpg.h	/^    Circuit     *cir_;$/;"	m	class:CoreNs::Atpg
+cir_	core/src/atpg.h	/^    Circuit    *cir_;$/;"	m	class:CoreNs::Atpg
 cir_	core/src/atpg_mgr.h	/^    Circuit             *cir_;$/;"	m	class:CoreNs::AtpgMgr
 cir_	core/src/implicator.h	/^    Circuit         *cir_; $/;"	m	class:CoreNs::Implicator
 cir_	core/src/pattern_rw.h	/^            Circuit *cir_;$/;"	m	class:CoreNs::ProcedureWriter
@@ -3081,7 +3083,7 @@ curModule_	interface/src/netlist_builder.h	/^    Cell    *curModule_;$/;"	m	clas
 curPat_	core/src/pattern_rw.h	/^    int             curPat_;$/;"	m	class:CoreNs::PatternReader
 curr_objs_	core/src/fan.h	/^    std::vector<FanObjective> curr_objs_; $/;"	m	class:CoreNs::Fan
 current_	core/src/fault.h	/^    FaultList current_;$/;"	m	class:CoreNs::FaultListExtract
-current_fault_	core/src/atpg.h	/^    Fault       *current_fault_;$/;"	m	class:CoreNs::Atpg
+current_fault_	core/src/atpg.h	/^    Fault      *current_fault_;$/;"	m	class:CoreNs::Atpg
 current_obj_	core/src/atpg.h	/^    Objective   current_obj_; $/;"	m	class:CoreNs::Atpg
 d_front_	core/src/implicator.h	/^    GateSet         d_front_; $/;"	m	class:CoreNs::Implicator
 d_tree_	core/src/atpg.h	/^    DDTree      d_tree_; $/;"	m	class:CoreNs::Atpg
@@ -3421,7 +3423,7 @@ id_	interface/src/cell.h	/^            int     id_;$/;"	m	class:IntfNs::Cell
 id_	interface/src/cell.h	/^    int    id_;$/;"	m	class:IntfNs::Net
 id_	interface/src/cell.h	/^    int  id_;$/;"	m	class:IntfNs::Port
 identifyLineParameter	core/src/circuit.cpp	/^void Circuit::identifyLineParameter() {$/;"	f	class:Circuit
-impl_	core/src/atpg.h	/^    Implicator  *impl_; $/;"	m	class:CoreNs::Atpg
+impl_	core/src/atpg.h	/^    Implicator *impl_; $/;"	m	class:CoreNs::Atpg
 in	interface/src/sdf_file.h	/^    char in[NAME_LEN];$/;"	m	struct:IntfNs::SdfIoPath
 inLib_	interface/src/cell.h	/^            bool    inLib_;$/;"	m	class:IntfNs::Cell
 inNet_	interface/src/cell.h	/^    Net  *inNet_;$/;"	m	class:IntfNs::Port
@@ -3719,6 +3721,7 @@ name_	interface/src/cell.h	/^            char    name_[NAME_LEN];$/;"	m	class:In
 name_	interface/src/cell.h	/^    char   name_[NAME_LEN];$/;"	m	class:IntfNs::Net
 name_	interface/src/cell.h	/^    char name_[NAME_LEN];$/;"	m	class:IntfNs::Port
 nbit_spec_	core/src/pattern.h	/^    size_t     nbit_spec_; \/\/ total specified bit counts$/;"	m	class:CoreNs::PatternProcessor
+nbit_spec_max	core/src/pattern.h	/^    size_t     nbit_spec_max; \/\/ max. specified bit counts among patterns $/;"	m	class:CoreNs::PatternProcessor
 ncomb_	core/src/circuit.h	/^    int             ncomb_;       \/\/ number of combinational gates$/;"	m	class:CoreNs::Circuit
 ndet_	core/src/simulator.h	/^    int             ndet_; \/\/ for n-detect$/;"	m	class:CoreNs::Simulator
 net	interface/src/mdt_file.h	/^    char         net[NAME_LEN];$/;"	m	struct:IntfNs::MdtPortToNet
@@ -3748,6 +3751,7 @@ nppi_	core/src/circuit.h	/^    int             nppi_;        \/\/ number of PPIs
 nppi_	core/src/pattern.h	/^    int        nppi_;$/;"	m	class:CoreNs::PatternProcessor
 nrecover_	core/src/simulator.h	/^    int             nrecover_; \/\/ number of recovers needed $/;"	m	class:CoreNs::Simulator
 nsi_	core/src/pattern.h	/^    int        nsi_;$/;"	m	class:CoreNs::PatternProcessor
+objs_	core/src/atpg.h	/^    ObjList     objs_; $/;"	m	class:CoreNs::Atpg
 operator !=	core/src/logic-hex.h	/^inline bool operator!=(const HexValue& lhs, const HexValue& rhs) {$/;"	f	namespace:CoreNs
 operator <	interface/src/global.h	/^inline bool NameKey::operator<(const NameKey &key) const {$/;"	f	class:IntfNs::NameKey
 operator =	core/src/decision_tree.h	/^inline DecisionTree &DecisionTree::operator= (const DecisionTree &rhs) { $/;"	f	class:CoreNs::DecisionTree
@@ -4239,6 +4243,7 @@ writeLht	core/src/pattern_rw.cpp	/^bool PatternWriter::writeLht(const char * con
 writePat	core/src/pattern_rw.cpp	/^bool PatternWriter::writePat(const char * const fname) {$/;"	f	class:PatternWriter
 writeProc	core/src/pattern_rw.cpp	/^bool ProcedureWriter::writeProc(const char * const fname) {$/;"	f	class:ProcedureWriter
 wsCol_	common/src/get_opt.h	/^    static const size_t          wsCol_ = 78;$/;"	m	class:CommonNs::OptMgr
+x_path_	core/src/atpg.h	/^    Value      *x_path_; \/\/ keep the x-path search status $/;"	m	class:CoreNs::Atpg
 ychar	interface/lib/dbg/lex_n_yacc/lht_pat_file.tab.cpp	/^    char            *ychar;$/;"	m	union:YYSTYPE	file:
 ychar	interface/lib/dbg/lex_n_yacc/lht_pat_file.tab.hpp	/^    char            *ychar;$/;"	m	union:YYSTYPE
 ychar	interface/lib/dbg/lex_n_yacc/mdt_file.tab.cpp	/^    char                 ychar[IntfNs::NAME_LEN];$/;"	m	union:YYSTYPE	file:

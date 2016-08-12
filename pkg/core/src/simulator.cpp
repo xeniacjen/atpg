@@ -266,8 +266,11 @@ void Simulator::pfCheckDetection(FaultList &remain) {
             if ((*injected_[i])->state_==Fault::AU) { 
                 // TODO: assert after debug 
                 (*injected_[i])->print(); 
+                (*injected_[i])->state_ = Fault::PT;
             }
-            (*injected_[i])->state_ = Fault::DT;
+            else 
+                (*injected_[i])->state_ = Fault::DT;
+
             remain.erase(injected_[i]);
         }
     }

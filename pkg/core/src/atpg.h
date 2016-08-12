@@ -21,12 +21,15 @@
 
 #define _MAX_BACK_TRACK_LIMIT_  64
 
+#include <map>
+
 #include "implicator.h" 
 #include "d_decision_tree.h"
 
 namespace CoreNs { 
 
 typedef std::pair<int, Value> Objective; 
+typedef std::map<int, Value> ObjList; 
 
 class Atpg { 
 public: 
@@ -45,12 +48,15 @@ private:
     bool isaTest(); 
 
     bool        is_path_oriented_mode_; 
+    ObjList     objs_; 
     Objective   current_obj_; 
 
 protected:
     virtual bool FaultActivate(); 
     virtual bool DDrive(); 
     virtual bool Backtrace(); 
+
+    bool CheckObjs(); 
 
     bool DBackTrack(); 
     bool CheckPath(const GateVec &path) const; 

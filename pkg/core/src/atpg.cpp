@@ -108,13 +108,13 @@ bool Atpg::FaultActivate() { // TODO: TDF support
 }
 
 bool Atpg::CheckDFrontier(GateVec &dfront) { 
-   // if (is_path_oriented_mode_) { 
-   //     for (int i=dfront.size()-1; i>=0; i--) 
-   //         if (!CheckDPath(dfront[i])) { 
-   //             dfront[i] = dfront.back(); 
-   //             dfront.pop_back(); 
-   //         }
-   // }
+   if (is_path_oriented_mode_) { 
+       for (int i=dfront.size()-1; i>=0; i--) 
+           if (!CheckDPath(dfront[i])) { 
+               dfront[i] = dfront.back(); 
+              dfront.pop_back(); 
+           }
+   }
 
    ResetXPath(); 
    for (int i=dfront.size()-1; i>=0; i--) 
@@ -297,7 +297,7 @@ bool Atpg::DBackTrack() {
         if (BackTrack()) return true; 
         if (d_tree_.pop(tree)) { 
             impl_->setDecisionTree(tree); 
-            if(!d_tree_.empty()) return false; 
+            if(d_tree_.empty()) return false; 
             continue; 
         } 
         return true; 

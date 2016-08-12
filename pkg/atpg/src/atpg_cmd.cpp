@@ -828,8 +828,8 @@ bool ReportStatsCmd::exec(const vector<string> &argv) {
         }
     }
 
-    float fc = (float)dt / (float)fu * 100;
-    float tc = (float)dt / (float)(ud + dt + pt + ab) * 100;
+    float fc = (float)(dt + pt) / (float)fu * 100; // TODO: multiple PT by a factor 
+    float tc = (float)(dt + pt) / (float)(ud + dt + pt + ab) * 100;
     float ae = (float)(dt + au + ti + re) / (float)fu * 100;
 
     float sr = (float)nbit / (float)npat_hard / (float)ntbit * 100; 
