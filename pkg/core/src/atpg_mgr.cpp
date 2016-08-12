@@ -104,8 +104,8 @@ void AtpgMgr::generation() {
             cout << endl; 
         }   
     }
-
-    // DEBUG: flag the AU faults 
+    
+    while (false) { // DEBUG: flag the AU faults 
         for (FaultList::iterator it=flist.begin(); it!=flist.end(); ++it) 
             (*it)->state_ = Fault::UD; 
         flist.sort(comp_fault); 
@@ -128,6 +128,7 @@ void AtpgMgr::generation() {
      
             delete atpg_; 
         }
+    }
 
     pcoll_->nbit_spec_ = 0; 
     pcoll_->nbit_spec_max = 0; 
@@ -204,6 +205,16 @@ void AtpgMgr::generation() {
             cout << endl; 
         }   
     }
+
+
+    if (pcoll_->staticCompression_==PatternProcessor::ON) { 
+        pcoll_->StaticCompression(); 
+
+        if (pcoll_->XFill_==PatternProcessor::ON) 
+            XFill(); 
+	}
+
+    ReverseFaultSim(); 
 }
 
 bool comp_fault(Fault* f1, Fault* f2) {
@@ -220,6 +231,22 @@ void AtpgMgr::calc_fault_hardness(Fault* f1) {
 
 }
 
+void AtpgMgr::ReverseFaultSim() { 
+    int dt = fListExtract_->getNStatus(Fault::DT); 
+    FaultList flist = fListExtract_->current_; 
+
+    int curr_dt = 0; 
+    PatternVec comp_pats; 
+    for (int i = 0; i < pcoll_->pats_.size(); ++i) {
+        Pattern *p = pcoll_->pats_[pcoll_->pats_.size()-i-1]; 
+        curr_dt+=sim_->pfFaultSim(p, flist); 
+        comp_pats.push_back(p); 
+        if(curr_dt>=dt) 
+            break; 
+    }
+
+    pcoll_->pats_ = comp_pats; 
+}
 
 void AtpgMgr::getPoPattern(Pattern *pat) { 
     sim_->goodSim();
@@ -252,5 +279,17 @@ void AtpgMgr::getPoPattern(Pattern *pat) {
             pat->ppo_[i] = H;
         else
             pat->ppo_[i] = X;
+    }
+}
+
+void AtpgMgr::XFill() { 
+    pcoll_->npat_hard_ = 0; 
+    for (int i=0; i<pcoll_->pats_.size(); i++) { 
+        Pattern *p = pcoll_->pats_[i]; 
+        pcoll_->randomFill(p); 
+		sim_->assignPatternToPi(p);
+		sim_->goodSim();
+        getPoPattern(p); 
+        pcoll_->npat_hard_++; 
     }
 }

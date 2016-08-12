@@ -75,8 +75,7 @@ public:
     size_t     nbit_spec_; // total specified bit counts
     size_t     nbit_spec_max; // max. specified bit counts among patterns 
     PatternVec pats_;
-    // for debug 
-    PatternVec pats_dbg;
+
     int        *piOrder_;
     int        *ppiOrder_;
     int        *poOrder_;
@@ -135,7 +134,6 @@ inline PatternProcessor::~PatternProcessor() {
     if (pats_.size() > 0)
         delete [] pats_[0];
     pats_.clear();
-    pats_dbg.clear();
     delete [] piOrder_;
     delete [] ppiOrder_;
     delete [] poOrder_;

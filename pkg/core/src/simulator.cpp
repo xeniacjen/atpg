@@ -112,11 +112,12 @@ void Simulator::pfFaultSim(PatternProcessor *pcoll, FaultListExtract *fListExtra
 // Date       [ CJY Ver. 1.0 started 2013/08/14 ]
 // **************************************************************************
 //{{{ void Simulator::pfFaultSim(const Pattern * const, FaultList &)
-void Simulator::pfFaultSim(const Pattern * const p, FaultList &remain) {
+int Simulator::pfFaultSim(const Pattern * const p, FaultList &remain) {
 
 	// Assign pattern to circuit PI & PPI for further fault sim
 	assignPatternToPi( p );
-    pfFaultSim(remain);
+    
+    return pfFaultSim(remain);
 
 } //}}}
 
@@ -130,9 +131,11 @@ void Simulator::pfFaultSim(const Pattern * const p, FaultList &remain) {
 // Date       [ CJY Ver. 1.0 started 2013/08/14 ]
 // **************************************************************************
 //{{{ void Simulator::pfFaultSim(FaultList &)
-void Simulator::pfFaultSim(FaultList &remain) {
+int Simulator::pfFaultSim(FaultList &remain) {
     if (remain.size() == 0)
-        return;
+        return 0;
+
+    int ret = 0; 
 
     // run good simulation first
     goodSimCopyToFault();
@@ -154,11 +157,13 @@ void Simulator::pfFaultSim(FaultList &remain) {
         if (ninjected_ == (int)WORD_SIZE
             || (it == remain.end() && ninjected_ > 0)) {
             eventFaultSim();
-            pfCheckDetection(remain);
+            ret+=pfCheckDetection(remain);
             pfReset();
         }
 
     } while (it != remain.end());
+
+    return ret; 
 } //}}}
 
 // **************************************************************************
@@ -250,7 +255,8 @@ void Simulator::pfInject(const Fault * const f, const size_t &i) {
 // Date       [ CBH Ver. 1.0 started 2031/08/18 ]
 // **************************************************************************
 //{{{ void Simulator::pfCheckDetection(FaultList &)
-void Simulator::pfCheckDetection(FaultList &remain) {
+int Simulator::pfCheckDetection(FaultList &remain) {
+    int ret = 0; 
     ParaValue detected = PARA_L;
     int start = cir_->tgate_ - cir_->npo_ - cir_->nppi_;
     for (int i = start; i < cir_->tgate_; ++i)
@@ -272,8 +278,11 @@ void Simulator::pfCheckDetection(FaultList &remain) {
                 (*injected_[i])->state_ = Fault::DT;
 
             remain.erase(injected_[i]);
+            ret++; 
         }
     }
+
+    return ret; 
 } //}}}
 
 // **************************************************************************
