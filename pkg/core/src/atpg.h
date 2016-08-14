@@ -36,11 +36,14 @@ public:
     enum GenStatus             { TEST_FOUND = 0, UNTESTABLE, ABORT }; 
 
         Atpg(Circuit *cir, Fault *f); 
+        Atpg(Circuit *cir, Fault *f, Pattern *p); 
         ~Atpg(); 
 
     virtual GenStatus Tpg(); 
     void    GetPiPattern(Pattern *p); 
     bool    TurnOnPoMode(); 
+
+    bool    CheckCompatibility(Fault *f);  
 
 private: 
     bool DDDrive(); 
@@ -61,12 +64,14 @@ protected:
     bool DBackTrack(); 
     bool CheckPath(const GateVec &path) const; 
 
-    bool CheckXPath(Gate *g) const; 
+    bool CheckXPath(Gate *g); 
     bool CheckDPath(Gate *g) const; 
     bool CheckDFrontier(GateVec &dfront); 
+
     void ResetXPath(); 
 
     void init(); 
+    void init(Pattern *p); 
     bool Imply(); 
     bool BackTrack(); 
     Gate *FindHardestToSetFanIn(Gate *g, Value obj) const; 
@@ -87,12 +92,24 @@ protected:
 inline Atpg::Atpg(Circuit *cir, Fault *f) { 
     cir_ = cir;
     current_fault_ = f; 
-    is_path_oriented_mode_ = false; 
 
+    is_path_oriented_mode_ = false; 
     impl_ = new Implicator(cir, f); 
     x_path_ = new Value[cir_->tgate_]; 
+
     init(); 
 }
+
+inline Atpg::Atpg(Circuit *cir, Fault *f, Pattern *p) { 
+    cir_ = cir;
+    current_fault_ = f; 
+
+    is_path_oriented_mode_ = false; 
+    impl_ = new Implicator(cir, f); 
+    x_path_ = new Value[cir_->tgate_]; 
+
+    init(p); 
+} 
 
 inline Atpg::~Atpg() { 
     delete    impl_; 
@@ -119,7 +136,7 @@ inline bool Atpg::CheckPath(const GateVec &path) const {
     return true; 
 }
 
-inline bool Atpg::CheckXPath(Gate *g) const { // TODO: keep the X-path status 
+inline bool Atpg::CheckXPath(Gate *g) { 
     if (impl_->GetVal(g->id_)!=X || x_path_[g->id_]==L) { 
         x_path_[g->id_] = L; 
         return false; 
@@ -141,7 +158,7 @@ inline bool Atpg::CheckXPath(Gate *g) const { // TODO: keep the X-path status
     x_path_[g->id_] = L; 
     return false; 
 }
-  
+
 inline bool Atpg::CheckDPath(Gate *g) const { 
     if (g->id_==current_obj_.first) { 
         return true; 

@@ -33,14 +33,16 @@ public:
     ~AtpgMgr();  
 
     void                generation(); 
-    void                ReverseFaultSim(); 
-    void                XFill(); 
     
     FaultListExtract    *fListExtract_;
     PatternProcessor    *pcoll_;
     Circuit             *cir_;
     Simulator           *sim_;
 private: 
+    void                DynamicCompression(FaultList &remain); 
+    void                ReverseFaultSim(); 
+    void                XFill(); 
+
     void                getPoPattern(Pattern *pat);  
     void                calc_fault_hardness(Fault* f1); 
 

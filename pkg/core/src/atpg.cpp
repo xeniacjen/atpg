@@ -74,6 +74,12 @@ void Atpg::init() {
     impl_->Init(); 
 }
 
+void Atpg::init(Pattern *p) { 
+    init(); 
+
+    impl_->Init(p); 
+}
+
 bool Atpg::Imply() { 
     return impl_->EventDrivenSim(); 
 } 
@@ -108,13 +114,13 @@ bool Atpg::FaultActivate() { // TODO: TDF support
 }
 
 bool Atpg::CheckDFrontier(GateVec &dfront) { 
-   if (is_path_oriented_mode_) { 
-       for (int i=dfront.size()-1; i>=0; i--) 
-           if (!CheckDPath(dfront[i])) { 
-               dfront[i] = dfront.back(); 
-              dfront.pop_back(); 
-           }
-   }
+   // if (is_path_oriented_mode_) { 
+   //     for (int i=dfront.size()-1; i>=0; i--) 
+   //         if (!CheckDPath(dfront[i])) { 
+   //             dfront[i] = dfront.back(); 
+   //            dfront.pop_back(); 
+   //         }
+   // }
 
    ResetXPath(); 
    for (int i=dfront.size()-1; i>=0; i--) 
@@ -305,3 +311,19 @@ bool Atpg::DBackTrack() {
 
     return false; 
 } 
+
+bool Atpg::CheckCompatibility(Fault *f) { 
+    Gate *g = &cir_->gates_[f->gate_]; 
+    // TODO 
+    Value v = impl_->Get3Val(g->id_); 
+    if (v==L  
+      && (f->type_==Fault::SA0 
+      || f->type_==Fault::STR)) return false; 
+    else if (v==H  
+      && (f->type_==Fault::SA1 
+      || f->type_==Fault::STF)) return false; 
+
+    ResetXPath(); 
+    return CheckXPath(g); 
+    
+}

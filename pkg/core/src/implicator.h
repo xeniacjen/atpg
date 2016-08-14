@@ -36,6 +36,7 @@ public:
          ~Implicator(); 
 
     void Init(); 
+    void Init(Pattern *p); 
 
     bool EventDrivenSim(); 
     bool EventDrivenSimB(); // backward event-driven sim. 
@@ -81,6 +82,8 @@ private:
     Value           FaultEval(Gate* g) const; 
     HexValue        GoodEvalHex(Gate *g) const; 
     HexValue        FaultEvalHex(Gate *g) const; 
+
+    void            AssignValue(int gid, Value v); 
 
     Circuit         *cir_; 
     Simulator       *sim_;  
@@ -149,6 +152,16 @@ inline void Implicator::Init() {
     } 
 }
 
+inline void Implicator::Init(Pattern *p) {
+    for (int j=0; j<cir_->npi_; ++j)
+        AssignValue(j, p->pi1_[j]);
+    for (int j=0; j<cir_->nppi_; ++j)
+        AssignValue(cir_->npi_ + j, p->ppi_[j]);
+
+    EventDrivenSim(); 
+}
+
+
 inline Value Implicator::GetVal(int gid) const {
     return values_[gid]; 
 }
@@ -200,7 +213,6 @@ inline void Implicator::GetPiPattern(Pattern *p) const {
 
 inline void Implicator::GetPoPattern(Pattern *p) const  {}
 
-
 inline void Implicator::PrintGate(int gid) const {
     Gate *g = &cir_->gates_[gid]; 
 
@@ -237,6 +249,22 @@ inline const DecisionTree &Implicator::getDecisionTree() const {
  
 inline void Implicator::setDecisionTree(const DecisionTree &tree) { 
     decision_tree_ = tree; 
+} 
+
+inline void Implicator::AssignValue(int gid, Value v) { 
+    e_front_list_.push_back(gid); 
+
+    if (target_fault_->gate_==gid) { 
+        PushEvent(gid); 
+        // PushEventHex(g->id_); 
+    }
+    else { 
+        PushFanoutEvent(gid); 
+        // PushFanoutEventHex(g->id_); 
+
+        // if (g->isFanoutStem()) 
+        //    PushBEvent(g->id_); 
+    }
 } 
  
 }; // CoreNs

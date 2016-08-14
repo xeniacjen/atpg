@@ -49,9 +49,7 @@ void AtpgMgr::generation() {
             continue; 
         }
         // if (flist.front()->state_==Fault::AB) 
-          // || flist.front()->state_==Fault::AU) 
         if (flist.front()->state_==Fault::AB 
-          || flist.front()->state_==Fault::AU  
           || flist.front()->state_==Fault::PT) 
             break; 
 
@@ -74,16 +72,19 @@ void AtpgMgr::generation() {
 		    pcoll_->pats_.push_back(p);
             atpg_->GetPiPattern(p); 
 
-		if ((pcoll_->staticCompression_ == PatternProcessor::OFF) && (pcoll_->XFill_ == PatternProcessor::ON)){
-			pcoll_->randomFill(pcoll_->pats_.back());
-		}
+            if (pcoll_->dynamicCompression_==PatternProcessor::ON) 
+               DynamicCompression(flist); 
+
+		    if ((pcoll_->staticCompression_ == PatternProcessor::OFF) 
+              && (pcoll_->XFill_ == PatternProcessor::ON)){
+			    pcoll_->randomFill(pcoll_->pats_.back());
+		    }
 
             sim_->pfFaultSim(pcoll_->pats_.back(), flist); 
             getPoPattern(pcoll_->pats_.back()); 
         }
         else if (ret==Atpg::UNTESTABLE) { 
             flist.front()->state_ = Fault::AU; 
-            flist.push_back(flist.front()); 
             flist.pop_front(); 
         }
         else { // ABORT 
@@ -105,31 +106,6 @@ void AtpgMgr::generation() {
         }   
     }
     
-    while (false) { // DEBUG: flag the AU faults 
-        for (FaultList::iterator it=flist.begin(); it!=flist.end(); ++it) 
-            (*it)->state_ = Fault::UD; 
-        flist.sort(comp_fault); 
-        while (flist.begin()!=flist.end()) { 
-            if (flist.front()->state_==Fault::AU 
-              || flist.front()->state_==Fault::AB)  
-                break; 
-     
-            f = flist.front();  
-            atpg_ = new Atpg(cir_, f); 
-            atpg_->TurnOnPoMode(); 
-            Atpg::GenStatus ret = atpg_->Tpg(); 
-     
-            if (ret==Atpg::UNTESTABLE)  
-                flist.front()->state_ = Fault::AU; 
-            else 
-                flist.front()->state_ = Fault::AB; 
-            flist.push_back(flist.front()); 
-            flist.pop_front(); 
-     
-            delete atpg_; 
-        }
-    }
-
     pcoll_->nbit_spec_ = 0; 
     pcoll_->nbit_spec_max = 0; 
     for (FaultList::iterator it=flist.begin(); it!=flist.end(); ++it) 
@@ -148,9 +124,7 @@ void AtpgMgr::generation() {
             continue; 
         }
         // if (flist.front()->state_==Fault::AB) 
-          // || flist.front()->state_==Fault::AU) 
         if (flist.front()->state_==Fault::AB 
-          || flist.front()->state_==Fault::AU  
           || flist.front()->state_==Fault::PT) 
             break; 
 
@@ -175,16 +149,19 @@ void AtpgMgr::generation() {
             pcoll_->npat_hard_++; 
             atpg_->GetPiPattern(p); 
 
-		if ((pcoll_->staticCompression_ == PatternProcessor::OFF) && (pcoll_->XFill_ == PatternProcessor::ON)){
-			pcoll_->randomFill(pcoll_->pats_.back());
-		}
+            if (pcoll_->dynamicCompression_==PatternProcessor::ON) 
+               DynamicCompression(flist); 
+
+		    if ((pcoll_->staticCompression_ == PatternProcessor::OFF) 
+              && (pcoll_->XFill_ == PatternProcessor::ON)){
+			    pcoll_->randomFill(pcoll_->pats_.back());
+		    }
 
             sim_->pfFaultSim(pcoll_->pats_.back(), flist); 
             getPoPattern(pcoll_->pats_.back()); 
         }
         else if (ret==Atpg::UNTESTABLE) { 
             flist.front()->state_ = Fault::AU; 
-            flist.push_back(flist.front()); 
             flist.pop_front(); 
         }
         else { // ABORT 
@@ -205,7 +182,6 @@ void AtpgMgr::generation() {
             cout << endl; 
         }   
     }
-
 
     if (pcoll_->staticCompression_==PatternProcessor::ON) { 
         pcoll_->StaticCompression(); 
@@ -232,19 +208,21 @@ void AtpgMgr::calc_fault_hardness(Fault* f1) {
 }
 
 void AtpgMgr::ReverseFaultSim() { 
-    int dt = fListExtract_->getNStatus(Fault::DT); 
+    int total_dt = fListExtract_->getNStatus(Fault::DT); 
     FaultList flist = fListExtract_->current_; 
 
     int curr_dt = 0; 
     PatternVec comp_pats; 
     for (int i = 0; i < pcoll_->pats_.size(); ++i) {
         Pattern *p = pcoll_->pats_[pcoll_->pats_.size()-i-1]; 
-        curr_dt+=sim_->pfFaultSim(p, flist); 
-        comp_pats.push_back(p); 
-        if(curr_dt>=dt) 
-            break; 
+        int dt = sim_->pfFaultSim(p, flist); 
+        curr_dt+=dt; 
+
+        if(dt > 0)  
+            comp_pats.push_back(p); 
     }
 
+    // assert(curr_dt>=total_dt);  
     pcoll_->pats_ = comp_pats; 
 }
 
@@ -291,5 +269,43 @@ void AtpgMgr::XFill() {
 		sim_->goodSim();
         getPoPattern(p); 
         pcoll_->npat_hard_++; 
+    }
+}
+
+void AtpgMgr::DynamicCompression(FaultList &remain) { 
+    Pattern *p = pcoll_->pats_.back(); 
+    Atpg::GenStatus stat = Atpg::TEST_FOUND; 
+    FaultList skipped_fs; 
+    int fail_count = 0;  
+
+    while (true) { 
+        if (stat==Atpg::TEST_FOUND) { 
+            atpg_->GetPiPattern(p); 
+            sim_->pfFaultSim(p, remain);  
+            getPoPattern(p); 
+        }
+        else { 
+            skipped_fs.push_back(remain.front()); 
+            remain.pop_front(); 
+            if (++fail_count>=10) // TODO 
+                break; 
+        }
+
+        while (!remain.empty() 
+          && !atpg_->CheckCompatibility(remain.front())) { 
+            skipped_fs.push_back(remain.front()); 
+            remain.pop_front(); 
+        }
+        if (remain.empty()) break; 
+
+        delete atpg_; 
+        atpg_ = new Atpg(cir_, remain.front(), p); 
+        atpg_->TurnOnPoMode(); 
+        stat = atpg_->Tpg(); 
+    }
+
+    while (!skipped_fs.empty()) { 
+        remain.push_front(skipped_fs.back()); 
+        skipped_fs.pop_back(); 
     }
 }

@@ -304,19 +304,8 @@ bool Implicator::MakeDecision(Gate *g, Value v) {
 
     //TODO: HexValue backtrack functionality 
     decision_tree_.put(g->id_, e_front_list_.size()); 
-    e_front_list_.push_back(g->id_); 
+    AssignValue(g->id_, v); 
 
-    if (target_fault_->gate_==g->id_) { 
-        PushEvent(g->id_); 
-        // PushEventHex(g->id_); 
-    }
-    else { 
-        PushFanoutEvent(g->id_); 
-        // PushFanoutEventHex(g->id_); 
-
-        // if (g->isFanoutStem()) 
-        //    PushBEvent(g->id_); 
-    }
     return true; 
 }
 
