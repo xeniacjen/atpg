@@ -1,0 +1,12 @@
+read_lib techlib/tsmc18.mdt
+read_netlist netlist/s15850.v
+report_netlist
+build_circuit --frame 1
+report_circuit
+read_pattern pat/s15850_loc_t_saf.pat
+set_fault_type saf
+add_fault -a
+run_fault_sim
+report_statistics
+report_memory_usage
+exit

@@ -1,30 +1,30 @@
 #                 Statistics Report
-#  Circuit name                               s38417
+#  Circuit name                               s38584
 #  Fault model                                   SAF
 #  Pattern type                                  LOC
 #  -------------------------------------------------
 #  Fault classes                             #faults
 #  ----------------------------  -------------------
-#    FU (full)                                 32320
+#    FU (full)                                 38358
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
-#    AU (atpg untestable)                         89
+#    AU (atpg untestable)                       1414
 #    RE (redundant)                                0
-#    AB (atpg abort)                              96
+#    AB (atpg abort)                             187
 #    TI (tied)                                     0
 #    --------------------------  -------------------
-#    DT (detected)                             32135
+#    DT (detected)                             36757
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
-#    test coverage                             99.7%
-#    fault coverage                           99.43%
-#    atpg effectiveness                        99.7%
+#    test coverage                            99.49%
+#    fault coverage                           95.83%
+#    atpg effectiveness                       99.51%
 #  -------------------------------------------------
-#  #Patterns                                     195
-#  Ave.Spec-rate                              22.57%
-#  Max.Spec-rate                              86.06%
+#  #Patterns                                     200
+#  Ave.Spec-rate                              13.14%
+#  Max.Spec-rate                              83.81%
 #  -------------------------------------------------
-#  ATPG runtime                              31.36 s
+#  ATPG runtime                              79.92 s
 #  -------------------------------------------------

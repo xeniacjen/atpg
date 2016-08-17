@@ -184,6 +184,7 @@ void AtpgMgr::generation() {
     }
 
     if (pcoll_->staticCompression_==PatternProcessor::ON) { 
+        ReverseFaultSim(); 
         pcoll_->StaticCompression(); 
 
         if (pcoll_->XFill_==PatternProcessor::ON) 
@@ -219,10 +220,10 @@ void AtpgMgr::ReverseFaultSim() {
         curr_dt+=dt; 
 
         if(dt > 0)  
-            comp_pats.push_back(p); 
+            comp_pats.insert(comp_pats.begin(), p); 
     }
 
-    // assert(curr_dt>=total_dt);  
+    assert(curr_dt>=total_dt);  
     pcoll_->pats_ = comp_pats; 
 }
 

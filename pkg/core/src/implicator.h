@@ -159,6 +159,7 @@ inline void Implicator::Init(Pattern *p) {
         AssignValue(cir_->npi_ + j, p->ppi_[j]);
 
     EventDrivenSim(); 
+    e_front_list_.clear(); 
 }
 
 
@@ -252,6 +253,10 @@ inline void Implicator::setDecisionTree(const DecisionTree &tree) {
 } 
 
 inline void Implicator::AssignValue(int gid, Value v) { 
+    // if (!SetVal(gid, v)) return false; 
+    if (!SetVal(gid, v)) assert(0); 
+    // if (!SetVal(gid, HexValue(v))) assert(0); 
+    
     e_front_list_.push_back(gid); 
 
     if (target_fault_->gate_==gid) { 

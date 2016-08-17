@@ -297,10 +297,7 @@ bool Implicator::GetJFrontier(GateVec& jf) {
 }
 
 bool Implicator::MakeDecision(Gate *g, Value v) {
-    // if (!SetVal(g->id_, v)) return false; 
     assert(g->type_==Gate::PI || g->type_==Gate::PPI); 
-    if (!SetVal(g->id_, v)) assert(0); 
-    // if (!SetVal(g->id_, HexValue(v))) assert(0); 
 
     //TODO: HexValue backtrack functionality 
     decision_tree_.put(g->id_, e_front_list_.size()); 

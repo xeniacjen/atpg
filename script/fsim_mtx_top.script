@@ -1,0 +1,12 @@
+read_lib techlib/tsmc18.mdt
+read_netlist verilog/mtx_top_nl.v
+report_netlist
+build_circuit --frame 1
+report_circuit
+read_pattern pat/mtx_top_loc_t.pat
+set_fault_type saf
+add_fault -a
+run_fault_sim
+report_statistics
+report_memory_usage
+exit
