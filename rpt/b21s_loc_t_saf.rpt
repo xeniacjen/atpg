@@ -11,20 +11,20 @@
 #    PT (possibly testable)                        0
 #    AU (atpg untestable)                         12
 #    RE (redundant)                                0
-#    AB (atpg abort)                            1242
+#    AB (atpg abort)                            1151
 #    TI (tied)                                     0
 #    --------------------------  -------------------
-#    DT (detected)                             27310
+#    DT (detected)                             27401
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
-#    test coverage                            95.65%
-#    fault coverage                           95.61%
-#    atpg effectiveness                       95.65%
+#    test coverage                            95.97%
+#    fault coverage                           95.93%
+#    atpg effectiveness                       95.97%
 #  -------------------------------------------------
-#  #Patterns                                     803
-#  Ave.Spec-rate                               15.4%
-#  Max.Spec-rate                              72.22%
+#  #Patterns                                     650
+#  Ave.Spec-rate                              20.44%
+#  Max.Spec-rate                              61.88%
 #  -------------------------------------------------
-#  ATPG runtime                              42.16 s
+#  ATPG runtime                               72.9 s
 #  -------------------------------------------------

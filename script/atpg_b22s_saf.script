@@ -6,7 +6,7 @@ set_fault_type saf
 add_fault --all
 set_X-Fill on
 set_static_compression on
-# set_dynamic_compression on
+set_dynamic_compression on
 run_atpg
 report_statistics > rpt/b22s_loc_t_saf.rpt
 exit
