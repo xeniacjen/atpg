@@ -19,7 +19,7 @@
 #ifndef _CORE_ATPG_H_ 
 #define _CORE_ATPG_H_ 
 
-#define _MAX_BACK_TRACK_LIMIT_  64
+#define _MAX_BACK_TRACK_LIMIT_  32
 
 #include <map>
 
@@ -177,7 +177,7 @@ inline bool Atpg::CheckDPath(Gate *g) const {
 }
 
 inline bool Atpg::TurnOnPoMode() { 
-    is_path_oriented_mode_ = true; 
+    // is_path_oriented_mode_ = true; 
     back_track_limit = _MAX_BACK_TRACK_LIMIT_; 
 
     return is_path_oriented_mode_; 
