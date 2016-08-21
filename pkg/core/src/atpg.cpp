@@ -114,6 +114,14 @@ bool Atpg::FaultActivate() { // TODO: TDF support
 }
 
 bool Atpg::CheckDFrontier(GateVec &dfront) { 
+   if (is_path_oriented_mode_) { 
+       for (int i=dfront.size()-1; i>=0; i--) 
+           if (!CheckDPath(dfront[i])) { 
+               dfront[i] = dfront.back(); 
+              dfront.pop_back(); 
+           }
+   }
+
    ResetXPath(); 
    for (int i=dfront.size()-1; i>=0; i--) 
         if (!CheckXPath(dfront[i])) { 
@@ -121,24 +129,7 @@ bool Atpg::CheckDFrontier(GateVec &dfront) {
             dfront.pop_back(); 
         }
 
-    if (dfront.empty()) return false; 
-
-    if (is_path_oriented_mode_) { 
-        GateVec gates_driven_first; 
-        for (int i=dfront.size()-1; i>=0; i--) 
-            if (CheckDPath(dfront[i])) { 
-               gates_driven_first.push_back(dfront[i]); 
-               dfront[i] = dfront.back(); 
-               dfront.pop_back(); 
-            }
-
-        while (!gates_driven_first.empty()) { 
-            dfront.push_back(gates_driven_first.back()); 
-            gates_driven_first.pop_back(); 
-        }
-    } 
-
-    return true; 
+    return (!dfront.empty()); 
 } 
 
 bool Atpg::DDDrive() { 
