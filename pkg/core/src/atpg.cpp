@@ -18,6 +18,7 @@
 
 #include <cassert>
 #include <climits>
+#include <algorithm>
 
 #include "atpg.h" 
 
@@ -132,6 +133,7 @@ bool Atpg::CheckDFrontier(GateVec &dfront) {
     return (!dfront.empty()); 
 } 
 
+bool comp_gate(Gate* g1, Gate* g2); 
 bool Atpg::DDDrive() { 
     GateVec dpath; 
     int gid; 
@@ -152,15 +154,8 @@ bool Atpg::DDDrive() {
     
             if (!CheckDFrontier(dfront)) return false;
     
-            // TODO: sort the D-frontier 
+            sort (dfront.begin(), dfront.end(), comp_gate); 
             gtoprop = dfront.back(); 
-            // Gate *gtoprop = NULL; 
-            // int observ = INT_MAX; 
-            // for (size_t i=0; i<dfront.size(); i++) 
-            //     if(dfront[i]->co_o_<observ) { 
-            //        gtoprop = dfront[i]; 
-            //        observ = dfront[i]->co_o_; 
-            //    }
     
             assert(gtoprop->isUnary()==L); 
             d_tree_.push(dfront, 
@@ -179,6 +174,10 @@ bool Atpg::DDDrive() {
     }
 
     return false; // D-path justification failed 
+}
+
+bool comp_gate(Gate* g1, Gate* g2) { 
+    return g1->co_o_ > g2->co_o_; 
 }
 
 bool Atpg::DDrive() { 
