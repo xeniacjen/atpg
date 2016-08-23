@@ -154,7 +154,7 @@ bool Atpg::DDDrive() {
     
             if (!CheckDFrontier(dfront)) return false;
     
-            sort (dfront.begin(), dfront.end(), comp_gate); 
+            // sort (dfront.begin(), dfront.end(), comp_gate); 
             gtoprop = dfront.back(); 
     
             assert(gtoprop->isUnary()==L); 
@@ -177,7 +177,7 @@ bool Atpg::DDDrive() {
 }
 
 bool comp_gate(Gate* g1, Gate* g2) { 
-    return g1->co_o_ > g2->co_o_; 
+    return g1->co_o_ < g2->co_o_; 
 }
 
 bool Atpg::DDrive() { 
