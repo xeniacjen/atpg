@@ -35,6 +35,7 @@ public:
     // * fault states  , defined according to TMAX
     // *     UD     undetected
     // *     DT     detected
+    // *     DH     hard but detected
     // *     PT     possibly testable
     // *     AU     ATPG untestable
     // *     TI     tied to logic zero or one 
@@ -42,7 +43,7 @@ public:
     // *     AB     aborted
     // ************************************
     enum  Type { SA0 = 0, SA1, STR, STF, BR };
-    enum  State { UD = 0, DT, PT, AU, TI, RE, AB };
+    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB };
 
           Fault();
           Fault(int gate, Type type, int line, int aggr = -1);
@@ -125,6 +126,9 @@ inline void Fault::print() const
             break;
         case Fault::DT:
             cout << " DT     ";
+            break;
+        case Fault::DH:
+            cout << " DH     ";
             break;
         case Fault::PT:
             cout << " PT     ";

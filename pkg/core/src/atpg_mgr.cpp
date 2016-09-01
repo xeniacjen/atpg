@@ -149,6 +149,8 @@ void AtpgMgr::generation() {
             pcoll_->npat_hard_++; 
             atpg_->GetPiPattern(p); 
 
+            flist.front()->state_ = Fault::DH; 
+
             if (pcoll_->dynamicCompression_==PatternProcessor::ON) 
                DynamicCompression(flist); 
 

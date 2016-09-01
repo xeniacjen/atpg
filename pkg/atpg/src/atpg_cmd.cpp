@@ -337,6 +337,8 @@ bool ReportFaultCmd::exec(const vector<string> &argv) {
             state = Fault::UD;
         else if (stateStr == "dt" || stateStr == "DT")
             state = Fault::DT;
+        else if (stateStr == "dh" || stateStr == "DH")
+            state = Fault::DH;
         else if (stateStr == "au" || stateStr == "AU")
             state = Fault::AU;
         else if (stateStr == "ti" || stateStr == "TI")
@@ -376,7 +378,7 @@ bool ReportFaultCmd::exec(const vector<string> &argv) {
     cout << "#    ----    ----    ----------------------------------" << endl;
     FaultListIter it = fanMgr_->atpg_mgr->fListExtract_->current_.begin();
     for ( ; it != fanMgr_->atpg_mgr->fListExtract_->current_.end(); ++it) {
-        if (!stateSet || (*it)->state_ != state)
+        if (stateSet && (*it)->state_ != state)
             continue;
         cout << "#    ";
         switch ((*it)->type_) {
@@ -402,6 +404,9 @@ bool ReportFaultCmd::exec(const vector<string> &argv) {
                 break;
             case Fault::DT:
                 cout << " DT     ";
+                break;
+            case Fault::DH: 
+                cout << " DH     ";
                 break;
             case Fault::PT:
                 cout << " PT     ";
@@ -793,6 +798,7 @@ bool ReportStatsCmd::exec(const vector<string> &argv) {
     size_t fu = fanMgr_->atpg_mgr->fListExtract_->current_.size();
     size_t ud = 0;
     size_t dt = 0;
+    size_t dh = 0; 
     size_t pt = 0;
     size_t au = 0;
     size_t ti = 0;
@@ -809,6 +815,10 @@ bool ReportStatsCmd::exec(const vector<string> &argv) {
             case Fault::DT:
                 dt++;
                 break;
+            case Fault::DH: 
+                dt++; 
+                dh++; 
+                break; 
             case Fault::PT:
                 pt++;
                 break;
@@ -853,6 +863,7 @@ bool ReportStatsCmd::exec(const vector<string> &argv) {
     cout << "#    RE (redundant)              " << setw(19) << re    << endl;
     cout << "#    AB (atpg abort)             " << setw(19) << ab    << endl;
     cout << "#    TI (tied)                   " << setw(19) << ti    << endl;
+    cout << "#    DH (hard-but-detected)      " << setw(19) << dh    << endl; 
     cout << "#    --------------------------  -------------------"   << endl;
     cout << "#    DT (detected)               " << setw(19) << dt    << endl;
     cout << "#  -------------------------------------------------"   << endl;
@@ -1109,6 +1120,213 @@ bool RunAtpgCmd::exec(const vector<string> &argv) {
 
     return true;
 } //}}}
+
+WriteFaultCmd::WriteFaultCmd(const std::string &name, FanMgr *fanMgr) :
+  Cmd(name) { 
+    fanMgr_ = fanMgr;
+    optMgr_.setName(name);
+    optMgr_.setShortDes("write faults");
+    optMgr_.setDes("writes faults to FILE");
+    Arg *arg = new Arg(Arg::REQ, "output pattern file", "FILE");
+    optMgr_.regArg(arg);
+    Opt *opt = new Opt(Opt::BOOL, "print usage", "");
+    opt->addFlag("h");
+    opt->addFlag("help");
+    optMgr_.regOpt(opt);
+    opt = new Opt(Opt::STR_REQ, "fault format. Currently supports only `script'", "FORMAT");
+    opt->addFlag("f");
+    opt->addFlag("format");
+    optMgr_.regOpt(opt);
+    opt = new Opt(Opt::STR_REQ, "write only faults with state STATE",
+                  "STATE");
+    opt->addFlag("s");
+    opt->addFlag("state");
+    optMgr_.regOpt(opt);
+}
+
+WriteFaultCmd::~WriteFaultCmd() {} 
+
+bool WriteFaultCmd::exec(const vector<string> &argv) {
+    optMgr_.parse(argv);
+
+    if (optMgr_.isFlagSet("h")) {
+        optMgr_.usage();
+        return true;
+    }
+
+    if (optMgr_.getNParsedArg() < 1) {
+        cerr << "**ERROR WriteFaultCmd::exec(): output file needed";
+        cerr << endl;
+        return false;
+    }
+
+    if (!fanMgr_->atpg_mgr->fListExtract_) {
+        cerr << "**ERROR WriteFaultCmd::exec(): fault list needed" << endl;
+        return false;
+    }
+
+    ofstream fout; 
+    fout.open(optMgr_.getParsedArg(0).c_str()); 
+    if (!fout.is_open()) { 
+        cerr << "**ERROR WriteFaultCmd::exec(): file `";
+        cerr << optMgr_.getParsedArg(0) << "' cannot be opened\n"; 
+        return false;
+    } 
+
+    fout << "#  Writing fault to `" << optMgr_.getParsedArg(0) << "' ...";
+    fout << endl;
+
+    bool stateSet = false;
+    Fault::State state = Fault::UD;
+    if (optMgr_.isFlagSet("s")) {
+        stateSet = true;
+        string stateStr = optMgr_.getFlagVar("s");
+        if (stateStr == "ud" || stateStr == "UD")
+            state = Fault::UD;
+        else if (stateStr == "dt" || stateStr == "DT")
+            state = Fault::DT;
+        else if (stateStr == "dh" || stateStr == "DH")
+            state = Fault::DH;
+        else if (stateStr == "au" || stateStr == "AU")
+            state = Fault::AU;
+        else if (stateStr == "ti" || stateStr == "TI")
+            state = Fault::TI;
+        else if (stateStr == "re" || stateStr == "RE")
+            state = Fault::RE;
+        else if (stateStr == "ab" || stateStr == "AB")
+            state = Fault::AB;
+        else if (stateStr == "pt" || stateStr == "PT")
+            state = Fault::PT;
+        else {
+            stateSet = true;
+            cerr << "**WARN ReportFaultCmd::exec(): fault state `";
+            cerr << stateStr << "' is not supported" << endl;
+        }
+    }
+
+    fout << "#  fault information"    << endl;
+    fout << "#    fault type:       ";
+    fout << "#    number of faults: " << fanMgr_->atpg_mgr->fListExtract_->current_.size();
+    fout << endl;
+    fout << "#    type    code    pin (cell)" << endl;
+    fout << "#    ----    ----    ----------------------------------" << endl;
+    FaultListIter it = fanMgr_->atpg_mgr->fListExtract_->current_.begin();
+    for ( ; it != fanMgr_->atpg_mgr->fListExtract_->current_.end(); ++it) {
+        if (stateSet && (*it)->state_ != state)
+            continue;
+        fout << "add_fault    ";
+        switch ((*it)->type_) {
+            case Fault::SA0:
+                fout << "SA0     ";
+                break;
+            case Fault::SA1:
+                fout << "SA1     ";
+                break;
+            case Fault::STR:
+                fout << "STR     ";
+                break;
+            case Fault::STF:
+                fout << "STF     ";
+                break;
+            case Fault::BR:
+                fout << "BR      ";
+                break;
+        }
+        int cid = fanMgr_->atpg_mgr->cir_->gates_[(*it)->gate_].cid_;
+        int pid = (*it)->line_;
+        int pmtid = fanMgr_->atpg_mgr->cir_->gates_[(*it)->gate_].pmtid_;
+        if ((*it)->gate_ == -1) { //CK
+            fout << "CK";
+        }
+        else if ((*it)->gate_ == -2) { //test_si
+            fout << "test_si";
+        }
+        else if ((*it)->gate_ == -3) { //test_so
+            fout << "test_so";
+        }
+        else if ((*it)->gate_ == -4) { //test_se
+            fout << "test_se";
+        }
+        else if (fanMgr_->atpg_mgr->cir_->gates_[(*it)->gate_].type_ == Gate::PI) {
+            fout << fanMgr_->nl->getTop()->getPort(cid)->name_ << " ";
+            fout << "(primary input)";
+        }
+        else if (fanMgr_->atpg_mgr->cir_->gates_[(*it)->gate_].type_ == Gate::PO) {
+            fout << fanMgr_->nl->getTop()->getPort(cid)->name_ << " ";
+            fout << "(primary output)";
+        }
+        else {
+            Cell *c = fanMgr_->nl->getTop()->getCell(cid);
+            //fout << "test" << c->name_<< " " << cid << endl;
+            Cell *libc = c->libc_;
+            Cell *pmt = libc->getCell(pmtid);
+            Port *p = NULL;
+            if (pid < 0) {// must be CK,SE,SI pins on FF
+                if (pid == -1)
+                    fout << c->name_ << "/CK ";
+                else if (pid == -2)
+                    fout << c->name_ << "/SE ";
+                else if (pid == -3)
+                    fout << c->name_ << "/SI ";
+                else
+                    fout << c->name_ << "/QN ";
+            }
+            else if (pid == 0) { // output
+                if (!strcmp(libc->name_,"SDFFXL"))
+                    fout << c->name_ << "/" << "Q" << " ";
+                else {
+                    for (size_t i = 0; i < pmt->getNPort(); ++i) {
+                        if (pmt->getPort(i)->type_ != Port::OUTPUT)
+                            continue;
+                        Net *n = pmt->getPort(i)->exNet_;
+                        if (!n)
+                            continue;
+                        PortSet pset = libc->getNetPorts(n->id_);
+                        PortSet::iterator pit = pset.begin();
+                        for ( ; pit != pset.end(); ++pit) {
+                            if ((*pit)->top_ != libc)
+                                continue;
+                            p = (*pit);
+                            break;
+                        }
+                        if (p)
+                            break;
+                    }
+                }
+            }
+            else { // input
+                int inCount = 0;
+                for (size_t i = 0; i < pmt->getNPort(); ++i) {
+                    if (pmt->getPort(i)->type_ == Port::INPUT)
+                        inCount++;
+                    if (inCount != pid)
+                        continue;
+                    Net *n = pmt->getPort(i)->exNet_;
+                    if (!n)
+                        continue;
+                    PortSet pset = libc->getNetPorts(n->id_);
+                    PortSet::iterator pit = pset.begin();
+                    for ( ; pit != pset.end(); ++pit) {
+                        if ((*pit)->top_ != libc)
+                            continue;
+                        p = (*pit);
+                        break;
+                    }
+                    if (p)
+                        break;
+                }
+            }
+            if (p)
+                fout << c->name_ << "/" << p->name_ << " ";
+            fout << "(" << libc->name_ << ")";
+        }
+        fout << endl;
+    }
+    fout << endl;
+
+    fout.close(); 
+    return true;
+}
 
 //{{{ WritePatCmd::WritePatCmd()
 WritePatCmd::WritePatCmd(const std::string &name, FanMgr *fanMgr) :

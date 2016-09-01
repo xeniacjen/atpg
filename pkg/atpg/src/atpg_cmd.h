@@ -153,6 +153,17 @@ private:
     FanMgr *fanMgr_;
 };
 
+class WriteFaultCmd : public CommonNs::Cmd { 
+public: 
+         WriteFaultCmd(const std::string &name, FanMgr *fanMgr); 
+         ~WriteFaultCmd(); 
+
+    bool exec(const std::vector<std::string> &argv);
+
+private:
+    FanMgr *fanMgr_;
+}; 
+
 class WritePatCmd : public CommonNs::Cmd {
 public:
          WritePatCmd(const std::string &name, FanMgr *fanMgr);
