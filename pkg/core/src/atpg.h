@@ -19,7 +19,7 @@
 #ifndef _CORE_ATPG_H_ 
 #define _CORE_ATPG_H_ 
 
-#define _MAX_BACK_TRACK_LIMIT_  256
+#define _MAX_BACK_TRACK_LIMIT_  256 
 
 #include <map>
 
@@ -60,6 +60,7 @@ protected:
     virtual bool Backtrace(); 
 
     bool CheckObjs(); 
+    bool GenObjs(); 
 
     bool DBackTrack(); 
     bool CheckPath(const GateVec &path) const; 

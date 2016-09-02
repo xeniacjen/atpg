@@ -48,15 +48,18 @@ void AtpgMgr::generation() {
             flist.pop_front(); 
             continue; 
         }
-        // if (flist.front()->state_==Fault::AB) 
-        if (flist.front()->state_==Fault::AB 
-          || flist.front()->state_==Fault::PT) 
+        // if (flist.front()->state_==Fault::AB 
+        //   || flist.front()->state_==Fault::PT) 
+        if (flist.front()->state_==Fault::AB) 
             break; 
 
         if (f==flist.front()) { 
-            f->state_ = Fault::PT; 
-            flist.push_back(flist.front()); 
-            flist.pop_front(); 
+            cerr << "**ERROR AtpgMgr::generation(): fault not dropped ";  
+            cerr << endl; 
+            assert(0); 
+            // f->state_ = Fault::PT; 
+            // flist.push_back(flist.front()); 
+            // flist.pop_front(); 
         }
 
         f = flist.front();  
@@ -129,9 +132,12 @@ void AtpgMgr::generation() {
             break; 
 
         if (f==flist.front()) { 
-            f->state_ = Fault::PT; 
-            flist.push_back(flist.front()); 
-            flist.pop_front(); 
+            cerr << "**ERROR AtpgMgr::generation(): fault not dropped ";  
+            cerr << endl; 
+            assert(0); 
+            // f->state_ = Fault::PT; 
+            // flist.push_back(flist.front()); 
+            // flist.pop_front(); 
         }
 
         f = flist.front();  
