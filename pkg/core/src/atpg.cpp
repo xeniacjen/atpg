@@ -133,7 +133,63 @@ bool Atpg::CheckDFrontier(GateVec &dfront) {
     return (!dfront.empty()); 
 } 
 
+bool Atpg::GenObjs() { 
+    int gid; 
+
+    objs_.clear(); 
+
+    // get the previous object 
+    d_tree_.top(gid); 
+    Gate *gtoprop = &cir_->gates_[gid]; 
+
+    Objective obj; 
+    obj.first = gtoprop->id_; 
+    obj.second = gtoprop->getOutputCtrlValue(); 
+    Value v = impl_->GetVal(obj.first); 
+
+    if (v==D || v==B) // D-frontier pushed forward 
+        return true; 
+    else if (v!=X) // D-frontier compromised 
+        return false;  
+    else  
+        objs_.insert(obj); 
+
+    current_obj_ = *objs_.begin(); 
+    return true; 
+}
+
 bool comp_gate(Gate* g1, Gate* g2); 
+bool Atpg::MultiDDrive() { 
+    GateVec dpath; 
+
+    if (!GenObjs()) return false; 
+
+    // Check path is sensitized 
+    d_tree_.GetPath(dpath); 
+    if (CheckPath(dpath)) { 
+        if (objs_.empty()) { // D-frontier pushed forward 
+            GateVec dfront; 
+            impl_->GetDFrontier(dfront); 
+    
+            if (!CheckDFrontier(dfront)) return false;
+    
+            // sort (dfront.begin(), dfront.end(), comp_gate); 
+            Gate *gtoprop = dfront.back(); 
+    
+            assert(gtoprop->isUnary()==L); 
+            d_tree_.push(dfront, 
+                impl_->GetEFrontierSize(), 
+                impl_->getDecisionTree()); 
+            impl_->ClearDecisionTree();  
+
+            return GenObjs(); 
+        } 
+        else return true; // initial objective unchanged 
+    }
+
+    return false; // D-path justification failed 
+}
+
 bool Atpg::DDDrive() { 
     GateVec dpath; 
     int gid; 
@@ -182,6 +238,7 @@ bool comp_gate(Gate* g1, Gate* g2) {
 
 bool Atpg::DDrive() { 
     if (is_path_oriented_mode_) return DDDrive(); 
+    // if (is_path_oriented_mode_) return MultiDDrive(); 
 
     GateVec dfront; 
     impl_->GetDFrontier(dfront); 
@@ -292,7 +349,7 @@ bool Atpg::BackTrack() {
 }
 
 bool Atpg::DBackTrack() { 
-    back_track_count++; 
+    // back_track_count++; 
     if (back_track_count>=back_track_limit) return false; 
 
     // int gid; 

@@ -47,8 +47,11 @@ public:
 
 private: 
     bool DDDrive(); 
+    bool MultiDDrive(); 
     bool isTestPossible(); 
     bool isaTest(); 
+
+    bool MultiDBackTrack(); 
 
     bool        is_path_oriented_mode_; 
     ObjList     objs_; 
@@ -59,7 +62,7 @@ protected:
     virtual bool DDrive(); 
     virtual bool Backtrace(); 
 
-    bool CheckObjs(); 
+    bool GenObjs(); 
 
     bool DBackTrack(); 
     bool CheckPath(const GateVec &path) const; 
