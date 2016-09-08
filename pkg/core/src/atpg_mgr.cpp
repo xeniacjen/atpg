@@ -137,6 +137,7 @@ void AtpgMgr::generation() {
         f = flist.front();  
         atpg_ = new Atpg(cir_, f); 
         atpg_->TurnOnPoMode(); 
+        atpg_->TurnOnObjOptimMode(); 
         Atpg::GenStatus ret = atpg_->Tpg(); 
 
         if (ret==Atpg::TEST_FOUND) { 

@@ -168,11 +168,17 @@ inline bool Atpg::CheckXPath(Gate *g) {
 
 inline bool Atpg::CheckDPath(Gate *g) const { 
     // get the previous object 
-    GateVec gids; d_tree_.top(gids); // TODO: make a switch 
-    for (size_t i=0; i<gids.size(); i++) { 
-        if (g->id_==gids[i]->id_) { 
-            return true; 
+    if (is_obj_optim_mode_) { 
+        GateVec gids; d_tree_.top(gids); // TODO: make a switch 
+        for (size_t i=0; i<gids.size(); i++) { 
+            if (g->id_==gids[i]->id_) { 
+                return true; 
+            }
         }
+    } 
+    else { 
+        int gid; d_tree_.top(gid); 
+        if (g->id_==gid) return true; 
     }
 
     for (int i=0; i<g->nfi_; i++) { 

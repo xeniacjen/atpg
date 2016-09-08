@@ -240,8 +240,8 @@ bool comp_gate(Gate* g1, Gate* g2) {
 }
 
 bool Atpg::DDrive() { 
-    // if (is_path_oriented_mode_) return DDDrive(); 
-    if (is_path_oriented_mode_) return MultiDDrive(); 
+    if (is_obj_optim_mode_) return MultiDDrive(); 
+    if (is_path_oriented_mode_) return DDDrive(); 
 
     GateVec dfront; 
     impl_->GetDFrontier(dfront); 
