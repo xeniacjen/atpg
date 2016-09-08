@@ -557,6 +557,7 @@ GetDFrontierNCheck	core/src/implicator.cpp	/^bool Implicator::GetDFrontierNCheck
 GetEFrontierSize	core/src/implicator.h	/^inline size_t Implicator::GetEFrontierSize() const { $/;"	f	class:CoreNs::Implicator
 GetHexVal	core/src/implicator.h	/^inline HexValue Implicator::GetHexVal(int gid) const {$/;"	f	class:CoreNs::Implicator
 GetJFrontier	core/src/implicator.cpp	/^bool Implicator::GetJFrontier(GateVec& jf) { $/;"	f	class:Implicator
+GetMultiPath	core/src/d_decision_tree.h	/^inline void DDTree::GetMultiPath(GateVec &path) const { $/;"	f	class:CoreNs::DDTree
 GetPath	core/src/d_decision_tree.h	/^inline void DDTree::GetPath(GateVec &path) const { $/;"	f	class:CoreNs::DDTree
 GetPiPattern	core/src/atpg.h	/^inline void Atpg::GetPiPattern(Pattern *p) { $/;"	f	class:CoreNs::Atpg
 GetPiPattern	core/src/implicator.h	/^inline void Implicator::GetPiPattern(Pattern *p) const {$/;"	f	class:CoreNs::Implicator
@@ -4081,7 +4082,9 @@ tgate_	core/src/circuit.h	/^    int             tgate_;       \/\/ number of tot
 tlvl_	core/src/circuit.h	/^    int             tlvl_;        \/\/ total level$/;"	m	class:CoreNs::Circuit
 tmusg	atpg/src/fan_mgr.h	/^    CommonNs::TmUsage   tmusg;$/;"	m	class:FanNs::FanMgr
 top	core/src/d_decision_tree.h	/^inline Gate *DDNode::top() const { $/;"	f	class:CoreNs::DDNode
+top	core/src/d_decision_tree.h	/^inline unsigned DDTree::top(GateVec &gids) const {$/;"	f	class:CoreNs::DDTree
 top	core/src/d_decision_tree.h	/^inline unsigned DDTree::top(int &gid) const { $/;"	f	class:CoreNs::DDTree
+top	core/src/d_decision_tree.h	/^inline void DDNode::top(GateVec &gids) const { $/;"	f	class:CoreNs::DDNode
 top_	interface/src/cell.h	/^            Cell    *top_;$/;"	m	class:IntfNs::Cell
 top_	interface/src/cell.h	/^    Cell   *top_;$/;"	m	class:IntfNs::Net
 top_	interface/src/cell.h	/^    Cell *top_;$/;"	m	class:IntfNs::Port

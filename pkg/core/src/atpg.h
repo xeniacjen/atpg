@@ -42,6 +42,7 @@ public:
     virtual GenStatus Tpg(); 
     void    GetPiPattern(Pattern *p); 
     bool    TurnOnPoMode(); 
+    bool    TurnOnObjOptimMode(); 
 
     bool    CheckCompatibility(Fault *f);  
 
@@ -54,6 +55,7 @@ private:
     bool MultiDBackTrack(); 
 
     bool        is_path_oriented_mode_; 
+    bool        is_obj_optim_mode_; 
     ObjList     objs_; 
     Objective   current_obj_; 
 
@@ -97,6 +99,7 @@ inline Atpg::Atpg(Circuit *cir, Fault *f) {
     current_fault_ = f; 
 
     is_path_oriented_mode_ = false; 
+    is_obj_optim_mode_ = false; 
     impl_ = new Implicator(cir, f); 
     x_path_ = new Value[cir_->tgate_]; 
 
@@ -108,6 +111,7 @@ inline Atpg::Atpg(Circuit *cir, Fault *f, Pattern *p) {
     current_fault_ = f; 
 
     is_path_oriented_mode_ = false; 
+    is_obj_optim_mode_ = false; 
     impl_ = new Implicator(cir, f); 
     x_path_ = new Value[cir_->tgate_]; 
 
@@ -128,7 +132,7 @@ inline bool Atpg::CheckPath(const GateVec &path) const {
 
     GateVec p = path; 
 
-    p.pop_back(); // pass the currently justifying gate 
+    // p.pop_back(); // pass the currently justifying gate 
     while (!p.empty()) { 
         Value v = impl_->GetVal(p.back()->id_); 
         if (v!=D && v!=B) return false; 
@@ -163,8 +167,12 @@ inline bool Atpg::CheckXPath(Gate *g) {
 }
 
 inline bool Atpg::CheckDPath(Gate *g) const { 
-    if (g->id_==current_obj_.first) { 
-        return true; 
+    // get the previous object 
+    GateVec gids; d_tree_.top(gids); // TODO: make a switch 
+    for (size_t i=0; i<gids.size(); i++) { 
+        if (g->id_==gids[i]->id_) { 
+            return true; 
+        }
     }
 
     for (int i=0; i<g->nfi_; i++) { 
@@ -185,6 +193,12 @@ inline bool Atpg::TurnOnPoMode() {
 
     return is_path_oriented_mode_; 
 }
+
+inline bool Atpg::TurnOnObjOptimMode() { 
+    is_obj_optim_mode_ = true; 
+
+    return is_obj_optim_mode_; 
+} 
 
 inline void Atpg::ResetXPath() { 
     for (int i=0; i<cir_->tgate_; i++) 

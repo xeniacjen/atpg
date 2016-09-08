@@ -31,6 +31,7 @@ struct DDNode {
 
     bool         empty() const; 
     Gate        *top() const; 
+    void         top(GateVec &gids) const;        
     void         pop(); 
     void         getJTree(DecisionTree &tree) const; 
   protected: 
@@ -50,9 +51,11 @@ class DDTree {
            const DecisionTree &tree); 
     bool pop(DecisionTree &tree); 
     unsigned top(int &gid) const; 
+    unsigned top(GateVec &gids) const; 
     bool empty() const;  
 
     void GetPath(GateVec &path) const; // retuen path by reference  
+    void GetMultiPath(GateVec &path) const; // retuen path by reference  
 
   protected: 
     std::vector<DDNode*> trees_; 
@@ -72,6 +75,10 @@ inline bool DDNode::empty() const {
 
 inline Gate *DDNode::top() const { 
     return dfront_.back(); 
+} 
+
+inline void DDNode::top(GateVec &gids) const { 
+    gids = dfront_; 
 } 
 
 inline void DDNode::pop() { 
@@ -118,6 +125,12 @@ inline unsigned DDTree::top(int &gid) const {
     return trees_.back()->startPoint_; 
 }
 
+inline unsigned DDTree::top(GateVec &gids) const {
+    trees_.back()->top(gids); 
+
+    return trees_.back()->startPoint_; 
+}
+
 inline bool DDTree::empty() const { 
     return trees_.empty(); 
 }
@@ -125,8 +138,18 @@ inline bool DDTree::empty() const {
 inline void DDTree::GetPath(GateVec &path) const { 
     path.clear(); 
 
-    for (size_t i=0; i<trees_.size(); i++) 
+    for (size_t i=0; i<trees_.size()-1; i++) 
         path.push_back(trees_[i]->top()); 
+}
+
+inline void DDTree::GetMultiPath(GateVec &path) const { 
+    path.clear(); 
+
+    for (size_t i=0; i<trees_.size()-1; i++) { 
+        GateVec gids; 
+        trees_[i]->top(gids); 
+        path.insert(path.end(), gids.begin(), gids.end()); 
+    }
 }
 
 } // CoreNs 
