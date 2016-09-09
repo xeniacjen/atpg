@@ -31,6 +31,13 @@ Atpg::GenStatus Atpg::Tpg() {
         GateVec f; f.push_back(&cir_->gates_[current_fault_->gate_]); 
         DecisionTree tree_dummy; tree_dummy.clear(); 
         d_tree_.push(f, 0, tree_dummy); 
+
+        if (is_obj_optim_mode_) { 
+            Value *mask = new Value [f.size()]; 
+            for (size_t i=0; i<f.size(); i++) 
+                mask[i] = H; 
+            d_tree_.top()->set_mask_(mask); 
+        }
     }
 
     while (true) { 

@@ -784,6 +784,7 @@ MdtLibBuilder	interface/src/techlib_builder.h	/^inline MdtLibBuilder::MdtLibBuil
 MdtNames	interface/src/mdt_file.h	/^struct MdtNames {$/;"	s	namespace:IntfNs
 MdtPortToNet	interface/src/mdt_file.h	/^struct MdtPortToNet {$/;"	s	namespace:IntfNs
 MdtPortType	interface/src/mdt_file.h	/^enum MdtPortType { MDT_PORT_INPUT, MDT_PORT_OUTPUT, MDT_PORT_INOUT,$/;"	g	namespace:IntfNs
+MultiDBackTrack	core/src/atpg.cpp	/^bool Atpg::MultiDBackTrack(DecisionTree &tree) { $/;"	f	class:Atpg
 MultiDDrive	core/src/atpg.cpp	/^bool Atpg::MultiDDrive() { $/;"	f	class:Atpg
 NA	atpg/src/atpg_cmd.h	/^    enum Type { NA = -1, $/;"	e	enum:FanNs::ReportScoapCmd::Type
 NA	core/src/gate.h	/^    enum      Type { NA = 0,$/;"	e	enum:CoreNs::Gate::Type
@@ -1319,6 +1320,7 @@ TmUsage	common/src/tm_usage.h	/^class TmUsage {$/;"	c	namespace:CommonNs
 TmUsage	common/src/tm_usage/tm_usage.cpp	/^TmUsage::TmUsage() {$/;"	f	class:TmUsage
 TmUsage	common/src/tm_usage/tm_usage.h	/^class TmUsage {$/;"	c	namespace:CommonNs
 Tpg	core/src/atpg.cpp	/^Atpg::GenStatus Atpg::Tpg() { $/;"	f	class:Atpg
+TurnOnObjOptimMode	core/src/atpg.h	/^inline bool Atpg::TurnOnObjOptimMode() { $/;"	f	class:CoreNs::Atpg
 TurnOnPoMode	core/src/atpg.h	/^inline bool Atpg::TurnOnPoMode() { $/;"	f	class:CoreNs::Atpg
 Type	atpg/src/atpg_cmd.h	/^    enum Type { NA = -1, $/;"	g	class:FanNs::ReportScoapCmd
 Type	common/src/get_opt.h	/^    enum        Type { BOOL = 0, STR_REQ, STR_OPT };$/;"	g	struct:CommonNs::Opt
@@ -3081,6 +3083,7 @@ current_	core/src/fault.h	/^    FaultList current_;$/;"	m	class:CoreNs::FaultLis
 current_fault_	core/src/atpg.h	/^    Fault      *current_fault_;$/;"	m	class:CoreNs::Atpg
 current_obj_	core/src/atpg.h	/^    Objective   current_obj_; $/;"	m	class:CoreNs::Atpg
 d_front_	core/src/implicator.h	/^    GateSet         d_front_; $/;"	m	class:CoreNs::Implicator
+d_mask_	core/src/d_decision_tree.h	/^    Value       *d_mask_; \/\/ indicate which gates to d-drive $/;"	m	struct:CoreNs::DDNode
 d_tree_	core/src/atpg.h	/^    DDTree      d_tree_; $/;"	m	class:CoreNs::Atpg
 data_	core/src/pattern.h	/^    Value *data_;$/;"	m	class:CoreNs::Vertex
 decision_tree_	core/src/implicator.h	/^    DecisionTree    decision_tree_; $/;"	m	class:CoreNs::Implicator
@@ -3390,6 +3393,7 @@ getTotalUsage	common/src/tm_usage.cpp	/^bool TmUsage::getTotalUsage(TmStat &st) 
 getTotalUsage	common/src/tm_usage/tm_usage.cpp	/^bool TmUsage::getTotalUsage(TmStat &st) const {$/;"	f	class:TmUsage
 getTypeName	core/src/gate.h	/^inline string Gate::getTypeName() const { $/;"	f	class:CoreNs::Gate
 getVars	common/src/cmd.h	/^inline VarMap CmdMgr::getVars() const {$/;"	f	class:CommonNs::CmdMgr
+get_mask_	core/src/d_decision_tree.h	/^inline Value *DDNode::get_mask_(size_t& n) const { $/;"	f	class:CoreNs::DDNode
 gh_	core/src/gate.h	/^    ParaValue gh_;    \/\/ good high$/;"	m	class:CoreNs::Gate
 gid_	core/src/decision_tree.h	/^    int      gid_;   \/\/  the gate ID of the decision$/;"	m	struct:CoreNs::DecisionTreeNode
 gl_	core/src/gate.h	/^    ParaValue gl_;    \/\/ good low$/;"	m	class:CoreNs::Gate
@@ -3439,6 +3443,7 @@ isSubset	core/src/logic-hex.h	/^inline bool HexValue::isSubset(const HexValue& h
 isTestPossible	core/src/atpg.cpp	/^bool Atpg::isTestPossible() { $/;"	f	class:Atpg
 isUnary	core/src/gate.h	/^inline Value Gate::isUnary() const {$/;"	f	class:CoreNs::Gate
 isUnjustified	core/src/implicator.h	/^inline bool Implicator::isUnjustified(int gid) const { $/;"	f	class:CoreNs::Implicator
+is_obj_optim_mode_	core/src/atpg.h	/^    bool        is_obj_optim_mode_; $/;"	m	class:CoreNs::Atpg
 is_path_oriented_mode_	core/src/atpg.h	/^    bool        is_path_oriented_mode_; $/;"	m	class:CoreNs::Atpg
 is_possibly_D	core/src/implicator.h	/^    bool            *is_possibly_D; $/;"	m	class:CoreNs::Implicator
 isaTest	core/src/atpg.cpp	/^bool Atpg::isaTest() { $/;"	f	class:Atpg
@@ -3856,6 +3861,7 @@ po2_	core/src/pattern.h	/^    Value *po2_;$/;"	m	class:CoreNs::Pattern
 poOrder_	core/src/pattern.h	/^    int        *poOrder_;$/;"	m	class:CoreNs::PatternProcessor
 pop	core/src/d_decision_tree.h	/^inline bool DDTree::pop(DecisionTree &tree) { $/;"	f	class:CoreNs::DDTree
 pop	core/src/d_decision_tree.h	/^inline void DDNode::pop() { $/;"	f	class:CoreNs::DDNode
+pop_hard	core/src/d_decision_tree.h	/^inline void DDTree::pop_hard(DecisionTree &tree) { $/;"	f	class:CoreNs::DDTree
 port	interface/src/mdt_file.h	/^    char         port[NAME_LEN];$/;"	m	struct:IntfNs::MdtPortToNet
 port	interface/src/sdf_file.h	/^    char        port[NAME_LEN];$/;"	m	struct:IntfNs::SdfPortSpec
 port	interface/src/vlog_file.h	/^    char          port[NAME_LEN];$/;"	m	struct:IntfNs::VlogPortToNet
@@ -4048,6 +4054,7 @@ setTop	interface/src/netlist.h	/^inline bool Netlist::setTop(const char * const 
 setTop	interface/src/netlist.h	/^inline bool Netlist::setTop(const size_t &i) {$/;"	f	class:IntfNs::Netlist
 setWireNets	interface/src/netlist_builder.cpp	/^void VlogNlBuilder::setWireNets(VlogNames * const nets) {$/;"	f	class:VlogNlBuilder
 setWireNets	interface/src/vlog_file.cpp	/^void VlogFile::setWireNets(VlogNames * const nets) {$/;"	f	class:VlogFile
+set_mask_	core/src/d_decision_tree.h	/^inline void DDNode::set_mask_(Value *mask) { $/;"	f	class:CoreNs::DDNode
 setupCircuitParameter	core/src/circuit.cpp	/^void Circuit::setupCircuitParameter() {$/;"	f	class:Circuit
 short	interface/lib/dbg/lex_n_yacc/lht_pat_file.tab.cpp	187;"	d	file:
 short	interface/lib/dbg/lex_n_yacc/mdt_file.tab.cpp	197;"	d	file:
@@ -4081,6 +4088,7 @@ tfConnectType	core/src/circuit.h	/^    enum            tfConnectType { CAPTURE =
 tgate_	core/src/circuit.h	/^    int             tgate_;       \/\/ number of total gates$/;"	m	class:CoreNs::Circuit
 tlvl_	core/src/circuit.h	/^    int             tlvl_;        \/\/ total level$/;"	m	class:CoreNs::Circuit
 tmusg	atpg/src/fan_mgr.h	/^    CommonNs::TmUsage   tmusg;$/;"	m	class:FanNs::FanMgr
+top	core/src/d_decision_tree.h	/^inline DDNode *DDTree::top() { $/;"	f	class:CoreNs::DDTree
 top	core/src/d_decision_tree.h	/^inline Gate *DDNode::top() const { $/;"	f	class:CoreNs::DDNode
 top	core/src/d_decision_tree.h	/^inline unsigned DDTree::top(GateVec &gids) const {$/;"	f	class:CoreNs::DDTree
 top	core/src/d_decision_tree.h	/^inline unsigned DDTree::top(int &gid) const { $/;"	f	class:CoreNs::DDTree
@@ -5636,6 +5644,7 @@ yywrap	interface/lib/opt/lex_n_yacc/vlog_file.yy.cpp	23;"	d	file:
 ~Circuit	core/src/circuit.h	/^inline Circuit::~Circuit() {$/;"	f	class:CoreNs::Circuit
 ~Cmd	common/src/cmd.h	/^inline Cmd::~Cmd() {}$/;"	f	class:CommonNs::Cmd
 ~CmdMgr	common/src/cmd.h	/^inline CmdMgr::~CmdMgr() {}$/;"	f	class:CommonNs::CmdMgr
+~DDNode	core/src/d_decision_tree.h	/^inline DDNode::~DDNode() { $/;"	f	class:CoreNs::DDNode
 ~DDTree	core/src/d_decision_tree.h	/^inline DDTree::~DDTree() { $/;"	f	class:CoreNs::DDTree
 ~DecisionTree	core/src/decision_tree.h	/^inline DecisionTree::~DecisionTree() {}$/;"	f	class:CoreNs::DecisionTree
 ~FanMgr	atpg/src/fan_mgr.h	/^    ~FanMgr() {}$/;"	f	class:FanNs::FanMgr

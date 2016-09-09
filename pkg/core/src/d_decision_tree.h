@@ -140,6 +140,7 @@ inline bool DDTree::pop(DecisionTree &tree) {
     trees_.back()->pop(); 
 
     if (trees_.back()->empty()) { 
+        delete trees_.back(); 
         trees_.pop_back(); 
         return true; 
     }
@@ -150,6 +151,7 @@ inline bool DDTree::pop(DecisionTree &tree) {
 inline void DDTree::pop_hard(DecisionTree &tree) { 
     trees_.back()->getJTree(tree); 
     
+    delete trees_.back(); 
     trees_.pop_back(); 
 }
 
