@@ -27,6 +27,9 @@ struct DDNode {
                  DDNode(const GateVec &df, 
                    const unsigned &startPoint, 
                    const DecisionTree &tree); 
+
+                 ~DDNode(); 
+
     unsigned     startPoint_; 
 
     bool         empty() const; 
@@ -34,8 +37,12 @@ struct DDNode {
     void         top(GateVec &gids) const;        
     void         pop(); 
     void         getJTree(DecisionTree &tree) const; 
+
+    void         set_mask_(Value *mask); 
+    Value       *get_mask_(size_t& n) const; 
   protected: 
     GateVec      dfront_; 
+    Value       *d_mask_; // indicate which gates to d-drive 
 
     DecisionTree j_tree_; 
 }; // DDNode 
@@ -50,8 +57,10 @@ class DDTree {
            const unsigned &startPoint, 
            const DecisionTree &tree); 
     bool pop(DecisionTree &tree); 
+    void pop_hard(DecisionTree &tree); 
     unsigned top(int &gid) const; 
     unsigned top(GateVec &gids) const; 
+    DDNode *top(); 
     bool empty() const;  
 
     void GetPath(GateVec &path) const; // retuen path by reference  
@@ -67,6 +76,12 @@ inline DDNode::DDNode(const GateVec &df,
     dfront_ = df; 
     startPoint_ = startPoint; 
     j_tree_ = tree; 
+
+    d_mask_ = NULL; 
+}
+
+inline DDNode::~DDNode() { 
+    if (d_mask_) delete [] d_mask_; 
 }
 
 inline bool DDNode::empty() const { 
@@ -78,7 +93,10 @@ inline Gate *DDNode::top() const {
 } 
 
 inline void DDNode::top(GateVec &gids) const { 
-    gids = dfront_; 
+    gids.clear(); 
+    for (size_t i=0; i<dfront_.size(); i++) 
+        if (d_mask_[i]==H)
+            gids.push_back(dfront_[i]); 
 } 
 
 inline void DDNode::pop() { 
@@ -87,6 +105,16 @@ inline void DDNode::pop() {
 
 inline void DDNode::getJTree(DecisionTree &tree) const { 
     tree = j_tree_; 
+}
+
+inline void DDNode::set_mask_(Value *mask) { 
+    d_mask_ = mask; 
+}
+
+inline Value *DDNode::get_mask_(size_t& n) const { 
+    n = dfront_.size(); 
+
+    return d_mask_; 
 }
 
 inline DDTree::~DDTree() { 
@@ -119,6 +147,12 @@ inline bool DDTree::pop(DecisionTree &tree) {
     return false; 
 } 
 
+inline void DDTree::pop_hard(DecisionTree &tree) { 
+    trees_.back()->getJTree(tree); 
+    
+    trees_.pop_back(); 
+}
+
 inline unsigned DDTree::top(int &gid) const { 
     gid = trees_.back()->top()->id_; 
     
@@ -129,6 +163,10 @@ inline unsigned DDTree::top(GateVec &gids) const {
     trees_.back()->top(gids); 
 
     return trees_.back()->startPoint_; 
+}
+
+inline DDNode *DDTree::top() { 
+    return trees_.back(); 
 }
 
 inline bool DDTree::empty() const { 

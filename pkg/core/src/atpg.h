@@ -52,7 +52,7 @@ private:
     bool isTestPossible(); 
     bool isaTest(); 
 
-    bool MultiDBackTrack(); 
+    bool MultiDBackTrack(DecisionTree &tree); 
 
     bool        is_path_oriented_mode_; 
     bool        is_obj_optim_mode_; 

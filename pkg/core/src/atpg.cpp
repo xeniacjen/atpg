@@ -185,6 +185,11 @@ bool Atpg::MultiDDrive() {
                 impl_->getDecisionTree()); 
             impl_->ClearDecisionTree();  
 
+            Value *mask = new Value [dfront.size()]; 
+            for (size_t i=0; i<dfront.size(); i++) 
+                mask[i] = H; 
+            d_tree_.top()->set_mask_(mask); 
+
             return GenObjs(); 
         } 
         else return true; // initial objective unchanged 
@@ -360,20 +365,57 @@ bool Atpg::DBackTrack() {
     DecisionTree tree; 
     while (!d_tree_.empty()) { 
         if (BackTrack()) return true; 
-        if (d_tree_.pop(tree)) { 
-            impl_->setDecisionTree(tree); 
-            if(d_tree_.empty()) return false; 
-            continue; 
+        if (is_obj_optim_mode_) { 
+            if (MultiDBackTrack(tree)) { 
+                impl_->setDecisionTree(tree); 
+                if(d_tree_.empty()) return false; 
+                continue; 
+            } 
         } 
+        else { 
+            if (d_tree_.pop(tree)) { 
+                impl_->setDecisionTree(tree); 
+                if(d_tree_.empty()) return false; 
+                continue; 
+            } 
+        }
         return true; 
     }
 
     return false; 
 } 
 
+bool Atpg::MultiDBackTrack(DecisionTree &tree) { 
+    bool is_flipped = false; 
+    bool ret = true; 
+    size_t size; 
+    Value *mask = d_tree_.top()->get_mask_(size); 
+    // TODO  
+    while (size!=0) { 
+        Value &v = mask[--size]; 
+        if (v==H) { 
+            if (!is_flipped) { 
+                v = L; 
+                is_flipped = true; 
+            }
+            else 
+                ret = false; 
+        }
+        // else { 
+        //     if (!is_flipped) 
+        //         v = L; 
+        // }
+    }
+
+    if (ret) 
+        d_tree_.pop_hard(tree); 
+
+    return ret; 
+}
+
 bool Atpg::CheckCompatibility(Fault *f) { 
     Gate *g = &cir_->gates_[f->gate_]; 
-    // TODO 
+
     Value v = impl_->Get3Val(g->id_); 
     if (v==L  
       && (f->type_==Fault::SA0 
