@@ -95,7 +95,7 @@ inline Gate *DDNode::top() const {
 inline void DDNode::top(GateVec &gids) const { 
     gids.clear(); 
     for (size_t i=0; i<dfront_.size(); i++) 
-        if (d_mask_[i]==H)
+        if (d_mask_[i]==H || d_mask_[i]==X)
             gids.push_back(dfront_[i]); 
 } 
 

@@ -161,6 +161,62 @@ bool Atpg::CheckDFrontier(GateVec &dfront) {
     return (!dfront.empty()); 
 } 
 
+bool Atpg::insertObj(const Objective& obj, ObjList& objs) { 
+    pair<ObjListIter, bool> ret = objs.insert(obj); 
+
+    if (!ret.second && ret.first->second!=obj.second)  
+        return false; 
+
+    return true; 
+} 
+
+bool Atpg::AddGateToProp(Gate *gtoprop) { 
+    Value v = impl_->GetVal(gtoprop->id_); 
+
+    if (v==D || v==B) // D-frontier pushed forward 
+        return true; 
+    else if (v!=X) // D-frontier compromised 
+        return false;  
+    else  { 
+        // TODO 
+        ObjList objs = objs_; // create a temp. copy 
+
+        Objective obj; 
+        obj.first = gtoprop->id_; 
+        obj.second = gtoprop->getOutputCtrlValue(); 
+
+        stack<Objective> event_list; 
+        event_list.push(obj); 
+        while (!event_list.empty()) { 
+            obj = event_list.top(); 
+            event_list.pop(); 
+
+            Value v = impl_->GetVal(obj.first); 
+            if (v!=X && v!=obj.second) return false; 
+            if (!insertObj(obj, objs)) return false; 
+           
+            Gate *g = &cir_->gates_[obj.first]; 
+            if (g->type_==Gate::BUF || g->type_==Gate::INV) { 
+                obj.first = g->fis_[0]; 
+                obj.second = (g->isInverse())?EvalNot(obj.second):obj.second;
+                event_list.push(obj); 
+            } 
+            else { 
+                if (g->getOutputCtrlValue()==obj.second) { 
+                    for (int i=0; i<g->nfi_; i++) { 
+                        obj.first = g->fis_[i]; 
+                        obj.second = g->getInputNonCtrlValue(); 
+                        event_list.push(obj); 
+                    }
+                }
+            }
+        }
+        objs_ = objs; 
+    }
+
+    return true; 
+}
+
 bool Atpg::GenObjs() { 
     GateVec gids; 
 
@@ -215,7 +271,7 @@ bool Atpg::MultiDDrive() {
 
             Value *mask = new Value [dfront.size()]; 
             for (size_t i=0; i<dfront.size(); i++) 
-                mask[i] = H; 
+                mask[i] = X; 
             d_tree_.top()->set_mask_(mask); 
 
             return GenObjs(); 
@@ -429,10 +485,10 @@ bool Atpg::MultiDBackTrack(DecisionTree &tree) {
             else 
                 ret = false; 
         }
-        // else { 
-        //     if (!is_flipped) 
-        //         v = L; 
-        // }
+        else { 
+            if (!is_flipped) 
+                v = X; 
+        }
     }
 
     if (ret) 

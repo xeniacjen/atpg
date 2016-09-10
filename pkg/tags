@@ -175,6 +175,7 @@ ASSIGN	interface/lib/opt/lex_n_yacc/vlog_file.tab.hpp	/^     ASSIGN = 262,$/;"	e
 AU	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB };$/;"	e	enum:CoreNs::Fault::State
 AddFaultCmd	atpg/src/atpg_cmd.cpp	/^AddFaultCmd::AddFaultCmd(const std::string &name, FanMgr *fanMgr) :$/;"	f	class:AddFaultCmd
 AddFaultCmd	atpg/src/atpg_cmd.h	/^class AddFaultCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
+AddGateToProp	core/src/atpg.cpp	/^bool Atpg::AddGateToProp(Gate *gtoprop) { $/;"	f	class:Atpg
 AddPinConsCmd	atpg/src/atpg_cmd.cpp	/^AddPinConsCmd::AddPinConsCmd(const std::string &name,$/;"	f	class:AddPinConsCmd
 AddPinConsCmd	atpg/src/atpg_cmd.h	/^class AddPinConsCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
 AddScanChainsCmd	atpg/src/atpg_cmd.cpp	/^AddScanChainsCmd::AddScanChainsCmd(const std::string &name, FanMgr *fanMgr) :$/;"	f	class:AddScanChainsCmd
@@ -877,6 +878,7 @@ OUTPUT	interface/src/cell.h	/^    enum Type { NA = -1, INPUT, OUTPUT, INOUT };$/
 OVERWRITE	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	983;"	d	file:
 OVERWRITE	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	983;"	d	file:
 ObjList	core/src/atpg.h	/^typedef std::map<int, Value> ObjList; $/;"	t	namespace:CoreNs
+ObjListIter	core/src/atpg.h	/^typedef ObjList::iterator ObjListIter; $/;"	t	namespace:CoreNs
 Objective	core/src/atpg.h	/^typedef std::pair<int, Value> Objective; $/;"	t	namespace:CoreNs
 Opt	common/src/get_opt.h	/^inline Opt::Opt(const Type &type,$/;"	f	class:CommonNs::Opt
 Opt	common/src/get_opt.h	/^struct Opt {$/;"	s	namespace:CommonNs
@@ -3431,9 +3433,11 @@ initCmds	common/src/common_test.cpp	/^void initCmds(CmdMgr *mgr) {$/;"	f
 initOpt	atpg/src/main.cpp	/^void initOpt(OptMgr &mgr) {$/;"	f
 initOpts	common/src/common_test.cpp	/^void initOpts(OptMgr *mgr) {$/;"	f
 injected_	core/src/simulator.h	/^    FaultListIter   injected_[WORD_SIZE];$/;"	m	class:CoreNs::Simulator
+insertObj	core/src/atpg.cpp	/^bool Atpg::insertObj(const Objective& obj, ObjList& objs) { $/;"	f	class:Atpg
 isEqv	interface/src/cell.h	/^inline bool Net::isEqv(Net * const n) const {$/;"	f	class:IntfNs::Net
 isFanoutStem	core/src/gate.h	/^inline bool Gate::isFanoutStem() const {$/;"	f	class:CoreNs::Gate
 isFlagSet	common/src/get_opt.h	/^inline bool OptMgr::isFlagSet(const std::string &f) const {$/;"	f	class:CommonNs::OptMgr
+isGateDrivePpo	core/src/circuit.h	/^inline bool Circuit::isGateDrivePpo(Gate *g) { $/;"	f	class:CoreNs::Circuit
 isInverse	core/src/gate.h	/^inline Value Gate::isInverse() const {$/;"	f	class:CoreNs::Gate
 isLegalVar	common/src/cmd.h	/^inline bool CmdMgr::isLegalVar(const std::string &var) const {$/;"	f	class:CommonNs::CmdMgr
 isLegalVarChar	common/src/cmd.h	/^inline bool CmdMgr::isLegalVarChar(const char &ch) const {$/;"	f	class:CommonNs::CmdMgr
@@ -3446,6 +3450,7 @@ isUnjustified	core/src/implicator.h	/^inline bool Implicator::isUnjustified(int 
 is_obj_optim_mode_	core/src/atpg.h	/^    bool        is_obj_optim_mode_; $/;"	m	class:CoreNs::Atpg
 is_path_oriented_mode_	core/src/atpg.h	/^    bool        is_path_oriented_mode_; $/;"	m	class:CoreNs::Atpg
 is_possibly_D	core/src/implicator.h	/^    bool            *is_possibly_D; $/;"	m	class:CoreNs::Implicator
+isaMultiTest	core/src/atpg.cpp	/^bool Atpg::isaMultiTest() { $/;"	f	class:Atpg
 isaTest	core/src/atpg.cpp	/^bool Atpg::isaTest() { $/;"	f	class:Atpg
 j_front_	core/src/implicator.h	/^    GateSet         j_front_; $/;"	m	class:CoreNs::Implicator
 j_tree_	core/src/d_decision_tree.h	/^    DecisionTree j_tree_; $/;"	m	struct:CoreNs::DDNode

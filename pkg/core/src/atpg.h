@@ -30,6 +30,7 @@ namespace CoreNs {
 
 typedef std::pair<int, Value> Objective; 
 typedef std::map<int, Value> ObjList; 
+typedef ObjList::iterator ObjListIter; 
 
 class Atpg { 
 public: 
@@ -58,6 +59,8 @@ private:
     bool DBackTrack(); 
 
     // obj-optim. help function 
+    bool insertObj(const Objective& obj, ObjList& objs); 
+    bool AddGateToProp(Gate *gtoprop); 
     bool GenObjs(); 
     bool MultiDDrive(); 
     bool MultiDBackTrack(DecisionTree &tree); 
