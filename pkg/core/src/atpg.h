@@ -19,7 +19,7 @@
 #ifndef _CORE_ATPG_H_ 
 #define _CORE_ATPG_H_ 
 
-#define _MAX_BACK_TRACK_LIMIT_  256
+#define _MAX_BACK_TRACK_LIMIT_  512
 
 #include <map>
 
@@ -39,6 +39,8 @@ public:
         Atpg(Circuit *cir, Fault *f); 
         Atpg(Circuit *cir, Fault *f, Pattern *p); 
         ~Atpg(); 
+
+    bool    SetBackTrackLimit(int limit); 
 
     virtual GenStatus Tpg(); 
     void    GetPiPattern(Pattern *p); 
@@ -201,12 +203,12 @@ inline bool Atpg::CheckDPath(Gate *g) const {
 
 inline bool Atpg::TurnOnPoMode() { 
     is_path_oriented_mode_ = true; 
-    back_track_limit = _MAX_BACK_TRACK_LIMIT_; 
 
     return is_path_oriented_mode_; 
 }
 
 inline bool Atpg::TurnOnObjOptimMode() { 
+    is_path_oriented_mode_ = true; 
     is_obj_optim_mode_ = true; 
 
     return is_obj_optim_mode_; 
@@ -217,6 +219,10 @@ inline void Atpg::ResetXPath() {
         x_path_[i] = X; 
 }
   
+inline bool Atpg::SetBackTrackLimit(int limit) { 
+    back_track_limit = limit; 
+}
+
 }; //CoreNs 
 
 #endif //_CORE_ATPG_H_

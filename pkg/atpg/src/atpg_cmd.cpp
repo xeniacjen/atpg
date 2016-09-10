@@ -1077,6 +1077,10 @@ RunAtpgCmd::RunAtpgCmd(const std::string &name, FanMgr *fanMgr) :
     opt->addFlag("h");
     opt->addFlag("help");
     optMgr_.regOpt(opt);
+    opt = new Opt(Opt::STR_REQ, "backtrack limit", "INT");
+    opt->addFlag("b");
+    opt->addFlag("backtrack");
+    optMgr_.regOpt(opt);
 }
 RunAtpgCmd::~RunAtpgCmd() {}
 //}}}
@@ -1105,6 +1109,11 @@ bool RunAtpgCmd::exec(const vector<string> &argv) {
 
     if (!fanMgr_->atpg_mgr->sim_)
         fanMgr_->atpg_mgr->sim_ = new Simulator(fanMgr_->atpg_mgr->cir_);
+
+    int backtrack = -1; 
+    if (optMgr_.isFlagSet("b")) { 
+        backtrack = atoi(optMgr_.getFlagVar("b").c_str()); 
+    }
 
     cout << "#  Performing pattern generation ...\n";
     fanMgr_->tmusg.periodStart();

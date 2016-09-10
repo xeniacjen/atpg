@@ -97,7 +97,6 @@ bool Atpg::isaMultiTest() {
 
 void Atpg::init() { 
     back_track_count = 0; 
-    // back_track_limit = _MAX_BACK_TRACK_LIMIT_; 
     back_track_limit = 0; 
 
     impl_->Init(); 
@@ -162,6 +161,9 @@ bool Atpg::CheckDFrontier(GateVec &dfront) {
 } 
 
 bool Atpg::insertObj(const Objective& obj, ObjList& objs) { 
+    Value v = impl_->GetVal(obj.first); 
+    assert(v==X); 
+
     pair<ObjListIter, bool> ret = objs.insert(obj); 
 
     if (!ret.second && ret.first->second!=obj.second)  
@@ -184,6 +186,8 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
         Objective obj; 
         obj.first = gtoprop->id_; 
         obj.second = gtoprop->getOutputCtrlValue(); 
+    
+        assert(!gtoprop->isUnary()); 
 
         stack<Objective> event_list; 
         event_list.push(obj); 
@@ -192,7 +196,7 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
             event_list.pop(); 
 
             Value v = impl_->GetVal(obj.first); 
-            if (v!=X && v!=obj.second) return false; 
+            if (v!=X && v==EvalNot(obj.second)) return false; 
             if (!insertObj(obj, objs)) return false; 
            
             Gate *g = &cir_->gates_[obj.first]; 
@@ -204,6 +208,7 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
             else { 
                 if (g->getOutputCtrlValue()==obj.second) { 
                     for (int i=0; i<g->nfi_; i++) { 
+                        if (impl_->GetVal(g->fis_[i])!=X) continue; 
                         obj.first = g->fis_[i]; 
                         obj.second = g->getInputNonCtrlValue(); 
                         event_list.push(obj); 
@@ -219,30 +224,34 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
 
 bool Atpg::GenObjs() { 
     GateVec gids; 
+    size_t size; 
+    bool ret = false; 
 
     objs_.clear(); 
 
     // get the previous object 
     d_tree_.top(gids); 
-    for (size_t i=0; i<gids.size(); i++) { 
-        Gate *gtoprop = gids[i]; 
+    Value *mask = d_tree_.top()->get_mask_(size); 
+    int j = 0; 
+    for (size_t i=0; i<size; i++) { 
+        if (mask[i]==L) continue; 
+        Gate *gtoprop = gids[j++]; 
     
-        Objective obj; 
-        obj.first = gtoprop->id_; 
-        obj.second = gtoprop->getOutputCtrlValue(); 
-        Value v = impl_->GetVal(obj.first); 
-    
-        if (v==D || v==B) // D-frontier pushed forward 
-            continue; 
-        else if (v!=X) // D-frontier compromised 
-            return false;  
-        else  
-            objs_.insert(obj); 
+        if (!AddGateToProp(gtoprop)) { 
+            if (mask[i]==H) return false; 
+            mask[i] = L; 
+        } 
+        else { 
+            mask[i] = H; 
+            ret = true; 
+        }
     }
+
+    assert(j==gids.size()); 
 
     if (!objs_.empty()) 
         current_obj_ = *objs_.begin(); 
-    return true; 
+    return ret; 
 }
 
 bool comp_gate(Gate* g1, Gate* g2); 

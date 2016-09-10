@@ -61,6 +61,7 @@ void AtpgMgr::generation() {
 
         f = flist.front();  
         atpg_ = new Atpg(cir_, f); 
+        atpg_->SetBackTrackLimit(0); 
         Atpg::GenStatus ret = atpg_->Tpg(); 
 
         if (ret==Atpg::TEST_FOUND) { 
@@ -136,6 +137,7 @@ void AtpgMgr::generation() {
 
         f = flist.front();  
         atpg_ = new Atpg(cir_, f); 
+        atpg_->SetBackTrackLimit(512); 
         atpg_->TurnOnPoMode(); 
         atpg_->TurnOnObjOptimMode(); 
         Atpg::GenStatus ret = atpg_->Tpg(); 
@@ -304,6 +306,7 @@ void AtpgMgr::DynamicCompression(FaultList &remain) {
 
         delete atpg_; 
         atpg_ = new Atpg(cir_, remain.front(), p); 
+        atpg_->SetBackTrackLimit(64); 
         atpg_->TurnOnPoMode(); 
         stat = atpg_->Tpg(); 
     }
