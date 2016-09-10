@@ -41,36 +41,39 @@ public:
 
     virtual GenStatus Tpg(); 
     void    GetPiPattern(Pattern *p); 
-    bool    TurnOnPoMode(); 
-    bool    TurnOnObjOptimMode(); 
 
     bool    CheckCompatibility(Fault *f);  
 
+    bool    TurnOnPoMode(); 
+    bool    TurnOnObjOptimMode(); 
 private: 
-    bool DDDrive(); 
-    bool MultiDDrive(); 
+    // podem help function 
     bool isTestPossible(); 
     bool isaTest(); 
 
+    // dfs-podem 
+    bool DDDrive(); 
+    bool CheckDPath(Gate *g) const; 
+    bool CheckPath(const GateVec &path) const; 
+    bool DBackTrack(); 
+
+    // obj-optim. help function 
+    bool GenObjs(); 
+    bool MultiDDrive(); 
     bool MultiDBackTrack(DecisionTree &tree); 
+    bool isaMultiTest(); 
 
     bool        is_path_oriented_mode_; 
     bool        is_obj_optim_mode_; 
     ObjList     objs_; 
-    Objective   current_obj_; 
 
+    DDTree      d_tree_; 
 protected:
     virtual bool FaultActivate(); 
     virtual bool DDrive(); 
     virtual bool Backtrace(); 
 
-    bool GenObjs(); 
-
-    bool DBackTrack(); 
-    bool CheckPath(const GateVec &path) const; 
-
     bool CheckXPath(Gate *g); 
-    bool CheckDPath(Gate *g) const; 
     bool CheckDFrontier(GateVec &dfront); 
 
     void ResetXPath(); 
@@ -90,7 +93,7 @@ protected:
     unsigned    back_track_count; 
     unsigned    back_track_limit; 
 
-    DDTree      d_tree_; 
+    Objective   current_obj_; 
     Value      *x_path_; // keep the x-path search status 
 }; //Atpg 
 

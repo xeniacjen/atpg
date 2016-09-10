@@ -50,7 +50,8 @@ Atpg::GenStatus Atpg::Tpg() {
                 return (back_track_count>=back_track_limit)?ABORT:UNTESTABLE; 
         }
         Imply(); 
-        if (isaTest()) { 
+        bool is_a_test = (is_obj_optim_mode_)?isaMultiTest():isaTest();
+        if (is_a_test) { 
             return TEST_FOUND; 
         }
     }
@@ -72,6 +73,26 @@ bool Atpg::isaTest() {
         if (v==D || v==B) return true; 
     }
     return false; 
+}
+
+bool Atpg::isaMultiTest() { 
+    // TODO 
+    GateVec gids; 
+
+    objs_.clear(); 
+
+    // get the previous object 
+    d_tree_.top(gids); 
+    for (size_t i=0; i<gids.size(); i++) { 
+        Gate *g = gids[i]; 
+
+        if (!cir_->isGateDrivePpo(g)) return false; 
+
+        Value v = impl_->GetVal(g->id_); 
+        if (v!=D && v!=B) return false; 
+    } 
+
+    return true; 
 }
 
 void Atpg::init() { 
