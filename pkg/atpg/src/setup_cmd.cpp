@@ -586,6 +586,14 @@ SetDynamicCompressionCmd::SetDynamicCompressionCmd(const std::string &name, FanM
     opt->addFlag("h");
     opt->addFlag("help");
     optMgr_.regOpt(opt);
+    opt = new Opt(Opt::STR_REQ, "backtrack limit", "INT");
+    opt->addFlag("b");
+    opt->addFlag("backtrack");
+    optMgr_.regOpt(opt);
+    opt = new Opt(Opt::STR_REQ, "aborted merge limit", "INT");
+    opt->addFlag("m");
+    opt->addFlag("merge");
+    optMgr_.regOpt(opt);
 }
 SetDynamicCompressionCmd::~SetDynamicCompressionCmd() {}
 //}}}
@@ -615,6 +623,18 @@ bool SetDynamicCompressionCmd::exec(const vector<string> &argv) {
         cout << "#  dynamic compression set to on" << endl;
 		
 		fanMgr_->atpg_mgr->pcoll_->dynamicCompression_ = PatternProcessor::ON;
+
+        int backtrack = -1; 
+        if (optMgr_.isFlagSet("b")) { 
+            backtrack = atoi(optMgr_.getFlagVar("b").c_str()); 
+        }
+
+        int merge = -1; 
+        if (optMgr_.isFlagSet("m")) { 
+            merge = atoi(optMgr_.getFlagVar("m").c_str()); 
+        }
+
+        fanMgr_->atpg_mgr->ConfigDynComp(merge, backtrack); 
 	}
 	else if (optMgr_.getParsedArg(0) == "off") {
         cout << "#  dynamic compression set to off" << endl;

@@ -21,7 +21,10 @@
 
 #include "atpg.h" 
 
-#define RPT_PER_PAT     64 
+#define RPT_PER_PAT             64 
+
+#define DYN_COMP_MERGE_DEFAULT  10 
+#define DYN_COMP_BT_DEFAULT     64 
 
 namespace CoreNs {
 
@@ -32,12 +35,14 @@ public:
     AtpgMgr();  
     ~AtpgMgr();  
 
-    void                generation(); 
+    void                generation(int limit); 
+
+    void                ConfigDynComp(int merge, int backtrack); 
     
-    FaultListExtract    *fListExtract_;
-    PatternProcessor    *pcoll_;
-    Circuit             *cir_;
-    Simulator           *sim_;
+    FaultListExtract   *fListExtract_;
+    PatternProcessor   *pcoll_;
+    Circuit            *cir_;
+    Simulator          *sim_;
 private: 
     void                DynamicCompression(FaultList &remain); 
     void                ReverseFaultSim(); 
@@ -46,7 +51,10 @@ private:
     void                getPoPattern(Pattern *pat);  
     void                calc_fault_hardness(Fault* f1); 
 
-    Atpg                *atpg_; 
+    Atpg               *atpg_; 
+
+    int                 dyn_comp_merge_; 
+    int                 dyn_comp_backtrack; 
 
     //AtpgVec             atpgs_; 
 }; 
@@ -60,6 +68,11 @@ inline AtpgMgr::AtpgMgr() {
     }
 
 inline AtpgMgr::~AtpgMgr() {}
+
+inline void AtpgMgr::ConfigDynComp(int merge, int backtrack) { 
+    dyn_comp_merge_ = (merge<0)?DYN_COMP_MERGE_DEFAULT:merge; 
+    dyn_comp_backtrack = (backtrack<0)?DYN_COMP_BT_DEFAULT:backtrack;
+} 
     
 }; // CoreNs
 
