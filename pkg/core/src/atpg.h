@@ -64,6 +64,7 @@ private:
     bool insertObj(const Objective& obj, ObjList& objs); 
     bool AddGateToProp(Gate *gtoprop); 
     bool GenObjs(); 
+    bool CheckDDDrive(); 
     bool MultiDDrive(); 
     bool MultiDBackTrack(DecisionTree &tree); 
     bool isaMultiTest(); 

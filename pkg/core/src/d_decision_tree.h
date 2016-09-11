@@ -61,6 +61,7 @@ class DDTree {
     unsigned top(int &gid) const; 
     unsigned top(GateVec &gids) const; 
     DDNode *top(); 
+    DDNode *sub_top(); 
     bool empty() const;  
 
     void GetPath(GateVec &path) const; // retuen path by reference  
@@ -169,6 +170,10 @@ inline unsigned DDTree::top(GateVec &gids) const {
 
 inline DDNode *DDTree::top() { 
     return trees_.back(); 
+}
+
+inline DDNode *DDTree::sub_top() { 
+    return trees_[trees_.size()-2]; 
 }
 
 inline bool DDTree::empty() const { 

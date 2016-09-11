@@ -246,12 +246,43 @@ bool Atpg::GenObjs() {
             ret = true; 
         }
     }
-
     assert(j==gids.size()); 
 
-    if (!objs_.empty()) 
+    if (!objs_.empty()) { 
+        // if (!CheckDDDrive()) return false; 
         current_obj_ = *objs_.begin(); 
+    }
+
     return ret; 
+}
+
+bool Atpg::CheckDDDrive() { 
+    GateVec gs_proped, gs_toprop; 
+
+    d_tree_.top(gs_toprop); 
+    d_tree_.sub_top()->top(gs_proped); 
+    for (size_t n=0; n<gs_proped.size(); n++) { 
+        Gate *g = gs_proped[n]; 
+        bool successor_found = false; 
+        // for (int i=0; i<g->nfo_; i++) { 
+        //     ObjListIter it = objs_.find(g->fis_[i]); 
+        //     if (it!=objs_.end()) { 
+        for (int i=0; i<g->nfo_; i++) { 
+            Gate *fo = &cir_->gates_[g->fos_[i]]; 
+            for (size_t j=0; j<gs_toprop.size(); j++) { 
+                // if (it!=objs_.end()) { 
+                if (fo==gs_toprop[j]) { 
+                    successor_found = true; 
+                    break; 
+                }
+            }
+            if (successor_found) break; 
+        }
+        if (!successor_found) 
+            return false; 
+    }
+
+    return true; 
 }
 
 bool comp_gate(Gate* g1, Gate* g2); 

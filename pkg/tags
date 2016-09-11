@@ -280,6 +280,7 @@ CellMap	interface/src/cell.h	/^typedef std::map<NameKey, Cell *> CellMap;$/;"	t	
 CellSet	interface/src/cell.h	/^typedef std::set<Cell *>          CellSet;$/;"	t	namespace:IntfNs
 CellVec	interface/src/cell.h	/^typedef std::vector<Cell *>       CellVec;$/;"	t	namespace:IntfNs
 CheckCompatibility	core/src/atpg.cpp	/^bool Atpg::CheckCompatibility(Fault *f) { $/;"	f	class:Atpg
+CheckDDDrive	core/src/atpg.cpp	/^bool Atpg::CheckDDDrive() { $/;"	f	class:Atpg
 CheckDFrontier	core/src/atpg.cpp	/^bool Atpg::CheckDFrontier(GateVec &dfront) { $/;"	f	class:Atpg
 CheckDPath	core/src/atpg.h	/^inline bool Atpg::CheckDPath(Gate *g) const { $/;"	f	class:CoreNs::Atpg
 CheckPath	core/src/atpg.h	/^inline bool Atpg::CheckPath(const GateVec &path) const { $/;"	f	class:CoreNs::Atpg
@@ -301,6 +302,7 @@ CommonNs	common/src/sys_cmd.h	/^namespace CommonNs {$/;"	n
 CommonNs	common/src/tm_usage.h	/^namespace CommonNs {$/;"	n
 CommonNs	common/src/tm_usage/tm_usage.h	/^namespace CommonNs {$/;"	n
 CommonNs	common/src/vt100.h	/^namespace CommonNs {$/;"	n
+ConfigDynComp	core/src/atpg_mgr.h	/^inline void AtpgMgr::ConfigDynComp(int merge, int backtrack) { $/;"	f	class:CoreNs::AtpgMgr
 CoreNs	core/src/atpg.h	/^namespace CoreNs { $/;"	n
 CoreNs	core/src/atpg_mgr.h	/^namespace CoreNs {$/;"	n
 CoreNs	core/src/circuit.h	/^namespace CoreNs {$/;"	n
@@ -364,6 +366,8 @@ DIVIDER	interface/lib/opt/lex_n_yacc/sdf_file.tab.cpp	/^     DIVIDER = 265,$/;"	
 DIVIDER	interface/lib/opt/lex_n_yacc/sdf_file.tab.hpp	/^     DIVIDER = 265,$/;"	e	enum:yytokentype
 DLAT	interface/src/primitive.h	/^                MUX,   DFF,   DLAT,   DELAY,  INVF,   WIRE, PULL,$/;"	e	enum:IntfNs::Pmt::Type
 DT	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB };$/;"	e	enum:CoreNs::Fault::State
+DYN_COMP_BT_DEFAULT	core/src/atpg_mgr.h	27;"	d
+DYN_COMP_MERGE_DEFAULT	core/src/atpg_mgr.h	26;"	d
 D_	core/src/logic-hex.h	/^    bool D_; $/;"	m	struct:CoreNs::HexValue
 DecisionTree	core/src/decision_tree.h	/^class DecisionTree {$/;"	c	namespace:CoreNs
 DecisionTree	core/src/decision_tree.h	/^inline DecisionTree::DecisionTree() {$/;"	f	class:CoreNs::DecisionTree
@@ -1243,6 +1247,7 @@ SdfFile	interface/src/sdf_file.h	/^inline SdfFile::SdfFile() {}$/;"	f	class:Intf
 SdfIoPath	interface/src/sdf_file.h	/^struct SdfIoPath {$/;"	s	namespace:IntfNs
 SdfPortSpec	interface/src/sdf_file.h	/^struct SdfPortSpec {$/;"	s	namespace:IntfNs
 SdfValue	interface/src/sdf_file.h	/^struct SdfValue {$/;"	s	namespace:IntfNs
+SetBackTrackLimit	core/src/atpg.h	/^inline bool Atpg::SetBackTrackLimit(int limit) { $/;"	f	class:CoreNs::Atpg
 SetDynamicCompressionCmd	atpg/src/setup_cmd.cpp	/^SetDynamicCompressionCmd::SetDynamicCompressionCmd(const std::string &name, FanMgr *fanMgr) :$/;"	f	class:SetDynamicCompressionCmd
 SetDynamicCompressionCmd	atpg/src/setup_cmd.h	/^class SetDynamicCompressionCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
 SetFaultTypeCmd	atpg/src/setup_cmd.cpp	/^SetFaultTypeCmd::SetFaultTypeCmd(const std::string &name, FanMgr *fanMgr) :$/;"	f	class:SetFaultTypeCmd
@@ -3017,7 +3022,7 @@ assignFiMinLvl	core/src/circuit.cpp	/^void Circuit::assignFiMinLvl(){$/;"	f	clas
 assignPatternToPi	core/src/simulator.h	/^inline void Simulator::assignPatternToPi(const Pattern *const pat)$/;"	f	class:CoreNs::Simulator
 assignValue	core/src/pattern_rw.cpp	/^void PatternReader::assignValue(Value *v, const char * const pat,$/;"	f	class:PatternReader
 atpgStat	atpg/src/fan_mgr.h	/^    CommonNs::TmStat    atpgStat;$/;"	m	class:FanNs::FanMgr
-atpg_	core/src/atpg_mgr.h	/^    Atpg                *atpg_; $/;"	m	class:CoreNs::AtpgMgr
+atpg_	core/src/atpg_mgr.h	/^    Atpg               *atpg_; $/;"	m	class:CoreNs::AtpgMgr
 atpg_mgr	atpg/src/fan_mgr.h	/^    CoreNs::AtpgMgr     *atpg_mgr;$/;"	m	class:FanNs::FanMgr
 autoCmplt	common/src/cmd.cpp	/^void CmdMgr::autoCmplt() {$/;"	f	class:CmdMgr
 back_track_count	core/src/atpg.h	/^    unsigned    back_track_count; $/;"	m	class:CoreNs::Atpg
@@ -3039,7 +3044,7 @@ checkUsage	common/src/tm_usage.cpp	/^bool TmUsage::checkUsage(TmStat &st) const 
 checkUsage	common/src/tm_usage/tm_usage.cpp	/^bool TmUsage::checkUsage(TmStat &st) const {$/;"	f	class:TmUsage
 cid_	core/src/gate.h	/^    int       cid_;   \/\/ original cell id in the netlist$/;"	m	class:CoreNs::Gate
 cir_	core/src/atpg.h	/^    Circuit    *cir_;$/;"	m	class:CoreNs::Atpg
-cir_	core/src/atpg_mgr.h	/^    Circuit             *cir_;$/;"	m	class:CoreNs::AtpgMgr
+cir_	core/src/atpg_mgr.h	/^    Circuit            *cir_;$/;"	m	class:CoreNs::AtpgMgr
 cir_	core/src/implicator.h	/^    Circuit         *cir_; $/;"	m	class:CoreNs::Implicator
 cir_	core/src/pattern_rw.h	/^            Circuit *cir_;$/;"	m	class:CoreNs::ProcedureWriter
 cir_	core/src/pattern_rw.h	/^    Circuit         *cir_;$/;"	m	class:CoreNs::PatternReader
@@ -3097,6 +3102,8 @@ detGateType	core/src/circuit.cpp	/^void Circuit::detGateType(const int &id, cons
 detVerilogPmtType	core/src/circuit.cpp	/^void Circuit::detVerilogPmtType(const int &id, const IntfNs::Cell * const c) {$/;"	f	class:Circuit
 det_	core/src/fault.h	/^    int   det_;   \/\/ number of detection$/;"	m	class:CoreNs::Fault
 dfront_	core/src/d_decision_tree.h	/^    GateVec      dfront_; $/;"	m	struct:CoreNs::DDNode
+dyn_comp_backtrack	core/src/atpg_mgr.h	/^    int                 dyn_comp_backtrack; $/;"	m	class:CoreNs::AtpgMgr
+dyn_comp_merge_	core/src/atpg_mgr.h	/^    int                 dyn_comp_merge_; $/;"	m	class:CoreNs::AtpgMgr
 dynamicCompression_	core/src/pattern.h	/^	State	   dynamicCompression_; \/\/ Flag; ON = need dynamic compression$/;"	m	class:CoreNs::PatternProcessor
 e_front_list_	core/src/implicator.h	/^    std::vector<int> e_front_list_; $/;"	m	class:CoreNs::Implicator
 empty	core/src/d_decision_tree.h	/^inline bool DDNode::empty() const { $/;"	f	class:CoreNs::DDNode
@@ -3156,7 +3163,7 @@ exit_	common/src/cmd.h	/^    bool                     exit_;     \/\/ exit flag$
 expandHome	common/src/cmd.cpp	/^string CmdMgr::expandHome(const string &path) const {$/;"	f	class:CmdMgr
 expandVar	common/src/cmd.cpp	/^string CmdMgr::expandVar(const string &str) const {$/;"	f	class:CmdMgr
 extract	core/src/fault.cpp	/^void FaultListExtract::extract(Circuit *cir) {$/;"	f	class:FaultListExtract
-fListExtract_	core/src/atpg_mgr.h	/^    FaultListExtract    *fListExtract_;$/;"	m	class:CoreNs::AtpgMgr
+fListExtract_	core/src/atpg_mgr.h	/^    FaultListExtract   *fListExtract_;$/;"	m	class:CoreNs::AtpgMgr
 fanMgr_	atpg/src/atpg_cmd.h	/^    FanMgr *fanMgr_;  $/;"	m	class:FanNs::ReportScoapCmd
 fanMgr_	atpg/src/atpg_cmd.h	/^    FanMgr *fanMgr_;$/;"	m	class:FanNs::AddFaultCmd
 fanMgr_	atpg/src/atpg_cmd.h	/^    FanMgr *fanMgr_;$/;"	m	class:FanNs::AddPinConsCmd
@@ -3325,7 +3332,7 @@ frame_	core/src/gate.h	/^    int       frame_; \/\/ time frame of the gate, for 
 gateToFault_	core/src/fault.h	/^    int       *gateToFault_;$/;"	m	class:CoreNs::FaultListExtract
 gate_	core/src/fault.h	/^    int   gate_;  \/\/ ID of the faulty gate$/;"	m	class:CoreNs::Fault
 gates_	core/src/circuit.h	/^    Gate            *gates_;      \/\/ gate array$/;"	m	class:CoreNs::Circuit
-generation	core/src/atpg_mgr.cpp	/^void AtpgMgr::generation() { $/;"	f	class:AtpgMgr
+generation	core/src/atpg_mgr.cpp	/^void AtpgMgr::generation(int limit) { $/;"	f	class:AtpgMgr
 get	core/src/decision_tree.h	/^inline bool DecisionTree::get(int &gid, unsigned &startPoint) {$/;"	f	class:CoreNs::DecisionTree
 getBitValue	core/src/logic.h	/^inline Value getBitValue(const ParaValue &pv, const size_t &i) {$/;"	f	namespace:CoreNs
 getCell	interface/src/cell.h	/^inline Cell *Cell::getCell(const char * const name) const {$/;"	f	class:IntfNs::Cell
@@ -3845,7 +3852,7 @@ pat_filetext	interface/lib/opt/lex_n_yacc/pat_file.yy.cpp	/^char *pat_filetext;$
 pat_filewrap	interface/lib/dbg/lex_n_yacc/pat_file.yy.cpp	355;"	d	file:
 pat_filewrap	interface/lib/opt/lex_n_yacc/pat_file.yy.cpp	355;"	d	file:
 pats_	core/src/pattern.h	/^    PatternVec pats_;$/;"	m	class:CoreNs::PatternProcessor
-pcoll_	core/src/atpg_mgr.h	/^    PatternProcessor    *pcoll_;$/;"	m	class:CoreNs::AtpgMgr
+pcoll_	core/src/atpg_mgr.h	/^    PatternProcessor   *pcoll_;$/;"	m	class:CoreNs::AtpgMgr
 pcoll_	core/src/pattern_rw.h	/^    PatternProcessor     *pcoll_;$/;"	m	class:CoreNs::PatternReader
 pcoll_	core/src/pattern_rw.h	/^    PatternProcessor *pcoll_;$/;"	m	class:CoreNs::PatternWriter
 periodStart	common/src/tm_usage.cpp	/^bool TmUsage::periodStart() {$/;"	f	class:TmUsage
@@ -4073,13 +4080,14 @@ short	interface/lib/opt/lex_n_yacc/sdf_file.tab.cpp	267;"	d	file:
 short	interface/lib/opt/lex_n_yacc/vlog_file.tab.cpp	203;"	d	file:
 shortDes_	common/src/get_opt.h	/^    std::string                  shortDes_;$/;"	m	class:CommonNs::OptMgr
 si_	core/src/pattern.h	/^    Value *si_;$/;"	m	class:CoreNs::Pattern
-sim_	core/src/atpg_mgr.h	/^    Simulator           *sim_;$/;"	m	class:CoreNs::AtpgMgr
+sim_	core/src/atpg_mgr.h	/^    Simulator          *sim_;$/;"	m	class:CoreNs::AtpgMgr
 sim_	core/src/implicator.h	/^    Simulator       *sim_;  $/;"	m	class:CoreNs::Implicator
 splitString	common/src/get_opt.cpp	/^vector<string> OptMgr::splitString(const string &input,$/;"	f	class:OptMgr
 startPoint_	core/src/d_decision_tree.h	/^    unsigned     startPoint_; $/;"	m	struct:CoreNs::DDNode
 startPoint_	core/src/decision_tree.h	/^    unsigned startPoint_; \/\/ starting point in backtrackList of gid_ ;$/;"	m	struct:CoreNs::DecisionTreeNode
 state_	core/src/fault.h	/^    State state_; \/\/ fault state$/;"	m	class:CoreNs::Fault
 staticCompression_	core/src/pattern.h	/^	State	   staticCompression_; \/\/ Flag; ON = need static compression$/;"	m	class:CoreNs::PatternProcessor
+sub_top	core/src/d_decision_tree.h	/^inline DDNode *DDTree::sub_top() { $/;"	f	class:CoreNs::DDTree
 success_	interface/src/lht_pat_file.h	/^    bool success_;$/;"	m	class:IntfNs::LhtPatFile
 success_	interface/src/mdt_file.h	/^    bool success_;$/;"	m	class:IntfNs::MdtFile
 success_	interface/src/pat_file.h	/^    bool success_;$/;"	m	class:IntfNs::PatFile
