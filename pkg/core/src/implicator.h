@@ -66,6 +66,8 @@ public:
     bool GetJFrontier(GateVec& jf); 
 
     bool IsFaultAtPo() const; 
+    bool isGateDrivePpo(Gate *g); 
+
 
     void GetPiPattern(Pattern *p) const; 
     void GetPoPattern(Pattern *p) const; 

@@ -29,8 +29,6 @@ public:
     bool            build(IntfNs::Netlist * const nl, const int &nframe = 1,
                           const tfConnectType &type = CAPTURE);
 
-    bool            isGateDrivePpo(Gate *g); 
-
     // info for one time frame
     IntfNs::Netlist *nl_;         // corresponding netlist
     int             npi_;         // number of PIs
@@ -112,22 +110,6 @@ inline Circuit::~Circuit() {
     delete [] cellToGate_;
     delete [] portToGate_;
 }
-
-inline bool Circuit::isGateDrivePpo(Gate *g) { 
-    for (int i=g->nfo_-1; i>=0; i--) { 
-        Gate *fo = &gates_[g->fos_[i]]; 
-
-        if (fo->isUnary()) { 
-            if (fo->type_==Gate::PO || fo->type_==Gate::PPO)
-                return true; 
-            else // NOT, BUF 
-                if (isGateDrivePpo(fo)) return true; 
-        }
-    }
-
-    return false; 
-}
-
 };
 
 #endif

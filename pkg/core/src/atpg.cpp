@@ -86,10 +86,7 @@ bool Atpg::isaMultiTest() {
     for (size_t i=0; i<gids.size(); i++) { 
         Gate *g = gids[i]; 
 
-        if (!cir_->isGateDrivePpo(g)) return false; 
-
-        Value v = impl_->GetVal(g->id_); 
-        if (v!=D && v!=B) return false; 
+        if (!impl_->isGateDrivePpo(g)) return false; 
     } 
 
     return true; 

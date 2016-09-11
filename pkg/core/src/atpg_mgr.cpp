@@ -26,7 +26,8 @@ using namespace std;
 
 using namespace CoreNs; 
 
-bool comp_fault(Fault* f1, Fault* f2);  
+bool comp_fault_hard(Fault* f1, Fault* f2);  
+bool comp_fault_lvl(Fault* f1, Fault* f2);  
 void AtpgMgr::generation(int limit) { 
     if (limit<0) limit = _MAX_BACK_TRACK_LIMIT_; 
 
@@ -36,7 +37,7 @@ void AtpgMgr::generation(int limit) {
         calc_fault_hardness(fListExtract_->faults_[i]); 
 
     FaultList flist = fListExtract_->current_; 
-    flist.sort(comp_fault); 
+    flist.sort(comp_fault_hard); 
 
     cout << "# ------------------------------------------------------------------------\n"; 
     cout << "# Phase 1: drop faults need no back-track \n"; 
@@ -116,7 +117,7 @@ void AtpgMgr::generation(int limit) {
     pcoll_->nbit_spec_max = 0; 
     for (FaultList::iterator it=flist.begin(); it!=flist.end(); ++it) 
         (*it)->state_ = Fault::UD; 
-    flist.sort(comp_fault); 
+    flist.sort(comp_fault_lvl); 
 
     cout << "\n\n# ------------------------------------------------------------------------\n"; 
     cout << "# Phase 2: hard-to-detect fault \n"; 
@@ -208,9 +209,13 @@ void AtpgMgr::generation(int limit) {
     ReverseFaultSim(); 
 }
 
-bool comp_fault(Fault* f1, Fault* f2) {
+bool comp_fault_hard(Fault* f1, Fault* f2) {
     return f1->hard_ > f2->hard_; 
 } 
+
+bool comp_fault_lvl(Fault* f1, Fault* f2) {
+    return f1->gate_ < f2->gate_; 
+}
 
 void AtpgMgr::calc_fault_hardness(Fault* f1) {
     int t1; 

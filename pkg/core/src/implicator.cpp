@@ -219,6 +219,25 @@ bool Implicator::IsFaultAtPo() const {
     return false; 
 }
 
+bool Implicator::isGateDrivePpo(Gate *g) { 
+    Value v = GetVal(g->id_); 
+    if (v!=D && v!=B) return false; 
+
+    for (int i=g->nfo_-1; i>=0; i--) { 
+        Gate *fo = &cir_->gates_[g->fos_[i]]; 
+        v = GetVal(fo->id_); 
+
+        if (v==D || v==B) { 
+            if (fo->type_==Gate::PO || fo->type_==Gate::PPO)
+                return true; 
+            else  
+                if (isGateDrivePpo(fo)) return true; 
+        }
+    }
+
+    return false; 
+}
+
 void Implicator::GetDFrontier(GateVec& df) const { 
     for (int n=0; n<cir_->tgate_; n++) { 
         if (GetVal(n)!=X) 
