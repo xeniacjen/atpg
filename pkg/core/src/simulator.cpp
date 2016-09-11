@@ -269,7 +269,8 @@ int Simulator::pfCheckDetection(FaultList &remain) {
             continue;
         (*injected_[i])->det_++;
         if ((*injected_[i])->det_ >= ndet_) {
-            if ((*injected_[i])->state_==Fault::DH) 
+            if ((*injected_[i])->state_==Fault::DH 
+              || (*injected_[i])->state_==Fault::AB) 
                 (*injected_[i])->state_ = Fault::DH;
             else if ((*injected_[i])->state_==Fault::AU) { 
                 // TODO: assert after debug 

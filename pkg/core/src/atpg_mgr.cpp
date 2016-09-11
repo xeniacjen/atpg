@@ -51,14 +51,16 @@ void AtpgMgr::generation(int limit) {
             continue; 
         }
         // if (flist.front()->state_==Fault::AB) 
-        if (flist.front()->state_==Fault::AB 
-          || flist.front()->state_==Fault::PT) 
+        // if (flist.front()->state_==Fault::AB 
+        //  || flist.front()->state_==Fault::PT) 
+        if (flist.front()->state_==Fault::AB)  
             break; 
 
         if (f==flist.front()) { 
-            f->state_ = Fault::PT; 
-            flist.push_back(flist.front()); 
-            flist.pop_front(); 
+            // f->state_ = Fault::PT; 
+            // flist.push_back(flist.front()); 
+            // flist.pop_front(); 
+            assert(0); 
         }
 
         f = flist.front();  
@@ -100,7 +102,8 @@ void AtpgMgr::generation(int limit) {
 
         if (ret==Atpg::TEST_FOUND && pcoll_->pats_.size()%RPT_PER_PAT==0) {
             int fu = fListExtract_->current_.size(); 
-            int dt = fListExtract_->getNStatus(Fault::DT); 
+            int dt = fListExtract_->getNStatus(Fault::DT);  
+            //     + fListExtract_(Fault::DH); 
             cout << "# " << setw(9) << pcoll_->pats_.size(); 
             cout << "  " << setw(8) << (float)dt / (float)fu * 100.f << "%";  
             cout << "  " << setw(7) << fu - dt; 
@@ -127,14 +130,17 @@ void AtpgMgr::generation(int limit) {
             continue; 
         }
         // if (flist.front()->state_==Fault::AB) 
-        if (flist.front()->state_==Fault::AB 
-          || flist.front()->state_==Fault::PT) 
+        // if (flist.front()->state_==Fault::AB) 
+        // if (flist.front()->state_==Fault::AB 
+        //  || flist.front()->state_==Fault::PT) 
+        if (flist.front()->state_==Fault::AB)  
             break; 
 
         if (f==flist.front()) { 
-            f->state_ = Fault::PT; 
-            flist.push_back(flist.front()); 
-            flist.pop_front(); 
+            // f->state_ = Fault::PT; 
+            // flist.push_back(flist.front()); 
+            // flist.pop_front(); 
+            assert(0); 
         }
 
         f = flist.front();  
@@ -181,7 +187,8 @@ void AtpgMgr::generation(int limit) {
 
         if (ret==Atpg::TEST_FOUND && pcoll_->pats_.size()%RPT_PER_PAT==0) {
             int fu = fListExtract_->current_.size(); 
-            int dt = fListExtract_->getNStatus(Fault::DT); 
+            int dt = fListExtract_->getNStatus(Fault::DT) 
+                + fListExtract_->getNStatus(Fault::DH); 
             cout << "# " << setw(9) << pcoll_->pats_.size(); 
             cout << "  " << setw(8) << (float)dt / (float)fu * 100.f << "%";  
             cout << "  " << setw(7) << fu - dt; 

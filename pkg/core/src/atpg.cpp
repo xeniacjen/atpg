@@ -398,6 +398,7 @@ bool Atpg::DDrive() {
 bool Atpg::Backtrace() {
     Gate *g = &cir_->gates_[current_obj_.first]; 
     Value objv = current_obj_.second; 
+    assert(impl_->GetVal(g->id_)==X); 
     while (!(g->type_==Gate::PI 
         || g->type_==Gate::PPI)) { // while objective net not fed by P/PI 
         
