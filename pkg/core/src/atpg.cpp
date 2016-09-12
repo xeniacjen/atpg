@@ -364,7 +364,7 @@ bool Atpg::DDDrive() {
 }
 
 bool comp_gate(Gate* g1, Gate* g2) { 
-    return g1->co_o_ < g2->co_o_; 
+    return g1->co_o_ > g2->co_o_; 
 }
 
 bool Atpg::DDrive() { 
