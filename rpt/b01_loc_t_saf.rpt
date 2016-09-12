@@ -8,24 +8,24 @@
 #    FU (full)                                   140
 #    --------------------------  -------------------
 #    UD (undetected)                               0
-#    PT (possibly testable)                        0
+#    PT (possibly testable)                        2
 #    AU (atpg untestable)                          0
 #    RE (redundant)                                0
 #    AB (atpg abort)                               0
 #    TI (tied)                                     0
-#    DH (hard-but-detected)                        1
+#    DH (hard-but-detected)                       38
 #    --------------------------  -------------------
-#    DT (detected)                               140
+#    DT (detected)                               138
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
 #    test coverage                              100%
 #    fault coverage                             100%
-#    atpg effectiveness                         100%
+#    atpg effectiveness                       98.57%
 #  -------------------------------------------------
-#  #Patterns                                      16
-#  Ave.Spec-rate                               -nan%
-#  Max.Spec-rate                                  0%
+#  #Patterns                                      18
+#  Ave.Spec-rate                              61.34%
+#  Max.Spec-rate                              71.43%
 #  -------------------------------------------------
-#  ATPG runtime                            0.00201 s
+#  ATPG runtime                             0.1337 s
 #  -------------------------------------------------

@@ -260,6 +260,8 @@ bool Atpg::CheckDDDrive() {
     d_tree_.sub_top()->top(gs_proped); 
     for (size_t n=0; n<gs_proped.size(); n++) { 
         Gate *g = gs_proped[n]; 
+        if (impl_->isGateDrivePpo(g)) continue; 
+
         bool successor_found = false; 
         // for (int i=0; i<g->nfo_; i++) { 
         //     ObjListIter it = objs_.find(g->fis_[i]); 
@@ -362,7 +364,7 @@ bool Atpg::DDDrive() {
 }
 
 bool comp_gate(Gate* g1, Gate* g2) { 
-    return g1->co_o_ > g2->co_o_; 
+    return g1->co_o_ < g2->co_o_; 
 }
 
 bool Atpg::DDrive() { 

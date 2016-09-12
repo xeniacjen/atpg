@@ -352,5 +352,10 @@ bool Implicator::BackTrack() {
         return true; 
     }
 
+    for (int i=back_track_point; i<e_front_list_.size(); i++) 
+        values_[e_front_list_[i]] = X; 
+
+    e_front_list_.resize(back_track_point); 
+
     return false; 
 }

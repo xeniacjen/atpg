@@ -41,9 +41,10 @@ public:
     // *     TI     tied to logic zero or one 
     // *     RE     redundant
     // *     AB     aborted
+    // *     AH     hard and aborted 
     // ************************************
     enum  Type { SA0 = 0, SA1, STR, STF, BR };
-    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB };
+    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB, AH };
 
           Fault();
           Fault(int gate, Type type, int line, int aggr = -1);

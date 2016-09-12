@@ -8,5 +8,5 @@
 ./bin/opt/atpg -f ./script/atpg_b20s_saf.script
 ./bin/opt/atpg -f ./script/atpg_b21s_saf.script
 ./bin/opt/atpg -f ./script/atpg_b22s_saf.script
-# ./bin/opt/atpg -f ./script/atpg_mtx_top_saf.script
+./bin/opt/atpg -f ./script/atpg_mtx_top_saf.script
 # ./bin/opt/atpg -f ./script/atpg_starc_top_saf.script 

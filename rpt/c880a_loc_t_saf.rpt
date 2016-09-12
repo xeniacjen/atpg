@@ -1,31 +1,31 @@
 #                 Statistics Report
-#  Circuit name                                 s298
+#  Circuit name                                c880a
 #  Fault model                                   SAF
 #  Pattern type                                  LOC
 #  -------------------------------------------------
 #  Fault classes                             #faults
 #  ----------------------------  -------------------
-#    FU (full)                                   358
+#    FU (full)                                   994
 #    --------------------------  -------------------
 #    UD (undetected)                               0
-#    PT (possibly testable)                        0
+#    PT (possibly testable)                        2
 #    AU (atpg untestable)                          0
 #    RE (redundant)                                0
-#    AB (atpg abort)                               0
+#    AB (atpg abort)                               2
 #    TI (tied)                                     0
-#    DH (hard-but-detected)                       36
+#    DH (hard-but-detected)                      272
 #    --------------------------  -------------------
-#    DT (detected)                               358
+#    DT (detected)                               990
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
-#    test coverage                              100%
-#    fault coverage                             100%
-#    atpg effectiveness                         100%
+#    test coverage                             99.8%
+#    fault coverage                            99.8%
+#    atpg effectiveness                        99.6%
 #  -------------------------------------------------
-#  #Patterns                                      57
-#  Ave.Spec-rate                              50.65%
-#  Max.Spec-rate                              82.35%
+#  #Patterns                                     102
+#  Ave.Spec-rate                              50.06%
+#  Max.Spec-rate                              76.67%
 #  -------------------------------------------------
-#  ATPG runtime                              0.128 s
+#  ATPG runtime                              7.211 s
 #  -------------------------------------------------

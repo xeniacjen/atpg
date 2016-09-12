@@ -54,7 +54,7 @@ void AtpgMgr::generation(int limit) {
         // if (flist.front()->state_==Fault::AB) 
         // if (flist.front()->state_==Fault::AB 
         //  || flist.front()->state_==Fault::PT) 
-        if (flist.front()->state_==Fault::AB)  
+        if (flist.front()->state_==Fault::AH)  
             break; 
 
         if (f==flist.front()) { 
@@ -94,7 +94,7 @@ void AtpgMgr::generation(int limit) {
             flist.pop_front(); 
         }
         else { // ABORT 
-            flist.front()->state_ = Fault::AB; 
+            flist.front()->state_ = Fault::AH; 
             flist.push_back(flist.front()); 
             flist.pop_front(); 
         }
@@ -115,8 +115,8 @@ void AtpgMgr::generation(int limit) {
     
     pcoll_->nbit_spec_ = 0; 
     pcoll_->nbit_spec_max = 0; 
-    for (FaultList::iterator it=flist.begin(); it!=flist.end(); ++it) 
-        (*it)->state_ = Fault::UD; 
+    // for (FaultList::iterator it=flist.begin(); it!=flist.end(); ++it) 
+    //     (*it)->state_ = Fault::UD; 
     flist.sort(comp_fault_lvl); 
 
     cout << "\n\n# ------------------------------------------------------------------------\n"; 
