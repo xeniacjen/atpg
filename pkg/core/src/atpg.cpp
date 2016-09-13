@@ -79,8 +79,6 @@ bool Atpg::isaMultiTest() {
     // TODO 
     GateVec gids; 
 
-    objs_.clear(); 
-
     // get the previous object 
     d_tree_.top(gids); 
     for (size_t i=0; i<gids.size(); i++) { 

@@ -222,17 +222,12 @@ bool Implicator::IsFaultAtPo() const {
 bool Implicator::isGateDrivePpo(Gate *g) { 
     Value v = GetVal(g->id_); 
     if (v!=D && v!=B) return false; 
+    if (g->type_==Gate::PO || g->type_==Gate::PPO)
+        return true; 
 
     for (int i=g->nfo_-1; i>=0; i--) { 
         Gate *fo = &cir_->gates_[g->fos_[i]]; 
-        v = GetVal(fo->id_); 
-
-        if (v==D || v==B) { 
-            if (fo->type_==Gate::PO || fo->type_==Gate::PPO)
-                return true; 
-            else  
-                if (isGateDrivePpo(fo)) return true; 
-        }
+        if (isGateDrivePpo(fo)) return true; 
     }
 
     return false; 
