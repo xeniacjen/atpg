@@ -4,7 +4,7 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-AB	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB };$/;"	e	enum:CoreNs::Fault::State
+AB	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB, AH };$/;"	e	enum:CoreNs::Fault::State
 ABORT	core/src/atpg.h	/^    enum GenStatus             { TEST_FOUND = 0, UNTESTABLE, ABORT }; $/;"	e	enum:CoreNs::Atpg::GenStatus
 ABSOLUTE	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     ABSOLUTE = 278,$/;"	e	enum:yytokentype	file:
 ABSOLUTE	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     ABSOLUTE = 278,$/;"	e	enum:yytokentype
@@ -14,6 +14,7 @@ ADDR_SIZE	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	970;"	d	file:
 ADDR_SIZE	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	970;"	d	file:
 ADDR_TYPE	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	979;"	d	file:
 ADDR_TYPE	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	979;"	d	file:
+AH	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB, AH };$/;"	e	enum:CoreNs::Fault::State
 ALIAS	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	985;"	d	file:
 ALIAS	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	985;"	d	file:
 AND	core/src/gate.h	/^                     AND, AND2,  AND3,  AND4,$/;"	e	enum:CoreNs::Gate::Type
@@ -172,7 +173,7 @@ ASSIGN	interface/lib/dbg/lex_n_yacc/vlog_file.tab.cpp	/^     ASSIGN = 262,$/;"	e
 ASSIGN	interface/lib/dbg/lex_n_yacc/vlog_file.tab.hpp	/^     ASSIGN = 262,$/;"	e	enum:yytokentype
 ASSIGN	interface/lib/opt/lex_n_yacc/vlog_file.tab.cpp	/^     ASSIGN = 262,$/;"	e	enum:yytokentype	file:
 ASSIGN	interface/lib/opt/lex_n_yacc/vlog_file.tab.hpp	/^     ASSIGN = 262,$/;"	e	enum:yytokentype
-AU	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB };$/;"	e	enum:CoreNs::Fault::State
+AU	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB, AH };$/;"	e	enum:CoreNs::Fault::State
 AddFaultCmd	atpg/src/atpg_cmd.cpp	/^AddFaultCmd::AddFaultCmd(const std::string &name, FanMgr *fanMgr) :$/;"	f	class:AddFaultCmd
 AddFaultCmd	atpg/src/atpg_cmd.h	/^class AddFaultCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
 AddGateToProp	core/src/atpg.cpp	/^bool Atpg::AddGateToProp(Gate *gtoprop) { $/;"	f	class:Atpg
@@ -355,7 +356,7 @@ DEVICE	interface/lib/opt/lex_n_yacc/sdf_file.tab.cpp	/^     DEVICE = 288,$/;"	e	
 DEVICE	interface/lib/opt/lex_n_yacc/sdf_file.tab.hpp	/^     DEVICE = 288,$/;"	e	enum:yytokentype
 DEVICE_DELAY	interface/src/sdf_file.h	/^                             DEVICE_DELAY };$/;"	e	enum:IntfNs::SdfDelayDef::Type
 DFF	interface/src/primitive.h	/^                MUX,   DFF,   DLAT,   DELAY,  INVF,   WIRE, PULL,$/;"	e	enum:IntfNs::Pmt::Type
-DH	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB };$/;"	e	enum:CoreNs::Fault::State
+DH	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB, AH };$/;"	e	enum:CoreNs::Fault::State
 DIFF	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     DIFF = 304,$/;"	e	enum:yytokentype	file:
 DIFF	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     DIFF = 304,$/;"	e	enum:yytokentype
 DIFF	interface/lib/opt/lex_n_yacc/sdf_file.tab.cpp	/^     DIFF = 304,$/;"	e	enum:yytokentype	file:
@@ -365,7 +366,7 @@ DIVIDER	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     DIVIDER = 265,$/;"	
 DIVIDER	interface/lib/opt/lex_n_yacc/sdf_file.tab.cpp	/^     DIVIDER = 265,$/;"	e	enum:yytokentype	file:
 DIVIDER	interface/lib/opt/lex_n_yacc/sdf_file.tab.hpp	/^     DIVIDER = 265,$/;"	e	enum:yytokentype
 DLAT	interface/src/primitive.h	/^                MUX,   DFF,   DLAT,   DELAY,  INVF,   WIRE, PULL,$/;"	e	enum:IntfNs::Pmt::Type
-DT	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB };$/;"	e	enum:CoreNs::Fault::State
+DT	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB, AH };$/;"	e	enum:CoreNs::Fault::State
 DYN_COMP_BT_DEFAULT	core/src/atpg_mgr.h	27;"	d
 DYN_COMP_MERGE_DEFAULT	core/src/atpg_mgr.h	26;"	d
 D_	core/src/logic-hex.h	/^    bool D_; $/;"	m	struct:CoreNs::HexValue
@@ -968,7 +969,7 @@ PROGRAM	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     PROGRAM = 263,$/;"	
 PROGRAM	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     PROGRAM = 263,$/;"	e	enum:yytokentype
 PROGRAM	interface/lib/opt/lex_n_yacc/sdf_file.tab.cpp	/^     PROGRAM = 263,$/;"	e	enum:yytokentype	file:
 PROGRAM	interface/lib/opt/lex_n_yacc/sdf_file.tab.hpp	/^     PROGRAM = 263,$/;"	e	enum:yytokentype
-PT	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB };$/;"	e	enum:CoreNs::Fault::State
+PT	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB, AH };$/;"	e	enum:CoreNs::Fault::State
 PULL	interface/src/primitive.h	/^                MUX,   DFF,   DLAT,   DELAY,  INVF,   WIRE, PULL,$/;"	e	enum:IntfNs::Pmt::Type
 PULSE	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	968;"	d	file:
 PULSE	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	968;"	d	file:
@@ -1089,7 +1090,7 @@ RAM	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	972;"	d	file:
 RAM	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	972;"	d	file:
 RCMOS1	interface/src/primitive.h	/^                CMOS1, CMOS2, RCMOS1, RCMOS2, CMOS1F, CMOS2F$/;"	e	enum:IntfNs::Pmt::Type
 RCMOS2	interface/src/primitive.h	/^                CMOS1, CMOS2, RCMOS1, RCMOS2, CMOS1F, CMOS2F$/;"	e	enum:IntfNs::Pmt::Type
-RE	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB };$/;"	e	enum:CoreNs::Fault::State
+RE	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB, AH };$/;"	e	enum:CoreNs::Fault::State
 READ_OFF	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	976;"	d	file:
 READ_OFF	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	976;"	d	file:
 RECOVERY	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     RECOVERY = 292,$/;"	e	enum:yytokentype	file:
@@ -1262,7 +1263,7 @@ SetXFillCmd	atpg/src/setup_cmd.cpp	/^SetXFillCmd::SetXFillCmd(const std::string 
 SetXFillCmd	atpg/src/setup_cmd.h	/^class SetXFillCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
 Simulator	core/src/simulator.h	/^class Simulator {$/;"	c	namespace:CoreNs
 Simulator	core/src/simulator.h	/^inline Simulator::Simulator(Circuit *cir) {$/;"	f	class:CoreNs::Simulator
-State	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB };$/;"	g	class:CoreNs::Fault
+State	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB, AH };$/;"	g	class:CoreNs::Fault
 State	core/src/pattern.h	/^	enum	   State { OFF = 0, ON };		   $/;"	g	class:CoreNs::PatternProcessor
 StaticCompression	core/src/pattern.h	/^inline void PatternProcessor::StaticCompression()$/;"	f	class:CoreNs::PatternProcessor
 SysBashCmd	common/src/sys_cmd.cpp	/^SysBashCmd::SysBashCmd(const string &name) : Cmd(name) {$/;"	f	class:SysBashCmd
@@ -1291,7 +1292,7 @@ TEMPERATURE	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     TEMPERATURE = 2
 TEMPERATURE	interface/lib/opt/lex_n_yacc/sdf_file.tab.cpp	/^     TEMPERATURE = 268,$/;"	e	enum:yytokentype	file:
 TEMPERATURE	interface/lib/opt/lex_n_yacc/sdf_file.tab.hpp	/^     TEMPERATURE = 268,$/;"	e	enum:yytokentype
 TEST_FOUND	core/src/atpg.h	/^    enum GenStatus             { TEST_FOUND = 0, UNTESTABLE, ABORT }; $/;"	e	enum:CoreNs::Atpg::GenStatus
-TI	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB };$/;"	e	enum:CoreNs::Fault::State
+TI	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB, AH };$/;"	e	enum:CoreNs::Fault::State
 TIE0	core/src/gate.h	/^                     TIE0,   TIE1, TIEX,   TIEZ$/;"	e	enum:CoreNs::Gate::Type
 TIE0	interface/src/primitive.h	/^                TIE1,  TIE0,  TIEX,   TIEZ,   UNDEF,$/;"	e	enum:IntfNs::Pmt::Type
 TIE1	core/src/gate.h	/^                     TIE0,   TIE1, TIEX,   TIEZ$/;"	e	enum:CoreNs::Gate::Type
@@ -1339,7 +1340,7 @@ Type	core/src/pattern.h	/^    enum       Type { BASIC_SCAN = 0, LAUNCH_CAPTURE, 
 Type	interface/src/cell.h	/^    enum Type { NA = -1, INPUT, OUTPUT, INOUT };$/;"	g	class:IntfNs::Port
 Type	interface/src/primitive.h	/^    enum Type { NA,$/;"	g	class:IntfNs::Pmt
 Type	interface/src/sdf_file.h	/^    enum              Type { IO_DELAY, IO_RETAIN, PORT_DELAY, INTER_DELAY,$/;"	g	struct:IntfNs::SdfDelayDef
-UD	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB };$/;"	e	enum:CoreNs::Fault::State
+UD	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB, AH };$/;"	e	enum:CoreNs::Fault::State
 UINT16_MAX	interface/lib/dbg/lex_n_yacc/lht_pat_file.yy.cpp	100;"	d	file:
 UINT16_MAX	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	100;"	d	file:
 UINT16_MAX	interface/lib/dbg/lex_n_yacc/pat_file.yy.cpp	100;"	d	file:
@@ -3068,7 +3069,8 @@ co_i_	core/src/gate.h	/^    int       *co_i_; $/;"	m	class:CoreNs::Gate
 co_o_	core/src/gate.h	/^    int       co_o_; $/;"	m	class:CoreNs::Gate
 color_	common/src/cmd.h	/^    Color                    color_;    \/\/ prompt color$/;"	m	class:CommonNs::CmdMgr
 comment_	common/src/cmd.h	/^    char                     comment_;  \/\/ comment character$/;"	m	class:CommonNs::CmdMgr
-comp_fault	core/src/atpg_mgr.cpp	/^bool comp_fault(Fault* f1, Fault* f2) {$/;"	f
+comp_fault_hard	core/src/atpg_mgr.cpp	/^bool comp_fault_hard(Fault* f1, Fault* f2) {$/;"	f
+comp_fault_lvl	core/src/atpg_mgr.cpp	/^bool comp_fault_lvl(Fault* f1, Fault* f2) {$/;"	f
 comp_gate	core/src/atpg.cpp	/^bool comp_gate(Gate* g1, Gate* g2) { $/;"	f
 connType_	core/src/circuit.h	/^    tfConnectType   connType_;    \/\/ time frame connection type$/;"	m	class:CoreNs::Circuit
 connectFrame	core/src/circuit.cpp	/^void Circuit::connectFrame() { $/;"	f	class:Circuit
@@ -3444,7 +3446,7 @@ insertObj	core/src/atpg.cpp	/^bool Atpg::insertObj(const Objective& obj, ObjList
 isEqv	interface/src/cell.h	/^inline bool Net::isEqv(Net * const n) const {$/;"	f	class:IntfNs::Net
 isFanoutStem	core/src/gate.h	/^inline bool Gate::isFanoutStem() const {$/;"	f	class:CoreNs::Gate
 isFlagSet	common/src/get_opt.h	/^inline bool OptMgr::isFlagSet(const std::string &f) const {$/;"	f	class:CommonNs::OptMgr
-isGateDrivePpo	core/src/circuit.h	/^inline bool Circuit::isGateDrivePpo(Gate *g) { $/;"	f	class:CoreNs::Circuit
+isGateDrivePpo	core/src/implicator.cpp	/^bool Implicator::isGateDrivePpo(Gate *g) { $/;"	f	class:Implicator
 isInverse	core/src/gate.h	/^inline Value Gate::isInverse() const {$/;"	f	class:CoreNs::Gate
 isLegalVar	common/src/cmd.h	/^inline bool CmdMgr::isLegalVar(const std::string &var) const {$/;"	f	class:CommonNs::CmdMgr
 isLegalVarChar	common/src/cmd.h	/^inline bool CmdMgr::isLegalVarChar(const char &ch) const {$/;"	f	class:CommonNs::CmdMgr
