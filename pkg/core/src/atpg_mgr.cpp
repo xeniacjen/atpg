@@ -19,6 +19,7 @@
 #include <cassert>
 #include <cstdlib>
 #include <iomanip>
+#include <algorithm>
 
 #include "atpg_mgr.h" 
 
@@ -51,16 +52,10 @@ void AtpgMgr::generation(int limit) {
             flist.pop_front(); 
             continue; 
         }
-        // if (flist.front()->state_==Fault::AB) 
-        // if (flist.front()->state_==Fault::AB 
-        //  || flist.front()->state_==Fault::PT) 
         if (flist.front()->state_==Fault::AH)  
             break; 
 
         if (f==flist.front()) { 
-            // f->state_ = Fault::PT; 
-            // flist.push_back(flist.front()); 
-            // flist.pop_front(); 
             assert(0); 
         }
 
@@ -104,7 +99,6 @@ void AtpgMgr::generation(int limit) {
         if (ret==Atpg::TEST_FOUND && pcoll_->pats_.size()%RPT_PER_PAT==0) {
             int fu = fListExtract_->current_.size(); 
             int dt = fListExtract_->getNStatus(Fault::DT);  
-            //     + fListExtract_(Fault::DH); 
             cout << "# " << setw(9) << pcoll_->pats_.size(); 
             cout << "  " << setw(8) << (float)dt / (float)fu * 100.f << "%";  
             cout << "  " << setw(7) << fu - dt; 
@@ -115,8 +109,6 @@ void AtpgMgr::generation(int limit) {
     
     pcoll_->nbit_spec_ = 0; 
     pcoll_->nbit_spec_max = 0; 
-    // for (FaultList::iterator it=flist.begin(); it!=flist.end(); ++it) 
-    //     (*it)->state_ = Fault::UD; 
     flist.sort(comp_fault_lvl); 
 
     cout << "\n\n# ------------------------------------------------------------------------\n"; 
@@ -130,17 +122,10 @@ void AtpgMgr::generation(int limit) {
             flist.pop_front(); 
             continue; 
         }
-        // if (flist.front()->state_==Fault::AB) 
-        // if (flist.front()->state_==Fault::AB) 
-        // if (flist.front()->state_==Fault::AB 
-        //  || flist.front()->state_==Fault::PT) 
         if (flist.front()->state_==Fault::AB)  
             break; 
 
         if (f==flist.front()) { 
-            // f->state_ = Fault::PT; 
-            // flist.push_back(flist.front()); 
-            // flist.pop_front(); 
             assert(0); 
         }
 
@@ -200,12 +185,14 @@ void AtpgMgr::generation(int limit) {
 
     if (pcoll_->staticCompression_==PatternProcessor::ON) { 
         ReverseFaultSim(); 
+        reverse(pcoll_->pats_.begin(), pcoll_->pats_.end()); 
         pcoll_->StaticCompression(); 
 
         if (pcoll_->XFill_==PatternProcessor::ON) 
             XFill(); 
 	}
 
+    reverse(pcoll_->pats_.begin(), pcoll_->pats_.end()); 
     ReverseFaultSim(); 
 }
 
