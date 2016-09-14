@@ -9,9 +9,9 @@
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
-#    AU (atpg untestable)                        121
+#    AU (atpg untestable)                        119
 #    RE (redundant)                                0
-#    AB (atpg abort)                              67
+#    AB (atpg abort)                              69
 #    TI (tied)                                     0
 #    DH (hard-but-detected)                      156
 #    --------------------------  -------------------

@@ -524,8 +524,10 @@ bool Atpg::MultiDBackTrack(DecisionTree &tree) {
                 ret = false; 
         }
         else { 
-            if (!is_flipped) 
+            if (!is_flipped) { 
                 v = X; 
+                ret = false; 
+            }
         }
     }
 

@@ -8,6 +8,7 @@
 ./bin/dbg/atpg -f ./script/atpg_s382_saf.script
 ./bin/dbg/atpg -f ./script/atpg_s444_saf.script
 # ./bin/dbg/atpg -f ./script/atpg_c432_saf.script
+./bin/dbg/atpg -f ./script/atpg_c880a_saf.script
 ./bin/dbg/atpg -f ./script/atpg_s1238_saf.script
 ./bin/dbg/atpg -f ./script/atpg_c1355_saf.script
 ./bin/dbg/atpg -f ./script/atpg_c5315_saf.script
