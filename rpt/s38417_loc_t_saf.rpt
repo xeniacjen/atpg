@@ -9,9 +9,9 @@
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
-#    AU (atpg untestable)                        119
+#    AU (atpg untestable)                        121
 #    RE (redundant)                                0
-#    AB (atpg abort)                              69
+#    AB (atpg abort)                              67
 #    TI (tied)                                     0
 #    DH (hard-but-detected)                      156
 #    --------------------------  -------------------
@@ -27,5 +27,5 @@
 #  Ave.Spec-rate                               17.5%
 #  Max.Spec-rate                              56.43%
 #  -------------------------------------------------
-#  ATPG runtime                              47.66 s
+#  ATPG runtime                              47.46 s
 #  -------------------------------------------------

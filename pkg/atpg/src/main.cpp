@@ -204,6 +204,8 @@ void initCmd(CmdMgr &cmdMgr, FanMgr &fanMgr) {
     Cmd *setStaticCompressionCmd = new SetStaticCompressionCmd("set_static_compression", &fanMgr);
     Cmd *setDynamicCompressionCmd = new SetDynamicCompressionCmd("set_dynamic_compression", &fanMgr);
     Cmd *setXFillCmd = new SetXFillCmd("set_X-Fill", &fanMgr);
+    Cmd *setDFSCmd = new SetDFSCmd("set_dfs_atpg", &fanMgr); 
+    Cmd *setObjOptimCmd = new SetObjOptimCmd("set_oo", &fanMgr); 
     cmdMgr.regCmd("SETUP", readLibCmd);
     cmdMgr.regCmd("SETUP", readNlCmd);
     cmdMgr.regCmd("SETUP", setFaultTypeCmd);
@@ -215,6 +217,8 @@ void initCmd(CmdMgr &cmdMgr, FanMgr &fanMgr) {
     cmdMgr.regCmd("SETUP", setStaticCompressionCmd);
     cmdMgr.regCmd("SETUP", setDynamicCompressionCmd);
     cmdMgr.regCmd("SETUP", setXFillCmd);
+    cmdMgr.regCmd("SETUP", setDFSCmd); 
+    cmdMgr.regCmd("SETUP", setObjOptimCmd); 
 
     // ATPG commands
     Cmd *readPatCmd       = new ReadPatCmd("read_pattern", &fanMgr);

@@ -137,6 +137,28 @@ public:
 private:
     FanMgr *fanMgr_;
 };
+
+class SetDFSCmd: public CommonNs::Cmd {
+public:
+         SetDFSCmd(const std::string &name, FanMgr *fanMgr);
+         ~SetDFSCmd();
+
+    bool exec(const std::vector<std::string> &argv);
+
+private:
+    FanMgr *fanMgr_;
+};
+
+class SetObjOptimCmd: public CommonNs::Cmd {
+public:
+         SetObjOptimCmd(const std::string &name, FanMgr *fanMgr);
+         ~SetObjOptimCmd();
+
+    bool exec(const std::vector<std::string> &argv);
+
+private:
+    FanMgr *fanMgr_;
+};
 //Ne
 
 };

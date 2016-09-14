@@ -707,3 +707,107 @@ bool SetXFillCmd::exec(const vector<string> &argv) {
     return true;
 } //}}}
 //Ne
+
+SetDFSCmd::SetDFSCmd(const std::string &name, FanMgr *fanMgr) :
+  Cmd(name) {
+    fanMgr_ = fanMgr;
+    optMgr_.setName(name);
+    optMgr_.setShortDes("set DFS feature for ATPG");
+    optMgr_.setDes("set DFS feature for ATPG to on/off");
+    optMgr_.regArg(new Arg(Arg::REQ, "either on or off",
+                           "on/off"));
+    Opt *opt = new Opt(Opt::BOOL, "print usage", "");
+    opt->addFlag("h");
+    opt->addFlag("help");
+    optMgr_.regOpt(opt);
+}
+
+SetDFSCmd::~SetDFSCmd() {}
+
+bool SetDFSCmd::exec(const vector<string> &argv) {
+    optMgr_.parse(argv);
+
+    if (optMgr_.isFlagSet("h")) {
+        optMgr_.usage();
+        return true;
+    }
+
+    if (optMgr_.getNParsedArg() < 1) {
+        cerr << "**ERROR SetDFSCmd::exec(): on/off needed";
+        cerr << endl;
+        return false;
+    }
+
+    if (!fanMgr_->atpg_mgr) 
+        fanMgr_->atpg_mgr = new AtpgMgr; 
+	
+    if (optMgr_.getParsedArg(0) == "on") {
+        cout << "#  DFS feature set to on" << endl;
+		
+		fanMgr_->atpg_mgr->set_dfs_on_ = true;
+	}
+	else if (optMgr_.getParsedArg(0) == "off") {
+        cout << "#  DFS feature set to off" << endl;
+		
+		fanMgr_->atpg_mgr->set_dfs_on_ = false;
+	}
+    else {
+        cerr << "**ERROR SetDFSCmd::exec(): unknown argument `";
+        cerr << optMgr_.getParsedArg(0) << "'" << endl;
+        return false;
+    }
+
+    return true;
+} 
+
+SetObjOptimCmd::SetObjOptimCmd(const std::string &name, FanMgr *fanMgr) :
+  Cmd(name) {
+    fanMgr_ = fanMgr;
+    optMgr_.setName(name);
+    optMgr_.setShortDes("set object-optimization engine(OOE)");
+    optMgr_.setDes("set object-optimization engine(OOE) to on/off");
+    optMgr_.regArg(new Arg(Arg::REQ, "either on or off",
+                           "on/off"));
+    Opt *opt = new Opt(Opt::BOOL, "print usage", "");
+    opt->addFlag("h");
+    opt->addFlag("help");
+    optMgr_.regOpt(opt);
+}
+
+SetObjOptimCmd::~SetObjOptimCmd() {}
+
+bool SetObjOptimCmd::exec(const vector<string> &argv) {
+    optMgr_.parse(argv);
+
+    if (optMgr_.isFlagSet("h")) {
+        optMgr_.usage();
+        return true;
+    }
+
+    if (optMgr_.getNParsedArg() < 1) {
+        cerr << "**ERROR SetObjOptimCmd::exec(): on/off needed";
+        cerr << endl;
+        return false;
+    }
+
+    if (!fanMgr_->atpg_mgr) 
+        fanMgr_->atpg_mgr = new AtpgMgr; 
+	
+    if (optMgr_.getParsedArg(0) == "on") {
+        cout << "#  set OOE to on" << endl;
+		
+		fanMgr_->atpg_mgr->set_oo_on_ = true;
+	}
+	else if (optMgr_.getParsedArg(0) == "off") {
+        cout << "#  OOE set to off" << endl;
+		
+		fanMgr_->atpg_mgr->set_oo_on_ = false;
+	}
+    else {
+        cerr << "**ERROR SetObjOptimCmd::exec(): unknown argument `";
+        cerr << optMgr_.getParsedArg(0) << "'" << endl;
+        return false;
+    }
+
+    return true;
+} //}}}

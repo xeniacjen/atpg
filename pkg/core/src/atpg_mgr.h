@@ -43,6 +43,9 @@ public:
     PatternProcessor   *pcoll_;
     Circuit            *cir_;
     Simulator          *sim_;
+
+    bool                set_dfs_on_; 
+    bool                set_oo_on_; 
 private: 
     void                DynamicCompression(FaultList &remain); 
     void                ReverseFaultSim(); 
@@ -65,6 +68,9 @@ inline AtpgMgr::AtpgMgr() {
         cir_          = NULL;
         sim_          = NULL;
         atpg_         = NULL;
+
+        set_dfs_on_   = true; 
+        set_oo_on_    = true; 
     }
 
 inline AtpgMgr::~AtpgMgr() {}
