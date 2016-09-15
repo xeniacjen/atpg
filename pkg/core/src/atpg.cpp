@@ -239,9 +239,15 @@ bool Atpg::GenObjs() {
         else { 
             mask[i] = H; 
             ret = true; 
+
+            if (!objs_.empty()) { 
+                // if has P/PIs obj. 
+                if (objs_.begin()->first<cir_->npi_+cir_->nppi_) 
+                    break; 
+            }
         }
     }
-    assert(j==gids.size()); 
+    // assert(j==gids.size()); 
 
     if (!objs_.empty()) { 
         // if (!CheckDDDrive()) return false; 
