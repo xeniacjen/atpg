@@ -175,7 +175,8 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
     else if (v!=X) // D-frontier compromised 
         return false;  
     else  { 
-        // TODO 
+        if (!CheckXPath(gtoprop)) return false; 
+
         ObjList objs = objs_; // create a temp. copy 
 
         Objective obj; 
@@ -227,6 +228,8 @@ bool Atpg::GenObjs() {
     // get the previous object 
     d_tree_.top(gids); 
     Value *mask = d_tree_.top()->get_mask_(size); 
+
+    ResetXPath(); 
     int j = 0; 
     for (size_t i=0; i<size; i++) { 
         if (mask[i]==L) continue; 
