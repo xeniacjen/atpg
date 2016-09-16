@@ -28,17 +28,18 @@ void FaultListExtract::extract(Circuit *cir) {
             gateToFault_[i] = faults_.size();
 			// extract fault of gate outputs 
 			// but do not extract faults between two time frames
-            //if (cir->gates_[i].nfo_ > 0 && i < cir->ngate_ - cir->nppi_) {
-            if (cir->gates_[i].nfo_ > 0 && i < cir->npi_ + cir->nppi_) {
+            // TODO: may have problem when retrieve P/POs faults... 
+            if (cir->gates_[i].nfo_ > 0 && i < cir->ngate_ - cir->nppi_) {
+            // if (cir->gates_[i].nfo_ > 0 && i < cir->npi_ + cir->nppi_) {
                     faults_.push_back(new Fault(i, Fault::SA0, 0));
                     faults_.push_back(new Fault(i, Fault::SA1, 0));
             }
 			// extract faults of gate inputs
             for (int j = 0; j < cir->gates_[i].nfi_; ++j) {
-                if (cir->gates_[cir->gates_[i].fis_[j]].nfo_>1) { 
+                // if (cir->gates_[cir->gates_[i].fis_[j]].nfo_>1) { 
                     faults_.push_back(new Fault(i, Fault::SA0, j + 1));
                     faults_.push_back(new Fault(i, Fault::SA1, j + 1));
-                }
+                // }
             }
             /** not considered so far... 
             if (cir->gates_[i].type_ == Gate::PPI) {

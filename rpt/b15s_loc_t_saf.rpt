@@ -5,27 +5,27 @@
 #  -------------------------------------------------
 #  Fault classes                             #faults
 #  ----------------------------  -------------------
-#    FU (full)                                 25894
+#    FU (full)                                 56412
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
-#    AU (atpg untestable)                         26
+#    AU (atpg untestable)                         33
 #    RE (redundant)                                0
-#    AB (atpg abort)                            1350
+#    AB (atpg abort)                            2109
 #    TI (tied)                                     0
-#    DH (hard-but-detected)                     5542
+#    DH (hard-but-detected)                     8667
 #    --------------------------  -------------------
-#    DT (detected)                             24518
+#    DT (detected)                             54270
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
-#    test coverage                            94.78%
-#    fault coverage                           94.69%
-#    atpg effectiveness                       94.79%
+#    test coverage                            96.26%
+#    fault coverage                            96.2%
+#    atpg effectiveness                       96.26%
 #  -------------------------------------------------
-#  #Patterns                                     555
-#  Ave.Spec-rate                              10.34%
-#  Max.Spec-rate                              83.92%
+#  #Patterns                                     579
+#  Ave.Spec-rate                              10.48%
+#  Max.Spec-rate                              46.19%
 #  -------------------------------------------------
-#  ATPG runtime                              254.1 s
+#  ATPG runtime                              361.6 s
 #  -------------------------------------------------

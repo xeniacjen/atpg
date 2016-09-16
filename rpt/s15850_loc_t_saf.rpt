@@ -5,27 +5,27 @@
 #  -------------------------------------------------
 #  Fault classes                             #faults
 #  ----------------------------  -------------------
-#    FU (full)                                 12150
+#    FU (full)                                 49424
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
-#    AU (atpg untestable)                        498
+#    AU (atpg untestable)                        941
 #    RE (redundant)                                0
-#    AB (atpg abort)                              22
+#    AB (atpg abort)                              73
 #    TI (tied)                                     0
-#    DH (hard-but-detected)                      188
+#    DH (hard-but-detected)                      272
 #    --------------------------  -------------------
-#    DT (detected)                             11630
+#    DT (detected)                             48410
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
-#    test coverage                            99.81%
-#    fault coverage                           95.72%
-#    atpg effectiveness                       99.82%
+#    test coverage                            99.85%
+#    fault coverage                           97.95%
+#    atpg effectiveness                       99.85%
 #  -------------------------------------------------
-#  #Patterns                                     240
-#  Ave.Spec-rate                              13.13%
-#  Max.Spec-rate                              86.42%
+#  #Patterns                                     253
+#  Ave.Spec-rate                              12.56%
+#  Max.Spec-rate                               40.1%
 #  -------------------------------------------------
-#  ATPG runtime                              17.15 s
+#  ATPG runtime                                 24 s
 #  -------------------------------------------------

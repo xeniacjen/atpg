@@ -5,27 +5,27 @@
 #  -------------------------------------------------
 #  Fault classes                             #faults
 #  ----------------------------  -------------------
-#    FU (full)                                 72192
+#    FU (full)                                154988
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
-#    AU (atpg untestable)                         72
+#    AU (atpg untestable)                         84
 #    RE (redundant)                                0
-#    AB (atpg abort)                            3969
+#    AB (atpg abort)                            5914
 #    TI (tied)                                     0
-#    DH (hard-but-detected)                    15270
+#    DH (hard-but-detected)                    25878
 #    --------------------------  -------------------
-#    DT (detected)                             68151
+#    DT (detected)                            148990
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
-#    test coverage                             94.5%
-#    fault coverage                            94.4%
-#    atpg effectiveness                        94.5%
+#    test coverage                            96.18%
+#    fault coverage                           96.13%
+#    atpg effectiveness                       96.18%
 #  -------------------------------------------------
-#  #Patterns                                     949
-#  Ave.Spec-rate                              8.052%
-#  Max.Spec-rate                              91.53%
+#  #Patterns                                     935
+#  Ave.Spec-rate                              8.127%
+#  Max.Spec-rate                              38.43%
 #  -------------------------------------------------
-#  ATPG runtime                               1405 s
+#  ATPG runtime                               1845 s
 #  -------------------------------------------------
