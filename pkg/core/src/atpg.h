@@ -33,6 +33,14 @@ typedef std::map<int, Value> ObjList;
 typedef ObjList::iterator ObjListIter; 
 
 class Atpg { 
+    friend struct comp_gate; 
+    struct comp_gate { 
+        comp_gate(Atpg *atpg) { atpg_ = atpg; }
+        Atpg *atpg_; 
+
+        bool operator()(Gate* g1, Gate* g2); 
+    }; 
+    
 public: 
     enum GenStatus             { TEST_FOUND = 0, UNTESTABLE, ABORT }; 
 

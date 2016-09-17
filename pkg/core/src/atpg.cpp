@@ -310,7 +310,6 @@ bool Atpg::CheckDDDrive() {
     return true; 
 }
 
-bool comp_gate(Gate* g1, Gate* g2); 
 bool Atpg::MultiDDrive() { 
     GateVec dpath; 
 
@@ -328,8 +327,6 @@ bool Atpg::MultiDDrive() {
             FaultSetMap f2p = d_tree_.top()->fault_to_prop_; 
             PropFaultSet(f2p); 
     
-            sort (dfront.begin(), dfront.end(), comp_gate); 
-
             d_tree_.push(dfront, 
                 impl_->GetEFrontierSize(), 
                 impl_->getDecisionTree()); 
@@ -340,6 +337,9 @@ bool Atpg::MultiDDrive() {
                 mask[i] = X; 
             d_tree_.top()->set_mask_(mask); 
             d_tree_.top()->set_f2p(f2p); 
+
+            GateVec &df = d_tree_.top()->dfront_; 
+            sort (df.begin(), df.end(), comp_gate(this)); 
 
             return GenObjs(); 
         } 
@@ -453,7 +453,6 @@ bool Atpg::DDDrive() {
     
             if (!CheckDFrontier(dfront)) return false;
     
-            // sort (dfront.begin(), dfront.end(), comp_gate); 
             gtoprop = dfront.back(); 
     
             assert(gtoprop->isUnary()==L); 
@@ -475,8 +474,14 @@ bool Atpg::DDDrive() {
     return false; // D-path justification failed 
 }
 
-bool comp_gate(Gate* g1, Gate* g2) { 
-    return g1->co_o_ > g2->co_o_; 
+bool Atpg::comp_gate::operator()(Gate* g1, Gate* g2) {  
+    FaultSetMap f2p = atpg_->d_tree_.top()->fault_to_prop_; 
+    int fs1, fs2; 
+    fs1 = f2p.find(g1)->second.size() + g1->co_o_; 
+    fs2 = f2p.find(g2)->second.size() + g2->co_o_; 
+
+    // return g1->co_o_ > g2->co_o_; 
+    return fs1 > fs2; 
 }
 
 bool Atpg::DDrive() { 

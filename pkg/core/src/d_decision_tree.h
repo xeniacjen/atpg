@@ -55,8 +55,9 @@ struct DDNode {
 
     FaultSetMap  fault_to_prop_; 
     GateSetMap   predecessor_; 
-  protected: 
+
     GateVec      dfront_; 
+  protected: 
     Value       *d_mask_; // indicate which gates to d-drive 
 
     DecisionTree j_tree_; 
