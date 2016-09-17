@@ -282,16 +282,22 @@ void AtpgMgr::XFill() {
 void AtpgMgr::DynamicCompression(FaultList &remain) { 
     Pattern *p = pcoll_->pats_.back(); 
     Atpg::GenStatus stat = Atpg::TEST_FOUND; 
+    Atpg *atpg = atpg_; 
+    bool begin = true; 
     FaultList skipped_fs; 
     int fail_count = 0;  
 
     while (true) { 
         if (stat==Atpg::TEST_FOUND) { 
+            if (begin) begin = false; 
+            else delete atpg_; 
+            atpg_ = atpg; 
             atpg_->GetPiPattern(p); 
             sim_->pfFaultSim(p, remain);  
             getPoPattern(p); 
         }
         else { 
+            delete atpg; 
             skipped_fs.push_back(remain.front()); 
             remain.pop_front(); 
             if (++fail_count>=dyn_comp_merge_) 
@@ -305,11 +311,10 @@ void AtpgMgr::DynamicCompression(FaultList &remain) {
         }
         if (remain.empty()) break; 
 
-        delete atpg_; 
-        atpg_ = new Atpg(cir_, remain.front(), p); 
-        atpg_->SetBackTrackLimit(dyn_comp_backtrack); 
-        if (set_dfs_on_) atpg_->TurnOnPoMode(); 
-        stat = atpg_->Tpg(); 
+        atpg = new Atpg(cir_, remain.front(), p); 
+        atpg->SetBackTrackLimit(dyn_comp_backtrack); 
+        if (set_dfs_on_) atpg->TurnOnPoMode(); 
+        stat = atpg->Tpg(); 
     }
 
     while (!skipped_fs.empty()) { 
