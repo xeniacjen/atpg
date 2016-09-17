@@ -83,6 +83,7 @@ private:
     Fault *GetFault(Gate *g, int line); 
     Fault *GetProbFault(Gate *g, int line); 
     void AddFaultSet(Gate *g, FaultSet &fs); 
+    int GetProbFaultSet(Gate *g); 
 
     bool        is_path_oriented_mode_; 
     bool        is_obj_optim_mode_; 

@@ -412,6 +412,52 @@ void Atpg::AddFaultSet(Gate *g, FaultSet &fs) {
     }
 }
 
+int Atpg::GetProbFaultSet(Gate *g) { // TODO: parity check 
+    int ret = 0; 
+
+    if (GetProbFault(g, 0)) { 
+        ret++; 
+        for (int i=0; i<g->nfo_; i++) { 
+            Gate *fo = &cir_->gates_[g->fos_[i]]; 
+            for (int j=0; j<fo->nfi_; j++) { 
+                if (fo->fis_[j]==g->id_ && GetProbFault(fo, j+1)) { 
+                    ret++; 
+                    ret+=GetProbFaultSet(fo); 
+                    break; 
+                }
+            }
+        }
+    }
+
+    return ret; 
+}
+
+Fault *Atpg::GetProbFault(Gate *g, int line) { 
+    Fault *f1; int fid1; 
+    Fault *f2; int fid2; 
+    Fault *f = 0; 
+
+    Value v; 
+    v = (line>0)?impl_->GetVal(g->fis_[line-1]):impl_->GetVal(g->id_); 
+    if (g->type_==Gate::PO || g->type_==Gate::PPO) 
+        line--; 
+    if (v!=X) return 0; 
+    else { 
+        fid1 = flist_->gateToFault_[g->id_] + 2 * line; // SA0 
+        fid2 = flist_->gateToFault_[g->id_] + 2 * line + 1; // SA1  
+    }
+
+    f1 = flist_->faults_[fid1]; 
+    f2 = flist_->faults_[fid2]; 
+
+    if (f1->state_==Fault::DT || f1->state_==Fault::DH) 
+        f++; 
+    if (f2->state_==Fault::DT || f2->state_==Fault::DH) 
+        f++; 
+
+    return f; 
+} 
+
 Fault *Atpg::GetFault(Gate *g, int line) { 
     Fault *f; int fid; 
 
@@ -477,8 +523,8 @@ bool Atpg::DDDrive() {
 bool Atpg::comp_gate::operator()(Gate* g1, Gate* g2) {  
     FaultSetMap f2p = atpg_->d_tree_.top()->fault_to_prop_; 
     int fs1, fs2; 
-    fs1 = f2p.find(g1)->second.size() + g1->co_o_; 
-    fs2 = f2p.find(g2)->second.size() + g2->co_o_; 
+    fs1 = f2p.find(g1)->second.size() + atpg_->GetProbFaultSet(g1); 
+    fs2 = f2p.find(g2)->second.size() + atpg_->GetProbFaultSet(g2); 
 
     // return g1->co_o_ > g2->co_o_; 
     return fs1 > fs2; 
