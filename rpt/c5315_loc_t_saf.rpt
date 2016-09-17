@@ -23,9 +23,9 @@
 #    fault coverage                            99.5%
 #    atpg effectiveness                        99.9%
 #  -------------------------------------------------
-#  #Patterns                                     390
-#  Ave.Spec-rate                              12.11%
+#  #Patterns                                     386
+#  Ave.Spec-rate                              11.38%
 #  Max.Spec-rate                              17.98%
 #  -------------------------------------------------
-#  ATPG runtime                              4.507 s
+#  ATPG runtime                              3.701 s
 #  -------------------------------------------------
