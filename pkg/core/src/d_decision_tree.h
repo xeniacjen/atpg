@@ -16,12 +16,19 @@
  * =====================================================================================
  */
 
-#include <stack>
+#include <set>
+#include <map>
 
 #include "decision_tree.h" 
-#include "gate.h"
+#include "fault.h"
 
 namespace CoreNs { 
+
+typedef std::set<int> GateSet; 
+typedef std::set<Fault *> FaultSet; 
+typedef std::map<Gate *, GateSet> GateSetMap; 
+typedef std::map<Gate *, FaultSet> FaultSetMap; 
+typedef FaultSetMap::iterator FaultSetMapIter; 
 
 struct DDNode { 
                  DDNode(const GateVec &df, 
@@ -35,11 +42,19 @@ struct DDNode {
     bool         empty() const; 
     Gate        *top() const; 
     void         top(GateVec &gids) const;        
+    void         top(GateSet &gs) const; 
     void         pop(); 
     void         getJTree(DecisionTree &tree) const; 
 
     void         set_mask_(Value *mask); 
     Value       *get_mask_(size_t& n) const; 
+
+    void         get_pred(GateSet &gs); 
+
+    void         set_f2p(FaultSetMap &f2p);
+
+    FaultSetMap  fault_to_prop_; 
+    GateSetMap   predecessor_; 
   protected: 
     GateVec      dfront_; 
     Value       *d_mask_; // indicate which gates to d-drive 
@@ -116,6 +131,20 @@ inline Value *DDNode::get_mask_(size_t& n) const {
     n = dfront_.size(); 
 
     return d_mask_; 
+}
+
+inline void DDNode::set_f2p(FaultSetMap &f2p) { 
+    fault_to_prop_.clear(); 
+
+    for (size_t i=0; i<dfront_.size(); i++) { 
+        Gate *g = dfront_[i]; 
+        FaultSetMapIter it = f2p.find(g); 
+        if (it!=f2p.end()) { 
+            fault_to_prop_.insert(std::pair<Gate *, FaultSet>(
+              it->first, it->second)); 
+        } 
+        else assert(0); 
+    }
 }
 
 inline DDTree::~DDTree() { 

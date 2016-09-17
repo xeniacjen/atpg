@@ -5,27 +5,27 @@
 #  -------------------------------------------------
 #  Fault classes                             #faults
 #  ----------------------------  -------------------
-#    FU (full)                                  1460
+#    FU (full)                                  3226
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
-#    AU (atpg untestable)                         70
+#    AU (atpg untestable)                         88
 #    RE (redundant)                                0
 #    AB (atpg abort)                               0
 #    TI (tied)                                     0
-#    DH (hard-but-detected)                       18
+#    DH (hard-but-detected)                       34
 #    --------------------------  -------------------
-#    DT (detected)                              1390
+#    DT (detected)                              3138
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
 #    test coverage                              100%
-#    fault coverage                           95.21%
+#    fault coverage                           97.27%
 #    atpg effectiveness                         100%
 #  -------------------------------------------------
-#  #Patterns                                     200
-#  Ave.Spec-rate                              32.96%
-#  Max.Spec-rate                                 75%
+#  #Patterns                                     197
+#  Ave.Spec-rate                               44.1%
+#  Max.Spec-rate                               62.5%
 #  -------------------------------------------------
-#  ATPG runtime                              3.974 s
+#  ATPG runtime                             0.5251 s
 #  -------------------------------------------------

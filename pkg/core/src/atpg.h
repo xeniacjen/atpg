@@ -48,13 +48,15 @@ public:
     bool    CheckCompatibility(Fault *f);  
 
     bool    TurnOnPoMode(); 
-    bool    TurnOnObjOptimMode(); 
+    bool    TurnOnObjOptimMode(FaultListExtract *fl); 
+
 private: 
     // podem help function 
     bool isTestPossible(); 
     bool isaTest(); 
 
     // dfs-podem 
+    bool init_d_tree(); 
     bool DDDrive(); 
     bool CheckDPath(Gate *g) const; 
     bool CheckPath(const GateVec &path) const; 
@@ -65,15 +67,22 @@ private:
     bool AddGateToProp(Gate *gtoprop); 
     bool GenObjs(); 
     bool CheckDDDrive(); 
+    void PropFaultSet(FaultSetMap &f2p); 
     bool MultiDDrive(); 
     bool MultiDBackTrack(DecisionTree &tree); 
     bool isaMultiTest(); 
+
+    Fault *GetFault(Gate *g, int line); 
+    Fault *GetProbFault(Gate *g, int line); 
+    void AddFaultSet(Gate *g, FaultSet &fs); 
 
     bool        is_path_oriented_mode_; 
     bool        is_obj_optim_mode_; 
     ObjList     objs_; 
 
     DDTree      d_tree_; 
+
+    FaultListExtract *flist_; 
 protected:
     virtual bool FaultActivate(); 
     virtual bool DDrive(); 
@@ -208,9 +217,11 @@ inline bool Atpg::TurnOnPoMode() {
     return is_path_oriented_mode_; 
 }
 
-inline bool Atpg::TurnOnObjOptimMode() { 
+inline bool Atpg::TurnOnObjOptimMode(FaultListExtract *fl) { 
     is_path_oriented_mode_ = true; 
     is_obj_optim_mode_ = true; 
+
+    flist_ = fl; 
 
     return is_obj_optim_mode_; 
 } 

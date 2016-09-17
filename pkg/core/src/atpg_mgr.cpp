@@ -133,7 +133,7 @@ void AtpgMgr::generation(int limit) {
         atpg_ = new Atpg(cir_, f); 
         atpg_->SetBackTrackLimit(limit); 
         if (set_dfs_on_) atpg_->TurnOnPoMode(); 
-        if (set_oo_on_) atpg_->TurnOnObjOptimMode(); 
+        if (set_oo_on_) atpg_->TurnOnObjOptimMode(fListExtract_); 
         Atpg::GenStatus ret = atpg_->Tpg(); 
 
         if (ret==Atpg::TEST_FOUND) { 

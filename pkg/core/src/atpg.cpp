@@ -26,18 +26,37 @@ using namespace std;
 
 using namespace CoreNs; 
 
+bool Atpg::init_d_tree() {
+    GateVec fgs; 
+    FaultSetMap f2p; 
+    // GateSetMap p; 
+
+    Fault *f = current_fault_; 
+    Gate *fg = &cir_->gates_[f->gate_]; 
+    fgs.push_back(fg);   
+    DecisionTree tree_dummy; tree_dummy.clear(); 
+    if (is_obj_optim_mode_) { 
+        FaultSet fs; 
+        f2p.insert(pair<Gate *, FaultSet>(fg, fs)); 
+    }
+
+    d_tree_.push(fgs, 0, tree_dummy); 
+
+    if (is_obj_optim_mode_) { 
+        Value *mask = new Value [fgs.size()]; 
+        for (size_t i=0; i<fgs.size(); i++)  
+            mask[i] = H; 
+        
+        d_tree_.top()->set_mask_(mask); 
+        d_tree_.top()->set_f2p(f2p); 
+    }
+
+    return true; 
+}
+
 Atpg::GenStatus Atpg::Tpg() { 
     if (is_path_oriented_mode_) { 
-        GateVec f; f.push_back(&cir_->gates_[current_fault_->gate_]); 
-        DecisionTree tree_dummy; tree_dummy.clear(); 
-        d_tree_.push(f, 0, tree_dummy); 
-
-        if (is_obj_optim_mode_) { 
-            Value *mask = new Value [f.size()]; 
-            for (size_t i=0; i<f.size(); i++) 
-                mask[i] = H; 
-            d_tree_.top()->set_mask_(mask); 
-        }
+        init_d_tree(); 
     }
 
     while (true) { 
@@ -305,11 +324,12 @@ bool Atpg::MultiDDrive() {
             impl_->GetDFrontier(dfront); 
     
             if (!CheckDFrontier(dfront)) return false;
+
+            FaultSetMap f2p = d_tree_.top()->fault_to_prop_; 
+            PropFaultSet(f2p); 
     
             sort (dfront.begin(), dfront.end(), comp_gate); 
-            Gate *gtoprop = dfront.back(); 
-    
-            assert(gtoprop->isUnary()==L); 
+
             d_tree_.push(dfront, 
                 impl_->GetEFrontierSize(), 
                 impl_->getDecisionTree()); 
@@ -319,6 +339,7 @@ bool Atpg::MultiDDrive() {
             for (size_t i=0; i<dfront.size(); i++) 
                 mask[i] = X; 
             d_tree_.top()->set_mask_(mask); 
+            d_tree_.top()->set_f2p(f2p); 
 
             return GenObjs(); 
         } 
@@ -326,6 +347,90 @@ bool Atpg::MultiDDrive() {
     }
 
     return false; // D-path justification failed 
+}
+
+struct FaultPropEvent { 
+    Gate   *event; 
+    int     source; 
+
+    FaultPropEvent(Gate *g, int s) { 
+        event = g; 
+        source = s; 
+    }
+}; 
+
+void Atpg::PropFaultSet(FaultSetMap &f2p) { 
+    queue<FaultPropEvent> events; 
+    
+    FaultSetMapIter it = f2p.begin(); 
+    for (; it!=f2p.end(); ++it) { 
+        events.push(FaultPropEvent(it->first, it->first->id_)); 
+    }
+
+    while (!events.empty()) { 
+        Gate *g = events.front().event; 
+        int s = events.front().source; 
+        events.pop(); 
+
+        it = f2p.find(g); 
+        FaultSet fs = it->second; 
+        AddFaultSet(g, fs); 
+
+        Value v = impl_->GetVal(g->id_); 
+        if (v==D || v==B) { 
+            for (int i=0; i<g->nfo_; i++) { 
+                Gate *fo = &cir_->gates_[g->fos_[i]]; 
+                it = f2p.find(fo); 
+                if (it==f2p.end()) { 
+                    f2p.insert(pair<Gate *, FaultSet>(fo, fs)); 
+                } 
+                else { 
+                    it->second.insert(fs.begin(), fs.end()); // TODO 
+                }
+                events.push(FaultPropEvent(fo, s)); 
+            }
+        }
+        // else { 
+            // TODO: set the predecessor 
+        // }
+    }
+}
+
+void Atpg::AddFaultSet(Gate *g, FaultSet &fs) { 
+    Fault *f = GetFault(g, 0); 
+    if (f) fs.insert(f); 
+
+    if (current_fault_->gate_!=g->id_) { 
+        for (int i=0; i<g->nfi_; i++) {
+            Gate *fi = &cir_->gates_[g->fis_[i]]; 
+            f = GetFault(g, i+1); 
+            if (f) fs.insert(f); 
+        } 
+    } 
+    else if (current_fault_->line_) { 
+        fs.insert(current_fault_); 
+    }
+}
+
+Fault *Atpg::GetFault(Gate *g, int line) { 
+    Fault *f; int fid; 
+
+    Value v; 
+    v = (line>0)?impl_->GetVal(g->fis_[line-1]):impl_->GetVal(g->id_); 
+    if (g->type_==Gate::PO || g->type_==Gate::PPO) 
+        line--; 
+    if (v!=D && v!=B) return 0; 
+    else if (v==D) // SA0 
+        fid = flist_->gateToFault_[g->id_] + 2 * line; 
+    else if (v==B) // SA1  
+        fid = flist_->gateToFault_[g->id_] + 2 * line + 1; 
+
+    f = flist_->faults_[fid]; 
+
+    if (f->state_==Fault::DT || f->state_==Fault::DH) 
+        return 0; 
+
+    return f; 
 }
 
 bool Atpg::DDDrive() { 
