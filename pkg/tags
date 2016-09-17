@@ -462,6 +462,8 @@ GetPath	core/src/d_decision_tree.h	/^inline void DDTree::GetPath(GateVec &path) 
 GetPiPattern	core/src/atpg.h	/^inline void Atpg::GetPiPattern(Pattern *p) { $/;"	f	class:CoreNs::Atpg
 GetPiPattern	core/src/implicator.h	/^inline void Implicator::GetPiPattern(Pattern *p) const {$/;"	f	class:CoreNs::Implicator
 GetPoPattern	core/src/implicator.h	/^inline void Implicator::GetPoPattern(Pattern *p) const  {}$/;"	f	class:CoreNs::Implicator
+GetProbFault	core/src/atpg.cpp	/^Fault *Atpg::GetProbFault(Gate *g, int line) { $/;"	f	class:Atpg
+GetProbFaultSet	core/src/atpg.cpp	/^int Atpg::GetProbFaultSet(Gate *g) { \/\/ TODO: parity check $/;"	f	class:Atpg
 GetVal	core/src/implicator.h	/^inline Value Implicator::GetVal(int gid) const {$/;"	f	class:CoreNs::Implicator
 GoodEval	core/src/implicator.cpp	/^Value Implicator::GoodEval(Gate *g) const { $/;"	f	class:Implicator
 H	core/src/logic.h	/^const   Value     H         = 1;       \/\/ High$/;"	m	namespace:CoreNs
@@ -902,6 +904,7 @@ ReportStatsCmd	atpg/src/atpg_cmd.cpp	/^ReportStatsCmd::ReportStatsCmd(const std:
 ReportStatsCmd	atpg/src/atpg_cmd.h	/^class ReportStatsCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
 ReportValueCmd	atpg/src/atpg_cmd.cpp	/^ReportValueCmd::ReportValueCmd(const std::string &name, FanMgr *fanMgr) :$/;"	f	class:ReportValueCmd
 ReportValueCmd	atpg/src/atpg_cmd.h	/^class ReportValueCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
+ResetProbFaultSet	core/src/atpg.h	/^inline void Atpg::ResetProbFaultSet() { $/;"	f	class:CoreNs::Atpg
 ResetXPath	core/src/atpg.h	/^inline void Atpg::ResetXPath() { $/;"	f	class:CoreNs::Atpg
 Result	common/src/cmd.h	/^    enum        Result { EXIT = -1, SUCCESS, FAIL, NOT_EXIST, NOP };$/;"	g	class:CommonNs::CmdMgr
 ReverseFaultSim	core/src/atpg_mgr.cpp	/^void AtpgMgr::ReverseFaultSim() { $/;"	f	class:AtpgMgr
@@ -1973,6 +1976,7 @@ assignFiMinLvl	core/src/circuit.cpp	/^void Circuit::assignFiMinLvl(){$/;"	f	clas
 assignPatternToPi	core/src/simulator.h	/^inline void Simulator::assignPatternToPi(const Pattern *const pat)$/;"	f	class:CoreNs::Simulator
 assignValue	core/src/pattern_rw.cpp	/^void PatternReader::assignValue(Value *v, const char * const pat,$/;"	f	class:PatternReader
 atpgStat	atpg/src/fan_mgr.h	/^    CommonNs::TmStat    atpgStat;$/;"	m	class:FanNs::FanMgr
+atpg_	core/src/atpg.h	/^        Atpg *atpg_; $/;"	m	struct:CoreNs::Atpg::comp_gate
 atpg_	core/src/atpg_mgr.h	/^    Atpg               *atpg_; $/;"	m	class:CoreNs::AtpgMgr
 atpg_mgr	atpg/src/fan_mgr.h	/^    CoreNs::AtpgMgr     *atpg_mgr;$/;"	m	class:FanNs::FanMgr
 autoCmplt	common/src/cmd.cpp	/^void CmdMgr::autoCmplt() {$/;"	f	class:CmdMgr
@@ -2021,7 +2025,8 @@ color_	common/src/cmd.h	/^    Color                    color_;    \/\/ prompt co
 comment_	common/src/cmd.h	/^    char                     comment_;  \/\/ comment character$/;"	m	class:CommonNs::CmdMgr
 comp_fault_hard	core/src/atpg_mgr.cpp	/^bool comp_fault_hard(Fault* f1, Fault* f2) {$/;"	f
 comp_fault_lvl	core/src/atpg_mgr.cpp	/^bool comp_fault_lvl(Fault* f1, Fault* f2) {$/;"	f
-comp_gate	core/src/atpg.cpp	/^bool comp_gate(Gate* g1, Gate* g2) { $/;"	f
+comp_gate	core/src/atpg.h	/^        comp_gate(Atpg *atpg) { atpg_ = atpg; }$/;"	f	struct:CoreNs::Atpg::comp_gate
+comp_gate	core/src/atpg.h	/^    struct comp_gate { $/;"	s	class:CoreNs::Atpg
 connType_	core/src/circuit.h	/^    tfConnectType   connType_;    \/\/ time frame connection type$/;"	m	class:CoreNs::Circuit
 connectFrame	core/src/circuit.cpp	/^void Circuit::connectFrame() { $/;"	f	class:Circuit
 cons_	core/src/gate.h	/^    ParaValue cons_;$/;"	m	class:CoreNs::Gate
@@ -2549,6 +2554,7 @@ nrecover_	core/src/simulator.h	/^    int             nrecover_; \/\/ number of r
 nsi_	core/src/pattern.h	/^    int        nsi_;$/;"	m	class:CoreNs::PatternProcessor
 objs_	core/src/atpg.h	/^    ObjList     objs_; $/;"	m	class:CoreNs::Atpg
 operator !=	core/src/logic-hex.h	/^inline bool operator!=(const HexValue& lhs, const HexValue& rhs) {$/;"	f	namespace:CoreNs
+operator ()	core/src/atpg.cpp	/^bool Atpg::comp_gate::operator()(Gate* g1, Gate* g2) {  $/;"	f	class:Atpg::comp_gate
 operator <	interface/src/global.h	/^inline bool NameKey::operator<(const NameKey &key) const {$/;"	f	class:IntfNs::NameKey
 operator =	core/src/decision_tree.h	/^inline DecisionTree &DecisionTree::operator= (const DecisionTree &rhs) { $/;"	f	class:CoreNs::DecisionTree
 operator =	core/src/logic-hex.h	/^inline HexValue& HexValue::operator=(HexValue hv) {$/;"	f	class:CoreNs::HexValue
@@ -2655,6 +2661,7 @@ printValue	core/src/logic.cpp	/^void CoreNs::printValue(const ParaValue &l, cons
 printValue	core/src/logic.cpp	/^void CoreNs::printValue(const ParaValue &v, ostream &out) {$/;"	f	class:CoreNs
 printValue	core/src/logic.cpp	/^void CoreNs::printValue(const Value &v, ostream &out) {$/;"	f	class:CoreNs
 printWelcome	atpg/src/main.cpp	/^void printWelcome() {$/;"	f
+prob_fs	core/src/atpg.h	/^    int        *prob_fs; $/;"	m	class:CoreNs::Atpg
 processed_	core/src/simulator.h	/^    bool            *processed_; \/\/ array of processed flags.  TRUE means this gate is processed$/;"	m	class:CoreNs::Simulator
 prompt_	common/src/cmd.h	/^    std::string              prompt_;   \/\/ command line prompt$/;"	m	class:CommonNs::CmdMgr
 pspec	interface/src/sdf_file.h	/^    SdfPortSpec       pspec;$/;"	m	struct:IntfNs::SdfDelayDef
@@ -2783,6 +2790,7 @@ setTop	interface/src/netlist.h	/^inline bool Netlist::setTop(const size_t &i) {$
 setWireNets	interface/src/netlist_builder.cpp	/^void VlogNlBuilder::setWireNets(VlogNames * const nets) {$/;"	f	class:VlogNlBuilder
 setWireNets	interface/src/vlog_file.cpp	/^void VlogFile::setWireNets(VlogNames * const nets) {$/;"	f	class:VlogFile
 set_dfs_on_	core/src/atpg_mgr.h	/^    bool                set_dfs_on_; $/;"	m	class:CoreNs::AtpgMgr
+set_f2p	core/src/d_decision_tree.h	/^inline void DDNode::set_f2p(FaultSetMap &f2p) { $/;"	f	class:CoreNs::DDNode
 set_mask_	core/src/d_decision_tree.h	/^inline void DDNode::set_mask_(Value *mask) { $/;"	f	class:CoreNs::DDNode
 set_oo_on_	core/src/atpg_mgr.h	/^    bool                set_oo_on_; $/;"	m	class:CoreNs::AtpgMgr
 setupCircuitParameter	core/src/circuit.cpp	/^void Circuit::setupCircuitParameter() {$/;"	f	class:Circuit

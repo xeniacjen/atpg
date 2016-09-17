@@ -81,9 +81,9 @@ private:
     bool isaMultiTest(); 
 
     Fault *GetFault(Gate *g, int line); 
-    Fault *GetProbFault(Gate *g, int line); 
+    Fault *GetProbFault(Gate *g, int line, Value vf); 
     void AddFaultSet(Gate *g, FaultSet &fs); 
-    int GetProbFaultSet(Gate *g); 
+    int GetProbFaultSet(Gate *g, Value vi); 
 
     bool        is_path_oriented_mode_; 
     bool        is_obj_optim_mode_; 
@@ -101,6 +101,7 @@ protected:
     bool CheckDFrontier(GateVec &dfront); 
 
     void ResetXPath(); 
+    void ResetProbFaultSet(); 
 
     void init(); 
     void init(Pattern *p); 
@@ -119,6 +120,7 @@ protected:
 
     Objective   current_obj_; 
     Value      *x_path_; // keep the x-path search status 
+    int        *prob_fs; 
 }; //Atpg 
 
 inline Atpg::Atpg(Circuit *cir, Fault *f) { 
@@ -129,6 +131,7 @@ inline Atpg::Atpg(Circuit *cir, Fault *f) {
     is_obj_optim_mode_ = false; 
     impl_ = new Implicator(cir, f); 
     x_path_ = new Value[cir_->tgate_]; 
+    prob_fs = new int[cir_->tgate_]; 
 
     init(); 
 }
@@ -141,6 +144,7 @@ inline Atpg::Atpg(Circuit *cir, Fault *f, Pattern *p) {
     is_obj_optim_mode_ = false; 
     impl_ = new Implicator(cir, f); 
     x_path_ = new Value[cir_->tgate_]; 
+    prob_fs = new int[cir_->tgate_]; 
 
     init(p); 
 } 
@@ -148,6 +152,7 @@ inline Atpg::Atpg(Circuit *cir, Fault *f, Pattern *p) {
 inline Atpg::~Atpg() { 
     delete    impl_; 
     delete [] x_path_; 
+    delete [] prob_fs; 
 }
 
 inline void Atpg::GetPiPattern(Pattern *p) { 
@@ -238,6 +243,11 @@ inline bool Atpg::TurnOnObjOptimMode(FaultListExtract *fl) {
 inline void Atpg::ResetXPath() { 
     for (int i=0; i<cir_->tgate_; i++) 
         x_path_[i] = X; 
+}
+
+inline void Atpg::ResetProbFaultSet() { 
+    for (int i=0; i<cir_->tgate_; i++) 
+        prob_fs[i] = -1; 
 }
   
 inline bool Atpg::SetBackTrackLimit(int limit) { 

@@ -95,7 +95,6 @@ bool Atpg::isaTest() {
 }
 
 bool Atpg::isaMultiTest() { 
-    // TODO 
     GateVec gids; 
 
     // get the previous object 
@@ -164,7 +163,6 @@ bool Atpg::CheckDFrontier(GateVec &dfront) {
            }
    }
 
-   ResetXPath(); 
    for (int i=dfront.size()-1; i>=0; i--) 
         if (!CheckXPath(dfront[i])) { 
             dfront[i] = dfront.back(); 
@@ -248,7 +246,6 @@ bool Atpg::GenObjs() {
     d_tree_.top(gids); 
     Value *mask = d_tree_.top()->get_mask_(size); 
 
-    ResetXPath(); 
     int j = 0; 
     for (size_t i=0; i<size; i++) { 
         if (mask[i]==L) continue; 
@@ -412,52 +409,58 @@ void Atpg::AddFaultSet(Gate *g, FaultSet &fs) {
     }
 }
 
-int Atpg::GetProbFaultSet(Gate *g) { // TODO: parity check 
-    int ret = 0; 
+int Atpg::GetProbFaultSet(Gate *g, Value vi) { 
 
-    if (impl_->GetVal(g->id_)==X) { 
-        if (GetProbFault(g, 0))  
+    if (prob_fs[g->id_]>=0) // gate visited 
+        return prob_fs[g->id_]; 
+
+    int ret = 0; 
+    if (CheckXPath(g)) { 
+        Value vo = (g->isInverse())?EvalNot(vi):vi;
+        if (GetProbFault(g, 0, vo))  
             ret++; 
         for (int i=0; i<g->nfo_; i++) { 
             Gate *fo = &cir_->gates_[g->fos_[i]]; 
             for (int j=0; j<fo->nfi_; j++) { 
                 if (fo->fis_[j]==g->id_) { 
-                    if (GetProbFault(fo, j+1))  
+                    if (GetProbFault(fo, j+1, vo))  
                         ret++; 
                     break; 
                 }
             }
-            ret+=GetProbFaultSet(fo); 
+            ret+=GetProbFaultSet(fo, vo); 
         }
     }
 
+    prob_fs[g->id_] = ret; 
     return ret; 
 }
 
-Fault *Atpg::GetProbFault(Gate *g, int line) { 
-    Fault *f1; int fid1; 
-    Fault *f2; int fid2; 
-    Fault *f = 0; 
+Fault *Atpg::GetProbFault(Gate *g, int line, Value vf) { 
+    Fault *f; int fid; 
 
     Value v; 
     v = (line>0)?impl_->GetVal(g->fis_[line-1]):impl_->GetVal(g->id_); 
+
     if (g->type_==Gate::PO || g->type_==Gate::PPO) 
         line--; 
+
     if (v!=X) return 0; 
     else { 
-        fid1 = flist_->gateToFault_[g->id_] + 2 * line; // SA0 
-        fid2 = flist_->gateToFault_[g->id_] + 2 * line + 1; // SA1  
+        if (vf==D)
+            fid = flist_->gateToFault_[g->id_] + 2 * line; // SA0 
+        else if (vf==B)
+            fid = flist_->gateToFault_[g->id_] + 2 * line + 1; // SA1  
+        else 
+            assert(0); 
     }
 
-    f1 = flist_->faults_[fid1]; 
-    f2 = flist_->faults_[fid2]; 
+    f = flist_->faults_[fid]; 
 
-    if (f1->state_==Fault::AB || f1->state_==Fault::AH) 
-        f++; 
-    if (f2->state_==Fault::AB || f2->state_==Fault::AH) 
-        f++; 
+    if (f->state_==Fault::AB || f->state_==Fault::AH) 
+        return f; 
 
-    return f; 
+    return 0; 
 } 
 
 Fault *Atpg::GetFault(Gate *g, int line) { 
@@ -525,14 +528,37 @@ bool Atpg::DDDrive() {
 bool Atpg::comp_gate::operator()(Gate* g1, Gate* g2) {  
     FaultSetMap f2p = atpg_->d_tree_.top()->fault_to_prop_; 
     int fs1, fs2; 
-    fs1 = f2p.find(g1)->second.size() + atpg_->GetProbFaultSet(g1); 
-    fs2 = f2p.find(g2)->second.size() + atpg_->GetProbFaultSet(g2); 
+    Value v1, v2; 
+
+    for (int i=0; i<g1->nfi_; i++) { 
+        Value v = atpg_->impl_->GetVal(g1->fis_[i]); 
+        if (v==D || v==B) { 
+            v1 = v; 
+            break; 
+        }
+    }
+
+    atpg_->ResetProbFaultSet(); 
+    fs1 = f2p.find(g1)->second.size() + atpg_->GetProbFaultSet(g1, v1); 
+
+    for (int i=0; i<g2->nfi_; i++) { 
+        Value v = atpg_->impl_->GetVal(g2->fis_[i]); 
+        if (v==D || v==B) { 
+            v2 = v; 
+            break; 
+        }
+    }
+
+    atpg_->ResetProbFaultSet(); 
+    fs2 = f2p.find(g2)->second.size() + atpg_->GetProbFaultSet(g2, v2); 
 
     // return g1->co_o_ > g2->co_o_; 
     return fs1 > fs2; 
 }
 
 bool Atpg::DDrive() { 
+    ResetXPath(); 
+
     if (is_obj_optim_mode_) return MultiDDrive(); 
     if (is_path_oriented_mode_) return DDDrive(); 
 
@@ -679,7 +705,6 @@ bool Atpg::MultiDBackTrack(DecisionTree &tree) {
     bool ret = true; 
     size_t size; 
     Value *mask = d_tree_.top()->get_mask_(size); 
-    // TODO  
     while (size!=0) { 
         Value &v = mask[--size]; 
         if (v==H) { 
