@@ -46,6 +46,8 @@ public:
 
     bool                set_dfs_on_; 
     bool                set_oo_on_; 
+
+    int                 req_dt_; 
 private: 
     void                DynamicCompression(FaultList &remain); 
     void                ReverseFaultSim(); 
@@ -71,6 +73,8 @@ inline AtpgMgr::AtpgMgr() {
 
         set_dfs_on_   = true; 
         set_oo_on_    = true; 
+
+        req_dt_       = -1; 
     }
 
 inline AtpgMgr::~AtpgMgr() {}

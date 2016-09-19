@@ -215,18 +215,27 @@ void AtpgMgr::calc_fault_hardness(Fault* f1) {
 }
 
 void AtpgMgr::ReverseFaultSim() { 
-    int total_dt = fListExtract_->getNStatus(Fault::DT); 
+    int total_dt = fListExtract_->getNStatus(Fault::DT) 
+      + fListExtract_->getNStatus(Fault::DH); 
     FaultList flist = fListExtract_->current_; 
+    // req_dt_ = (req_dt_>0)?req_dt_:total_dt;
 
     int curr_dt = 0; 
     PatternVec comp_pats; 
     for (int i = 0; i < pcoll_->pats_.size(); ++i) {
         Pattern *p = pcoll_->pats_[pcoll_->pats_.size()-i-1]; 
         int dt = sim_->pfFaultSim(p, flist); 
-        curr_dt+=dt; 
 
-        if(dt > 0)  
-            comp_pats.insert(comp_pats.begin(), p); 
+        if (req_dt_<=0) { 
+            if(dt > 0)  
+                comp_pats.insert(comp_pats.begin(), p); 
+        }
+        else { // req_dt_ set 
+            if(dt > 0 && curr_dt<req_dt_)  
+                comp_pats.insert(comp_pats.begin(), p); 
+        }
+
+        curr_dt+=dt; 
     }
 
     assert(curr_dt>=total_dt);  

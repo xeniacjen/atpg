@@ -1081,6 +1081,10 @@ RunAtpgCmd::RunAtpgCmd(const std::string &name, FanMgr *fanMgr) :
     opt->addFlag("b");
     opt->addFlag("backtrack");
     optMgr_.regOpt(opt);
+    opt = new Opt(Opt::STR_REQ, "required detection count", "INT");
+    opt->addFlag("r");
+    opt->addFlag("req");
+    optMgr_.regOpt(opt);
 }
 RunAtpgCmd::~RunAtpgCmd() {}
 //}}}
@@ -1114,6 +1118,12 @@ bool RunAtpgCmd::exec(const vector<string> &argv) {
     if (optMgr_.isFlagSet("b")) { 
         backtrack = atoi(optMgr_.getFlagVar("b").c_str()); 
     }
+
+    int req_dt = -1; 
+    if (optMgr_.isFlagSet("r")) { 
+        req_dt = atoi(optMgr_.getFlagVar("r").c_str()); 
+    }
+    if (req_dt>0) fanMgr_->atpg_mgr->req_dt_ = req_dt; 
 
     cout << "#  Performing pattern generation ...\n";
     fanMgr_->tmusg.periodStart();
