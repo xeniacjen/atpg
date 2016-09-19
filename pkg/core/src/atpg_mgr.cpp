@@ -226,13 +226,10 @@ void AtpgMgr::ReverseFaultSim() {
         Pattern *p = pcoll_->pats_[pcoll_->pats_.size()-i-1]; 
         int dt = sim_->pfFaultSim(p, flist); 
 
-        if (req_dt_<=0) { 
-            if(dt > 0)  
-                comp_pats.insert(comp_pats.begin(), p); 
-        }
-        else { // req_dt_ set 
-            if(dt > 0 && curr_dt<req_dt_)  
-                comp_pats.insert(comp_pats.begin(), p); 
+        if(dt > 0) { 
+            comp_pats.insert(comp_pats.begin(), p); 
+            if (req_dt_>0 && curr_dt<req_dt_) 
+                req_pat_ = comp_pats.size(); 
         }
 
         curr_dt+=dt; 

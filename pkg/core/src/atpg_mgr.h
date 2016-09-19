@@ -48,6 +48,7 @@ public:
     bool                set_oo_on_; 
 
     int                 req_dt_; 
+    int                 req_pat_; 
 private: 
     void                DynamicCompression(FaultList &remain); 
     void                ReverseFaultSim(); 

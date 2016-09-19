@@ -780,6 +780,7 @@ bool ReportStatsCmd::exec(const vector<string> &argv) {
 
 
     size_t npat = 0;
+    size_t npat_req = 0; 
     size_t npat_hard = 0; 
     size_t nbit = 0; 
     size_t nbit_max = 0; 
@@ -787,6 +788,8 @@ bool ReportStatsCmd::exec(const vector<string> &argv) {
 
     if (fanMgr_->atpg_mgr->pcoll_) { 
         npat = fanMgr_->atpg_mgr->pcoll_->pats_.size();
+        npat_req = (fanMgr_->atpg_mgr->req_dt_<=0)?npat
+          :fanMgr_->atpg_mgr->req_pat_;
         npat_hard =  fanMgr_->atpg_mgr->pcoll_->npat_hard_;
         nbit = fanMgr_->atpg_mgr->pcoll_->nbit_spec_;
         nbit_max = fanMgr_->atpg_mgr->pcoll_->nbit_spec_max;
@@ -877,6 +880,7 @@ bool ReportStatsCmd::exec(const vector<string> &argv) {
     cout << setw(5) << ae << "%" << endl;
     cout << "#  -------------------------------------------------"   << endl;
     cout << "#  #Patterns                     " << setw(19) << npat  << endl;
+    cout << "#  #Patterns Norm.               " << setw(19) << npat_req << endl;
     cout << "#  Ave.Spec-rate                " << setw(19) << sr << "%" << endl; 
     cout << "#  Max.Spec-rate                " << setw(19) << sr_max << "%" << endl; 
     cout << "#  -------------------------------------------------"   << endl;
