@@ -13,6 +13,7 @@
 ./core/src/atpg_mgr.h
 ./core/src/circuit.h
 ./core/src/implicator.cpp
+./core/src/dfs-podem.cpp
 ./core/src/logic.h
 ./core/src/atpg.h
 ./core/src/simulator.cpp
@@ -26,6 +27,7 @@
 ./core/src/d_decision_tree.h
 ./core/src/fault.h
 ./core/src/logic-hex.h
+./core/src/obj-optim.cpp
 ./core/src/pattern_rw.h
 ./common/src/ascii.h
 ./common/src/tm_usage.cpp

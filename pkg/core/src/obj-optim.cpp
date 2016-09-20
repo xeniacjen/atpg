@@ -123,7 +123,7 @@ bool Atpg::GenObjs() {
     // assert(j==gids.size()); 
 
     if (!objs_.empty()) { 
-        // if (!CheckDDDrive()) return false; 
+        if (!CheckDDDrive()) return false; 
         current_obj_ = *objs_.begin(); 
     }
 
@@ -131,32 +131,7 @@ bool Atpg::GenObjs() {
 }
 
 bool Atpg::CheckDDDrive() { 
-    GateVec gs_proped, gs_toprop; 
-
-    d_tree_.top(gs_toprop); 
-    d_tree_.sub_top()->top(gs_proped); 
-    for (size_t n=0; n<gs_proped.size(); n++) { 
-        Gate *g = gs_proped[n]; 
-        if (impl_->isGateDrivePpo(g)) continue; 
-
-        bool successor_found = false; 
-        // for (int i=0; i<g->nfo_; i++) { 
-        //     ObjListIter it = objs_.find(g->fis_[i]); 
-        //     if (it!=objs_.end()) { 
-        for (int i=0; i<g->nfo_; i++) { 
-            Gate *fo = &cir_->gates_[g->fos_[i]]; 
-            for (size_t j=0; j<gs_toprop.size(); j++) { 
-                // if (it!=objs_.end()) { 
-                if (fo==gs_toprop[j]) { 
-                    successor_found = true; 
-                    break; 
-                }
-            }
-            if (successor_found) break; 
-        }
-        if (!successor_found) 
-            return false; 
-    }
+    // TODO 
 
     return true; 
 }
@@ -171,7 +146,7 @@ struct FaultPropEvent {
     }
 }; 
 
-void Atpg::PropFaultSet(FaultSetMap &f2p) { 
+void Atpg::PropFaultSet(FaultSetMap &f2p, GateSetMap &pred) { 
     queue<FaultPropEvent> events; 
     
     FaultSetMapIter it = f2p.begin(); 
@@ -190,6 +165,18 @@ void Atpg::PropFaultSet(FaultSetMap &f2p) {
 
         Value v = impl_->GetVal(g->id_); 
         if (v==D || v==B) { 
+            if (g->type_==Gate::PO || g->type_==Gate::PPO) { 
+                GateSetMapIter itg = pred.find(g); 
+                if (itg==pred.end()) { 
+                    GateSet gs; gs.insert(s); 
+                    pred.insert(pair<Gate *, GateSet>(g, gs)); 
+                } 
+                else { 
+                    itg->second.insert(s); 
+                }
+                continue; 
+            }
+
             for (int i=0; i<g->nfo_; i++) { 
                 Gate *fo = &cir_->gates_[g->fos_[i]]; 
                 it = f2p.find(fo); 
@@ -202,9 +189,16 @@ void Atpg::PropFaultSet(FaultSetMap &f2p) {
                 events.push(FaultPropEvent(fo, s)); 
             }
         }
-        // else { 
-            // TODO: set the predecessor 
-        // }
+        else { 
+            GateSetMapIter itg = pred.find(g); 
+            if (itg==pred.end()) { 
+                GateSet gs; gs.insert(s); 
+                pred.insert(pair<Gate *, GateSet>(g, gs)); 
+            } 
+            else { 
+                itg->second.insert(s); 
+            }
+        }
     }
 }
 
@@ -223,7 +217,9 @@ bool Atpg::MultiDDrive() {
             if (!CheckDFrontier(dfront)) return false;
 
             FaultSetMap f2p = d_tree_.top()->fault_to_prop_; 
-            PropFaultSet(f2p); 
+            FaultSetMap fp = d_tree_.top()->fault_proped_; 
+            GateSetMap pred; 
+            PropFaultSet(f2p, pred); 
     
             d_tree_.push(dfront, 
                 impl_->GetEFrontierSize(), 
@@ -234,7 +230,9 @@ bool Atpg::MultiDDrive() {
             for (size_t i=0; i<dfront.size(); i++) 
                 mask[i] = X; 
             d_tree_.top()->set_mask_(mask); 
+            d_tree_.top()->fault_proped_ = fp; 
             d_tree_.top()->set_f2p(f2p); 
+            d_tree_.top()->predecessor_ = pred; 
 
             GateVec &df = d_tree_.top()->dfront_; 
             sort (df.begin(), df.end(), comp_gate(this)); 
@@ -287,6 +285,23 @@ bool Atpg::isaMultiTest() {
         if (!impl_->isGateDrivePpo(g)) return false; 
     } 
 
+    GateVec dfront; 
+    FaultSetMap f2p = d_tree_.top()->fault_to_prop_; 
+    FaultSetMap fp = d_tree_.top()->fault_proped_; 
+    GateSetMap pred; 
+    PropFaultSet(f2p, pred); 
+
+    d_tree_.push(dfront, 
+        impl_->GetEFrontierSize(), 
+        impl_->getDecisionTree()); 
+
+    d_tree_.top()->fault_proped_ = fp; 
+    d_tree_.top()->set_f2p(f2p); 
+
+    FaultSet fs; 
+    d_tree_.top()->get_fs(fs); 
+    prop_fs_ = fs.size(); 
+
     return true; 
 }
 
@@ -305,7 +320,9 @@ Fault *Atpg::GetFault(Gate *g, int line) {
 
     f = flist_->faults_[fid]; 
 
-    if (f->state_==Fault::AB || f->state_==Fault::AH) 
+    if (f->state_==Fault::AB 
+      || f->state_==Fault::AH 
+      || f->state_==Fault::UD)  
         return f; 
 
     return 0; 
@@ -365,7 +382,9 @@ Fault *Atpg::GetProbFault(Gate *g, int line, Value vf) {
 
     f = flist_->faults_[fid]; 
 
-    if (f->state_==Fault::AB || f->state_==Fault::AH) 
+    if (f->state_==Fault::AB 
+      || f->state_==Fault::AH 
+      || f->state_==Fault::UD)  
         return f; 
 
     return 0; 
@@ -411,6 +430,10 @@ int Atpg::GetProbFaultSet(Gate *g, Value vi) {
     }
 
     prob_fs[g->id_] = ret; 
+
+    if (current_fault_->gate_==g->id_) 
+        prob_fs_ = ret; 
+
     return ret; 
 }
 

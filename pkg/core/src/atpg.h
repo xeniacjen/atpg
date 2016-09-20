@@ -58,6 +58,9 @@ public:
     bool    TurnOnPoMode(); 
     bool    TurnOnObjOptimMode(FaultListExtract *fl); 
 
+    int         prop_fs_;
+    int         prob_fs_; 
+
 private: 
     // podem help function 
     bool isTestPossible(); 
@@ -75,7 +78,7 @@ private:
     bool AddGateToProp(Gate *gtoprop); 
     bool GenObjs(); 
     bool CheckDDDrive(); 
-    void PropFaultSet(FaultSetMap &f2p); 
+    void PropFaultSet(FaultSetMap &f2p, GateSetMap &pred); 
     bool MultiDDrive(); 
     bool MultiDBackTrack(DecisionTree &tree); 
     bool isaMultiTest(); 

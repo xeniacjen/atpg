@@ -29,6 +29,7 @@ typedef std::set<Fault *> FaultSet;
 typedef std::map<Gate *, GateSet> GateSetMap; 
 typedef std::map<Gate *, FaultSet> FaultSetMap; 
 typedef FaultSetMap::iterator FaultSetMapIter; 
+typedef GateSetMap::iterator GateSetMapIter; 
 
 struct DDNode { 
                  DDNode(const GateVec &df, 
@@ -50,10 +51,12 @@ struct DDNode {
     Value       *get_mask_(size_t& n) const; 
 
     void         get_pred(GateSet &gs); 
+    void         get_fs(FaultSet &fs); 
 
     void         set_f2p(FaultSetMap &f2p);
 
     FaultSetMap  fault_to_prop_; 
+    FaultSetMap  fault_proped_; 
     GateSetMap   predecessor_; 
 
     GateVec      dfront_; 
@@ -136,15 +139,39 @@ inline Value *DDNode::get_mask_(size_t& n) const {
 
 inline void DDNode::set_f2p(FaultSetMap &f2p) { 
     fault_to_prop_.clear(); 
-
+    
+    FaultSetMapIter it; 
     for (size_t i=0; i<dfront_.size(); i++) { 
         Gate *g = dfront_[i]; 
-        FaultSetMapIter it = f2p.find(g); 
+        it = f2p.find(g); 
         if (it!=f2p.end()) { 
             fault_to_prop_.insert(std::pair<Gate *, FaultSet>(
               it->first, it->second)); 
         } 
         else assert(0); 
+    }
+
+    for (it=f2p.begin(); it!=f2p.end(); ++it) { 
+        Gate *g = it->first; 
+        if (g->type_==Gate::PO || g->type_==Gate::PPO) { 
+            FaultSetMapIter itg = fault_proped_.find(g); 
+            if (itg!=fault_proped_.end()) { 
+                itg->second.insert(it->second.begin(), it->second.end()); 
+            } 
+            else { 
+                fault_proped_.insert(std::pair<Gate *, FaultSet>(
+                  it->first, it->second)); 
+            }
+        }
+    }
+}
+
+inline void DDNode::get_fs(FaultSet &fs) { 
+    fs.clear(); 
+
+    FaultSetMapIter it; 
+    for (it=fault_proped_.begin(); it!=fault_proped_.end(); ++it) { 
+        fs.insert(it->second.begin(), it->second.end()); 
     }
 }
 

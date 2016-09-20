@@ -165,8 +165,8 @@ ASSIGN	interface/lib/dbg/lex_n_yacc/vlog_file.tab.hpp	/^     ASSIGN = 262,$/;"	e
 AU	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB, AH };$/;"	e	enum:CoreNs::Fault::State
 AddFaultCmd	atpg/src/atpg_cmd.cpp	/^AddFaultCmd::AddFaultCmd(const std::string &name, FanMgr *fanMgr) :$/;"	f	class:AddFaultCmd
 AddFaultCmd	atpg/src/atpg_cmd.h	/^class AddFaultCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
-AddFaultSet	core/src/atpg.cpp	/^void Atpg::AddFaultSet(Gate *g, FaultSet &fs) { $/;"	f	class:Atpg
-AddGateToProp	core/src/atpg.cpp	/^bool Atpg::AddGateToProp(Gate *gtoprop) { $/;"	f	class:Atpg
+AddFaultSet	core/src/obj-optim.cpp	/^void Atpg::AddFaultSet(Gate *g, FaultSet &fs) { $/;"	f	class:Atpg
+AddGateToProp	core/src/obj-optim.cpp	/^bool Atpg::AddGateToProp(Gate *gtoprop) { $/;"	f	class:Atpg
 AddPinConsCmd	atpg/src/atpg_cmd.cpp	/^AddPinConsCmd::AddPinConsCmd(const std::string &name,$/;"	f	class:AddPinConsCmd
 AddPinConsCmd	atpg/src/atpg_cmd.h	/^class AddPinConsCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
 AddScanChainsCmd	atpg/src/atpg_cmd.cpp	/^AddScanChainsCmd::AddScanChainsCmd(const std::string &name, FanMgr *fanMgr) :$/;"	f	class:AddScanChainsCmd
@@ -244,7 +244,7 @@ CellMap	interface/src/cell.h	/^typedef std::map<NameKey, Cell *> CellMap;$/;"	t	
 CellSet	interface/src/cell.h	/^typedef std::set<Cell *>          CellSet;$/;"	t	namespace:IntfNs
 CellVec	interface/src/cell.h	/^typedef std::vector<Cell *>       CellVec;$/;"	t	namespace:IntfNs
 CheckCompatibility	core/src/atpg.cpp	/^bool Atpg::CheckCompatibility(Fault *f) { $/;"	f	class:Atpg
-CheckDDDrive	core/src/atpg.cpp	/^bool Atpg::CheckDDDrive() { $/;"	f	class:Atpg
+CheckDDDrive	core/src/obj-optim.cpp	/^bool Atpg::CheckDDDrive() { $/;"	f	class:Atpg
 CheckDFrontier	core/src/atpg.cpp	/^bool Atpg::CheckDFrontier(GateVec &dfront) { $/;"	f	class:Atpg
 CheckDPath	core/src/atpg.h	/^inline bool Atpg::CheckDPath(Gate *g) const { $/;"	f	class:CoreNs::Atpg
 CheckPath	core/src/atpg.h	/^inline bool Atpg::CheckPath(const GateVec &path) const { $/;"	f	class:CoreNs::Atpg
@@ -284,8 +284,8 @@ D	core/src/logic.h	/^const   Value     D         = 3;       \/\/ D (good 1 \/ fa
 DATA_SIZE	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	969;"	d	file:
 DATE	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     DATE = 261,$/;"	e	enum:yytokentype	file:
 DATE	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     DATE = 261,$/;"	e	enum:yytokentype
-DBackTrack	core/src/atpg.cpp	/^bool Atpg::DBackTrack() { $/;"	f	class:Atpg
-DDDrive	core/src/atpg.cpp	/^bool Atpg::DDDrive() { $/;"	f	class:Atpg
+DBackTrack	core/src/dfs-podem.cpp	/^bool Atpg::DBackTrack() { $/;"	f	class:Atpg
+DDDrive	core/src/dfs-podem.cpp	/^bool Atpg::DDDrive() { $/;"	f	class:Atpg
 DDNode	core/src/d_decision_tree.h	/^inline DDNode::DDNode(const GateVec &df, $/;"	f	class:CoreNs::DDNode
 DDNode	core/src/d_decision_tree.h	/^struct DDNode { $/;"	s	namespace:CoreNs
 DDTree	core/src/d_decision_tree.h	/^        DDTree() { }; $/;"	f	class:CoreNs::DDTree
@@ -430,8 +430,8 @@ FaultList	core/src/fault.h	/^typedef std::list<Fault *>           FaultList;$/;"
 FaultListExtract	core/src/fault.h	/^class FaultListExtract {$/;"	c	namespace:CoreNs
 FaultListExtract	core/src/fault.h	/^inline FaultListExtract::FaultListExtract() {$/;"	f	class:CoreNs::FaultListExtract
 FaultListIter	core/src/fault.h	/^typedef std::list<Fault *>::iterator FaultListIter;$/;"	t	namespace:CoreNs
-FaultPropEvent	core/src/atpg.cpp	/^    FaultPropEvent(Gate *g, int s) { $/;"	f	struct:FaultPropEvent
-FaultPropEvent	core/src/atpg.cpp	/^struct FaultPropEvent { $/;"	s	file:
+FaultPropEvent	core/src/obj-optim.cpp	/^    FaultPropEvent(Gate *g, int s) { $/;"	f	struct:FaultPropEvent
+FaultPropEvent	core/src/obj-optim.cpp	/^struct FaultPropEvent { $/;"	s	file:
 FaultSet	core/src/d_decision_tree.h	/^typedef std::set<Fault *> FaultSet; $/;"	t	namespace:CoreNs
 FaultSetMap	core/src/d_decision_tree.h	/^typedef std::map<Gate *, FaultSet> FaultSetMap; $/;"	t	namespace:CoreNs
 FaultSetMapIter	core/src/d_decision_tree.h	/^typedef FaultSetMap::iterator FaultSetMapIter; $/;"	t	namespace:CoreNs
@@ -447,14 +447,15 @@ Gate	core/src/gate.h	/^inline Gate::Gate() {$/;"	f	class:CoreNs::Gate
 GateSet	core/src/d_decision_tree.h	/^typedef std::set<int> GateSet; $/;"	t	namespace:CoreNs
 GateSet	core/src/implicator.h	/^typedef std::set<int> GateSet; $/;"	t	namespace:CoreNs
 GateSetMap	core/src/d_decision_tree.h	/^typedef std::map<Gate *, GateSet> GateSetMap; $/;"	t	namespace:CoreNs
+GateSetMapIter	core/src/d_decision_tree.h	/^typedef GateSetMap::iterator GateSetMapIter; $/;"	t	namespace:CoreNs
 GateVec	core/src/gate.h	/^typedef std::vector<Gate *> GateVec;  $/;"	t	namespace:CoreNs
-GenObjs	core/src/atpg.cpp	/^bool Atpg::GenObjs() { $/;"	f	class:Atpg
+GenObjs	core/src/obj-optim.cpp	/^bool Atpg::GenObjs() { $/;"	f	class:Atpg
 GenStatus	core/src/atpg.h	/^    enum GenStatus             { TEST_FOUND = 0, UNTESTABLE, ABORT }; $/;"	g	class:CoreNs::Atpg
 Get3Val	core/src/implicator.h	/^inline Value Implicator::Get3Val(int gid) const {$/;"	f	class:CoreNs::Implicator
 GetDFrontier	core/src/implicator.cpp	/^void Implicator::GetDFrontier(GateVec& df) const { $/;"	f	class:Implicator
 GetDFrontierNCheck	core/src/implicator.cpp	/^bool Implicator::GetDFrontierNCheck(GateVec& df) {$/;"	f	class:Implicator
 GetEFrontierSize	core/src/implicator.h	/^inline size_t Implicator::GetEFrontierSize() const { $/;"	f	class:CoreNs::Implicator
-GetFault	core/src/atpg.cpp	/^Fault *Atpg::GetFault(Gate *g, int line) { $/;"	f	class:Atpg
+GetFault	core/src/obj-optim.cpp	/^Fault *Atpg::GetFault(Gate *g, int line) { $/;"	f	class:Atpg
 GetHexVal	core/src/implicator.h	/^inline HexValue Implicator::GetHexVal(int gid) const {$/;"	f	class:CoreNs::Implicator
 GetJFrontier	core/src/implicator.cpp	/^bool Implicator::GetJFrontier(GateVec& jf) { $/;"	f	class:Implicator
 GetMultiPath	core/src/d_decision_tree.h	/^inline void DDTree::GetMultiPath(GateVec &path) const { $/;"	f	class:CoreNs::DDTree
@@ -462,8 +463,8 @@ GetPath	core/src/d_decision_tree.h	/^inline void DDTree::GetPath(GateVec &path) 
 GetPiPattern	core/src/atpg.h	/^inline void Atpg::GetPiPattern(Pattern *p) { $/;"	f	class:CoreNs::Atpg
 GetPiPattern	core/src/implicator.h	/^inline void Implicator::GetPiPattern(Pattern *p) const {$/;"	f	class:CoreNs::Implicator
 GetPoPattern	core/src/implicator.h	/^inline void Implicator::GetPoPattern(Pattern *p) const  {}$/;"	f	class:CoreNs::Implicator
-GetProbFault	core/src/atpg.cpp	/^Fault *Atpg::GetProbFault(Gate *g, int line) { $/;"	f	class:Atpg
-GetProbFaultSet	core/src/atpg.cpp	/^int Atpg::GetProbFaultSet(Gate *g) { \/\/ TODO: parity check $/;"	f	class:Atpg
+GetProbFault	core/src/obj-optim.cpp	/^Fault *Atpg::GetProbFault(Gate *g, int line, Value vf) { $/;"	f	class:Atpg
+GetProbFaultSet	core/src/obj-optim.cpp	/^int Atpg::GetProbFaultSet(Gate *g, Value vi) { $/;"	f	class:Atpg
 GetVal	core/src/implicator.h	/^inline Value Implicator::GetVal(int gid) const {$/;"	f	class:CoreNs::Implicator
 GoodEval	core/src/implicator.cpp	/^Value Implicator::GoodEval(Gate *g) const { $/;"	f	class:Implicator
 H	core/src/logic.h	/^const   Value     H         = 1;       \/\/ High$/;"	m	namespace:CoreNs
@@ -606,8 +607,8 @@ MdtLibBuilder	interface/src/techlib_builder.h	/^inline MdtLibBuilder::MdtLibBuil
 MdtNames	interface/src/mdt_file.h	/^struct MdtNames {$/;"	s	namespace:IntfNs
 MdtPortToNet	interface/src/mdt_file.h	/^struct MdtPortToNet {$/;"	s	namespace:IntfNs
 MdtPortType	interface/src/mdt_file.h	/^enum MdtPortType { MDT_PORT_INPUT, MDT_PORT_OUTPUT, MDT_PORT_INOUT,$/;"	g	namespace:IntfNs
-MultiDBackTrack	core/src/atpg.cpp	/^bool Atpg::MultiDBackTrack(DecisionTree &tree) { $/;"	f	class:Atpg
-MultiDDrive	core/src/atpg.cpp	/^bool Atpg::MultiDDrive() { $/;"	f	class:Atpg
+MultiDBackTrack	core/src/obj-optim.cpp	/^bool Atpg::MultiDBackTrack(DecisionTree &tree) { $/;"	f	class:Atpg
+MultiDDrive	core/src/obj-optim.cpp	/^bool Atpg::MultiDDrive() { $/;"	f	class:Atpg
 NA	atpg/src/atpg_cmd.h	/^    enum Type { NA = -1, $/;"	e	enum:FanNs::ReportScoapCmd::Type
 NA	core/src/gate.h	/^    enum      Type { NA = 0,$/;"	e	enum:CoreNs::Gate::Type
 NA	interface/src/cell.h	/^    enum Type { NA = -1, INPUT, OUTPUT, INOUT };$/;"	e	enum:IntfNs::Port::Type
@@ -833,7 +834,7 @@ PrintPatterns	core/src/pattern.h	/^inline void PatternProcessor::PrintPatterns()
 PrintPorts	core/src/pattern.h	/^inline void PatternProcessor::PrintPorts() const {$/;"	f	class:CoreNs::PatternProcessor
 ProcedureWriter	core/src/pattern_rw.h	/^class ProcedureWriter {$/;"	c	namespace:CoreNs
 ProcedureWriter	core/src/pattern_rw.h	/^inline ProcedureWriter::ProcedureWriter(Circuit *cir) {$/;"	f	class:CoreNs::ProcedureWriter
-PropFaultSet	core/src/atpg.cpp	/^void Atpg::PropFaultSet(FaultSetMap &f2p) { $/;"	f	class:Atpg
+PropFaultSet	core/src/obj-optim.cpp	/^void Atpg::PropFaultSet(FaultSetMap &f2p, GateSetMap &pred) { $/;"	f	class:Atpg
 PushBEvent	core/src/implicator.cpp	/^void Implicator::PushBEvent(int gid) {$/;"	f	class:Implicator
 PushEvent	core/src/implicator.cpp	/^void Implicator::PushEvent(int gid) {$/;"	f	class:Implicator
 PushEventHex	core/src/implicator.cpp	/^void Implicator::PushEventHex(int gid) {$/;"	f	class:Implicator
@@ -2070,7 +2071,7 @@ eqvs_	interface/src/cell.h	/^    NetVec  eqvs_;$/;"	m	class:IntfNs::Net
 errorStr_	common/src/cmd.h	/^    std::string              errorStr_; \/\/ error related string$/;"	m	class:CommonNs::CmdMgr
 error_	common/src/cmd.h	/^    Error                    error_;    \/\/ error type$/;"	m	class:CommonNs::CmdMgr
 error_	common/src/get_opt.h	/^    Error                        error_;$/;"	m	class:CommonNs::OptMgr
-event	core/src/atpg.cpp	/^    Gate   *event; $/;"	m	struct:FaultPropEvent	file:
+event	core/src/obj-optim.cpp	/^    Gate   *event; $/;"	m	struct:FaultPropEvent	file:
 eventFaultSim	core/src/simulator.cpp	/^void Simulator::eventFaultSim() {$/;"	f	class:Simulator
 events_	core/src/implicator.h	/^    std::queue<int> *events_; $/;"	m	class:CoreNs::Implicator
 events_	core/src/simulator.h	/^    std::stack<int> *events_;$/;"	m	class:CoreNs::Simulator
@@ -2158,6 +2159,7 @@ faultEval	core/src/simulator.h	/^inline void Simulator::faultEval(const int &i) 
 faultInjectH_	core/src/simulator.h	/^    ParaValue       (*faultInjectH_)[5];$/;"	m	class:CoreNs::Simulator
 faultInjectL_	core/src/simulator.h	/^    ParaValue       (*faultInjectL_)[5];  $/;"	m	class:CoreNs::Simulator
 fault_	core/src/pattern.h	/^	FaultList fault_;$/;"	m	class:CoreNs::Vertex
+fault_proped_	core/src/d_decision_tree.h	/^    FaultSetMap  fault_proped_; $/;"	m	struct:CoreNs::DDNode
 fault_to_prop_	core/src/d_decision_tree.h	/^    FaultSetMap  fault_to_prop_; $/;"	m	struct:CoreNs::DDNode
 faults_	core/src/fault.h	/^    FaultVec  faults_;$/;"	m	class:CoreNs::FaultListExtract
 fh_	core/src/gate.h	/^    ParaValue fh_;    \/\/ faulty high$/;"	m	class:CoreNs::Gate
@@ -2306,6 +2308,7 @@ getTotalUsage	common/src/tm_usage.cpp	/^bool TmUsage::getTotalUsage(TmStat &st) 
 getTotalUsage	common/src/tm_usage/tm_usage.cpp	/^bool TmUsage::getTotalUsage(TmStat &st) const {$/;"	f	class:TmUsage
 getTypeName	core/src/gate.h	/^inline string Gate::getTypeName() const { $/;"	f	class:CoreNs::Gate
 getVars	common/src/cmd.h	/^inline VarMap CmdMgr::getVars() const {$/;"	f	class:CommonNs::CmdMgr
+get_fs	core/src/d_decision_tree.h	/^inline void DDNode::get_fs(FaultSet &fs) { $/;"	f	class:CoreNs::DDNode
 get_mask_	core/src/d_decision_tree.h	/^inline Value *DDNode::get_mask_(size_t& n) const { $/;"	f	class:CoreNs::DDNode
 gh_	core/src/gate.h	/^    ParaValue gh_;    \/\/ good high$/;"	m	class:CoreNs::Gate
 gid_	core/src/decision_tree.h	/^    int      gid_;   \/\/  the gate ID of the decision$/;"	m	struct:CoreNs::DecisionTreeNode
@@ -2343,9 +2346,9 @@ initCmd	atpg/src/main.cpp	/^void initCmd(CmdMgr &cmdMgr, FanMgr &fanMgr) {$/;"	f
 initCmds	common/src/common_test.cpp	/^void initCmds(CmdMgr *mgr) {$/;"	f
 initOpt	atpg/src/main.cpp	/^void initOpt(OptMgr &mgr) {$/;"	f
 initOpts	common/src/common_test.cpp	/^void initOpts(OptMgr *mgr) {$/;"	f
-init_d_tree	core/src/atpg.cpp	/^bool Atpg::init_d_tree() {$/;"	f	class:Atpg
+init_d_tree	core/src/dfs-podem.cpp	/^bool Atpg::init_d_tree() {$/;"	f	class:Atpg
 injected_	core/src/simulator.h	/^    FaultListIter   injected_[WORD_SIZE];$/;"	m	class:CoreNs::Simulator
-insertObj	core/src/atpg.cpp	/^bool Atpg::insertObj(const Objective& obj, ObjList& objs) { $/;"	f	class:Atpg
+insertObj	core/src/obj-optim.cpp	/^bool Atpg::insertObj(const Objective& obj, ObjList& objs) { $/;"	f	class:Atpg
 isEqv	interface/src/cell.h	/^inline bool Net::isEqv(Net * const n) const {$/;"	f	class:IntfNs::Net
 isFanoutStem	core/src/gate.h	/^inline bool Gate::isFanoutStem() const {$/;"	f	class:CoreNs::Gate
 isFlagSet	common/src/get_opt.h	/^inline bool OptMgr::isFlagSet(const std::string &f) const {$/;"	f	class:CommonNs::OptMgr
@@ -2362,7 +2365,7 @@ isUnjustified	core/src/implicator.h	/^inline bool Implicator::isUnjustified(int 
 is_obj_optim_mode_	core/src/atpg.h	/^    bool        is_obj_optim_mode_; $/;"	m	class:CoreNs::Atpg
 is_path_oriented_mode_	core/src/atpg.h	/^    bool        is_path_oriented_mode_; $/;"	m	class:CoreNs::Atpg
 is_possibly_D	core/src/implicator.h	/^    bool            *is_possibly_D; $/;"	m	class:CoreNs::Implicator
-isaMultiTest	core/src/atpg.cpp	/^bool Atpg::isaMultiTest() { $/;"	f	class:Atpg
+isaMultiTest	core/src/obj-optim.cpp	/^bool Atpg::isaMultiTest() { $/;"	f	class:Atpg
 isaTest	core/src/atpg.cpp	/^bool Atpg::isaTest() { $/;"	f	class:Atpg
 j_front_	core/src/implicator.h	/^    GateSet         j_front_; $/;"	m	class:CoreNs::Implicator
 j_tree_	core/src/d_decision_tree.h	/^    DecisionTree j_tree_; $/;"	m	struct:CoreNs::DDNode
@@ -2554,7 +2557,7 @@ nrecover_	core/src/simulator.h	/^    int             nrecover_; \/\/ number of r
 nsi_	core/src/pattern.h	/^    int        nsi_;$/;"	m	class:CoreNs::PatternProcessor
 objs_	core/src/atpg.h	/^    ObjList     objs_; $/;"	m	class:CoreNs::Atpg
 operator !=	core/src/logic-hex.h	/^inline bool operator!=(const HexValue& lhs, const HexValue& rhs) {$/;"	f	namespace:CoreNs
-operator ()	core/src/atpg.cpp	/^bool Atpg::comp_gate::operator()(Gate* g1, Gate* g2) {  $/;"	f	class:Atpg::comp_gate
+operator ()	core/src/obj-optim.cpp	/^bool Atpg::comp_gate::operator()(Gate* g1, Gate* g2) {  $/;"	f	class:Atpg::comp_gate
 operator <	interface/src/global.h	/^inline bool NameKey::operator<(const NameKey &key) const {$/;"	f	class:IntfNs::NameKey
 operator =	core/src/decision_tree.h	/^inline DecisionTree &DecisionTree::operator= (const DecisionTree &rhs) { $/;"	f	class:CoreNs::DecisionTree
 operator =	core/src/logic-hex.h	/^inline HexValue& HexValue::operator=(HexValue hv) {$/;"	f	class:CoreNs::HexValue
@@ -2692,6 +2695,8 @@ reportCell	atpg/src/setup_cmd.cpp	/^void ReportCellCmd::reportCell(const size_t 
 reportGate	atpg/src/atpg_cmd.cpp	/^void ReportGateCmd::reportGate(const int &i) const {$/;"	f	class:ReportGateCmd
 reportScoap	atpg/src/atpg_cmd.cpp	/^void ReportScoapCmd::reportScoap(Type type) {$/;"	f	class:ReportScoapCmd
 reportValue	atpg/src/atpg_cmd.cpp	/^void ReportValueCmd::reportValue(const int &i) const {$/;"	f	class:ReportValueCmd
+req_dt_	core/src/atpg_mgr.h	/^    int                 req_dt_; $/;"	m	class:CoreNs::AtpgMgr
+req_pat_	core/src/atpg_mgr.h	/^    int                 req_pat_; $/;"	m	class:CoreNs::AtpgMgr
 resetStdin	common/src/cmd.cpp	/^void CmdMgr::resetStdin() const {$/;"	f	class:CmdMgr
 resetStdout	common/src/cmd.cpp	/^void CmdMgr::resetStdout(const int &stdoutFd, const fpos_t &stdoutPos) const {$/;"	f	class:CmdMgr
 rtime	atpg/src/atpg_cmd.cpp	/^double rtime;$/;"	v
@@ -2803,7 +2808,7 @@ shortDes_	common/src/get_opt.h	/^    std::string                  shortDes_;$/;"
 si_	core/src/pattern.h	/^    Value *si_;$/;"	m	class:CoreNs::Pattern
 sim_	core/src/atpg_mgr.h	/^    Simulator          *sim_;$/;"	m	class:CoreNs::AtpgMgr
 sim_	core/src/implicator.h	/^    Simulator       *sim_;  $/;"	m	class:CoreNs::Implicator
-source	core/src/atpg.cpp	/^    int     source; $/;"	m	struct:FaultPropEvent	file:
+source	core/src/obj-optim.cpp	/^    int     source; $/;"	m	struct:FaultPropEvent	file:
 splitString	common/src/get_opt.cpp	/^vector<string> OptMgr::splitString(const string &input,$/;"	f	class:OptMgr
 startPoint_	core/src/d_decision_tree.h	/^    unsigned     startPoint_; $/;"	m	struct:CoreNs::DDNode
 startPoint_	core/src/decision_tree.h	/^    unsigned startPoint_; \/\/ starting point in backtrackList of gid_ ;$/;"	m	struct:CoreNs::DecisionTreeNode
