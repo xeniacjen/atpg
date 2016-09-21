@@ -131,9 +131,12 @@ bool Atpg::GenObjs() {
 }
 
 bool Atpg::CheckDDDrive() { 
-    // TODO 
+    GateSet proped, pred; 
+    d_tree_.top()->get_pred(pred); 
+    d_tree_.sub_top()->top(proped); 
 
-    return true; 
+    return includes(pred.begin(), pred.end(), 
+      proped.begin(), proped.end()); 
 }
 
 struct FaultPropEvent { 

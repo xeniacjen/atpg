@@ -119,6 +119,13 @@ inline void DDNode::top(GateVec &gids) const {
             gids.push_back(dfront_[i]); 
 } 
 
+inline void DDNode::top(GateSet &gs) const {
+    gs.clear(); 
+    for (size_t i=0; i<dfront_.size(); i++) 
+        if (d_mask_[i]==H || d_mask_[i]==X)
+            gs.insert(dfront_[i]->id_); 
+} 
+
 inline void DDNode::pop() { 
     dfront_.pop_back(); 
 }
@@ -173,6 +180,18 @@ inline void DDNode::get_fs(FaultSet &fs) {
     for (it=fault_proped_.begin(); it!=fault_proped_.end(); ++it) { 
         fs.insert(it->second.begin(), it->second.end()); 
     }
+}
+
+inline void DDNode::get_pred(GateSet &gs) { 
+    gs.clear(); 
+    for (size_t i=0; i<dfront_.size(); i++) 
+        if (d_mask_[i]==H || d_mask_[i]==X) { 
+            GateSetMapIter it = predecessor_.find(dfront_[i]); 
+            if (it!=predecessor_.end()) { 
+                gs.insert(it->second.begin(), it->second.end()); 
+            }
+            else assert(0); 
+        }
 }
 
 inline DDTree::~DDTree() { 

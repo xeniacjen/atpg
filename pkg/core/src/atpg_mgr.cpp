@@ -36,10 +36,9 @@ void AtpgMgr::generation(int limit) {
     Fault *f = NULL; 
     for (int i=0; i<fListExtract_->faults_.size(); i++) 
         calc_fault_hardness(fListExtract_->faults_[i]); 
-
     FaultList flist = fListExtract_->current_; 
     flist.sort(comp_fault_hard); 
-
+/** 
     cout << "# ------------------------------------------------------------------------\n"; 
     cout << "# Phase 1: drop faults need no back-track \n"; 
     cout << "# ------------------------------------------------------------------------\n"; 
@@ -106,7 +105,7 @@ void AtpgMgr::generation(int limit) {
             cout << endl; 
         }   
     }
-    
+*/ 
     pcoll_->nbit_spec_ = 0; 
     pcoll_->nbit_spec_max = 0; 
     flist.sort(comp_fault_lvl); 
