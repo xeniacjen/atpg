@@ -56,10 +56,10 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
     
         assert(!gtoprop->isUnary()); 
 
-        stack<Objective> event_list; 
+        queue<Objective> event_list; 
         event_list.push(obj); 
         while (!event_list.empty()) { 
-            obj = event_list.top(); 
+            obj = event_list.front(); 
             event_list.pop(); 
 
             Value v = impl_->GetVal(obj.first); 
@@ -81,7 +81,7 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
                         event_list.push(obj); 
                     }
                 }
-                else { // TODO: move to outside . 
+                else { 
                     int x_count = 0; 
                     int gnext = -1; 
                     for (int i=0; i<g->nfi_; i++) { 
@@ -92,7 +92,7 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
                             gnext = i; 
                         }
                         else if (it!=objs.end() 
-                          && it->second==g->getInputCtrlValue()) { 
+                        && it->second==g->getInputCtrlValue()) { 
                             continue; 
                         }
                     }
@@ -104,6 +104,7 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
                 }
             }
         }
+
         objs_ = objs; 
     }
 
