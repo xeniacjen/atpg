@@ -13,7 +13,7 @@
 #    RE (redundant)                                0
 #    AB (atpg abort)                               0
 #    TI (tied)                                     0
-#    DH (hard-but-detected)                     1784
+#    DH (hard-but-detected)                     1530
 #    --------------------------  -------------------
 #    DT (detected)                             86754
 #  -------------------------------------------------
@@ -23,10 +23,10 @@
 #    fault coverage                            90.1%
 #    atpg effectiveness                         100%
 #  -------------------------------------------------
-#  #Patterns                                      16
-#  #Patterns Norm.                                16
-#  Ave.Spec-rate                              58.92%
+#  #Patterns                                      17
+#  #Patterns Norm.                                17
+#  Ave.Spec-rate                              60.66%
 #  Max.Spec-rate                                100%
 #  -------------------------------------------------
-#  ATPG runtime                              365.7 s
+#  ATPG runtime                                397 s
 #  -------------------------------------------------

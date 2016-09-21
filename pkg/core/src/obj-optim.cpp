@@ -332,7 +332,6 @@ Fault *Atpg::GetFault(Gate *g, int line) {
 }
 
 bool Atpg::comp_gate::operator()(Gate* g1, Gate* g2) {  
-    /** 
     FaultSetMap f2p = atpg_->d_tree_.top()->fault_to_prop_; 
     int fs1, fs2; 
     Value v1, v2; 
@@ -358,10 +357,9 @@ bool Atpg::comp_gate::operator()(Gate* g1, Gate* g2) {
 
     atpg_->ResetProbFaultSet(); 
     fs2 = f2p.find(g2)->second.size() + atpg_->GetProbFaultSet(g2, v2); 
-    */ 
 
-    return g1->co_o_ > g2->co_o_; 
-    // return fs1 > fs2; 
+    // return g1->co_o_ > g2->co_o_; 
+    return fs1 > fs2; 
 }
 
 Fault *Atpg::GetProbFault(Gate *g, int line, Value vf) { 
