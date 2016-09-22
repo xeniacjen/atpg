@@ -28,17 +28,17 @@ using namespace CoreNs;
 
 bool Atpg::init_d_tree() {
     GateVec fgs; 
-    FaultSetMap f2p; 
+    // FaultSetMap f2p; 
     // GateSetMap p; 
 
     Fault *f = current_fault_; 
     Gate *fg = &cir_->gates_[f->gate_]; 
     fgs.push_back(fg);   
     DecisionTree tree_dummy; tree_dummy.clear(); 
-    if (is_obj_optim_mode_) { 
-        FaultSet fs; 
-        f2p.insert(pair<Gate *, FaultSet>(fg, fs)); 
-    }
+    // if (is_obj_optim_mode_) { 
+    //     FaultSet fs; 
+    //     f2p.insert(pair<Gate *, FaultSet>(fg, fs)); 
+    // }
 
     d_tree_.push(fgs, 0, tree_dummy); 
 
@@ -48,7 +48,7 @@ bool Atpg::init_d_tree() {
             mask[i] = H; 
         
         d_tree_.top()->set_mask_(mask); 
-        d_tree_.top()->set_f2p(f2p); 
+        // d_tree_.top()->set_f2p(f2p); 
     }
 
     return true; 

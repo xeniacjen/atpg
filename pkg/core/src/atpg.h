@@ -78,7 +78,8 @@ private:
     bool AddGateToProp(Gate *gtoprop); 
     bool GenObjs(); 
     bool CheckDDDrive(); 
-    void PropFaultSet(FaultSetMap &f2p, GateSetMap &pred); 
+    // void PropFaultSet(FaultSetMap &f2p, GateSetMap &pred); 
+    void PropFaultSet(const GateVec &gv, GateSetMap &pred); 
     bool MultiDDrive(); 
     bool MultiDBackTrack(DecisionTree &tree); 
     bool isaMultiTest(); 
@@ -91,6 +92,8 @@ private:
     bool        is_path_oriented_mode_; 
     bool        is_obj_optim_mode_; 
     ObjList     objs_; 
+
+    int        *prob_fs; 
 
     DDTree      d_tree_; 
 
@@ -105,6 +108,7 @@ protected:
 
     void ResetXPath(); 
     void ResetProbFaultSet(); 
+    void ResetFaultReach();   
 
     void init(); 
     void init(Pattern *p); 
@@ -112,6 +116,8 @@ protected:
     bool BackTrack(); 
     Gate *FindHardestToSetFanIn(Gate *g, Value obj) const; 
     Gate *FindEasiestToSetFanIn(Gate *g, Value obj) const; 
+
+    void CalcIsFaultReach(const GateVec &gv); 
 
     Circuit    *cir_;
     Implicator *impl_; 
@@ -123,7 +129,7 @@ protected:
 
     Objective   current_obj_; 
     Value      *x_path_; // keep the x-path search status 
-    int        *prob_fs; 
+    bool       *is_fault_reach_; 
 }; //Atpg 
 
 inline Atpg::Atpg(Circuit *cir, Fault *f) { 
@@ -135,6 +141,7 @@ inline Atpg::Atpg(Circuit *cir, Fault *f) {
     impl_ = new Implicator(cir, f); 
     x_path_ = new Value[cir_->tgate_]; 
     prob_fs = new int[cir_->tgate_]; 
+    is_fault_reach_ = new bool[cir_->tgate_]; 
 
     init(); 
 }
@@ -148,6 +155,7 @@ inline Atpg::Atpg(Circuit *cir, Fault *f, Pattern *p) {
     impl_ = new Implicator(cir, f); 
     x_path_ = new Value[cir_->tgate_]; 
     prob_fs = new int[cir_->tgate_]; 
+    is_fault_reach_ = new bool[cir_->tgate_]; 
 
     init(p); 
 } 
@@ -156,6 +164,7 @@ inline Atpg::~Atpg() {
     delete    impl_; 
     delete [] x_path_; 
     delete [] prob_fs; 
+    delete [] is_fault_reach_; 
 }
 
 inline void Atpg::GetPiPattern(Pattern *p) { 
@@ -251,6 +260,11 @@ inline void Atpg::ResetXPath() {
 inline void Atpg::ResetProbFaultSet() { 
     for (int i=0; i<cir_->tgate_; i++) 
         prob_fs[i] = -1; 
+}
+
+inline void Atpg::ResetFaultReach() { 
+    for (int i=0; i<cir_->tgate_; i++) 
+        is_fault_reach_[i] = false; 
 }
   
 inline bool Atpg::SetBackTrackLimit(int limit) { 

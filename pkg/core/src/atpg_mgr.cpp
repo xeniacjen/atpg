@@ -116,8 +116,8 @@ void AtpgMgr::generation(int limit) {
     cout << "# #patterns  fault     #faults  #faults \n"; 
     cout << "# simulated  coverage  in list  detected\n"; 
     cout << "# ------------------------------------------------------------------------\n"; 
-    int prob_fs = 0; 
-    int prop_fs = 0; 
+    // int prob_fs = 0; 
+    // int prop_fs = 0; 
     while (flist.begin()!=flist.end()) { 
         if (flist.front()->state_==Fault::DT) { 
             flist.pop_front(); 
@@ -148,10 +148,10 @@ void AtpgMgr::generation(int limit) {
             atpg_->GetPiPattern(p); 
 
             flist.front()->state_ = Fault::DH; 
-            if (set_oo_on_) { 
-                prob_fs+=atpg_->prob_fs_; 
-                prop_fs+=atpg_->prop_fs_; 
-            }
+            // if (set_oo_on_) { 
+            //     prob_fs+=atpg_->prob_fs_; 
+            //     prop_fs+=atpg_->prop_fs_; 
+            // }
 
             if (pcoll_->dynamicCompression_==PatternProcessor::ON) 
                DynamicCompression(flist); 
@@ -185,11 +185,11 @@ void AtpgMgr::generation(int limit) {
             cout << "  " << setw(7) << fu - dt; 
             cout << "  " << setw(8) << dt; 
             // cout << "  " << setw(8) << (float)prop_fs/(float)prob_fs*100.f<<"% "; 
-            cout << "  " << setw(8) << prop_fs; 
+            // cout << "  " << setw(8) << prop_fs; 
             cout << endl; 
 
-            prop_fs = 0; 
-            prob_fs = 0; 
+            // prop_fs = 0; 
+            // prob_fs = 0; 
         }   
     }
 

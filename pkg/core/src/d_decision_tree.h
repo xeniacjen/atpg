@@ -51,12 +51,12 @@ struct DDNode {
     Value       *get_mask_(size_t& n) const; 
 
     void         get_pred(GateSet &gs); 
-    void         get_fs(FaultSet &fs); 
+    // void         get_fs(FaultSet &fs); 
 
-    void         set_f2p(FaultSetMap &f2p);
+    // void         set_f2p(FaultSetMap &f2p);
 
-    FaultSetMap  fault_to_prop_; 
-    FaultSetMap  fault_proped_; 
+    // FaultSetMap  fault_to_prop_; 
+    // FaultSetMap  fault_proped_; 
     GateSetMap   predecessor_; 
 
     GateVec      dfront_; 
@@ -144,6 +144,7 @@ inline Value *DDNode::get_mask_(size_t& n) const {
     return d_mask_; 
 }
 
+/** 
 inline void DDNode::set_f2p(FaultSetMap &f2p) { 
     fault_to_prop_.clear(); 
     
@@ -157,7 +158,6 @@ inline void DDNode::set_f2p(FaultSetMap &f2p) {
         } 
         else assert(0); 
     }
-
     for (it=f2p.begin(); it!=f2p.end(); ++it) { 
         Gate *g = it->first; 
         if (g->type_==Gate::PO || g->type_==Gate::PPO) { 
@@ -172,7 +172,9 @@ inline void DDNode::set_f2p(FaultSetMap &f2p) {
         }
     }
 }
+*/ 
 
+/**
 inline void DDNode::get_fs(FaultSet &fs) { 
     fs.clear(); 
 
@@ -181,6 +183,7 @@ inline void DDNode::get_fs(FaultSet &fs) {
         fs.insert(it->second.begin(), it->second.end()); 
     }
 }
+*/ 
 
 inline void DDNode::get_pred(GateSet &gs) { 
     gs.clear(); 
