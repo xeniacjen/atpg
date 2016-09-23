@@ -187,14 +187,24 @@ inline void DDNode::get_fs(FaultSet &fs) {
 
 inline void DDNode::get_pred(GateSet &gs) { 
     gs.clear(); 
-    for (size_t i=0; i<dfront_.size(); i++) 
+
+    GateSetMapIter it; 
+    for (size_t i=0; i<dfront_.size(); i++) { 
         if (d_mask_[i]==H || d_mask_[i]==X) { 
-            GateSetMapIter it = predecessor_.find(dfront_[i]); 
+            it = predecessor_.find(dfront_[i]); 
             if (it!=predecessor_.end()) { 
                 gs.insert(it->second.begin(), it->second.end()); 
             }
             else assert(0); 
         }
+    } 
+
+    for (it=predecessor_.begin(); it!=predecessor_.end(); ++it) { 
+        Gate *g = it->first; 
+        if (g->type_==Gate::PO || g->type_==Gate::PPO) { 
+            gs.insert(it->second.begin(), it->second.end()); 
+        }
+    }
 }
 
 inline DDTree::~DDTree() { 
