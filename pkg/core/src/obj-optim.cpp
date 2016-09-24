@@ -27,6 +27,8 @@ using namespace std;
 using namespace CoreNs; 
 
 bool Atpg::insertObj(const Objective& obj, ObjList& objs) { 
+    if (is_fault_reach_[obj.first]) return true; 
+
     Value v = impl_->GetVal(obj.first); 
     assert(v==X); 
 
@@ -75,7 +77,8 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
             else { 
                 if (g->getOutputCtrlValue()==obj.second) { 
                     for (int i=0; i<g->nfi_; i++) { 
-                        if (impl_->GetVal(g->fis_[i])!=X) continue; 
+                        if (impl_->GetVal(g->fis_[i])!=X 
+                          || is_fault_reach_[g->fis_[i]]) continue; 
                         obj.first = g->fis_[i]; 
                         obj.second = g->getInputNonCtrlValue(); 
                         event_list.push(obj); 
@@ -97,6 +100,7 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
                         }
                     }
                     if (x_count==1) { 
+                        if (is_fault_reach_[g->fis_[gnext]]) continue; 
                         obj.first = g->fis_[gnext]; 
                         obj.second = g->getInputCtrlValue(); 
                         event_list.push(obj); 
@@ -120,7 +124,7 @@ void Atpg::CalcIsFaultReach(const GateVec &gv) {
         Gate *g = events.top(); 
         events.pop(); 
 
-        is_fault_reach_[g->id_] == true; 
+        is_fault_reach_[g->id_] = true; 
         for (int i=0; i<g->nfo_; i++) 
             if (!is_fault_reach_[g->fos_[i]]) 
                 events.push(&cir_->gates_[g->fos_[i]]); 
@@ -137,8 +141,8 @@ bool Atpg::GenObjs() {
     // get the previous object 
     d_tree_.top(gids); 
     Value *mask = d_tree_.top()->get_mask_(size); 
-    // ResetFaultReach(); 
-    // CalcIsFaultReach(gids); 
+    ResetFaultReach(); 
+    CalcIsFaultReach(gids); 
 
     int j = 0; 
     for (size_t i=0; i<size; i++) { 
@@ -480,8 +484,8 @@ int Atpg::GetProbFaultSet(Gate *g, Value vi) {
 
     prob_fs[g->id_] = ret; 
 
-    if (current_fault_->gate_==g->id_) 
-        prob_fs_ = ret; 
+    // if (current_fault_->gate_==g->id_) 
+    //     prob_fs_ = ret; 
 
     return ret; 
 }

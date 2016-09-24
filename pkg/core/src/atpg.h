@@ -58,8 +58,8 @@ public:
     bool    TurnOnPoMode(); 
     bool    TurnOnObjOptimMode(FaultListExtract *fl); 
 
-    int         prop_fs_;
-    int         prob_fs_; 
+    // int     prop_fs_;
+    // int     prob_fs_; 
 
 private: 
     // podem help function 
