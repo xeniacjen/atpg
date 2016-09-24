@@ -76,6 +76,7 @@ private:
     // obj-optim. help function 
     bool insertObj(const Objective& obj, ObjList& objs); 
     bool AddGateToProp(Gate *gtoprop); 
+    bool AddUniquePathObj(Gate *gtoprop, std::queue<Objective>& events); 
     bool GenObjs(); 
     bool CheckDDDrive(); 
     // void PropFaultSet(FaultSetMap &f2p, GateSetMap &pred); 

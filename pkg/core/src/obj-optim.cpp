@@ -40,6 +40,23 @@ bool Atpg::insertObj(const Objective& obj, ObjList& objs) {
     return true; 
 } 
 
+bool Atpg::AddUniquePathObj(Gate *gtoprop, queue<Objective>& events) { 
+    Gate *gnext = gtoprop; 
+    while (gnext->nfo_==1) { 
+        for (int i=0; i<gnext->nfi_; i++) { 
+            if (impl_->GetVal(gnext->fis_[i])!=X) continue;  
+            //   || is_fault_reach_[gnext->fis_[i]]) continue; 
+            Objective obj; 
+            obj.first = gnext->fis_[i]; 
+            obj.second = gnext->getInputNonCtrlValue(); 
+            events.push(obj); 
+        }
+        gnext = &cir_->gates_[gnext->fos_[0]]; 
+    }
+
+    return true; 
+} 
+
 bool Atpg::AddGateToProp(Gate *gtoprop) { 
     Value v = impl_->GetVal(gtoprop->id_); 
 
@@ -59,6 +76,8 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
         assert(!gtoprop->isUnary()); 
 
         queue<Objective> event_list; 
+        if (!AddUniquePathObj(gtoprop, event_list)) return false; 
+
         event_list.push(obj); 
         while (!event_list.empty()) { 
             obj = event_list.front(); 
@@ -77,8 +96,8 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
             else { 
                 if (g->getOutputCtrlValue()==obj.second) { 
                     for (int i=0; i<g->nfi_; i++) { 
-                        if (impl_->GetVal(g->fis_[i])!=X 
-                          || is_fault_reach_[g->fis_[i]]) continue; 
+                        if (impl_->GetVal(g->fis_[i])!=X) continue;  
+                        //   || is_fault_reach_[g->fis_[i]]) continue; 
                         obj.first = g->fis_[i]; 
                         obj.second = g->getInputNonCtrlValue(); 
                         event_list.push(obj); 
@@ -100,7 +119,7 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
                         }
                     }
                     if (x_count==1) { 
-                        if (is_fault_reach_[g->fis_[gnext]]) continue; 
+                        // if (is_fault_reach_[g->fis_[gnext]]) continue; 
                         obj.first = g->fis_[gnext]; 
                         obj.second = g->getInputCtrlValue(); 
                         event_list.push(obj); 
