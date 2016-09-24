@@ -76,7 +76,7 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
         assert(!gtoprop->isUnary()); 
 
         queue<Objective> event_list; 
-        if (!AddUniquePathObj(gtoprop, event_list)) return false; 
+        // if (!AddUniquePathObj(gtoprop, event_list)) return false; 
 
         event_list.push(obj); 
         while (!event_list.empty()) { 
@@ -96,8 +96,9 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
             else { 
                 if (g->getOutputCtrlValue()==obj.second) { 
                     for (int i=0; i<g->nfi_; i++) { 
-                        if (impl_->GetVal(g->fis_[i])!=X) continue;  
-                        //   || is_fault_reach_[g->fis_[i]]) continue; 
+                        // if (impl_->GetVal(g->fis_[i])!=X) continue;  
+                        if (impl_->GetVal(g->fis_[i])!=X
+                          || is_fault_reach_[g->fis_[i]]) continue; 
                         obj.first = g->fis_[i]; 
                         obj.second = g->getInputNonCtrlValue(); 
                         event_list.push(obj); 
@@ -119,7 +120,7 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
                         }
                     }
                     if (x_count==1) { 
-                        // if (is_fault_reach_[g->fis_[gnext]]) continue; 
+                        if (is_fault_reach_[g->fis_[gnext]]) continue; 
                         obj.first = g->fis_[gnext]; 
                         obj.second = g->getInputCtrlValue(); 
                         event_list.push(obj); 
@@ -186,7 +187,7 @@ bool Atpg::GenObjs() {
     // assert(j==gids.size()); 
 
     if (!objs_.empty()) { 
-        if (!CheckDDDrive()) return false; 
+        // if (!CheckDDDrive()) return false; 
         current_obj_ = *objs_.begin(); 
     }
 
