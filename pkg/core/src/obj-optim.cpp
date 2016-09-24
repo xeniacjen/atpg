@@ -143,6 +143,7 @@ void Atpg::CalcIsFaultReach(const GateVec &gv) {
         Gate *g = events.top(); 
         events.pop(); 
 
+        if (!CheckXPath(g)) continue; 
         is_fault_reach_[g->id_] = true; 
         for (int i=0; i<g->nfo_; i++) 
             if (!is_fault_reach_[g->fos_[i]]) 
@@ -160,7 +161,6 @@ bool Atpg::GenObjs() {
     // get the previous object 
     d_tree_.top(gids); 
     Value *mask = d_tree_.top()->get_mask_(size); 
-    ResetFaultReach(); 
     CalcIsFaultReach(gids); 
 
     int j = 0; 

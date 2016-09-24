@@ -132,6 +132,7 @@ bool Atpg::CheckDFrontier(GateVec &dfront) {
 
 bool Atpg::DDrive() { 
     ResetXPath(); 
+    ResetFaultReach(); 
 
     if (is_obj_optim_mode_) return MultiDDrive(); 
     if (is_path_oriented_mode_) return DDDrive(); 
