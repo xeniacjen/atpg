@@ -57,6 +57,37 @@ bool Atpg::AddUniquePathObj(Gate *gtoprop, queue<Objective>& events) {
     return true; 
 } 
 
+void Atpg::PushObjEvents(Gate *prev, 
+                           const Objective& obj, 
+                           queue<Objective>& events, 
+                           queue<Objective>& events_forward) { 
+
+    events.push(obj); 
+
+    Gate *g = &cir_->gates_[obj.first]; 
+    if (g->nfo_>1) { 
+        for (int i=0; i<g->nfo_; i++) {
+            Gate *fo = &cir_->gates_[g->fos_[i]]; 
+            if (fo==prev) continue; 
+            
+            Objective obj_forward; 
+            if (g->type_==Gate::BUF || g->type_==Gate::INV) { 
+                obj_forward.first = fo->id_; 
+                obj_forward.second = 
+                  (fo->isInverse())?EvalNot(obj.second):obj.second;
+                events_forward.push(obj_forward); 
+            }
+            else { 
+                if (obj.second==fo->getInputCtrlValue()) { 
+                    obj_forward.first = fo->id_; 
+                    obj_forward.second = EvalNot(fo->getOutputCtrlValue()); 
+                    events_forward.push(obj_forward); 
+                }
+            }
+        }
+    }
+}
+
 bool Atpg::AddGateToProp(Gate *gtoprop) { 
     Value v = impl_->GetVal(gtoprop->id_); 
 
@@ -76,6 +107,7 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
         assert(!gtoprop->isUnary()); 
 
         queue<Objective> event_list; 
+        queue<Objective> event_list_forward; 
         // if (!AddUniquePathObj(gtoprop, event_list)) return false; 
 
         event_list.push(obj); 
@@ -91,7 +123,7 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
             if (g->type_==Gate::BUF || g->type_==Gate::INV) { 
                 obj.first = g->fis_[0]; 
                 obj.second = (g->isInverse())?EvalNot(obj.second):obj.second;
-                event_list.push(obj); 
+                PushObjEvents(g, obj, event_list, event_list_forward); 
             } 
             else { 
                 if (g->getOutputCtrlValue()==obj.second) { 
@@ -101,7 +133,7 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
                           || is_fault_reach_[g->fis_[i]]) continue; 
                         obj.first = g->fis_[i]; 
                         obj.second = g->getInputNonCtrlValue(); 
-                        event_list.push(obj); 
+                        PushObjEvents(g, obj, event_list, event_list_forward); 
                     }
                 }
                 else { 
@@ -123,7 +155,37 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
                         if (is_fault_reach_[g->fis_[gnext]]) continue; 
                         obj.first = g->fis_[gnext]; 
                         obj.second = g->getInputCtrlValue(); 
-                        event_list.push(obj); 
+                        PushObjEvents(g, obj, event_list, event_list_forward); 
+                    }
+                }
+            }
+        }
+
+        while (!event_list_forward.empty()) { 
+            obj = event_list_forward.front(); 
+            event_list_forward.pop(); 
+        
+            Value v = impl_->GetVal(obj.first); 
+            if (v!=X) { 
+                if (v==EvalNot(obj.second)) { return false; } 
+                continue; 
+            }
+            if (!insertObj(obj, objs)) return false; 
+
+            Gate *g = &cir_->gates_[obj.first]; 
+            for (int i=0; i<g->nfo_; i++) {
+                Gate *fo = &cir_->gates_[g->fos_[i]]; 
+                if (g->type_==Gate::BUF || g->type_==Gate::INV) { 
+                    obj.first = fo->id_; 
+                    obj.second = 
+                    (fo->isInverse())?EvalNot(obj.second):obj.second;
+                    event_list_forward.push(obj); 
+                }
+                else { 
+                    if (obj.second==fo->getInputCtrlValue()) { 
+                        obj.first = fo->id_; 
+                        obj.second = EvalNot(fo->getOutputCtrlValue()); 
+                        event_list_forward.push(obj); 
                     }
                 }
             }
@@ -162,7 +224,7 @@ bool Atpg::GenObjs() {
     // get the previous object 
     d_tree_.top(gids); 
     Value *mask = d_tree_.top()->get_mask_(size); 
-    CalcIsFaultReach(gids); 
+    // CalcIsFaultReach(gids); 
 
     int j = 0; 
     for (size_t i=0; i<size; i++) { 

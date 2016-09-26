@@ -75,6 +75,10 @@ private:
 
     // obj-optim. help function 
     bool insertObj(const Objective& obj, ObjList& objs); 
+    void PushObjEvents(Gate *prev, 
+                         const Objective& obj, 
+                         std::queue<Objective>& events, 
+                         std::queue<Objective>& events_forward); 
     bool AddGateToProp(Gate *gtoprop); 
     bool AddUniquePathObj(Gate *gtoprop, std::queue<Objective>& events); 
     bool GenObjs(); 

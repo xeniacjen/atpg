@@ -24,9 +24,9 @@
 #    atpg effectiveness                       95.82%
 #  -------------------------------------------------
 #  #Patterns                                     904
-#  #Patterns Norm.                               904
+#  #Patterns Norm.                               896
 #  Ave.Spec-rate                              9.366%
 #  Max.Spec-rate                               93.8%
 #  -------------------------------------------------
-#  ATPG runtime                               2025 s
+#  ATPG runtime                               1962 s
 #  -------------------------------------------------

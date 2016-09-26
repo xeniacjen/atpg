@@ -7,6 +7,6 @@ add_fault --all
 set_X-Fill on
 set_static_compression on
 set_dynamic_compression on
-run_atpg
+run_atpg -r 56048 
 report_statistics > rpt/b20s_loc_t_saf.rpt
 exit
