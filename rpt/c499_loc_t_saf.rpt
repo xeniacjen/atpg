@@ -1,32 +1,32 @@
 #                 Statistics Report
-#  Circuit name                                c1355
+#  Circuit name                                 c499
 #  Fault model                                   SAF
 #  Pattern type                                  LOC
 #  -------------------------------------------------
 #  Fault classes                             #faults
 #  ----------------------------  -------------------
-#    FU (full)                                  3398
+#    FU (full)                                  2646
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
 #    AU (atpg untestable)                          0
 #    RE (redundant)                                0
-#    AB (atpg abort)                             112
+#    AB (atpg abort)                              13
 #    TI (tied)                                     0
-#    DH (hard-but-detected)                     3286
+#    DH (hard-but-detected)                     2633
 #    --------------------------  -------------------
-#    DT (detected)                              3286
+#    DT (detected)                              2633
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
-#    test coverage                             96.7%
-#    fault coverage                            96.7%
-#    atpg effectiveness                        96.7%
+#    test coverage                            99.51%
+#    fault coverage                           99.51%
+#    atpg effectiveness                       99.51%
 #  -------------------------------------------------
 #  #Patterns                                     132
 #  #Patterns Norm.                               132
-#  Ave.Spec-rate                              78.27%
+#  Ave.Spec-rate                              85.66%
 #  Max.Spec-rate                                100%
 #  -------------------------------------------------
-#  ATPG runtime                              191.9 s
+#  ATPG runtime                              135.6 s
 #  -------------------------------------------------

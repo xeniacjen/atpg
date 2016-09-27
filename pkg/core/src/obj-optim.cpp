@@ -277,7 +277,7 @@ struct FaultPropEvent {
 }; 
 
 void Atpg::PropFaultSet(const GateVec &gv, GateSetMap &pred) { 
-    queue<FaultPropEvent> events; 
+    stack<FaultPropEvent> events; 
     
     // FaultSetMapIter it = f2p.begin(); 
     // for (; it!=f2p.end(); ++it) { 
@@ -288,8 +288,8 @@ void Atpg::PropFaultSet(const GateVec &gv, GateSetMap &pred) {
     }
 
     while (!events.empty()) { 
-        Gate *g = events.front().event; 
-        int s = events.front().source; 
+        Gate *g = events.top().event; 
+        int s = events.top().source; 
         events.pop(); 
 
         // it = f2p.find(g); 
@@ -322,6 +322,7 @@ void Atpg::PropFaultSet(const GateVec &gv, GateSetMap &pred) {
                 events.push(FaultPropEvent(fo, s)); 
             }
         }
+        else if (v!=X) continue; 
         else { 
             GateSetMapIter itg = pred.find(g); 
             if (itg==pred.end()) { 
@@ -351,9 +352,9 @@ bool Atpg::MultiDDrive() {
 
             // FaultSetMap f2p = d_tree_.top()->fault_to_prop_; 
             // FaultSetMap fp = d_tree_.top()->fault_proped_; 
-            GateSetMap pred; 
-            GateVec gids; d_tree_.top()->top(gids); 
-            PropFaultSet(gids, pred); 
+            // GateSetMap pred; 
+            // GateVec gids; d_tree_.top()->top(gids); 
+            // PropFaultSet(gids, pred); 
     
             d_tree_.push(dfront, 
                 impl_->GetEFrontierSize(), 
@@ -366,12 +367,20 @@ bool Atpg::MultiDDrive() {
             d_tree_.top()->set_mask_(mask); 
             // d_tree_.top()->fault_proped_ = fp; 
             // d_tree_.top()->set_f2p(f2p); 
-            d_tree_.top()->predecessor_ = pred; 
+            // d_tree_.top()->predecessor_ = pred; 
 
             GateVec &df = d_tree_.top()->dfront_; 
             sort (df.begin(), df.end(), comp_gate(this)); 
 
-            return GenObjs(); 
+            if (!GenObjs()) return false; 
+            else {
+                if (objs_.empty()) { 
+                    GateVec gids; d_tree_.top(gids); 
+                    current_obj_.first = gids[0]->id_; 
+                    current_obj_.second = gids[0]->getOutputCtrlValue(); 
+                }
+                return true; 
+            } 
         } 
         else return true; // initial objective unchanged 
     }

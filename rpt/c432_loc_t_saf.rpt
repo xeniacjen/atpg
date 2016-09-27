@@ -1,32 +1,32 @@
 #                 Statistics Report
-#  Circuit name                                c1355
+#  Circuit name                                 c432
 #  Fault model                                   SAF
 #  Pattern type                                  LOC
 #  -------------------------------------------------
 #  Fault classes                             #faults
 #  ----------------------------  -------------------
-#    FU (full)                                  3398
+#    FU (full)                                  1338
 #    --------------------------  -------------------
 #    UD (undetected)                               0
 #    PT (possibly testable)                        0
-#    AU (atpg untestable)                          0
+#    AU (atpg untestable)                         25
 #    RE (redundant)                                0
-#    AB (atpg abort)                             112
+#    AB (atpg abort)                              61
 #    TI (tied)                                     0
-#    DH (hard-but-detected)                     3286
+#    DH (hard-but-detected)                     1252
 #    --------------------------  -------------------
-#    DT (detected)                              3286
+#    DT (detected)                              1252
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
-#    test coverage                             96.7%
-#    fault coverage                            96.7%
-#    atpg effectiveness                        96.7%
+#    test coverage                            95.35%
+#    fault coverage                           93.57%
+#    atpg effectiveness                       95.44%
 #  -------------------------------------------------
-#  #Patterns                                     132
-#  #Patterns Norm.                               132
-#  Ave.Spec-rate                              78.27%
+#  #Patterns                                      94
+#  #Patterns Norm.                                94
+#  Ave.Spec-rate                              34.46%
 #  Max.Spec-rate                                100%
 #  -------------------------------------------------
-#  ATPG runtime                              191.9 s
+#  ATPG runtime                              19.32 s
 #  -------------------------------------------------
