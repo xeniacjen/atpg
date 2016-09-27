@@ -65,13 +65,14 @@ void Atpg::PushObjEvents(Gate *prev,
     events.push(obj); 
 
     Gate *g = &cir_->gates_[obj.first]; 
+    if (g->type_==Gate::PI || g->type_==Gate::PPI) return; 
     if (g->nfo_>1) { 
         for (int i=0; i<g->nfo_; i++) {
             Gate *fo = &cir_->gates_[g->fos_[i]]; 
             if (fo==prev) continue; 
             
             Objective obj_forward; 
-            if (g->type_==Gate::BUF || g->type_==Gate::INV) { 
+            if (fo->type_==Gate::BUF || fo->type_==Gate::INV) { 
                 obj_forward.first = fo->id_; 
                 obj_forward.second = 
                   (fo->isInverse())?EvalNot(obj.second):obj.second;
@@ -175,7 +176,7 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
             Gate *g = &cir_->gates_[obj.first]; 
             for (int i=0; i<g->nfo_; i++) {
                 Gate *fo = &cir_->gates_[g->fos_[i]]; 
-                if (g->type_==Gate::BUF || g->type_==Gate::INV) { 
+                if (fo->type_==Gate::BUF || fo->type_==Gate::INV) { 
                     obj.first = fo->id_; 
                     obj.second = 
                     (fo->isInverse())?EvalNot(obj.second):obj.second;

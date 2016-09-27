@@ -1097,6 +1097,7 @@ PushEventHex	core/src/implicator.cpp	/^void Implicator::PushEventHex(int gid) {$
 PushFaninEvent	core/src/implicator.cpp	/^void Implicator::PushFaninEvent(int gid) {$/;"	f	class:Implicator
 PushFanoutEvent	core/src/implicator.cpp	/^void Implicator::PushFanoutEvent(int gid) {$/;"	f	class:Implicator
 PushFanoutEventHex	core/src/implicator.cpp	/^void Implicator::PushFanoutEventHex(int gid) {$/;"	f	class:Implicator
+PushObjEvents	core/src/obj-optim.cpp	/^void Atpg::PushObjEvents(Gate *prev, $/;"	f	class:Atpg
 QSTRING	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     QSTRING = 332,$/;"	e	enum:yytokentype	file:
 QSTRING	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     QSTRING = 332,$/;"	e	enum:yytokentype
 QSTRING	interface/lib/opt/lex_n_yacc/sdf_file.tab.cpp	/^     QSTRING = 332,$/;"	e	enum:yytokentype	file:

@@ -8,25 +8,25 @@
 #    FU (full)                                 14080
 #    --------------------------  -------------------
 #    UD (undetected)                               0
-#    PT (possibly testable)                        2
-#    AU (atpg untestable)                         59
+#    PT (possibly testable)                        0
+#    AU (atpg untestable)                         57
 #    RE (redundant)                                0
-#    AB (atpg abort)                             756
+#    AB (atpg abort)                               6
 #    TI (tied)                                     0
-#    DH (hard-but-detected)                      951
+#    DH (hard-but-detected)                    14017
 #    --------------------------  -------------------
-#    DT (detected)                             13263
+#    DT (detected)                             14017
 #  -------------------------------------------------
 #  Coverage                               percentage
 #    --------------------------  -------------------
-#    test coverage                            94.61%
-#    fault coverage                           94.21%
-#    atpg effectiveness                       94.62%
+#    test coverage                            99.96%
+#    fault coverage                           99.55%
+#    atpg effectiveness                       99.96%
 #  -------------------------------------------------
-#  #Patterns                                     239
-#  #Patterns Norm.                               239
-#  Ave.Spec-rate                              7.144%
-#  Max.Spec-rate                              35.39%
+#  #Patterns                                     388
+#  #Patterns Norm.                               388
+#  Ave.Spec-rate                              10.99%
+#  Max.Spec-rate                              39.33%
 #  -------------------------------------------------
-#  ATPG runtime                              43.54 s
+#  ATPG runtime                              116.8 s
 #  -------------------------------------------------

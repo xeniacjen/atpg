@@ -154,13 +154,14 @@ void AtpgMgr::generation(int limit) {
             // }
 
             if (pcoll_->dynamicCompression_==PatternProcessor::ON) 
-               DynamicCompression(flist); 
+                DynamicCompression(flist); 
 
 		    if ((pcoll_->staticCompression_ == PatternProcessor::OFF) 
               && (pcoll_->XFill_ == PatternProcessor::ON)){
 			    pcoll_->randomFill(pcoll_->pats_.back());
 		    }
 
+            // flist.pop_front(); 
             sim_->pfFaultSim(pcoll_->pats_.back(), flist); 
             getPoPattern(pcoll_->pats_.back()); 
         }
