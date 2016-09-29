@@ -43,6 +43,7 @@ class Atpg {
     
 public: 
     enum GenStatus             { TEST_FOUND = 0, UNTESTABLE, ABORT }; 
+    enum SetObjRet             { SUCCESS = 0, FAIL, NOCHANGE }; 
 
         Atpg(Circuit *cir, Fault *f); 
         Atpg(Circuit *cir, Fault *f, Pattern *p); 
@@ -74,21 +75,33 @@ private:
     bool DBackTrack(); 
 
     // obj-optim. help function 
+    Value GetObj(int gid, const ObjList& objs); 
+    SetObjRet SetObj(const Objective& obj, ObjList& objs);  
+    void PushFaninObjEvent(Gate *g, 
+                            std::stack<Objective>& events); 
+    void PushFanoutObjEvent(const Objective& obj, 
+                             std::queue<Objective>& events_forward); 
+    bool BackwardObjProp(Gate *g, 
+                          ObjList& objs,  
+                          ObjList& events_forward); 
+
     bool insertObj(const Objective& obj, ObjList& objs); 
     void PushObjEvents(Gate *prev, 
                          const Objective& obj, 
                          std::queue<Objective>& events, 
                          std::queue<Objective>& events_forward); 
+
     bool AddGateToProp(Gate *gtoprop); 
     bool AddUniquePathObj(Gate *gtoprop, std::queue<Objective>& events); 
     bool GenObjs(); 
     bool CheckDDDrive(); 
-    // void PropFaultSet(FaultSetMap &f2p, GateSetMap &pred); 
-    void PropFaultSet(const GateVec &gv, GateSetMap &pred); 
     bool MultiDDrive(); 
     bool MultiDBackTrack(DecisionTree &tree); 
     bool isaMultiTest(); 
 
+    // TODO: prob. no need 
+    // void PropFaultSet(FaultSetMap &f2p, GateSetMap &pred); 
+    void PropFaultSet(const GateVec &gv, GateSetMap &pred); 
     Fault *GetFault(Gate *g, int line); 
     Fault *GetProbFault(Gate *g, int line, Value vf); 
     void AddFaultSet(Gate *g, FaultSet &fs); 
@@ -275,6 +288,45 @@ inline void Atpg::ResetFaultReach() {
 inline bool Atpg::SetBackTrackLimit(int limit) { 
     back_track_limit = limit; 
 }
+
+inline Value Atpg::GetObj(int gid, const ObjList& objs) { 
+    Value vg = impl_->GetVal(gid); 
+    if (vg==X) { 
+        ObjList::const_iterator it = objs.find(gid); 
+        if (it==objs.end()) return X; 
+        return it->second; 
+    }
+    else return vg; 
+} 
+
+inline Atpg::SetObjRet Atpg::SetObj(const Objective& obj, ObjList& objs) { 
+    int gid = obj.first; Value vo = obj.second; 
+    Value vg = impl_->GetVal(gid); 
+    if (vg==X) { 
+        std::pair<ObjListIter, bool> ret = objs.insert(obj); 
+        if (!ret.second && ret.first->second!=vo)  
+            return FAIL; 
+        else if (!ret.second && ret.first->second==vo)  
+            return NOCHANGE; 
+        else return SUCCESS; 
+    } 
+    else { 
+        if (vg==EvalNot(vo)) return FAIL; 
+        return NOCHANGE; 
+    }
+}
+
+inline void Atpg:: PushFaninObjEvent(Gate *g, 
+                                      std::stack<Objective>& events) { 
+
+    Objective obj; 
+    for (int i=0; i<g->nfi_; i++) { 
+        if (is_fault_reach_[g->fis_[i]]) continue; 
+        obj.first = g->fis_[i]; 
+        obj.second = g->getInputNonCtrlValue(); 
+        events.push(obj); 
+    }
+} 
 
 }; //CoreNs 
 

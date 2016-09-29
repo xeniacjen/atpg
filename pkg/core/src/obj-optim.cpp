@@ -110,35 +110,28 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
     
         assert(!gtoprop->isUnary()); 
 
-        queue<Objective> event_list; 
+        stack<Objective> event_list; 
         queue<Objective> event_list_forward; 
         // if (!AddUniquePathObj(gtoprop, event_list)) return false; 
 
         event_list.push(obj); 
         while (!event_list.empty()) { 
-            obj = event_list.front(); 
+            obj = event_list.top(); 
             event_list.pop(); 
 
-            Value v = impl_->GetVal(obj.first); 
-            if (v!=X && v==EvalNot(obj.second)) return false; 
-            if (!insertObj(obj, objs)) return false; 
+            SetObjRet ret = SetObj(obj, objs); 
+            if (ret==FAIL) return false; 
+            else if (ret==NOCHANGE) continue; 
            
             Gate *g = &cir_->gates_[obj.first]; 
             if (g->type_==Gate::BUF || g->type_==Gate::INV) { 
                 obj.first = g->fis_[0]; 
                 obj.second = (g->isInverse())?EvalNot(obj.second):obj.second;
-                PushObjEvents(g, obj, event_list, event_list_forward); 
+                event_list.push(obj); 
             } 
             else { 
                 if (g->getOutputCtrlValue()==obj.second) { 
-                    for (int i=0; i<g->nfi_; i++) { 
-                        // if (impl_->GetVal(g->fis_[i])!=X) continue;  
-                        if (impl_->GetVal(g->fis_[i])!=X
-                          || is_fault_reach_[g->fis_[i]]) continue; 
-                        obj.first = g->fis_[i]; 
-                        obj.second = g->getInputNonCtrlValue(); 
-                        PushObjEvents(g, obj, event_list, event_list_forward); 
-                    }
+                    PushFaninObjEvent(g, event_list); 
                 }
                 else { 
                     bool success = true; 
@@ -161,12 +154,12 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
                         if (is_fault_reach_[g->fis_[gnext]]) continue; 
                         obj.first = g->fis_[gnext]; 
                         obj.second = g->getInputCtrlValue(); 
-                        PushObjEvents(g, obj, event_list, event_list_forward); 
+                        event_list.push(obj); 
                     }
                 }
             }
         }
-
+/** 
         while (!event_list_forward.empty()) { 
             obj = event_list_forward.front(); 
             event_list_forward.pop(); 
@@ -214,7 +207,7 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
                 }
             }
         }
-
+*/ 
         objs_ = objs; 
     }
 
