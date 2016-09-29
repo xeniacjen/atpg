@@ -27,6 +27,7 @@ using namespace std;
 using namespace CoreNs; 
 
 bool Atpg::insertObj(const Objective& obj, ObjList& objs) { 
+    // TODO: forward should not skip? 
     if (is_fault_reach_[obj.first]) return true; 
 
     Value v = impl_->GetVal(obj.first); 
@@ -65,10 +66,12 @@ void Atpg::PushObjEvents(Gate *prev,
     events.push(obj); 
 
     Gate *g = &cir_->gates_[obj.first]; 
-    if (g->type_==Gate::PI || g->type_==Gate::PPI) return; 
+    // TODO: clean foward event list and return 
+    // if (g->type_==Gate::PI || g->type_==Gate::PPI) return; 
     if (g->nfo_>1) { 
         for (int i=0; i<g->nfo_; i++) {
             Gate *fo = &cir_->gates_[g->fos_[i]]; 
+            // TODO: skip those in objs 
             if (fo==prev) continue; 
             
             Objective obj_forward; 
@@ -138,6 +141,7 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
                     }
                 }
                 else { 
+                    bool success = true; 
                     int x_count = 0; 
                     int gnext = -1; 
                     for (int i=0; i<g->nfi_; i++) { 
@@ -148,11 +152,12 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
                             gnext = i; 
                         }
                         else if (it!=objs.end() 
-                        && it->second==g->getInputCtrlValue()) { 
-                            continue; 
+                          && it->second==g->getInputCtrlValue()) { 
+                            success = false; 
+                            break; 
                         }
                     }
-                    if (x_count==1) { 
+                    if (x_count==1 && success) { 
                         if (is_fault_reach_[g->fis_[gnext]]) continue; 
                         obj.first = g->fis_[gnext]; 
                         obj.second = g->getInputCtrlValue(); 
@@ -176,7 +181,8 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
             Gate *g = &cir_->gates_[obj.first]; 
             for (int i=0; i<g->nfo_; i++) {
                 Gate *fo = &cir_->gates_[g->fos_[i]]; 
-                if (fo->type_==Gate::BUF || fo->type_==Gate::INV) { 
+                if (fo->type_==Gate::BUF || fo->type_==Gate::INV 
+                  || fo->type_==Gate::PO || fo->type_==Gate::PPO ) { 
                     obj.first = fo->id_; 
                     obj.second = 
                     (fo->isInverse())?EvalNot(obj.second):obj.second;
@@ -188,6 +194,23 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
                         obj.second = EvalNot(fo->getOutputCtrlValue()); 
                         event_list_forward.push(obj); 
                     }
+                    else if (obj.second==fo->getInputNonCtrlValue()) { 
+                        bool success = true; 
+                        for (int i=0; i<fo->nfi_; i++) { 
+                            int fi = fo->fis_[i]; 
+                            if (fi==g->id_) continue; 
+                            ObjListIter it = objs.find(fi);  
+                            if (impl_->GetVal(fi)==fo->getInputNonCtrlValue() 
+                              || (it!=objs.end() && it->second==fo->getInputNonCtrlValue())) continue; 
+                            success = false; 
+                            break; 
+                        }
+                        if (success) { 
+                            obj.first = fo->id_; 
+                            obj.second = fo->getOutputCtrlValue(); 
+                            event_list_forward.push(obj); 
+                        }
+                    }  
                 }
             }
         }
@@ -225,7 +248,7 @@ bool Atpg::GenObjs() {
     // get the previous object 
     d_tree_.top(gids); 
     Value *mask = d_tree_.top()->get_mask_(size); 
-    // CalcIsFaultReach(gids); 
+    CalcIsFaultReach(gids); 
 
     int j = 0; 
     for (size_t i=0; i<size; i++) { 
