@@ -101,22 +101,22 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
         return false;  
     else  { 
         if (!CheckXPath(gtoprop)) return false; 
+        assert(!gtoprop->isUnary()); 
 
         ObjList objs = objs_; // create a temp. copy 
 
-        Objective obj; 
-        obj.first = gtoprop->id_; 
-        obj.second = gtoprop->getOutputCtrlValue(); 
-    
-        assert(!gtoprop->isUnary()); 
+        // Objective obj; 
+        // obj.first = gtoprop->id_; 
+        // obj.second = gtoprop->getOutputCtrlValue(); 
 
         stack<Objective> event_list; 
         queue<Objective> event_list_forward; 
         // if (!AddUniquePathObj(gtoprop, event_list)) return false; 
 
-        event_list.push(obj); 
+        // event_list.push(obj); 
+        PushFaninObjEvent(gtoprop, event_list); 
         while (!event_list.empty()) { 
-            obj = event_list.top(); 
+            Objective obj = event_list.top(); 
             event_list.pop(); 
 
             SetObjRet ret = SetObj(obj, objs); 
@@ -138,14 +138,12 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
                     int x_count = 0; 
                     int gnext = -1; 
                     for (int i=0; i<g->nfi_; i++) { 
-                        int fi = g->fis_[i]; 
-                        ObjListIter it = objs.find(fi); 
-                        if (impl_->GetVal(fi)==X && it==objs.end()) { 
+                        Value vi = GetObj(g->fis_[i], objs); 
+                        if (vi==X) { 
                             x_count++;  
                             gnext = i; 
                         }
-                        else if (it!=objs.end() 
-                          && it->second==g->getInputCtrlValue()) { 
+                        else if (vi==g->getInputCtrlValue()) { 
                             success = false; 
                             break; 
                         }
