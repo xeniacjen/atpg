@@ -77,19 +77,22 @@ private:
     // obj-optim. help function 
     Value GetObj(int gid, const ObjList& objs); 
     SetObjRet SetObj(const Objective& obj, ObjList& objs);  
+    void EvalObj(Objective& obj, ObjList& objs); 
     void PushFaninObjEvent(Gate *g, 
-                            std::stack<Objective>& events); 
+                           std::stack<Objective>& events); 
     void PushFanoutObjEvent(const Objective& obj, 
-                             std::queue<Objective>& events_forward); 
-    bool BackwardObjProp(Gate *g, 
-                          ObjList& objs,  
-                          ObjList& events_forward); 
+                            std::queue<Objective>& events_forward); 
+    bool BackwardObjProp(Gate *gtoprop, 
+                         ObjList& objs,  
+                         std::queue<Objective>& events_forward); 
+    bool ForwardObjProp(ObjList& objs, 
+                        std::queue<Objective>& events_forward); 
 
     bool insertObj(const Objective& obj, ObjList& objs); 
     void PushObjEvents(Gate *prev, 
-                         const Objective& obj, 
-                         std::queue<Objective>& events, 
-                         std::queue<Objective>& events_forward); 
+                       const Objective& obj, 
+                       std::queue<Objective>& events, 
+                       std::queue<Objective>& events_forward); 
 
     bool AddGateToProp(Gate *gtoprop); 
     bool AddUniquePathObj(Gate *gtoprop, std::queue<Objective>& events); 
@@ -326,6 +329,18 @@ inline void Atpg:: PushFaninObjEvent(Gate *g,
         obj.second = g->getInputNonCtrlValue(); 
         events.push(obj); 
     }
+} 
+
+inline void Atpg::EvalObj(Objective& obj, ObjList& objs) { 
+    if (obj.second!=X) return; 
+
+    Gate *g = &cir_->gates_[obj.first]; 
+    for (int i=0; i<g->nfi_; i++) { 
+        if (GetObj(g->fis_[i], objs)!=g->getInputNonCtrlValue()) 
+            return; 
+    }
+
+    obj.second = g->getOutputCtrlValue(); 
 } 
 
 }; //CoreNs 

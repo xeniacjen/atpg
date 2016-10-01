@@ -59,9 +59,9 @@ bool Atpg::AddUniquePathObj(Gate *gtoprop, queue<Objective>& events) {
 } 
 
 void Atpg::PushObjEvents(Gate *prev, 
-                           const Objective& obj, 
-                           queue<Objective>& events, 
-                           queue<Objective>& events_forward) { 
+                         const Objective& obj, 
+                         queue<Objective>& events, 
+                         queue<Objective>& events_forward) { 
 
     events.push(obj); 
 
@@ -92,6 +92,106 @@ void Atpg::PushObjEvents(Gate *prev,
     }
 }
 
+void Atpg::PushFanoutObjEvent(const Objective& obj, 
+                              queue<Objective>& events_forward) { 
+    
+    Gate *g = &cir_->gates_[obj.first]; 
+    for (int i=0; i<g->nfo_; i++) { 
+        Gate *fo = &cir_->gates_[g->fos_[i]]; 
+        Objective obj_forward; 
+        if (fo->type_==Gate::BUF || fo->type_==Gate::INV 
+          || fo->type_==Gate::PO || fo->type_==Gate::PPO) { 
+            obj_forward.first = fo->id_; 
+            obj_forward.second = 
+              (fo->isInverse())?EvalNot(obj.second):obj.second;
+            events_forward.push(obj_forward); 
+        }
+        else { 
+            obj_forward.first = fo->id_; 
+            if (obj.second==fo->getInputCtrlValue())  
+                obj_forward.second = EvalNot(fo->getOutputCtrlValue()); 
+            else 
+                obj_forward.second = X; 
+            events_forward.push(obj_forward); 
+        }
+    }
+}
+
+bool Atpg::BackwardObjProp(Gate *gtoprop, 
+                           ObjList& objs,  
+                           queue<Objective>& events_forward) { 
+
+    stack<Objective> event_list; 
+    PushFaninObjEvent(gtoprop, event_list); 
+    while (!event_list.empty()) { 
+        Objective obj = event_list.top(); 
+        event_list.pop(); 
+
+        SetObjRet ret = SetObj(obj, objs); 
+        if (ret==FAIL) return false; 
+        else if (ret==NOCHANGE) continue; 
+       
+        Gate *g = &cir_->gates_[obj.first]; 
+        if (g->nfo_>1) 
+            PushFanoutObjEvent(obj, events_forward); 
+
+        if (g->type_==Gate::BUF || g->type_==Gate::INV) { 
+            obj.first = g->fis_[0]; 
+            obj.second = (g->isInverse())?EvalNot(obj.second):obj.second;
+            event_list.push(obj); 
+        } 
+        else { 
+            if (g->getOutputCtrlValue()==obj.second) { 
+                PushFaninObjEvent(g, event_list); 
+            }
+            else { 
+                bool success = true; 
+                int x_count = 0; 
+                int gnext = -1; 
+                for (int i=0; i<g->nfi_; i++) { 
+                    Value vi = GetObj(g->fis_[i], objs); 
+                    if (vi==X) { 
+                        x_count++;  
+                        gnext = i; 
+                    }
+                    else if (vi==g->getInputCtrlValue()) { 
+                        success = false; 
+                        break; 
+                    }
+                }
+                if (x_count==1 && success) { 
+                    if (is_fault_reach_[g->fis_[gnext]]) continue; 
+                    obj.first = g->fis_[gnext]; 
+                    obj.second = g->getInputCtrlValue(); 
+                    event_list.push(obj); 
+                }
+            }
+        }
+    }
+
+    return true; 
+}
+
+
+bool Atpg::ForwardObjProp(ObjList& objs, 
+                          queue<Objective>& events_forward) { 
+    while (!events_forward.empty()) { 
+        Objective obj = events_forward.front(); 
+        events_forward.pop(); 
+
+        EvalObj(obj, objs); 
+        if (obj.second==X) continue; 
+
+        SetObjRet ret = SetObj(obj, objs); 
+        if (ret==FAIL) return false; 
+        else if (ret==NOCHANGE) continue; 
+
+        PushFanoutObjEvent(obj, events_forward); 
+    }
+
+    return true; 
+}
+
 bool Atpg::AddGateToProp(Gate *gtoprop) { 
     Value v = impl_->GetVal(gtoprop->id_); 
 
@@ -105,58 +205,13 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
 
         ObjList objs = objs_; // create a temp. copy 
 
-        // Objective obj; 
-        // obj.first = gtoprop->id_; 
-        // obj.second = gtoprop->getOutputCtrlValue(); 
-
-        stack<Objective> event_list; 
         queue<Objective> event_list_forward; 
         // if (!AddUniquePathObj(gtoprop, event_list)) return false; 
 
-        // event_list.push(obj); 
-        PushFaninObjEvent(gtoprop, event_list); 
-        while (!event_list.empty()) { 
-            Objective obj = event_list.top(); 
-            event_list.pop(); 
-
-            SetObjRet ret = SetObj(obj, objs); 
-            if (ret==FAIL) return false; 
-            else if (ret==NOCHANGE) continue; 
-           
-            Gate *g = &cir_->gates_[obj.first]; 
-            if (g->type_==Gate::BUF || g->type_==Gate::INV) { 
-                obj.first = g->fis_[0]; 
-                obj.second = (g->isInverse())?EvalNot(obj.second):obj.second;
-                event_list.push(obj); 
-            } 
-            else { 
-                if (g->getOutputCtrlValue()==obj.second) { 
-                    PushFaninObjEvent(g, event_list); 
-                }
-                else { 
-                    bool success = true; 
-                    int x_count = 0; 
-                    int gnext = -1; 
-                    for (int i=0; i<g->nfi_; i++) { 
-                        Value vi = GetObj(g->fis_[i], objs); 
-                        if (vi==X) { 
-                            x_count++;  
-                            gnext = i; 
-                        }
-                        else if (vi==g->getInputCtrlValue()) { 
-                            success = false; 
-                            break; 
-                        }
-                    }
-                    if (x_count==1 && success) { 
-                        if (is_fault_reach_[g->fis_[gnext]]) continue; 
-                        obj.first = g->fis_[gnext]; 
-                        obj.second = g->getInputCtrlValue(); 
-                        event_list.push(obj); 
-                    }
-                }
-            }
-        }
+        if (!BackwardObjProp(gtoprop, objs, event_list_forward)) 
+            return false; 
+        if (!ForwardObjProp(objs, event_list_forward)) 
+            return false; 
 /** 
         while (!event_list_forward.empty()) { 
             obj = event_list_forward.front(); 
