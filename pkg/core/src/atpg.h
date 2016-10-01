@@ -87,13 +87,6 @@ private:
                          std::queue<Objective>& events_forward); 
     bool ForwardObjProp(ObjList& objs, 
                         std::queue<Objective>& events_forward); 
-
-    bool insertObj(const Objective& obj, ObjList& objs); 
-    void PushObjEvents(Gate *prev, 
-                       const Objective& obj, 
-                       std::queue<Objective>& events, 
-                       std::queue<Objective>& events_forward); 
-
     bool AddGateToProp(Gate *gtoprop); 
     bool AddUniquePathObj(Gate *gtoprop, std::queue<Objective>& events); 
     bool GenObjs(); 
@@ -101,6 +94,9 @@ private:
     bool MultiDDrive(); 
     bool MultiDBackTrack(DecisionTree &tree); 
     bool isaMultiTest(); 
+
+    bool CheckXPathObj(Gate *g, const ObjList& objs); 
+    void ResetXPathObj(); 
 
     // TODO: prob. no need 
     // void PropFaultSet(FaultSetMap &f2p, GateSetMap &pred); 
@@ -115,6 +111,8 @@ private:
     ObjList     objs_; 
 
     int        *prob_fs; 
+
+    Value      *x_path_obj_; 
 
     DDTree      d_tree_; 
 
@@ -161,6 +159,7 @@ inline Atpg::Atpg(Circuit *cir, Fault *f) {
     is_obj_optim_mode_ = false; 
     impl_ = new Implicator(cir, f); 
     x_path_ = new Value[cir_->tgate_]; 
+    x_path_obj_ = new Value[cir_->tgate_]; 
     prob_fs = new int[cir_->tgate_]; 
     is_fault_reach_ = new bool[cir_->tgate_]; 
 
@@ -175,6 +174,7 @@ inline Atpg::Atpg(Circuit *cir, Fault *f, Pattern *p) {
     is_obj_optim_mode_ = false; 
     impl_ = new Implicator(cir, f); 
     x_path_ = new Value[cir_->tgate_]; 
+    x_path_obj_ = new Value[cir_->tgate_]; 
     prob_fs = new int[cir_->tgate_]; 
     is_fault_reach_ = new bool[cir_->tgate_]; 
 
@@ -184,6 +184,7 @@ inline Atpg::Atpg(Circuit *cir, Fault *f, Pattern *p) {
 inline Atpg::~Atpg() { 
     delete    impl_; 
     delete [] x_path_; 
+    delete [] x_path_obj_; 
     delete [] prob_fs; 
     delete [] is_fault_reach_; 
 }
@@ -231,6 +232,30 @@ inline bool Atpg::CheckXPath(Gate *g) {
     return false; 
 }
 
+inline bool Atpg::CheckXPathObj(Gate *g, const ObjList& objs) { 
+    if (GetObj(g->id_, objs)!=X || x_path_obj_[g->id_]==L) { 
+        x_path_obj_[g->id_] = L; 
+        return false; 
+    }
+
+    if (g->type_==Gate::PO || g->type_==Gate::PPO || x_path_obj_[g->id_]==H) { 
+        x_path_obj_[g->id_] = H; 
+        return true; 
+    }
+
+    for (int i=0; i<g->nfo_; i++) { 
+        Gate *fo = &cir_->gates_[g->fos_[i]]; 
+        if (CheckXPathObj(fo, objs)) { 
+            x_path_obj_[g->id_] = H; 
+            return true; 
+        }
+    }
+    
+    x_path_obj_[g->id_] = L; 
+    return false; 
+    
+}
+
 inline bool Atpg::CheckDPath(Gate *g) const { 
     // get the previous object 
     if (is_obj_optim_mode_) { 
@@ -276,6 +301,13 @@ inline bool Atpg::TurnOnObjOptimMode(FaultListExtract *fl) {
 inline void Atpg::ResetXPath() { 
     for (int i=0; i<cir_->tgate_; i++) 
         x_path_[i] = X; 
+}
+
+inline void Atpg::ResetXPathObj() { 
+    for (int i=0; i<cir_->tgate_; i++) { 
+        if (x_path_[i]==L) x_path_obj_[i] = L; 
+        else x_path_obj_[i] = X; 
+    }
 }
 
 inline void Atpg::ResetProbFaultSet() { 

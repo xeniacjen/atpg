@@ -26,21 +26,6 @@ using namespace std;
 
 using namespace CoreNs; 
 
-bool Atpg::insertObj(const Objective& obj, ObjList& objs) { 
-    // TODO: forward should not skip? 
-    if (is_fault_reach_[obj.first]) return true; 
-
-    Value v = impl_->GetVal(obj.first); 
-    assert(v==X); 
-
-    pair<ObjListIter, bool> ret = objs.insert(obj); 
-
-    if (!ret.second && ret.first->second!=obj.second)  
-        return false; 
-
-    return true; 
-} 
-
 bool Atpg::AddUniquePathObj(Gate *gtoprop, queue<Objective>& events) { 
     Gate *gnext = gtoprop; 
     while (gnext->nfo_==1) { 
@@ -57,40 +42,6 @@ bool Atpg::AddUniquePathObj(Gate *gtoprop, queue<Objective>& events) {
 
     return true; 
 } 
-
-void Atpg::PushObjEvents(Gate *prev, 
-                         const Objective& obj, 
-                         queue<Objective>& events, 
-                         queue<Objective>& events_forward) { 
-
-    events.push(obj); 
-
-    Gate *g = &cir_->gates_[obj.first]; 
-    // TODO: clean foward event list and return 
-    // if (g->type_==Gate::PI || g->type_==Gate::PPI) return; 
-    if (g->nfo_>1) { 
-        for (int i=0; i<g->nfo_; i++) {
-            Gate *fo = &cir_->gates_[g->fos_[i]]; 
-            // TODO: skip those in objs 
-            if (fo==prev) continue; 
-            
-            Objective obj_forward; 
-            if (fo->type_==Gate::BUF || fo->type_==Gate::INV) { 
-                obj_forward.first = fo->id_; 
-                obj_forward.second = 
-                  (fo->isInverse())?EvalNot(obj.second):obj.second;
-                events_forward.push(obj_forward); 
-            }
-            else { 
-                if (obj.second==fo->getInputCtrlValue()) { 
-                    obj_forward.first = fo->id_; 
-                    obj_forward.second = EvalNot(fo->getOutputCtrlValue()); 
-                    events_forward.push(obj_forward); 
-                }
-            }
-        }
-    }
-}
 
 void Atpg::PushFanoutObjEvent(const Objective& obj, 
                               queue<Objective>& events_forward) { 
@@ -212,55 +163,10 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
             return false; 
         if (!ForwardObjProp(objs, event_list_forward)) 
             return false; 
-/** 
-        while (!event_list_forward.empty()) { 
-            obj = event_list_forward.front(); 
-            event_list_forward.pop(); 
         
-            Value v = impl_->GetVal(obj.first); 
-            if (v!=X) { 
-                if (v==EvalNot(obj.second)) { return false; } 
-                continue; 
-            }
-            if (!insertObj(obj, objs)) return false; 
+        ResetXPathObj(); 
+        if (!CheckXPathObj(gtoprop, objs)); 
 
-            Gate *g = &cir_->gates_[obj.first]; 
-            for (int i=0; i<g->nfo_; i++) {
-                Gate *fo = &cir_->gates_[g->fos_[i]]; 
-                if (fo->type_==Gate::BUF || fo->type_==Gate::INV 
-                  || fo->type_==Gate::PO || fo->type_==Gate::PPO ) { 
-                    obj.first = fo->id_; 
-                    obj.second = 
-                    (fo->isInverse())?EvalNot(obj.second):obj.second;
-                    event_list_forward.push(obj); 
-                }
-                else { 
-                    if (obj.second==fo->getInputCtrlValue()) { 
-                        obj.first = fo->id_; 
-                        obj.second = EvalNot(fo->getOutputCtrlValue()); 
-                        event_list_forward.push(obj); 
-                    }
-                    else if (obj.second==fo->getInputNonCtrlValue()) { 
-                        bool success = true; 
-                        for (int i=0; i<fo->nfi_; i++) { 
-                            int fi = fo->fis_[i]; 
-                            if (fi==g->id_) continue; 
-                            ObjListIter it = objs.find(fi);  
-                            if (impl_->GetVal(fi)==fo->getInputNonCtrlValue() 
-                              || (it!=objs.end() && it->second==fo->getInputNonCtrlValue())) continue; 
-                            success = false; 
-                            break; 
-                        }
-                        if (success) { 
-                            obj.first = fo->id_; 
-                            obj.second = fo->getOutputCtrlValue(); 
-                            event_list_forward.push(obj); 
-                        }
-                    }  
-                }
-            }
-        }
-*/ 
         objs_ = objs; 
     }
 
