@@ -250,8 +250,8 @@ inline void PatternProcessor::StaticCompression()
 	//for each pair of patterns, try to merge them
 	for (int i=0; i<(int)pats_.size()-1; ++i){
 		if (mergeRecord[i] == true) continue;//If the pattern has been merged before, no need to merge again
-		for (int j=i+1; j<(int)pats_.size(); ++j){
-			if (mergeRecord[j] == true) continue;
+		for (int j=0; j<(int)pats_.size(); ++j){
+			if (mergeRecord[j] == true || j==i) continue;
 
 			bool compatible = true;
 			for (int k=0; k<npi_; ++k){//If any bit of the patterns has different values(one is high and one is low), the patterns are not compatible

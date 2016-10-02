@@ -128,7 +128,6 @@ bool Atpg::BackwardObjProp(Gate *gtoprop,
     return true; 
 }
 
-
 bool Atpg::ForwardObjProp(ObjList& objs, 
                           queue<Objective>& events_forward) { 
     while (!events_forward.empty()) { 
@@ -231,11 +230,27 @@ bool Atpg::GenObjs() {
 
     if (!objs_.empty()) { 
         // if (!CheckDDDrive()) return false; 
-        current_obj_ = *objs_.begin(); 
+        // current_obj_ = *objs_.begin(); 
+        FindEasiestToSetObj(current_obj_); 
     }
 
     return ret; 
 }
+
+void Atpg::FindEasiestToSetObj(Objective& obj) { 
+    int ctr_ablility = INT_MAX; 
+
+    ObjListIter it = objs_.begin(); 
+    for (; it!=objs_.end(); ++it) { 
+        int cc = (it->second==H)?cir_->gates_[it->first].cc1_
+          : cir_->gates_[it->first].cc0_; 
+
+        if (cc<ctr_ablility) { 
+            obj = *it; 
+            ctr_ablility == cc; 
+        }
+    }
+} 
 
 bool Atpg::CheckDDDrive() { 
     GateSet proped, pred; 
