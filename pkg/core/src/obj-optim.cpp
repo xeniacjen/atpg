@@ -72,6 +72,7 @@ bool Atpg::BackwardObjProp(Gate *gtoprop,
                            ObjList& objs,  
                            queue<Objective>& events_forward) { 
 
+    bool need_foward_impl = true; 
     stack<Objective> event_list; 
     PushFaninObjEvent(gtoprop, event_list); 
     while (!event_list.empty()) { 
@@ -83,7 +84,7 @@ bool Atpg::BackwardObjProp(Gate *gtoprop,
         else if (ret==NOCHANGE) continue; 
        
         Gate *g = &cir_->gates_[obj.first]; 
-        if (g->nfo_>1) 
+        if (g->nfo_>1&&need_foward_impl) 
             PushFanoutObjEvent(obj, events_forward); 
 
         if (g->type_==Gate::BUF || g->type_==Gate::INV) { 
@@ -91,6 +92,10 @@ bool Atpg::BackwardObjProp(Gate *gtoprop,
             obj.second = (g->isInverse())?EvalNot(obj.second):obj.second;
             event_list.push(obj); 
         } 
+        else if (g->type_==Gate::PI|| g->type_==Gate::PPI) { 
+            while (!events_forward.empty()) events_forward.pop(); 
+            need_foward_impl = false; 
+        }
         else { 
             if (g->getOutputCtrlValue()==obj.second) { 
                 PushFaninObjEvent(g, event_list); 
@@ -164,8 +169,8 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
         if (!ForwardObjProp(objs, event_list_forward)) 
             return false; 
         
-        ResetXPathObj(); 
-        if (!CheckXPathObj(gtoprop, objs)); 
+        // ResetXPathObj(); 
+        // if (!CheckXPathObj(gtoprop, objs)) return false; 
 
         objs_ = objs; 
     }
