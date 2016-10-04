@@ -230,8 +230,9 @@ bool Atpg::GenObjs() {
 
     if (!objs_.empty()) { 
         // if (!CheckDDDrive()) return false; 
-        // current_obj_ = *objs_.begin(); 
-        FindEasiestToSetObj(current_obj_); 
+        current_obj_ = *objs_.rbegin(); 
+        // FindEasiestToSetObj(current_obj_); 
+        // FindHardestToSetObj(current_obj_); 
     }
 
     return ret; 
@@ -247,10 +248,62 @@ void Atpg::FindEasiestToSetObj(Objective& obj) {
 
         if (cc<ctr_ablility) { 
             obj = *it; 
-            ctr_ablility == cc; 
+            ctr_ablility = cc; 
         }
     }
 } 
+
+void Atpg::FindHardestToSetObj(Objective& obj) { 
+    int ctr_ablility = INT_MIN; 
+
+    ObjListIter it = objs_.begin(); 
+    for (; it!=objs_.end(); ++it) { 
+        int cc = (it->second==H)?cir_->gates_[it->first].cc1_
+          : cir_->gates_[it->first].cc0_; 
+
+        if (cc>ctr_ablility) { 
+            obj = *it; 
+            ctr_ablility = cc; 
+        }
+    }
+}
+
+Gate *Atpg::FindEasiestToSetFanInObj(Gate *g, Value obj) { 
+    Gate *ret = 0; 
+    Gate *x_ret = 0; 
+    int ctr_ablility = INT_MAX; 
+    int x_ctr_ablility = INT_MAX; 
+    if (g->isInverse()) 
+        obj = EvalNot(obj); 
+
+    for (size_t n=0; n<g->nfi_; n++ ) { 
+        int cc = (obj==H)?cir_->gates_[g->fis_[n]].cc1_
+          : cir_->gates_[g->fis_[n]].cc0_; 
+
+        Value v = GetObj(g->fis_[n], objs_); 
+        if (v==obj) { 
+            assert(impl_->GetVal(g->fis_[n])==X); 
+            if (cc<ctr_ablility) { 
+                ret = &cir_->gates_[g->fis_[n]]; 
+                ctr_ablility = cc; 
+            }
+            if (cc<x_ctr_ablility) { 
+                x_ret = &cir_->gates_[g->fis_[n]]; 
+                x_ctr_ablility = cc; 
+            }
+        } 
+        else if (v==EvalNot(obj)) continue;  
+        else if (v==X) { 
+            if (cc<x_ctr_ablility) { 
+                x_ret = &cir_->gates_[g->fis_[n]]; 
+                x_ctr_ablility = cc; 
+            }
+        
+        }
+    }
+
+    return (ret!=0)?ret:x_ret; 
+}
 
 bool Atpg::CheckDDDrive() { 
     GateSet proped, pred; 

@@ -95,7 +95,10 @@ private:
     bool MultiDBackTrack(DecisionTree &tree); 
     bool isaMultiTest(); 
 
+    void FindHardestToSetObj(Objective& obj); 
     void FindEasiestToSetObj(Objective& obj); 
+    Gate *FindEasiestToSetFanInObj(Gate *g, Value obj); 
+
     bool CheckXPathObj(Gate *g, const ObjList& objs); 
     void ResetXPathObj(); 
 

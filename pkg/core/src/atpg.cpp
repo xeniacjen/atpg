@@ -180,7 +180,10 @@ bool Atpg::Backtrace() {
             // choose input of "g" which 
             //  1) is at X 
             //  2) is easiest to control 
-            gnext = FindEasiestToSetFanIn(g, objv); 
+            // gnext = FindEasiestToSetFanIn(g, objv);
+            gnext = (!objs_.empty())? FindEasiestToSetFanInObj(g, objv)
+                                    : FindEasiestToSetFanIn(g, objv); 
+            if (gnext==0) gnext = FindEasiestToSetFanIn(g, objv); 
         }
         else if (objv==g->getOutputCtrlValue()) { // is objv is hard to set
             // choose input of "g" which 
