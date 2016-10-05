@@ -21,14 +21,11 @@
 
 #define _MAX_BACK_TRACK_LIMIT_  512
 
-#include <map>
-
-#include "implicator.h" 
+#include "learn.h"
 #include "d_decision_tree.h"
 
 namespace CoreNs { 
 
-typedef std::pair<int, Value> Objective; 
 typedef std::map<int, Value> ObjList; 
 typedef ObjList::iterator ObjListIter; 
 

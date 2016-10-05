@@ -28,9 +28,12 @@
 
 namespace CoreNs {
 
+class LearnInfoMgr;  
+
 typedef std::set<int> GateSet; 
 
 class Implicator { 
+    friend class LearnInfoMgr; 
 public: 
          Implicator(Circuit *cir, Fault *ftarget); 
          ~Implicator(); 
@@ -52,7 +55,7 @@ public:
     bool BackTrack(); 
 
     bool  isPossiblyToSetVal(int gid, Value v) const; 
-    bool  isPossiblyToSetDorB(int gid) const; 
+    // bool  isPossiblyToSetDorB(int gid) const; 
     Value GetVal(int gid) const; 
     HexValue GetHexVal(int gid) const; 
     Value Get3Val(int gid) const; 
@@ -140,18 +143,18 @@ inline void Implicator::Init() {
         cir_->gates_[i].fh_ = PARA_L; 
     }
 
-    std::queue<int> possibly_D_queue; 
-    possibly_D_queue.push(target_fault_->gate_); 
-
-    while (!possibly_D_queue.empty()) { 
-        int gid = possibly_D_queue.back(); 
-        possibly_D_queue.pop(); 
-        is_possibly_D[gid] = true; 
-
-        Gate *g = &cir_->gates_[gid]; 
-        for (int i=0; i<g->nfo_; i++) 
-            possibly_D_queue.push(g->fos_[i]); 
-    } 
+    // std::queue<int> possibly_D_queue; 
+    // possibly_D_queue.push(target_fault_->gate_); 
+// 
+    // while (!possibly_D_queue.empty()) { 
+        // int gid = possibly_D_queue.back(); 
+        // possibly_D_queue.pop(); 
+        // is_possibly_D[gid] = true; 
+// 
+        // Gate *g = &cir_->gates_[gid]; 
+        // for (int i=0; i<g->nfo_; i++) 
+            // possibly_D_queue.push(g->fos_[i]); 
+    // } 
 }
 
 inline void Implicator::Init(Pattern *p) {
@@ -180,9 +183,9 @@ inline Value Implicator::Get3Val(int gid) const {
         return values_[gid]; 
 }
 
-inline bool Implicator::isPossiblyToSetDorB(int gid) const { 
-    return is_possibly_D[gid]; 
-} 
+// inline bool Implicator::isPossiblyToSetDorB(int gid) const { 
+//     return is_possibly_D[gid]; 
+// } 
 
 inline bool Implicator::SetVal(int gid, Value v) { 
     if (values_[gid]!=X && values_[gid]!=v) return false; 
