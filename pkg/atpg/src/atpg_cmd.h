@@ -142,6 +142,17 @@ private:
     FanMgr *fanMgr_;
 };
 
+class RunStaticLearnCmd : public CommonNs::Cmd { 
+public: 
+        RunStaticLearnCmd(const std::string &name, FanMgr *fanMgr);
+        ~RunStaticLearnCmd(); 
+
+    bool exec(const std::vector<std::string> &argv);
+
+private: 
+    FanMgr *fanMgr_;
+}; 
+
 class RunAtpgCmd : public CommonNs::Cmd {
 public:
          RunAtpgCmd(const std::string &name, FanMgr *fanMgr);

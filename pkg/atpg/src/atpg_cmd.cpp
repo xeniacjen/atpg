@@ -1070,6 +1070,58 @@ bool RunFaultSimCmd::exec(const vector<string> &argv) {
     return true;
 } //}}}
 
+RunStaticLearnCmd::RunStaticLearnCmd(const std::string &name, FanMgr *fanMgr) : 
+  Cmd(name) { 
+    fanMgr_ = fanMgr;
+    optMgr_.setName(name);
+    optMgr_.setShortDes("run static learning");
+    optMgr_.setDes("run static learning process");
+    Opt *opt = new Opt(Opt::BOOL, "print usage", "");
+    opt->addFlag("h");
+    opt->addFlag("help");
+    optMgr_.regOpt(opt);
+}
+
+RunStaticLearnCmd::~RunStaticLearnCmd() {} 
+
+bool RunStaticLearnCmd::exec(const vector<string> &argv) {
+    optMgr_.parse(argv);
+
+    if (optMgr_.isFlagSet("h")) {
+        optMgr_.usage();
+        return true;
+    }
+
+    if (!fanMgr_->atpg_mgr->cir_) {
+        cerr << "**ERROR RunFaultSimCmd::exec(): circuit needed" << endl;
+        return false;
+    }
+
+    if (!fanMgr_->atpg_mgr->fListExtract_) {
+        fanMgr_->atpg_mgr->fListExtract_ = new FaultListExtract;
+        fanMgr_->atpg_mgr->fListExtract_->extract(fanMgr_->atpg_mgr->cir_);
+    }
+
+    if (!fanMgr_->atpg_mgr->learn_mgr_) { 
+        fanMgr_->atpg_mgr->learn_mgr_ = new LearnInfoMgr(
+          fanMgr_->atpg_mgr->cir_); 
+    }
+
+    cout << "#  Performing pattern generation ...\n";
+    fanMgr_->tmusg.periodStart();
+
+    fanMgr_->atpg_mgr->learn_mgr_->StaticLearn();
+
+    fanMgr_->tmusg.getPeriodUsage(fanMgr_->atpgStat);
+    cout << "#  Finished pattern generation";
+    cout << "    " << (double)fanMgr_->atpgStat.rTime / 1000000.0 << " s";
+    cout << "    " << (double)fanMgr_->atpgStat.vmSize / 1024.0   << " MB";
+    cout << endl;
+	rtime = (double)fanMgr_->atpgStat.rTime / 1000000.0;
+
+    return true;
+}
+
 //{{{ RunAtpgCmd::RunAtpgCmd()
 RunAtpgCmd::RunAtpgCmd(const std::string &name, FanMgr *fanMgr) :
   Cmd(name) {

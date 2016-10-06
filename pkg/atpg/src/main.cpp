@@ -228,6 +228,7 @@ void initCmd(CmdMgr &cmdMgr, FanMgr &fanMgr) {
     Cmd *addPinConsCmd    = new AddPinConsCmd("add_pin_constraint", &fanMgr);
     Cmd *runLogicSimCmd   = new RunLogicSimCmd("run_logic_sim", &fanMgr);
     Cmd *runFaultSimCmd   = new RunFaultSimCmd("run_fault_sim", &fanMgr);
+    Cmd *runStaticLearnCmd= new RunStaticLearnCmd("run_static_learn", &fanMgr); 
     Cmd *runAtpgCmd       = new RunAtpgCmd("run_atpg", &fanMgr);
     Cmd *reportCircuitCmd = new ReportCircuitCmd("report_circuit", &fanMgr);
     Cmd *reportGateCmd    = new ReportGateCmd("report_gate", &fanMgr);
@@ -245,6 +246,7 @@ void initCmd(CmdMgr &cmdMgr, FanMgr &fanMgr) {
     cmdMgr.regCmd("ATPG", addPinConsCmd);
     cmdMgr.regCmd("ATPG", runLogicSimCmd);
     cmdMgr.regCmd("ATPG", runFaultSimCmd);
+    cmdMgr.regCmd("ATPG", runStaticLearnCmd); 
     cmdMgr.regCmd("ATPG", runAtpgCmd);
     cmdMgr.regCmd("ATPG", reportCircuitCmd);
     cmdMgr.regCmd("ATPG", reportGateCmd);

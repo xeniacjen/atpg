@@ -44,6 +44,8 @@ public:
     Circuit            *cir_;
     Simulator          *sim_;
 
+    LearnInfoMgr       *learn_mgr_; 
+
     bool                set_dfs_on_; 
     bool                set_oo_on_; 
 
@@ -70,6 +72,7 @@ inline AtpgMgr::AtpgMgr() {
         pcoll_        = NULL;
         cir_          = NULL;
         sim_          = NULL;
+        learn_mgr_    = NULL; 
         atpg_         = NULL;
 
         set_dfs_on_   = true; 

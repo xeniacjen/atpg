@@ -22,6 +22,18 @@ using namespace std;
 
 using namespace CoreNs; 
 
+void LearnInfoMgr::StaticLearn() { 
+    for (int i=0; i<cir_->tgate_; i++) { 
+        Objective obj; 
+        obj.first = i; 
+        obj.second = L; 
+        SetLearnInfo(obj); 
+
+        obj.second = H; 
+        SetLearnInfo(obj); 
+    }
+}  
+
 LearnInfoMgr::LearnInfoMgr(Circuit *cir) { 
     cir_ = cir; 
 }
@@ -52,11 +64,61 @@ void LearnInfoMgr::GetLearnInfo(stack<Objective>& objs) const {
 bool LearnInfoMgr::SetLearnInfo(const Objective& obj) { 
     Fault *dummy_fault = new Fault(); 
     Implicator *impl = new Implicator(cir_, dummy_fault); 
+    impl->Init(); 
 
-    // TODO 
+    impl->AssignValue(obj.first, obj.second); 
+    impl->EventDrivenSim(); 
+
+    for (int i=0; i<impl->GetEFrontierSize(); i++) { 
+        Objective impl_obj; 
+        impl_obj.first = impl->e_front_list_[i]; 
+        impl_obj.second = impl->GetVal(impl_obj.first); 
+        if (obj.first==impl_obj.first) continue; 
+        if (isWorthLearn(impl_obj, impl)) 
+            addImplObj(obj, impl_obj); 
+    }
 
     delete impl; 
     delete dummy_fault; 
 
     return true; 
 }
+
+bool LearnInfoMgr::isWorthLearn(const Objective& impl_obj,  
+                                Implicator* impl) { 
+
+    Gate *g = &cir_->gates_[impl_obj.first]; 
+    if (g->getOutputCtrlValue()!=impl_obj.second) return false; 
+
+    return true; 
+} 
+
+bool LearnInfoMgr::addImplObj(Objective obj, 
+                              Objective impl_obj) {  
+
+    impl_obj.second = EvalNot(impl_obj.second); 
+    LearnInfoListIter it_impl; getLearnInfo(impl_obj, it_impl); 
+
+    obj.second = EvalNot(obj.second); 
+    LearnInfoListIter it; getLearnInfo(obj, it); 
+    it_impl->second->impl_objs_.push_back(it->second); 
+
+    return true; 
+}
+
+bool LearnInfoMgr::getLearnInfo(const Objective& obj, 
+                   LearnInfoListIter& it) { 
+
+    it = learn_infos_.find(obj); 
+    if (it==learn_infos_.end()) { 
+        LearnInfo *learn_info = new LearnInfo(); 
+        learn_info->obj_ = obj; 
+
+        pair<LearnInfoListIter, bool> ret 
+          = learn_infos_.insert(make_pair(obj, learn_info));  
+        it = ret.first; 
+        return false; 
+    } 
+
+    return true; 
+} 

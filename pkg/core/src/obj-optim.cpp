@@ -75,6 +75,7 @@ bool Atpg::BackwardObjProp(Gate *gtoprop,
     bool need_foward_impl = true; 
     stack<Objective> event_list; 
     PushFaninObjEvent(gtoprop, event_list); 
+    if (learn_mgr_!=0) learn_mgr_->GetLearnInfo(event_list); 
     while (!event_list.empty()) { 
         Objective obj = event_list.top(); 
         event_list.pop(); 

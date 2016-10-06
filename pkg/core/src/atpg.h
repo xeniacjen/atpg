@@ -56,6 +56,8 @@ public:
     bool    TurnOnPoMode(); 
     bool    TurnOnObjOptimMode(FaultListExtract *fl); 
 
+    void SetLearnEngine(LearnInfoMgr *learn_mgr); 
+
     // int     prop_fs_;
     // int     prob_fs_; 
 
@@ -142,6 +144,8 @@ protected:
     Circuit    *cir_;
     Implicator *impl_; 
 
+    LearnInfoMgr * learn_mgr_; 
+
     Fault      *current_fault_;
 
     unsigned    back_track_count; 
@@ -164,6 +168,8 @@ inline Atpg::Atpg(Circuit *cir, Fault *f) {
     prob_fs = new int[cir_->tgate_]; 
     is_fault_reach_ = new bool[cir_->tgate_]; 
 
+    learn_mgr_ = NULL; 
+
     init(); 
 }
 
@@ -178,6 +184,8 @@ inline Atpg::Atpg(Circuit *cir, Fault *f, Pattern *p) {
     x_path_obj_ = new Value[cir_->tgate_]; 
     prob_fs = new int[cir_->tgate_]; 
     is_fault_reach_ = new bool[cir_->tgate_]; 
+
+    learn_mgr_ = NULL; 
 
     init(p); 
 } 
@@ -375,6 +383,10 @@ inline void Atpg::EvalObj(Objective& obj, ObjList& objs) {
 
     obj.second = g->getOutputCtrlValue(); 
 } 
+
+inline void Atpg::SetLearnEngine(LearnInfoMgr *learn_mgr) { 
+    learn_mgr_ = learn_mgr; 
+}
 
 }; //CoreNs 
 

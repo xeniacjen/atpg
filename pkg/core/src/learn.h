@@ -46,10 +46,20 @@ public:
     LearnInfoMgr(Circuit *cir); 
     ~LearnInfoMgr(); 
 
-    void GetLearnInfo(std::stack<Objective>& objs) const; 
-    bool SetLearnInfo(const Objective& obj); 
+    void StaticLearn(); 
 
-private:  
+    void GetLearnInfo(std::stack<Objective>& objs) const; 
+    virtual bool SetLearnInfo(const Objective& obj); 
+
+protected:  
+    bool            isWorthLearn(const Objective& impl_obj,  
+                                   Implicator* impl); 
+    bool            addImplObj(Objective obj, 
+                               Objective impl_obj); 
+    bool            getLearnInfo(const Objective& obj, 
+                                 LearnInfoListIter& it); 
+
+
     Circuit        *cir_;
     Implicator     *impl_; 
 
