@@ -67,14 +67,23 @@ bool LearnInfoMgr::SetLearnInfo(const Objective& obj) {
     impl->Init(); 
 
     impl->AssignValue(obj.first, obj.second); 
-    impl->EventDrivenSim(); 
+    // if (!impl->EventDrivenSimB()) { 
+    //     delete impl; 
+    //     delete dummy_fault; 
+    //     return false; 
+    // }
+    if (!impl->EventDrivenSim()) { 
+        delete impl; 
+        delete dummy_fault; 
+        return false; 
+    }
 
     for (int i=0; i<impl->GetEFrontierSize(); i++) { 
         Objective impl_obj; 
         impl_obj.first = impl->e_front_list_[i]; 
         impl_obj.second = impl->GetVal(impl_obj.first); 
         if (obj.first==impl_obj.first) continue; 
-        if (isWorthLearn(impl_obj, impl)) 
+        if (isWorthLearn(obj, impl_obj, impl)) 
             addImplObj(obj, impl_obj); 
     }
 
@@ -84,11 +93,13 @@ bool LearnInfoMgr::SetLearnInfo(const Objective& obj) {
     return true; 
 }
 
-bool LearnInfoMgr::isWorthLearn(const Objective& impl_obj,  
+bool LearnInfoMgr::isWorthLearn(const Objective& obj, 
+                                const Objective& impl_obj,  
                                 Implicator* impl) { 
 
     Gate *g = &cir_->gates_[impl_obj.first]; 
     if (g->getOutputCtrlValue()!=impl_obj.second) return false; 
+    if (CheckIfHasDirectPass(obj, impl_obj)) return false; 
 
     return true; 
 } 
@@ -122,3 +133,18 @@ bool LearnInfoMgr::getLearnInfo(const Objective& obj,
 
     return true; 
 } 
+
+bool LearnInfoMgr::CheckIfHasDirectPass(Objective obj, 
+                                        Objective impl_obj) const { 
+
+    // TODO 
+    Gate *g = &cir_->gates_[impl_obj.first]; 
+    while(g->isUnary() && g->nfi_>0) {  
+        if (g->id_==obj.first) return true; 
+
+        g = &cir_->gates_[g->fis_[0]]; 
+    }
+
+    return false; 
+} 
+

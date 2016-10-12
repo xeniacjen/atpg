@@ -31,9 +31,11 @@ Atpg::GenStatus Atpg::Tpg() {
         init_d_tree(); 
     }
 
+    bool is_backtrace_success = true; 
     while (true) { 
-        if (isTestPossible()) { 
-            Backtrace(); // Make a decision 
+        if (isTestPossible() && is_backtrace_success) { 
+            is_backtrace_success = (!objs_.empty())?BacktraceOO():Backtrace(); // Make a decision 
+            if (!is_backtrace_success) continue; 
         } 
         else { 
             bool tpg_fail = (is_path_oriented_mode_)?!DBackTrack():!BackTrack();
@@ -180,10 +182,7 @@ bool Atpg::Backtrace() {
             // choose input of "g" which 
             //  1) is at X 
             //  2) is easiest to control 
-            // gnext = FindEasiestToSetFanIn(g, objv);
-            gnext = (!objs_.empty())? FindEasiestToSetFanInObj(g, objv)
-                                    : FindEasiestToSetFanIn(g, objv); 
-            if (gnext==0) gnext = FindEasiestToSetFanIn(g, objv); 
+            gnext = FindEasiestToSetFanIn(g, objv);
         }
         else if (objv==g->getOutputCtrlValue()) { // is objv is hard to set
             // choose input of "g" which 

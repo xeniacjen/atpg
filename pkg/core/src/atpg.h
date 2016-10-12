@@ -21,7 +21,7 @@
 
 #define _MAX_BACK_TRACK_LIMIT_  512
 
-#include "learn.h"
+#include "b_decision_tree.h"
 #include "d_decision_tree.h"
 
 namespace CoreNs { 
@@ -56,7 +56,7 @@ public:
     bool    TurnOnPoMode(); 
     bool    TurnOnObjOptimMode(FaultListExtract *fl); 
 
-    void SetLearnEngine(LearnInfoMgr *learn_mgr); 
+    void    SetLearnEngine(LearnInfoMgr *learn_mgr); 
 
     // int     prop_fs_;
     // int     prob_fs_; 
@@ -97,6 +97,9 @@ private:
     void FindHardestToSetObj(Objective& obj); 
     void FindEasiestToSetObj(Objective& obj); 
     Gate *FindEasiestToSetFanInObj(Gate *g, Value obj); 
+    Gate *FindHardestToSetFanInObj(Gate *g, Value obj); 
+    bool BacktraceOO(); 
+    bool BBackTrack(Gate *&g, Value& objv); 
 
     bool CheckXPathObj(Gate *g, const ObjList& objs); 
     void ResetXPathObj(); 
@@ -118,6 +121,7 @@ private:
     Value      *x_path_obj_; 
 
     DDTree      d_tree_; 
+    BDTree      b_tree_; 
 
     FaultListExtract *flist_; 
 protected:

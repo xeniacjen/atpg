@@ -273,7 +273,7 @@ inline void Implicator::AssignValue(int gid, Value v) {
         // PushFanoutEventHex(g->id_); 
 
         // if (g->isFanoutStem()) 
-        //    PushBEvent(g->id_); 
+        PushBEvent(gid); 
     }
 } 
  

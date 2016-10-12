@@ -25,19 +25,22 @@ using namespace std;
 using namespace CoreNs; 
 
 bool Implicator::EventDrivenSim() {
+    while (!events_b->empty()) events_b->pop();  
     while (!events_->empty()) { 
         Gate *g = &cir_->gates_[events_->front()]; 
         events_->pop(); 
 
         Value v; 
         v = (g->id_==target_fault_->gate_)?FaultEval(g):GoodEval(g); 
+        if (v==X) continue; 
 
         if (GetVal(g->id_)!=v) { 
             if (!SetVal(g->id_, v)) { 
                 if (g->id_==target_fault_->gate_)
                     values_[g->id_] = v; 
                 else { 
-                    assert(0); 
+                    return false; 
+                    // assert(0); 
                 }
             }
             e_front_list_.push_back(g->id_); 
@@ -48,7 +51,35 @@ bool Implicator::EventDrivenSim() {
 }
 
 bool Implicator::EventDrivenSimB() { 
-    // TODO 
+    while (!events_b->empty()) { 
+        Gate *g = &cir_->gates_[events_b->front()]; 
+        events_b->pop(); 
+
+        if (g->nfo_>1) PushFanoutEvent(g->id_); 
+
+        Value v = values_[g->id_]; 
+        if (g->type_==Gate::BUF || g->type_==Gate::INV) { 
+            v = (g->isInverse())?EvalNot(v):v; 
+            if (!SetVal(g->fis_[0], v)) return false; 
+            e_front_list_.push_back(g->fis_[0]); 
+            PushBEvent(g->fis_[0]); 
+        }
+        else if (g->type_==Gate::PI|| g->type_==Gate::PPI)  
+            continue; 
+        else { 
+            if (g->getOutputCtrlValue()==v) { 
+                for (int i=0; i<g->nfi_; i++) { 
+                    if (!SetVal(g->fis_[i], g->getInputNonCtrlValue())) 
+                        return false; 
+                    e_front_list_.push_back(g->fis_[i]); 
+                    PushBEvent(g->fis_[i]); 
+                }
+            }
+            else { 
+                // TODO 
+            }
+        }
+    }
 }
 
 bool Implicator::EventDrivenSimHex() {

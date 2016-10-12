@@ -231,8 +231,8 @@ bool Atpg::GenObjs() {
 
     if (!objs_.empty()) { 
         // if (!CheckDDDrive()) return false; 
-        current_obj_ = *objs_.rbegin(); 
-        // FindEasiestToSetObj(current_obj_); 
+        // current_obj_ = *objs_.rbegin(); 
+        FindEasiestToSetObj(current_obj_); 
         // FindHardestToSetObj(current_obj_); 
     }
 
@@ -274,6 +274,52 @@ Gate *Atpg::FindEasiestToSetFanInObj(Gate *g, Value obj) {
     Gate *x_ret = 0; 
     int ctr_ablility = INT_MAX; 
     int x_ctr_ablility = INT_MAX; 
+    ObjVec candi; 
+    ObjVec x_candi; 
+    if (g->isInverse()) 
+        obj = EvalNot(obj); 
+
+    Objective o; 
+    for (size_t n=0; n<g->nfi_; n++ ) { 
+        int cc = (obj==H)?cir_->gates_[g->fis_[n]].cc1_
+          : cir_->gates_[g->fis_[n]].cc0_; 
+
+        o.first = g->fis_[n]; 
+        o.second = obj; 
+
+        Value v = GetObj(g->fis_[n], objs_); 
+        if (v==obj) { 
+            assert(impl_->GetVal(g->fis_[n])==X); 
+            if (cc<ctr_ablility) { 
+                candi.push_back(o); 
+                ctr_ablility = cc; 
+            }
+            else candi.insert(candi.begin(), o); 
+
+            if (cc<x_ctr_ablility)  
+                x_ctr_ablility = cc; 
+        } 
+        else if (v==EvalNot(obj)) continue;  
+        else if (v==X) { 
+            if (cc<x_ctr_ablility) { 
+                x_candi.push_back(o); 
+                x_ctr_ablility = cc; 
+            }
+            else x_candi.insert(x_candi.begin(), o); 
+        }
+    }
+
+    candi.insert(candi.begin(), x_candi.begin(), x_candi.end()); 
+    if (candi.empty()) return NULL; 
+    b_tree_.push(candi); 
+
+    b_tree_.top(o); 
+    return &cir_->gates_[o.first]; 
+}
+
+Gate *Atpg::FindHardestToSetFanInObj(Gate *g, Value obj) { 
+    Gate *ret = 0; 
+    int ctr_ablility = INT_MIN; 
     if (g->isInverse()) 
         obj = EvalNot(obj); 
 
@@ -282,28 +328,80 @@ Gate *Atpg::FindEasiestToSetFanInObj(Gate *g, Value obj) {
           : cir_->gates_[g->fis_[n]].cc0_; 
 
         Value v = GetObj(g->fis_[n], objs_); 
-        if (v==obj) { 
-            assert(impl_->GetVal(g->fis_[n])==X); 
-            if (cc<ctr_ablility) { 
-                ret = &cir_->gates_[g->fis_[n]]; 
-                ctr_ablility = cc; 
-            }
-            if (cc<x_ctr_ablility) { 
-                x_ret = &cir_->gates_[g->fis_[n]]; 
-                x_ctr_ablility = cc; 
-            }
-        } 
-        else if (v==EvalNot(obj)) continue;  
-        else if (v==X) { 
-            if (cc<x_ctr_ablility) { 
-                x_ret = &cir_->gates_[g->fis_[n]]; 
-                x_ctr_ablility = cc; 
-            }
-        
+        if (v!=g->getInputCtrlValue() 
+          && impl_->GetVal(g->fis_[n])==X  
+          && cc>ctr_ablility) { 
+            ret = &cir_->gates_[g->fis_[n]]; 
+            ctr_ablility = cc; 
+        }
+        else if (v==g->getInputCtrlValue()) { 
+            return NULL; 
         }
     }
 
-    return (ret!=0)?ret:x_ret; 
+    return ret; 
+} 
+
+bool Atpg::BacktraceOO() { 
+    Gate *g = &cir_->gates_[current_obj_.first]; 
+    Value objv = current_obj_.second; 
+    assert(impl_->GetVal(g->id_)==X); 
+    while (!(g->type_==Gate::PI 
+        || g->type_==Gate::PPI)) { // while objective net not fed by P/PI 
+        
+        if (g->getOutputCtrlValue()==X) { //NOT, BUF, TODO: XOR, XNOR 
+            if (g->type_==Gate::INV) 
+                objv = EvalNot(objv); 
+            g = &cir_->gates_[g->fis_[0]]; 
+            assert(impl_->GetVal(g->id_)==X); 
+            continue; 
+        } 
+
+        Gate *gnext = NULL; 
+        if (objv==EvalNot(g->getOutputCtrlValue())) { // if objv is easy to set 
+            // choose input of "g" which 
+            //  1) is at X 
+            //  2) is easiest to control 
+            gnext = FindEasiestToSetFanInObj(g, objv);
+        }
+        else if (objv==g->getOutputCtrlValue()) { // is objv is hard to set
+            // choose input of "g" which 
+            //  1) is at X 
+            //  2) is hardest to control 
+            gnext = FindHardestToSetFanInObj(g, objv); 
+        } 
+        if (!gnext) { 
+            if (BBackTrack(g, objv)) continue; 
+            else { 
+                b_tree_.clear(); 
+                return false; 
+            }
+        }
+        
+        if (g->isInverse()) 
+            objv = EvalNot(objv); 
+
+        g = gnext; 
+    }
+
+    b_tree_.clear(); 
+    return impl_->MakeDecision(g, objv); 
+}
+
+bool Atpg::BBackTrack(Gate *&g, Value& objv) { 
+    while (!b_tree_.empty()) { 
+        if (b_tree_.pop()) continue; 
+
+        Objective obj; 
+        b_tree_.top(obj);  
+
+        g = &cir_->gates_[obj.first]; 
+        objv = obj.second; 
+
+        return true; 
+    }
+
+    return false; 
 }
 
 bool Atpg::CheckDDDrive() { 

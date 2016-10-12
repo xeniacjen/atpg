@@ -81,7 +81,14 @@ inline AtpgMgr::AtpgMgr() {
         req_dt_       = -1; 
     }
 
-inline AtpgMgr::~AtpgMgr() {}
+inline AtpgMgr::~AtpgMgr() {
+    if (!fListExtract_) delete fListExtract_;
+    if (!pcoll_) delete pcoll_;
+    if (!cir_) delete cir_;
+    if (!sim_) delete sim_;
+    if (!learn_mgr_) delete learn_mgr_;
+    if (!atpg_) delete atpg_;
+}
 
 inline void AtpgMgr::ConfigDynComp(int merge, int backtrack) { 
     dyn_comp_merge_ = (merge<0)?DYN_COMP_MERGE_DEFAULT:merge; 

@@ -52,13 +52,15 @@ public:
     virtual bool SetLearnInfo(const Objective& obj); 
 
 protected:  
-    bool            isWorthLearn(const Objective& impl_obj,  
-                                   Implicator* impl); 
+    bool            isWorthLearn(const Objective& obj, 
+                                 const Objective& impl_obj,  
+                                 Implicator* impl); 
     bool            addImplObj(Objective obj, 
                                Objective impl_obj); 
     bool            getLearnInfo(const Objective& obj, 
                                  LearnInfoListIter& it); 
-
+    bool            CheckIfHasDirectPass(Objective obj, 
+                                         Objective impl_obj) const; 
 
     Circuit        *cir_;
     Implicator     *impl_; 
