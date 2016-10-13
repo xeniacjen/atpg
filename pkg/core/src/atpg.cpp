@@ -34,10 +34,13 @@ Atpg::GenStatus Atpg::Tpg() {
     bool is_backtrace_success = true; 
     while (true) { 
         if (isTestPossible() && is_backtrace_success) { 
-            is_backtrace_success = (!objs_.empty())?BacktraceOO():Backtrace(); // Make a decision 
+            // Make a decision 
+            is_backtrace_success = (!objs_.empty())?BacktraceOO():Backtrace(); 
+            // Backtrace(); 
             if (!is_backtrace_success) continue; 
         } 
         else { 
+            is_backtrace_success = true; 
             bool tpg_fail = (is_path_oriented_mode_)?!DBackTrack():!BackTrack();
             if(tpg_fail) // TPG process failed  
                 return (back_track_count>=back_track_limit)?ABORT:UNTESTABLE; 

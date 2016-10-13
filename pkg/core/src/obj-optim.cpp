@@ -231,8 +231,12 @@ bool Atpg::GenObjs() {
 
     if (!objs_.empty()) { 
         // if (!CheckDDDrive()) return false; 
-        // current_obj_ = *objs_.rbegin(); 
-        FindEasiestToSetObj(current_obj_); 
+            int gid = objs_.begin()->first; 
+            if (gid < cir_->npi_ + cir_->nppi_) // has P/PI obj. 
+                current_obj_ = *objs_.begin(); 
+            else 
+                current_obj_ = *objs_.rbegin(); 
+        // FindEasiestToSetObj(current_obj_); 
         // FindHardestToSetObj(current_obj_); 
     }
 

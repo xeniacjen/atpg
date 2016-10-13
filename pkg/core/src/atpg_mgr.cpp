@@ -33,8 +33,8 @@ void AtpgMgr::generation(int limit) {
     if (limit<0) limit = _MAX_BACK_TRACK_LIMIT_; 
 
     // TODO: using script 
-    learn_mgr_ = new LearnInfoMgr(cir_); 
-    learn_mgr_->StaticLearn(); 
+    // learn_mgr_ = new LearnInfoMgr(cir_); 
+    // learn_mgr_->StaticLearn(); 
 
     pcoll_->init(cir_); 
     Fault *f = NULL; 
@@ -137,7 +137,7 @@ void AtpgMgr::generation(int limit) {
         f = flist.front();  
         atpg_ = new Atpg(cir_, f); 
         atpg_->SetBackTrackLimit(limit); 
-        atpg_->SetLearnEngine(learn_mgr_); 
+        // atpg_->SetLearnEngine(learn_mgr_); 
         if (set_dfs_on_) atpg_->TurnOnPoMode(); 
         if (set_oo_on_) atpg_->TurnOnObjOptimMode(fListExtract_); 
         Atpg::GenStatus ret = atpg_->Tpg(); 
