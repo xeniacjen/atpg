@@ -11,6 +11,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector>
+#include "graph.h"
 #include "circuit.h"
 #include "fault.h"
 
@@ -23,8 +24,19 @@ class Pattern;
 typedef std::vector<Pattern *> PatternVec;
 
 //  this is for static compression using compatibility graph
-class Vertex;
-typedef std::vector<Vertex *> VertexVec;
+struct PatternVertex : public Vertex<Pattern *> { 
+    PatternVertex(Pattern *p, int id) : Vertex<Pattern *>(p){ 
+        id_ = id; 
+        merge_count_ = 0; 
+        detect_fault_.clear(); 
+    }
+
+    int id_; 
+    size_t merge_count_; 
+    FaultVec detect_fault_; 
+}; // PatternVertex 
+
+typedef std::vector<PatternVertex *> VertexVec;
 //  end of compatibility graph
 
 class Pattern {
@@ -38,6 +50,7 @@ public:
     Value *po1_;
     Value *po2_;
     Value *ppo_;
+
 };
 
 // This class process the test pattern set
@@ -87,8 +100,10 @@ public:
     void       PrintPattern(unsigned i) const; 
 
     void       randomFill(Pattern* pat);  
-};
 
+    bool IsCompatible(size_t i, size_t j) const; 
+    bool Merge(size_t i, size_t j);  
+};
 
 inline Pattern::Pattern() {
     pi1_ = NULL;
@@ -240,8 +255,7 @@ inline void PatternProcessor::PrintPattern(unsigned i) const {
 // Date       [ HKY Ver. 1.0 started 2014/09/01 ]
 // **************************************************************************
 
-inline void PatternProcessor::StaticCompression()
-{
+inline void PatternProcessor::StaticCompression() {
 	bool mergeRecord[(int)pats_.size()];
 	for (int i=0; i<(int)pats_.size(); ++i){
 		mergeRecord[i] = false;
@@ -253,72 +267,9 @@ inline void PatternProcessor::StaticCompression()
 		for (int j=0; j<(int)pats_.size(); ++j){
 			if (mergeRecord[j] == true || j==i) continue;
 
-			bool compatible = true;
-			for (int k=0; k<npi_; ++k){//If any bit of the patterns has different values(one is high and one is low), the patterns are not compatible
-				if( ((pats_[i]->pi1_[k]==L)&&(pats_[j]->pi1_[k]==H)) || ((pats_[i]->pi1_[k]==H)&&(pats_[j]->pi1_[k]==L)) ){
-					compatible = false;
-					break;
-				}
-			}
-			if ((pats_[i]->pi2_!= NULL)&&(compatible == true)){//If the pattern has second primary input, we have to check it too
-				for (int k=0; k<npi_; ++k){
-					if( ((pats_[i]->pi2_[k]==L)&&(pats_[j]->pi2_[k]==H)) || ((pats_[i]->pi2_[k]==H)&&(pats_[j]->pi2_[k]==L)) ){
-						compatible = false;
-						break;
-					}
-				}
-			}
-			if ((pats_[i]->ppi_!= NULL)&&(compatible == true)){//Check ppi
-				for (int k=0; k<nppi_; ++k){
-					if( ((pats_[i]->ppi_[k]==L)&&(pats_[j]->ppi_[k]==H)) || ((pats_[i]->ppi_[k]==H)&&(pats_[j]->ppi_[k]==L)) ){
-						compatible = false;
-						break;
-					}
-				}
-			}
-			if ((pats_[i]->si_!= NULL)&&(compatible == true)){//Check si
-				for (int k=0; k<nsi_; ++k){
-					if( ((pats_[i]->si_[k]==L)&&(pats_[j]->si_[k]==H)) || ((pats_[i]->si_[k]==H)&&(pats_[j]->si_[k]==L)) ){
-						compatible = false;
-						break;
-					}
-				}
-			}
 			//the patterns are compatible, merge the patterns
-			if (compatible == true){
-				for (int k=0; k<npi_; ++k){
-					pats_[i]->pi1_[k] = (pats_[i]->pi1_[k]<pats_[j]->pi1_[k]) ? pats_[i]->pi1_[k]: pats_[j]->pi1_[k];
-				}
-				if (pats_[i]->pi2_!= NULL){
-					for (int k=0; k<npi_; ++k){
-						pats_[i]->pi2_[k] = (pats_[i]->pi2_[k]<pats_[j]->pi2_[k]) ? pats_[i]->pi2_[k]: pats_[j]->pi2_[k];
-					}
-				}
-				if (pats_[i]->ppi_!= NULL){
-					for (int k=0; k<nppi_; ++k){
-						pats_[i]->ppi_[k] = (pats_[i]->ppi_[k]<pats_[j]->ppi_[k]) ? pats_[i]->ppi_[k]: pats_[j]->ppi_[k];
-					}
-				}
-				if (pats_[i]->si_!= NULL){
-					for (int k=0; k<nsi_; ++k){
-						pats_[i]->si_[k] = (pats_[i]->si_[k]<pats_[j]->si_[k]) ? pats_[i]->si_[k]: pats_[j]->si_[k];
-					}
-				}
-
-				for (int k=0; k<npo_; ++k){
-					pats_[i]->po1_[k] = (pats_[i]->po1_[k]<pats_[j]->po1_[k]) ? pats_[i]->po1_[k]: pats_[j]->po1_[k];
-				}
-				if (pats_[i]->po2_!= NULL){
-					for (int k=0; k<npo_; ++k){
-						pats_[i]->po2_[k] = (pats_[i]->po2_[k]<pats_[j]->po2_[k]) ? pats_[i]->po2_[k]: pats_[j]->po2_[k];
-					}
-				}
-				if (pats_[i]->ppo_!= NULL){
-					for (int k=0; k<nppi_; ++k){
-						pats_[i]->ppo_[k] = (pats_[i]->ppo_[k]<pats_[j]->ppo_[k]) ? pats_[i]->ppo_[k]: pats_[j]->ppo_[k];
-					}
-				}
-
+			if (IsCompatible(i, j)){
+                Merge(i, j); 
 				mergeRecord[j] = true;
 			}
 		}
@@ -371,33 +322,78 @@ inline void PatternProcessor::randomFill(Pattern *pat){
         nbit_spec_max = nbit_spec; 
 }
 
-//This is for static compression using compatibility graph
-//
-class Vertex {
-public:
-          Vertex();
-		  Vertex(Value *data, Fault *fault);
-          ~Vertex();
-    Value *data_;
-	FaultList fault_;
-	
-};
+inline bool PatternProcessor::IsCompatible(size_t i, size_t j) const { 
+	bool compatible = true;
+	for (int k=0; k<npi_; ++k){//If any bit of the patterns has different values(one is high and one is low), the patterns are not compatible
+		if( ((pats_[i]->pi1_[k]==L)&&(pats_[j]->pi1_[k]==H)) || ((pats_[i]->pi1_[k]==H)&&(pats_[j]->pi1_[k]==L)) ){
+			compatible = false;
+			break;
+		}
+	}
+	if ((pats_[i]->pi2_!= NULL)&&(compatible == true)){//If the pattern has second primary input, we have to check it too
+		for (int k=0; k<npi_; ++k){
+			if( ((pats_[i]->pi2_[k]==L)&&(pats_[j]->pi2_[k]==H)) || ((pats_[i]->pi2_[k]==H)&&(pats_[j]->pi2_[k]==L)) ){
+				compatible = false;
+				break;
+			}
+		}
+	}
+	if ((pats_[i]->ppi_!= NULL)&&(compatible == true)){//Check ppi
+		for (int k=0; k<nppi_; ++k){
+			if( ((pats_[i]->ppi_[k]==L)&&(pats_[j]->ppi_[k]==H)) || ((pats_[i]->ppi_[k]==H)&&(pats_[j]->ppi_[k]==L)) ){
+				compatible = false;
+				break;
+			}
+		}
+	}
+	if ((pats_[i]->si_!= NULL)&&(compatible == true)){//Check si
+		for (int k=0; k<nsi_; ++k){
+			if( ((pats_[i]->si_[k]==L)&&(pats_[j]->si_[k]==H)) || ((pats_[i]->si_[k]==H)&&(pats_[j]->si_[k]==L)) ){
+				compatible = false;
+				break;
+			}
+		}
+	}
 
-inline Vertex::Vertex() {
-    data_ = NULL;
+    return compatible; 
 }
 
-inline Vertex::Vertex(Value *data, Fault *fault) {
-    data_ = data;
-	fault_.push_back(fault);
-}
+inline bool PatternProcessor::Merge(size_t i, size_t j) { 
+	for (int k=0; k<npi_; ++k){
+		pats_[i]->pi1_[k] = (pats_[i]->pi1_[k]<pats_[j]->pi1_[k]) ? pats_[i]->pi1_[k]: pats_[j]->pi1_[k];
+	}
+	if (pats_[i]->pi2_!= NULL){
+		for (int k=0; k<npi_; ++k){
+			pats_[i]->pi2_[k] = (pats_[i]->pi2_[k]<pats_[j]->pi2_[k]) ? pats_[i]->pi2_[k]: pats_[j]->pi2_[k];
+		}
+	}
+	if (pats_[i]->ppi_!= NULL){
+		for (int k=0; k<nppi_; ++k){
+			pats_[i]->ppi_[k] = (pats_[i]->ppi_[k]<pats_[j]->ppi_[k]) ? pats_[i]->ppi_[k]: pats_[j]->ppi_[k];
+		}
+	}
+	if (pats_[i]->si_!= NULL){
+		for (int k=0; k<nsi_; ++k){
+			pats_[i]->si_[k] = (pats_[i]->si_[k]<pats_[j]->si_[k]) ? pats_[i]->si_[k]: pats_[j]->si_[k];
+		}
+	}
 
-inline Vertex::~Vertex() {
-    delete [] data_;
-	fault_.clear();
+	for (int k=0; k<npo_; ++k){
+		pats_[i]->po1_[k] = (pats_[i]->po1_[k]<pats_[j]->po1_[k]) ? pats_[i]->po1_[k]: pats_[j]->po1_[k];
+	}
+	if (pats_[i]->po2_!= NULL){
+		for (int k=0; k<npo_; ++k){
+			pats_[i]->po2_[k] = (pats_[i]->po2_[k]<pats_[j]->po2_[k]) ? pats_[i]->po2_[k]: pats_[j]->po2_[k];
+		}
+	}
+	if (pats_[i]->ppo_!= NULL){
+		for (int k=0; k<nppi_; ++k){
+			pats_[i]->ppo_[k] = (pats_[i]->ppo_[k]<pats_[j]->ppo_[k]) ? pats_[i]->ppo_[k]: pats_[j]->ppo_[k];
+		}
+	}
 
-}
-// end of Vertex
+    return true; 
+} 
 
 };
 
