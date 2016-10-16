@@ -10,8 +10,9 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <vector>
+#include <vector> 
 #include "graph.h"
+#include "clique_partition.h"
 #include "circuit.h"
 #include "fault.h"
 
@@ -36,7 +37,8 @@ struct PatternVertex : public Vertex<Pattern *> {
     FaultVec detect_fault_; 
 }; // PatternVertex 
 
-typedef std::vector<PatternVertex *> VertexVec;
+typedef std::vector<PatternVertex *> VertexList;
+typedef std::vector<Edge *> EdgeList; 
 //  end of compatibility graph
 
 class Pattern {
@@ -93,6 +95,12 @@ public:
     int        *ppiOrder_;
     int        *poOrder_;
 
+    VertexList pat_graph_; 
+    EdgeList   pat_graph_edges_; 
+
+    void       BuildGraph(); 
+    void       ClearGraph(); 
+
     void       init(Circuit *cir);
 	void 	   StaticCompression();
     void       PrintPorts() const; 
@@ -101,8 +109,8 @@ public:
 
     void       randomFill(Pattern* pat);  
 
-    bool IsCompatible(size_t i, size_t j) const; 
-    bool Merge(size_t i, size_t j);  
+    bool       IsCompatible(size_t i, size_t j) const; 
+    bool       Merge(size_t i, size_t j);  
 };
 
 inline Pattern::Pattern() {
@@ -256,34 +264,53 @@ inline void PatternProcessor::PrintPattern(unsigned i) const {
 // **************************************************************************
 
 inline void PatternProcessor::StaticCompression() {
-	bool mergeRecord[(int)pats_.size()];
-	for (int i=0; i<(int)pats_.size(); ++i){
-		mergeRecord[i] = false;
-	}
+    CliquePartition cp; 
 
-	//for each pair of patterns, try to merge them
-	for (int i=0; i<(int)pats_.size()-1; ++i){
-		if (mergeRecord[i] == true) continue;//If the pattern has been merged before, no need to merge again
-		for (int j=0; j<(int)pats_.size(); ++j){
-			if (mergeRecord[j] == true || j==i) continue;
+    int **compat; 
 
-			//the patterns are compatible, merge the patterns
-			if (IsCompatible(i, j)){
-                Merge(i, j); 
-				mergeRecord[j] = true;
-			}
-		}
-	}
+    compat = new int *[pats_.size()]; 
+    for (size_t i=0; i<pats_.size(); i++)  
+        compat[i] = new int[pats_.size()]; 
+    
+    for (size_t i=0; i<pats_.size(); i++) { 
+        compat[i][i] = 1; 
+        for (size_t j=i+1; j<pats_.size(); j++) { 
+            if (IsCompatible(i, j)) { 
+                compat[i][j] = 1; 
+                compat[j][i] = 1; 
+            }
+            else { 
+                compat[i][j] = 0; 
+                compat[j][i] = 0; 
+            }
+        } 
+    }
 
-	//replace Pattern
-	PatternVec compPattern;
-	for (int i=0; i<(int)pats_.size(); ++i){
-		if (mergeRecord[i]==false){
-			compPattern.push_back(pats_[i]);
-		}
-	}
-	pats_ = compPattern;
+    cp.clique_partition(compat, pats_.size()); 
 
+    std::map<int, Pattern *> comp_pats;  
+    for (int i=0; i<MAXCLIQUES; i++) { 
+        if (cp.clique_set[i].size==UNKNOWN) break; 
+        int merged_pat = -1; 
+        int pat_quality = 0; 
+        for (int j=0; j<MAXCLIQUES; j++) { 
+            if (cp.clique_set[i].members[j]==UNKNOWN) break;  
+            merged_pat = cp.clique_set[i].members[j]; 
+            pat_quality = (merged_pat>pat_quality)?merged_pat:pat_quality;; 
+            if (j>0) { 
+                Merge(cp.clique_set[i].members[j], 
+                      cp.clique_set[i].members[j-1]); 
+            }
+        } 
+        comp_pats.insert(std::make_pair(pat_quality, pats_[merged_pat])); 
+    }
+
+    PatternVec comp_pat_vec; 
+    std::map<int, Pattern *>::iterator it = comp_pats.begin();  
+    for (; it!=comp_pats.end(); ++it) 
+        comp_pat_vec.push_back(it->second); 
+
+    pats_ = comp_pat_vec; 
 }
 
 inline void PatternProcessor::randomFill(Pattern *pat){
@@ -394,6 +421,33 @@ inline bool PatternProcessor::Merge(size_t i, size_t j) {
 
     return true; 
 } 
+
+inline void PatternProcessor::BuildGraph() { 
+    for (size_t i=0; i<pats_.size(); i++) { 
+        PatternVertex *pv = new PatternVertex(pats_[i], i); 
+        for (size_t j=0; j<pat_graph_.size(); j++) { 
+            if (IsCompatible(i, j)) { 
+                Edge *e = new Edge(); 
+                e->v1_ = pat_graph_[j]; 
+                e->v2_ = pv; 
+
+                pat_graph_[j]->es_.push_back(e); 
+                pv->es_.push_back(e); 
+
+                pat_graph_edges_.push_back(e); 
+            }
+        } 
+        pat_graph_.push_back(pv); 
+    }
+}
+
+inline void PatternProcessor::ClearGraph() { 
+    for (size_t n=0; n<pat_graph_.size(); n++) 
+        delete pat_graph_[n]; 
+
+    for (size_t n=0; n<pat_graph_edges_.size(); n++) 
+        delete pat_graph_edges_[n]; 
+}
 
 };
 

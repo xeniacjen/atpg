@@ -9,14 +9,17 @@
 ./core/src/atpg_mgr.cpp
 ./core/src/gate.h
 ./core/src/atpg.cpp
+./core/src/graph.h
 ./core/src/pattern.h
 ./core/src/atpg_mgr.h
 ./core/src/circuit.h
 ./core/src/learn.h
+./core/src/clique_partition.cpp
 ./core/src/b_decision_tree.h
 ./core/src/implicator.cpp
 ./core/src/dfs-podem.cpp
 ./core/src/logic.h
+./core/src/clique_partition.h
 ./core/src/atpg.h
 ./core/src/simulator.cpp
 ./core/src/simulator.h

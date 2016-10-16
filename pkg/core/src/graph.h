@@ -20,12 +20,19 @@
 #define _CORE_GRAPH_H_ 
 
 #include <vector> 
+#include <set> 
 
 struct Edge; 
+struct VertexBase; 
 typedef std::vector<Edge *> EdgeVec; 
+typedef std::set<VertexBase *> VertexSet; 
 
 struct VertexBase { 
-    EdgeVec es_; 
+    EdgeVec     es_; 
+
+    size_t      GetNNeighbor() const; 
+    VertexBase *GetNeighbor(size_t n) const; 
+    void        GetNeighborSet(VertexSet &vs) const; 
 };  
 
 template <class T>
@@ -40,5 +47,25 @@ struct Edge {
     VertexBase *v1_; 
     VertexBase *v2_; 
 }; 
+
+inline size_t VertexBase::GetNNeighbor() const { 
+    return es_.size(); 
+}
+
+inline VertexBase *VertexBase::GetNeighbor(size_t n) const { 
+    if (n>=es_.size()) return NULL; 
+
+    VertexBase *v = es_[n]->v1_; 
+    
+    return (v==this)?es_[n]->v2_:v;
+}
+
+inline void VertexBase::GetNeighborSet(VertexSet &vs) const { 
+    vs.clear(); 
+    for (size_t n=0; n<es_.size(); n++) { 
+        VertexBase *v = GetNeighbor(n); 
+        vs.insert(v); 
+    }
+} 
 
 #endif 

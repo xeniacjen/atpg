@@ -22,6 +22,7 @@
 ./bin/dbg/atpg -f ./script/atpg_s38417_saf.script
 ./bin/dbg/atpg -f ./script/atpg_s38584_saf.script
 ./bin/dbg/atpg -f ./script/atpg_b15s_saf.script
+./bin/dbg/atpg -f ./script/atpg_b17s_saf.script
 ./bin/dbg/atpg -f ./script/atpg_b20s_saf.script
 ./bin/dbg/atpg -f ./script/atpg_b21s_saf.script
 ./bin/dbg/atpg -f ./script/atpg_b22s_saf.script

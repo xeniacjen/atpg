@@ -235,6 +235,7 @@ BacktraceOO	core/src/obj-optim.cpp	/^bool Atpg::BacktraceOO() { $/;"	f	class:Atp
 BackwardObjProp	core/src/obj-optim.cpp	/^bool Atpg::BackwardObjProp(Gate *gtoprop, $/;"	f	class:Atpg
 BuildCircuitCmd	atpg/src/setup_cmd.cpp	/^BuildCircuitCmd::BuildCircuitCmd(const std::string &name, FanMgr *fanMgr) :$/;"	f	class:BuildCircuitCmd
 BuildCircuitCmd	atpg/src/setup_cmd.h	/^class BuildCircuitCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
+BuildGraph	core/src/pattern.h	/^inline void PatternProcessor::BuildGraph() { $/;"	f	class:CoreNs::PatternProcessor
 CAPTURE	core/src/circuit.h	/^    enum            tfConnectType { CAPTURE = 0, SHIFT };$/;"	e	enum:CoreNs::Circuit::tfConnectType
 CASE_EQU	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     CASE_EQU = 312,$/;"	e	enum:yytokentype	file:
 CASE_EQU	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     CASE_EQU = 312,$/;"	e	enum:yytokentype
@@ -260,6 +261,9 @@ CELLTYPE	interface/lib/opt/lex_n_yacc/sdf_file.tab.cpp	/^     CELLTYPE = 271,$/;
 CELLTYPE	interface/lib/opt/lex_n_yacc/sdf_file.tab.hpp	/^     CELLTYPE = 271,$/;"	e	enum:yytokentype
 CELL_TYPE	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	957;"	d	file:
 CELL_TYPE	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	957;"	d	file:
+CLIQUE_FALSE	core/src/clique_partition.h	110;"	d
+CLIQUE_TRUE	core/src/clique_partition.h	109;"	d
+CLIQUE_UNKNOWN	core/src/clique_partition.h	108;"	d
 CLOCK	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	959;"	d	file:
 CLOCK	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	959;"	d	file:
 CMOS1	interface/src/primitive.h	/^                CMOS1, CMOS2, RCMOS1, RCMOS2, CMOS1F, CMOS2F$/;"	e	enum:IntfNs::Pmt::Type
@@ -301,6 +305,8 @@ CheckXPathObj	core/src/atpg.h	/^inline bool Atpg::CheckXPathObj(Gate *g, const O
 Circuit	core/src/circuit.h	/^class Circuit {$/;"	c	namespace:CoreNs
 Circuit	core/src/circuit.h	/^inline Circuit::Circuit() {$/;"	f	class:CoreNs::Circuit
 ClearDecisionTree	core/src/implicator.h	/^inline void Implicator::ClearDecisionTree() { $/;"	f	class:CoreNs::Implicator
+ClearGraph	core/src/pattern.h	/^inline void PatternProcessor::ClearGraph() { $/;"	f	class:CoreNs::PatternProcessor
+CliquePartition	core/src/clique_partition.h	/^class CliquePartition { $/;"	c
 Cmd	common/src/cmd.h	/^class Cmd {$/;"	c	namespace:CommonNs
 Cmd	common/src/cmd.h	/^inline Cmd::Cmd(const std::string &name) {$/;"	f	class:CommonNs::Cmd
 CmdMap	common/src/cmd.h	/^typedef std::map<std::string, Cmd *>                  CmdMap;$/;"	t	namespace:CommonNs
@@ -485,7 +491,10 @@ E_INVALID_VAR	common/src/cmd.h	/^    enum        Error { E_EXIST = 0, E_NOT_REG,
 E_NOT_REG	common/src/cmd.h	/^    enum        Error { E_EXIST = 0, E_NOT_REG, E_INVALID_VAR };$/;"	e	enum:CommonNs::CmdMgr::Error
 E_NOT_REG	common/src/get_opt.h	/^    enum                     Error { E_EXIST = 0, E_NOT_REG, E_REQ };$/;"	e	enum:CommonNs::OptMgr::Error
 E_REQ	common/src/get_opt.h	/^    enum                     Error { E_EXIST = 0, E_NOT_REG, E_REQ };$/;"	e	enum:CommonNs::OptMgr::Error
+Edge	core/src/graph.h	/^struct Edge { $/;"	s
+EdgeList	core/src/pattern.h	/^typedef std::vector<Edge *> EdgeList; $/;"	t	namespace:CoreNs
 EdgeType	interface/src/sdf_file.h	/^    enum        EdgeType { EDGE_NA, EDGE_01, EDGE_10, EDGE_0Z, EDGE_Z1,$/;"	g	struct:IntfNs::SdfPortSpec
+EdgeVec	core/src/graph.h	/^typedef std::vector<Edge *> EdgeVec; $/;"	t
 Error	common/src/cmd.h	/^    enum        Error { E_EXIST = 0, E_NOT_REG, E_INVALID_VAR };$/;"	g	class:CommonNs::CmdMgr
 Error	common/src/get_opt.h	/^    enum                     Error { E_EXIST = 0, E_NOT_REG, E_REQ };$/;"	g	class:CommonNs::OptMgr
 EvalAndHex	core/src/logic-hex.h	/^inline HexValue EvalAndHex(HexValue a, HexValue b) {$/;"	f	namespace:CoreNs
@@ -595,6 +604,9 @@ GetHexVal	core/src/implicator.h	/^inline HexValue Implicator::GetHexVal(int gid)
 GetJFrontier	core/src/implicator.cpp	/^bool Implicator::GetJFrontier(GateVec& jf) { $/;"	f	class:Implicator
 GetLearnInfo	core/src/learn.cpp	/^void LearnInfoMgr::GetLearnInfo(stack<Objective>& objs) const { $/;"	f	class:LearnInfoMgr
 GetMultiPath	core/src/d_decision_tree.h	/^inline void DDTree::GetMultiPath(GateVec &path) const { $/;"	f	class:CoreNs::DDTree
+GetNNeighbor	core/src/graph.h	/^inline size_t VertexBase::GetNNeighbor() const { $/;"	f	class:VertexBase
+GetNeighbor	core/src/graph.h	/^inline VertexBase *VertexBase::GetNeighbor(size_t n) const { $/;"	f	class:VertexBase
+GetNeighborSet	core/src/graph.h	/^inline void VertexBase::GetNeighborSet(VertexSet &vs) const { $/;"	f	class:VertexBase
 GetObj	core/src/atpg.h	/^inline Value Atpg::GetObj(int gid, const ObjList& objs) { $/;"	f	class:CoreNs::Atpg
 GetPath	core/src/d_decision_tree.h	/^inline void DDTree::GetPath(GateVec &path) const { $/;"	f	class:CoreNs::DDTree
 GetPiPattern	core/src/atpg.h	/^inline void Atpg::GetPiPattern(Pattern *p) { $/;"	f	class:CoreNs::Atpg
@@ -767,6 +779,7 @@ IntfNs	interface/src/techlib.h	/^namespace IntfNs {$/;"	n
 IntfNs	interface/src/techlib_builder.h	/^namespace IntfNs {$/;"	n
 IntfNs	interface/src/vlog_file.h	/^namespace IntfNs {$/;"	n
 IntfNs	interface/src/vlog_file.y	/^IntfNs::VlogFile *vlog;$/;"	l
+IsCompatible	core/src/pattern.h	/^inline bool PatternProcessor::IsCompatible(size_t i, size_t j) const { $/;"	f	class:CoreNs::PatternProcessor
 IsFaultAtPo	core/src/implicator.cpp	/^bool Implicator::IsFaultAtPo() const {$/;"	f	class:Implicator
 L	core/src/logic.h	/^const   Value     L         = 0;       \/\/ Low$/;"	m	namespace:CoreNs
 LAUNCH_CAPTURE	core/src/pattern.h	/^    enum       Type { BASIC_SCAN = 0, LAUNCH_CAPTURE, LAUNCH_SHIFT };$/;"	e	enum:CoreNs::PatternProcessor::Type
@@ -800,6 +813,7 @@ LhtPatFile	interface/src/lht_pat_file.h	/^class LhtPatFile {$/;"	c	namespace:Int
 LhtPatFile	interface/src/lht_pat_file.h	/^inline LhtPatFile::LhtPatFile() {$/;"	f	class:IntfNs::LhtPatFile
 MACRO	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	984;"	d	file:
 MACRO	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	984;"	d	file:
+MAXCLIQUES	core/src/clique_partition.h	106;"	d
 MAX_ADDR	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	975;"	d	file:
 MAX_ADDR	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	975;"	d	file:
 MDT_PORT_INOUT	interface/src/mdt_file.h	/^enum MdtPortType { MDT_PORT_INPUT, MDT_PORT_OUTPUT, MDT_PORT_INOUT,$/;"	e	enum:IntfNs::MdtPortType
@@ -830,6 +844,7 @@ MdtLibBuilder	interface/src/techlib_builder.h	/^inline MdtLibBuilder::MdtLibBuil
 MdtNames	interface/src/mdt_file.h	/^struct MdtNames {$/;"	s	namespace:IntfNs
 MdtPortToNet	interface/src/mdt_file.h	/^struct MdtPortToNet {$/;"	s	namespace:IntfNs
 MdtPortType	interface/src/mdt_file.h	/^enum MdtPortType { MDT_PORT_INPUT, MDT_PORT_OUTPUT, MDT_PORT_INOUT,$/;"	g	namespace:IntfNs
+Merge	core/src/pattern.h	/^inline bool PatternProcessor::Merge(size_t i, size_t j) { $/;"	f	class:CoreNs::PatternProcessor
 MultiDBackTrack	core/src/obj-optim.cpp	/^bool Atpg::MultiDBackTrack(DecisionTree &tree) { $/;"	f	class:Atpg
 MultiDDrive	core/src/obj-optim.cpp	/^bool Atpg::MultiDDrive() { $/;"	f	class:Atpg
 NA	atpg/src/atpg_cmd.h	/^    enum Type { NA = -1, $/;"	e	enum:FanNs::ReportScoapCmd::Type
@@ -1028,6 +1043,8 @@ PatternProcessor	core/src/pattern.h	/^inline PatternProcessor::PatternProcessor(
 PatternReader	core/src/pattern_rw.h	/^class PatternReader : public IntfNs::PatFile {$/;"	c	namespace:CoreNs
 PatternReader	core/src/pattern_rw.h	/^inline PatternReader::PatternReader(PatternProcessor *pcoll, Circuit *cir) {$/;"	f	class:CoreNs::PatternReader
 PatternVec	core/src/pattern.h	/^typedef std::vector<Pattern *> PatternVec;$/;"	t	namespace:CoreNs
+PatternVertex	core/src/pattern.h	/^    PatternVertex(Pattern *p, int id) : Vertex<Pattern *>(p){ $/;"	f	struct:CoreNs::PatternVertex
+PatternVertex	core/src/pattern.h	/^struct PatternVertex : public Vertex<Pattern *> { $/;"	s	namespace:CoreNs
 PatternWriter	core/src/pattern_rw.h	/^class PatternWriter {$/;"	c	namespace:CoreNs
 PatternWriter	core/src/pattern_rw.h	/^inline PatternWriter::PatternWriter(PatternProcessor *pcoll, Circuit *cir) {$/;"	f	class:CoreNs::PatternWriter
 Pmt	interface/src/primitive.h	/^class Pmt : public Cell {$/;"	c	namespace:IntfNs
@@ -1324,7 +1341,7 @@ Simulator	core/src/simulator.h	/^class Simulator {$/;"	c	namespace:CoreNs
 Simulator	core/src/simulator.h	/^inline Simulator::Simulator(Circuit *cir) {$/;"	f	class:CoreNs::Simulator
 State	core/src/fault.h	/^    enum  State { UD = 0, DT, DH, PT, AU, TI, RE, AB, AH };$/;"	g	class:CoreNs::Fault
 State	core/src/pattern.h	/^	enum	   State { OFF = 0, ON };		   $/;"	g	class:CoreNs::PatternProcessor
-StaticCompression	core/src/pattern.h	/^inline void PatternProcessor::StaticCompression()$/;"	f	class:CoreNs::PatternProcessor
+StaticCompression	core/src/pattern.h	/^inline void PatternProcessor::StaticCompression() {$/;"	f	class:CoreNs::PatternProcessor
 StaticLearn	core/src/learn.cpp	/^void LearnInfoMgr::StaticLearn() { $/;"	f	class:LearnInfoMgr
 SysBashCmd	common/src/sys_cmd.cpp	/^SysBashCmd::SysBashCmd(const string &name) : Cmd(name) {$/;"	f	class:SysBashCmd
 SysBashCmd	common/src/sys_cmd.h	/^class SysBashCmd : public Cmd {$/;"	c	namespace:CommonNs
@@ -1432,6 +1449,7 @@ UINT8_MAX	interface/lib/opt/lex_n_yacc/pat_file.yy.cpp	97;"	d	file:
 UINT8_MAX	interface/lib/opt/lex_n_yacc/sdf_file.yy.cpp	97;"	d	file:
 UINT8_MAX	interface/lib/opt/lex_n_yacc/vlog_file.yy.cpp	97;"	d	file:
 UNDEF	interface/src/primitive.h	/^                TIE1,  TIE0,  TIEX,   TIEZ,   UNDEF,$/;"	e	enum:IntfNs::Pmt::Type
+UNKNOWN	core/src/clique_partition.h	105;"	d
 UNTESTABLE	core/src/atpg.h	/^    enum GenStatus             { TEST_FOUND = 0, UNTESTABLE, ABORT }; $/;"	e	enum:CoreNs::Atpg::GenStatus
 USED	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	958;"	d	file:
 USED	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	958;"	d	file:
@@ -1515,10 +1533,12 @@ VT100_VT52M	common/src/vt100.h	/^const char *const VT100_VT52M    = "\\033[?1h";
 Value	core/src/logic.h	/^typedef unsigned char Value;$/;"	t	namespace:CoreNs
 VarMap	common/src/cmd.h	/^typedef std::map<std::string, std::string>            VarMap;$/;"	t	namespace:CommonNs
 VarMapIter	common/src/cmd.h	/^typedef VarMap::iterator                              VarMapIter;$/;"	t	namespace:CommonNs
-Vertex	core/src/pattern.h	/^class Vertex {$/;"	c	namespace:CoreNs
-Vertex	core/src/pattern.h	/^inline Vertex::Vertex() {$/;"	f	class:CoreNs::Vertex
-Vertex	core/src/pattern.h	/^inline Vertex::Vertex(Value *data, Fault *fault) {$/;"	f	class:CoreNs::Vertex
-VertexVec	core/src/pattern.h	/^typedef std::vector<Vertex *> VertexVec;$/;"	t	namespace:CoreNs
+Vertex	core/src/graph.h	/^		  Vertex<T>(T data) : data_(data) { }$/;"	f	struct:Vertex
+Vertex	core/src/graph.h	/^          Vertex<T>() { }$/;"	f	struct:Vertex
+Vertex	core/src/graph.h	/^struct Vertex : public VertexBase {$/;"	s
+VertexBase	core/src/graph.h	/^struct VertexBase { $/;"	s
+VertexList	core/src/pattern.h	/^typedef std::vector<PatternVertex *> VertexList;$/;"	t	namespace:CoreNs
+VertexSet	core/src/graph.h	/^typedef std::set<VertexBase *> VertexSet; $/;"	t
 VlogFile	interface/src/vlog_file.h	/^class VlogFile {$/;"	c	namespace:IntfNs
 VlogFile	interface/src/vlog_file.h	/^inline VlogFile::VlogFile() {$/;"	f	class:IntfNs::VlogFile
 VlogNames	interface/src/vlog_file.h	/^struct VlogNames {$/;"	s	namespace:IntfNs
@@ -2968,6 +2988,7 @@ ZERO_CONST	interface/lib/dbg/lex_n_yacc/sdf_file.tab.cpp	/^     ZERO_CONST = 328
 ZERO_CONST	interface/lib/dbg/lex_n_yacc/sdf_file.tab.hpp	/^     ZERO_CONST = 328,$/;"	e	enum:yytokentype
 ZERO_CONST	interface/lib/opt/lex_n_yacc/sdf_file.tab.cpp	/^     ZERO_CONST = 328,$/;"	e	enum:yytokentype	file:
 ZERO_CONST	interface/lib/opt/lex_n_yacc/sdf_file.tab.hpp	/^     ZERO_CONST = 328,$/;"	e	enum:yytokentype
+_CLIQUE_PART_H_	core/src/clique_partition.h	2;"	d
 _COMMON_ASCII_H_	common/src/ascii.h	9;"	d
 _COMMON_CMD_H_	common/src/cmd.h	10;"	d
 _COMMON_GET_OPT_H_	common/src/get_opt.h	10;"	d
@@ -2981,6 +3002,7 @@ _CORE_CIRCUIT_H_	core/src/circuit.h	9;"	d
 _CORE_DECISION_TREE_H_	core/src/decision_tree.h	9;"	d
 _CORE_FAULT_H_	core/src/fault.h	9;"	d
 _CORE_GATE_H_	core/src/gate.h	9;"	d
+_CORE_GRAPH_H_	core/src/graph.h	20;"	d
 _CORE_IMPL_H_	core/src/implicator.h	20;"	d
 _CORE_LEARN_H_	core/src/learn.h	20;"	d
 _CORE_LOGIC_HEX_H_	core/src/logic-hex.h	20;"	d
@@ -3122,6 +3144,9 @@ clear	core/src/d_decision_tree.h	/^inline void DDTree::clear() { $/;"	f	class:Co
 clear	core/src/decision_tree.h	/^inline void DecisionTree::clear() {$/;"	f	class:CoreNs::DecisionTree
 clearPorts	interface/src/cell.h	/^inline void Cell::clearPorts() {$/;"	f	class:IntfNs::Cell
 clearPorts	interface/src/cell.h	/^inline void Net::clearPorts() {$/;"	f	class:IntfNs::Net
+clique	core/src/clique_partition.h	/^struct clique$/;"	s
+clique_partition	core/src/clique_partition.cpp	/^int CliquePartition::clique_partition(int** compat, int nodesize)$/;"	f	class:CliquePartition
+clique_set	core/src/clique_partition.h	/^    clique clique_set[MAXCLIQUES];   \/* stores the clique partitioning results *\/$/;"	m	class:CliquePartition
 cmdHisPtr_	common/src/cmd.h	/^    size_t                   cmdHisPtr_; \/\/ command history pointer$/;"	m	class:CommonNs::CmdMgr
 cmdHis_	common/src/cmd.h	/^    std::vector<std::string> cmdHis_;    \/\/ command history$/;"	m	class:CommonNs::CmdMgr
 cmdMap_	common/src/cmd.h	/^    CmdMap                   cmdMap_;    \/\/ command map$/;"	m	class:CommonNs::CmdMgr
@@ -3162,7 +3187,7 @@ current_obj_	core/src/atpg.h	/^    Objective   current_obj_; $/;"	m	class:CoreNs
 d_front_	core/src/implicator.h	/^    GateSet         d_front_; $/;"	m	class:CoreNs::Implicator
 d_mask_	core/src/d_decision_tree.h	/^    Value       *d_mask_; \/\/ indicate which gates to d-drive $/;"	m	struct:CoreNs::DDNode
 d_tree_	core/src/atpg.h	/^    DDTree      d_tree_; $/;"	m	class:CoreNs::Atpg
-data_	core/src/pattern.h	/^    Value *data_;$/;"	m	class:CoreNs::Vertex
+data_	core/src/graph.h	/^    T     data_;$/;"	m	struct:Vertex
 decision_tree_	core/src/implicator.h	/^    DecisionTree    decision_tree_; $/;"	m	class:CoreNs::Implicator
 depthFromPo_	core/src/gate.h	/^    int       depthFromPo_; \/\/ depth from po, this is for fault effect propagation$/;"	m	class:CoreNs::Gate
 des_	common/src/get_opt.h	/^    std::string                  des_;$/;"	m	class:CommonNs::OptMgr
@@ -3171,6 +3196,7 @@ des_	common/src/get_opt.h	/^    std::string des_;$/;"	m	struct:CommonNs::Opt
 detGateType	core/src/circuit.cpp	/^void Circuit::detGateType(const int &id, const Cell * const c,$/;"	f	class:Circuit
 detVerilogPmtType	core/src/circuit.cpp	/^void Circuit::detVerilogPmtType(const int &id, const IntfNs::Cell * const c) {$/;"	f	class:Circuit
 det_	core/src/fault.h	/^    int   det_;   \/\/ number of detection$/;"	m	class:CoreNs::Fault
+detect_fault_	core/src/pattern.h	/^    FaultVec detect_fault_; $/;"	m	struct:CoreNs::PatternVertex
 dfront_	core/src/d_decision_tree.h	/^    GateVec      dfront_; $/;"	m	struct:CoreNs::DDNode
 dyn_comp_backtrack	core/src/atpg_mgr.h	/^    int                 dyn_comp_backtrack; $/;"	m	class:CoreNs::AtpgMgr
 dyn_comp_merge_	core/src/atpg_mgr.h	/^    int                 dyn_comp_merge_; $/;"	m	class:CoreNs::AtpgMgr
@@ -3185,6 +3211,7 @@ eqvs_	interface/src/cell.h	/^    NetVec  eqvs_;$/;"	m	class:IntfNs::Net
 errorStr_	common/src/cmd.h	/^    std::string              errorStr_; \/\/ error related string$/;"	m	class:CommonNs::CmdMgr
 error_	common/src/cmd.h	/^    Error                    error_;    \/\/ error type$/;"	m	class:CommonNs::CmdMgr
 error_	common/src/get_opt.h	/^    Error                        error_;$/;"	m	class:CommonNs::OptMgr
+es_	core/src/graph.h	/^    EdgeVec     es_; $/;"	m	struct:VertexBase
 event	core/src/obj-optim.cpp	/^    Gate   *event; $/;"	m	struct:FaultPropEvent	file:
 eventFaultSim	core/src/simulator.cpp	/^void Simulator::eventFaultSim() {$/;"	f	class:Simulator
 events_	core/src/implicator.h	/^    std::queue<int> *events_; $/;"	m	class:CoreNs::Implicator
@@ -3274,7 +3301,6 @@ fanMgr_	atpg/src/setup_cmd.h	/^    FanMgr *fanMgr_;$/;"	m	class:FanNs::SetXFillC
 faultEval	core/src/simulator.h	/^inline void Simulator::faultEval(const int &i) {$/;"	f	class:CoreNs::Simulator
 faultInjectH_	core/src/simulator.h	/^    ParaValue       (*faultInjectH_)[5];$/;"	m	class:CoreNs::Simulator
 faultInjectL_	core/src/simulator.h	/^    ParaValue       (*faultInjectL_)[5];  $/;"	m	class:CoreNs::Simulator
-fault_	core/src/pattern.h	/^	FaultList fault_;$/;"	m	class:CoreNs::Vertex
 faults_	core/src/fault.h	/^    FaultVec  faults_;$/;"	m	class:CoreNs::FaultListExtract
 fh_	core/src/gate.h	/^    ParaValue fh_;    \/\/ faulty high$/;"	m	class:CoreNs::Gate
 fiMinLvl_	core/src/gate.h	/^    int       fiMinLvl_;    \/\/ the minimum level of the fanin gates, this is to justify the headline cone, (in atpg.cpp)$/;"	m	class:CoreNs::Gate
@@ -3406,6 +3432,9 @@ flex_uint8_t	interface/lib/opt/lex_n_yacc/sdf_file.yy.cpp	/^typedef unsigned cha
 flex_uint8_t	interface/lib/opt/lex_n_yacc/vlog_file.yy.cpp	/^typedef uint8_t flex_uint8_t;$/;"	t	file:
 flex_uint8_t	interface/lib/opt/lex_n_yacc/vlog_file.yy.cpp	/^typedef unsigned char flex_uint8_t; $/;"	t	file:
 flist_	core/src/atpg.h	/^    FaultListExtract *flist_; $/;"	m	class:CoreNs::Atpg
+form_setY	core/src/clique_partition.cpp	/^int CliquePartition::form_setY(int* setY, int* current_clique, int** local_compat, int nodesize, int* node_set)$/;"	f	class:CliquePartition
+form_set_Y1	core/src/clique_partition.cpp	/^void CliquePartition::form_set_Y1(int nodesize, int* set_Y, int* set_Y1, int** sets_I_y, int* node_set)$/;"	f	class:CliquePartition
+form_set_Y2	core/src/clique_partition.cpp	/^void CliquePartition::form_set_Y2(int nodesize, int* set_Y2, int* set_Y1, int* sizes_of_sets_I_y)$/;"	f	class:CliquePartition
 fos_	core/src/circuit.h	/^    int             *fos_;        \/\/ fanout net array$/;"	m	class:CoreNs::Circuit
 fos_	core/src/gate.h	/^    int       *fos_;  \/\/ fanout array$/;"	m	class:CoreNs::Gate
 frame_	core/src/gate.h	/^    int       frame_; \/\/ time frame of the gate, for 2-pattern test$/;"	m	class:CoreNs::Gate
@@ -3483,6 +3512,7 @@ getTotalUsage	common/src/tm_usage.cpp	/^bool TmUsage::getTotalUsage(TmStat &st) 
 getTotalUsage	common/src/tm_usage/tm_usage.cpp	/^bool TmUsage::getTotalUsage(TmStat &st) const {$/;"	f	class:TmUsage
 getTypeName	core/src/gate.h	/^inline string Gate::getTypeName() const { $/;"	f	class:CoreNs::Gate
 getVars	common/src/cmd.h	/^inline VarMap CmdMgr::getVars() const {$/;"	f	class:CommonNs::CmdMgr
+get_degree_of_a_node	core/src/clique_partition.cpp	/^int CliquePartition::get_degree_of_a_node(int x, int nodesize, int** local_compat, int* node_set)$/;"	f	class:CliquePartition
 get_mask_	core/src/d_decision_tree.h	/^inline Value *DDNode::get_mask_(size_t& n) const { $/;"	f	class:CoreNs::DDNode
 get_pred	core/src/d_decision_tree.h	/^inline void DDNode::get_pred(GateSet &gs) { $/;"	f	class:CoreNs::DDNode
 gh_	core/src/gate.h	/^    ParaValue gh_;    \/\/ good high$/;"	m	class:CoreNs::Gate
@@ -3506,6 +3536,7 @@ hevents_	core/src/implicator.h	/^    std::queue<int> *hevents_; $/;"	m	class:Cor
 hier	interface/src/vlog2pmt.cpp	/^const char hier = '\/';$/;"	v
 hvalues_	core/src/implicator.h	/^    HexValue        *hvalues_; $/;"	m	class:CoreNs::Implicator
 id_	core/src/gate.h	/^    int       id_;    \/\/ position in circuit gate array$/;"	m	class:CoreNs::Gate
+id_	core/src/pattern.h	/^    int id_; $/;"	m	struct:CoreNs::PatternVertex
 id_	interface/src/cell.h	/^            int     id_;$/;"	m	class:IntfNs::Cell
 id_	interface/src/cell.h	/^    int    id_;$/;"	m	class:IntfNs::Net
 id_	interface/src/cell.h	/^    int  id_;$/;"	m	class:IntfNs::Port
@@ -3523,8 +3554,10 @@ initCmd	atpg/src/main.cpp	/^void initCmd(CmdMgr &cmdMgr, FanMgr &fanMgr) {$/;"	f
 initCmds	common/src/common_test.cpp	/^void initCmds(CmdMgr *mgr) {$/;"	f
 initOpt	atpg/src/main.cpp	/^void initOpt(OptMgr &mgr) {$/;"	f
 initOpts	common/src/common_test.cpp	/^void initOpts(OptMgr *mgr) {$/;"	f
+init_clique_set	core/src/clique_partition.cpp	/^void CliquePartition::init_clique_set()$/;"	f	class:CliquePartition
 init_d_tree	core/src/dfs-podem.cpp	/^bool Atpg::init_d_tree() {$/;"	f	class:Atpg
 injected_	core/src/simulator.h	/^    FaultListIter   injected_[WORD_SIZE];$/;"	m	class:CoreNs::Simulator
+input_sanity_check	core/src/clique_partition.cpp	/^int CliquePartition::input_sanity_check(int** compat, int array_dimension)$/;"	f	class:CliquePartition
 isEqv	interface/src/cell.h	/^inline bool Net::isEqv(Net * const n) const {$/;"	f	class:IntfNs::Net
 isFanoutStem	core/src/gate.h	/^inline bool Gate::isFanoutStem() const {$/;"	f	class:CoreNs::Gate
 isFlagSet	common/src/get_opt.h	/^inline bool OptMgr::isFlagSet(const std::string &f) const {$/;"	f	class:CommonNs::OptMgr
@@ -3646,6 +3679,7 @@ main	interface/src/pat_test.cpp	/^int main(int argc, char **argv) {$/;"	f
 main	interface/src/sdf_test.cpp	/^int main(int argc, char **argv) {$/;"	f
 main	interface/src/vlog2pmt.cpp	/^int main(int argc, char **argv) {$/;"	f
 main	interface/src/vlog_test.cpp	/^int main(int argc, char **argv) {$/;"	f
+make_a_local_copy	core/src/clique_partition.cpp	/^void CliquePartition::make_a_local_copy(int** local_compat, int** compat, int nodesize)$/;"	f	class:CliquePartition
 mark_	core/src/decision_tree.h	/^    bool     mark_;  \/\/ initially, mark=false;  when backtracked once, this is changed to true; when backtracked again, this decision is poped out. $/;"	m	struct:CoreNs::DecisionTreeNode
 maxPos_	common/src/cmd.h	/^    size_t                   maxPos_;    \/\/ maximum command string position$/;"	m	class:CommonNs::CmdMgr
 mdt	interface/lib/dbg/lex_n_yacc/mdt_file.tab.cpp	/^IntfNs::MdtFile *mdt;$/;"	v
@@ -3794,6 +3828,8 @@ mdt_filewarning	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	/^bool mdt_filewarn
 mdt_filewarning	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	/^bool mdt_filewarning = 1;$/;"	v
 mdt_filewrap	interface/lib/dbg/lex_n_yacc/mdt_file.yy.cpp	355;"	d	file:
 mdt_filewrap	interface/lib/opt/lex_n_yacc/mdt_file.yy.cpp	355;"	d	file:
+members	core/src/clique_partition.h	/^    int members[MAXCLIQUES];           \/* members of the clique *\/$/;"	m	struct:clique
+merge_count_	core/src/pattern.h	/^    size_t merge_count_; $/;"	m	struct:CoreNs::PatternVertex
 meta_	common/src/get_opt.h	/^    std::string meta_;$/;"	m	struct:CommonNs::Arg
 meta_	common/src/get_opt.h	/^    std::string meta_;$/;"	m	struct:CommonNs::Opt
 modules_	interface/src/netlist.h	/^    CellVec modules_;$/;"	m	class:IntfNs::Netlist
@@ -3858,6 +3894,7 @@ optMgr_	common/src/cmd.h	/^            OptMgr      optMgr_;$/;"	m	class:CommonNs
 optToSet_	common/src/get_opt.h	/^    std::map<Opt *, bool>        optToSet_;$/;"	m	class:CommonNs::OptMgr
 optToVar_	common/src/get_opt.h	/^    std::map<Opt *, std::string> optToVar_;$/;"	m	class:CommonNs::OptMgr
 out	interface/src/sdf_file.h	/^    char out[NAME_LEN];$/;"	m	struct:IntfNs::SdfIoPath
+output_sanity_check	core/src/clique_partition.cpp	/^int CliquePartition::output_sanity_check(int array_dimension, int** local_compat, int** compat)$/;"	f	class:CliquePartition
 p1	interface/src/sdf_file.h	/^    char              p1[NAME_LEN];$/;"	m	struct:IntfNs::SdfDelayDef
 p2	interface/src/sdf_file.h	/^    char              p2[NAME_LEN];$/;"	m	struct:IntfNs::SdfDelayDef
 pStart_	common/src/tm_usage.h	/^    TmStat pStart_;$/;"	m	class:CommonNs::TmUsage
@@ -3942,6 +3979,8 @@ pat_filetext	interface/lib/dbg/lex_n_yacc/pat_file.yy.cpp	/^char *pat_filetext;$
 pat_filetext	interface/lib/opt/lex_n_yacc/pat_file.yy.cpp	/^char *pat_filetext;$/;"	v
 pat_filewrap	interface/lib/dbg/lex_n_yacc/pat_file.yy.cpp	355;"	d	file:
 pat_filewrap	interface/lib/opt/lex_n_yacc/pat_file.yy.cpp	355;"	d	file:
+pat_graph_	core/src/pattern.h	/^    VertexList pat_graph_; $/;"	m	class:CoreNs::PatternProcessor
+pat_graph_edges_	core/src/pattern.h	/^    EdgeList   pat_graph_edges_; $/;"	m	class:CoreNs::PatternProcessor
 pats_	core/src/pattern.h	/^    PatternVec pats_;$/;"	m	class:CoreNs::PatternProcessor
 pcoll_	core/src/atpg_mgr.h	/^    PatternProcessor   *pcoll_;$/;"	m	class:CoreNs::AtpgMgr
 pcoll_	core/src/pattern_rw.h	/^    PatternProcessor     *pcoll_;$/;"	m	class:CoreNs::PatternReader
@@ -3958,6 +3997,7 @@ pfReset	core/src/simulator.h	/^inline void Simulator::pfReset() {$/;"	f	class:Co
 pi1_	core/src/pattern.h	/^    Value *pi1_;$/;"	m	class:CoreNs::Pattern
 pi2_	core/src/pattern.h	/^    Value *pi2_;$/;"	m	class:CoreNs::Pattern
 piOrder_	core/src/pattern.h	/^    int        *piOrder_;$/;"	m	class:CoreNs::PatternProcessor
+pick_a_node_to_merge	core/src/clique_partition.cpp	/^int CliquePartition::pick_a_node_to_merge(int* setY, int** local_compat, int* node_set, int nodesize)$/;"	f	class:CliquePartition
 pmtid_	core/src/gate.h	/^    int       pmtid_; \/\/ original primitive id in the library cell$/;"	m	class:CoreNs::Gate
 po1_	core/src/pattern.h	/^    Value *po1_;$/;"	m	class:CoreNs::Pattern
 po2_	core/src/pattern.h	/^    Value *po2_;$/;"	m	class:CoreNs::Pattern
@@ -3996,6 +4036,8 @@ printValue	core/src/logic.cpp	/^void CoreNs::printValue(const ParaValue &l, cons
 printValue	core/src/logic.cpp	/^void CoreNs::printValue(const ParaValue &v, ostream &out) {$/;"	f	class:CoreNs
 printValue	core/src/logic.cpp	/^void CoreNs::printValue(const Value &v, ostream &out) {$/;"	f	class:CoreNs
 printWelcome	atpg/src/main.cpp	/^void printWelcome() {$/;"	f
+print_clique_set	core/src/clique_partition.cpp	/^void CliquePartition::print_clique_set()$/;"	f	class:CliquePartition
+print_setY	core/src/clique_partition.cpp	/^void CliquePartition::print_setY(int* setY)$/;"	f	class:CliquePartition
 prob_fs	core/src/atpg.h	/^    int        *prob_fs; $/;"	m	class:CoreNs::Atpg
 processed_	core/src/simulator.h	/^    bool            *processed_; \/\/ array of processed flags.  TRUE means this gate is processed$/;"	m	class:CoreNs::Simulator
 prompt_	common/src/cmd.h	/^    std::string              prompt_;   \/\/ command line prompt$/;"	m	class:CommonNs::CmdMgr
@@ -4114,6 +4156,7 @@ sdf_filetext	interface/lib/dbg/lex_n_yacc/sdf_file.yy.cpp	/^char *sdf_filetext;$
 sdf_filetext	interface/lib/opt/lex_n_yacc/sdf_file.yy.cpp	/^char *sdf_filetext;$/;"	v
 sdf_filewrap	interface/lib/dbg/lex_n_yacc/sdf_file.yy.cpp	355;"	d	file:
 sdf_filewrap	interface/lib/opt/lex_n_yacc/sdf_file.yy.cpp	355;"	d	file:
+select_new_node	core/src/clique_partition.cpp	/^int CliquePartition::select_new_node(int** local_compat, int nodesize, int* node_set)$/;"	f	class:CliquePartition
 setBitValue	core/src/logic.h	/^inline void setBitValue(ParaValue &pv, const size_t &i, const Value &v) {$/;"	f	namespace:CoreNs
 setColor	common/src/cmd.h	/^inline void CmdMgr::setColor(const Color &color) {$/;"	f	class:CommonNs::CmdMgr
 setComment	common/src/cmd.h	/^inline void CmdMgr::setComment(const char &ch) {$/;"	f	class:CommonNs::CmdMgr
@@ -4182,6 +4225,7 @@ shortDes_	common/src/get_opt.h	/^    std::string                  shortDes_;$/;"
 si_	core/src/pattern.h	/^    Value *si_;$/;"	m	class:CoreNs::Pattern
 sim_	core/src/atpg_mgr.h	/^    Simulator          *sim_;$/;"	m	class:CoreNs::AtpgMgr
 sim_	core/src/implicator.h	/^    Simulator       *sim_;  $/;"	m	class:CoreNs::Implicator
+size	core/src/clique_partition.h	/^    int size;                          \/* number of members in the clique *\/$/;"	m	struct:clique
 source	core/src/obj-optim.cpp	/^    int     source; $/;"	m	struct:FaultPropEvent	file:
 splitString	common/src/get_opt.cpp	/^vector<string> OptMgr::splitString(const string &input,$/;"	f	class:OptMgr
 startPoint_	core/src/d_decision_tree.h	/^    unsigned     startPoint_; $/;"	m	struct:CoreNs::DDNode
@@ -4248,6 +4292,8 @@ usage	common/src/get_opt.cpp	/^void OptMgr::usage(ostream &out) {$/;"	f	class:Op
 v	interface/src/sdf_file.h	/^    SdfDelayValue v[12];$/;"	m	struct:IntfNs::SdfDelayValueList
 v	interface/src/sdf_file.h	/^    SdfValue v[3];$/;"	m	struct:IntfNs::SdfDelayValue
 v	interface/src/sdf_file.h	/^    float v[3];$/;"	m	struct:IntfNs::SdfValue
+v1_	core/src/graph.h	/^    VertexBase *v1_; $/;"	m	struct:Edge
+v2_	core/src/graph.h	/^    VertexBase *v2_; $/;"	m	struct:Edge
 val_	interface/src/global.h	/^    char val_[NAME_LEN];$/;"	m	struct:IntfNs::NameKey
 values_	core/src/implicator.h	/^    Value           *values_; $/;"	m	class:CoreNs::Implicator
 varMap_	common/src/cmd.h	/^    VarMap                   varMap_;    \/\/ variable map$/;"	m	class:CommonNs::CmdMgr
@@ -5867,7 +5913,6 @@ yywrap	interface/lib/opt/lex_n_yacc/vlog_file.yy.cpp	23;"	d	file:
 ~TestLargeLoopCmd	common/src/common_test.cpp	/^TestLargeLoopCmd::~TestLargeLoopCmd() {}$/;"	f	class:TestLargeLoopCmd
 ~TmUsage	common/src/tm_usage.cpp	/^TmUsage::~TmUsage() {}$/;"	f	class:TmUsage
 ~TmUsage	common/src/tm_usage/tm_usage.cpp	/^TmUsage::~TmUsage() {}$/;"	f	class:TmUsage
-~Vertex	core/src/pattern.h	/^inline Vertex::~Vertex() {$/;"	f	class:CoreNs::Vertex
 ~VlogFile	interface/src/vlog_file.h	/^inline VlogFile::~VlogFile() {}$/;"	f	class:IntfNs::VlogFile
 ~VlogNlBuilder	interface/src/netlist_builder.h	/^inline VlogNlBuilder::~VlogNlBuilder() {}$/;"	f	class:IntfNs::VlogNlBuilder
 ~WriteFaultCmd	atpg/src/atpg_cmd.cpp	/^WriteFaultCmd::~WriteFaultCmd() {} $/;"	f	class:WriteFaultCmd

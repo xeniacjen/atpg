@@ -21,7 +21,7 @@
 #        DYNPKGS = out
 #
 #############################################################################
-STAPKGS = common interface core atpg
+STAPKGS = common interface core atpg 
 DYNPKGS =
 
 OWNPKGS = $(STAPKGS) $(DYNPKGS)
@@ -29,8 +29,8 @@ OWNPKGS = $(STAPKGS) $(DYNPKGS)
 # To specify dependent packages
 #        test3_DEP = test1 test2          // test3 depends on test1 and test2
 
-core_DEP = interface
-atpg_DEP = common interface core
+core_DEP = interface 
+atpg_DEP = common interface core 
 
 # To specify sources containing main function
 #        test1_EXE = hello.cpp route.cpp  // hello.cpp and route.cpp in test1
