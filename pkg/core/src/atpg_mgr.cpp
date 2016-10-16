@@ -201,14 +201,13 @@ void AtpgMgr::generation(int limit) {
 
     if (pcoll_->staticCompression_==PatternProcessor::ON) { 
         ReverseFaultSim(); 
-        // reverse(pcoll_->pats_.begin(), pcoll_->pats_.end()); 
         pcoll_->StaticCompression(); 
 
         if (pcoll_->XFill_==PatternProcessor::ON) 
             XFill(); 
 	}
 
-    // reverse(pcoll_->pats_.begin(), pcoll_->pats_.end()); 
+    RVEFaultSim(); 
     ReverseFaultSim(); 
 }
 
@@ -254,6 +253,60 @@ void AtpgMgr::ReverseFaultSim() {
     assert(curr_dt>=total_dt);  
     pcoll_->pats_ = comp_pats; 
 }
+
+void AtpgMgr::RVEFaultSim() { 
+    typedef set<size_t> PatSet; 
+    typedef PatSet::iterator PatSetIter; 
+    typedef map<Fault *, PatSet> FaultPatSetMap; 
+    typedef FaultPatSetMap::iterator FaultPatSetMapIter; 
+
+    int *num_essential_faults = new int[pcoll_->pats_.size()]; 
+    FaultPatSetMap fault_detect; 
+    for (size_t i=0; i < pcoll_->pats_.size(); i++) {
+        // size_t pid = pcoll_->pats_.size()-i-1; 
+        size_t pid = i; 
+        Pattern *p = pcoll_->pats_[pid]; 
+        num_essential_faults[pid] = 0; 
+
+        FaultList flist = fListExtract_->current_; 
+        FaultVec detect; 
+        sim_->pfFaultSim(p, detect, flist); 
+        for (size_t j=0; j<detect.size(); j++) { 
+            PatSet ps; ps.insert(pid); 
+            pair<FaultPatSetMapIter, bool> ret 
+              = fault_detect.insert(make_pair(detect[j], ps)); 
+            if (ret.second) { 
+                num_essential_faults[pid]++; 
+            }
+            else if (ret.first->second.size()==1) { 
+                ret.first->second.insert(pid); 
+
+                size_t pid_check = *ret.first->second.begin(); 
+                if (--num_essential_faults[pid_check]==0) { 
+                    FaultPatSetMapIter it = fault_detect.begin(); 
+                    for (; it!=fault_detect.end(); ++it) { 
+                        PatSetIter it_pat = it->second.find(pid_check); 
+                        if (it_pat!=it->second.end()) 
+                            it->second.erase(it_pat); 
+                        if (it->second.size()==1) { 
+                            num_essential_faults[*it->second.begin()]++; 
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    PatternVec comp_pats; 
+    for (size_t i=0; i<pcoll_->pats_.size(); i++) { 
+        if (num_essential_faults[i]>0) 
+            comp_pats.push_back(pcoll_->pats_[i]); 
+    }
+
+    pcoll_->pats_ = comp_pats; 
+
+    delete[] num_essential_faults; 
+} 
 
 void AtpgMgr::getPoPattern(Pattern *pat) { 
     sim_->goodSim();
@@ -322,8 +375,8 @@ void AtpgMgr::DynamicCompression(FaultList &remain) {
             delete atpg; 
             skipped_fs.push_back(remain.front()); 
             remain.pop_front(); 
-            // if (++fail_count>=dyn_comp_merge_) 
-            //     break; 
+            if (++fail_count>=dyn_comp_merge_) 
+                break; 
         }
 
         while (!remain.empty() 

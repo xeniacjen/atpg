@@ -351,6 +351,7 @@ void CliquePartition::form_set_Y1(int nodesize, int* set_Y, int* set_Y1, int** s
   printf(" }\n");
 #endif
 
+  free(cards); 
   return;
 }
 
@@ -496,6 +497,16 @@ int CliquePartition::pick_a_node_to_merge(int* setY, int** local_compat, int* no
   if(set_Y2[0] != CLIQUE_UNKNOWN)
     new_node = set_Y2[0];
   
+  for(i=0; i<nodesize; i++)
+    {
+      free(sets_I_y[i]); 
+    }
+  free(sets_I_y); 
+  free(curr_indexes); 
+  free(set_Y1); 
+  free(set_Y2); 
+  free(sizes_of_sets_I_y); 
+
   return new_node; 
 }
 
@@ -554,6 +565,7 @@ int CliquePartition::clique_partition(int** compat, int nodesize)
   int clique_index = CLIQUE_UNKNOWN;
   /*int nodesize=CLIQUE_UNKNOWN;*/
 
+#ifdef DEBUG
   printf("\n");
   printf("**************************************\n");
   printf(" *       Clique Partitioner         *\n");
@@ -561,6 +573,7 @@ int CliquePartition::clique_partition(int** compat, int nodesize)
   printf("\nEntering Clique Partitioner.. \n");
 
   input_sanity_check(compat, nodesize);
+#endif 
   
   /* dynamically allocate memory for local copy */
 
@@ -573,7 +586,9 @@ int CliquePartition::clique_partition(int** compat, int nodesize)
 
   make_a_local_copy(local_compat, compat, nodesize);
 
+#ifdef DEBUG
   printf(" You entered the compatibility array: \n");
+
   for(i=0; i<nodesize; i++) 
     {
 	printf("\t");
@@ -583,6 +598,7 @@ int CliquePartition::clique_partition(int** compat, int nodesize)
 	}
       printf("\n");
     }
+#endif 
 
   init_clique_set();
 
@@ -686,94 +702,22 @@ int CliquePartition::clique_partition(int** compat, int nodesize)
 	  curr_index++;
 	}
     }
+#ifdef DEBUG
   output_sanity_check(nodesize, local_compat, compat);
   printf("\n Final Clique Partitioning Results:\n");
   print_clique_set();
   printf("Exiting Clique Partitioner.. Bye.\n");
   printf("**************************************\n\n");
+#endif 
+
+  for(i=0; i<nodesize; i++)
+    {
+      free(local_compat[i]); 
+    }
+  free(local_compat); 
+  free(current_clique); 
+  free(node_set); 
+  free(setY); 
+
   return 1;
 }
-
-// int main()
-// {
-    // int** compat;
-    // int i;
-
-    // compat=(int** )malloc(9 * sizeof(int*));
-    // for(i=0; i<9; i++)
-    // {
-	// compat[i]=(int*)malloc(9 * sizeof(int));
-    // }
-
-// /*
- // 1 0 0 1 0 1 0 1 0
- // 0 1 0 1 0 1 0 1 0
- // 0 0 1 0 0 0 0 0 0
- // 1 1 0 1 0 0 0 1 0
- // 0 0 0 0 1 0 0 0 0
- // 1 1 0 0 0 1 0 1 0
- // 0 0 0 0 0 0 1 0 0
- // 1 1 0 1 0 1 0 1 0
- // 0 0 0 0 0 0 0 0 1
-// */
-    // compat[0][0]=1;     compat[0][1]=0;    compat[0][2]=0; 
-    // compat[0][3]=1;     compat[0][4]=0;    compat[0][5]=1;    
-    // compat[0][6]=0;     compat[0][7]=1;    compat[0][8]=0;  
-
-    // compat[1][0]=0;     compat[1][1]=1;    compat[1][2]=0; 
-    // compat[1][3]=1;     compat[1][4]=0;    compat[1][5]=1;    
-    // compat[1][6]=0;     compat[1][7]=1;    compat[1][8]=0;  
-
-    // compat[2][0]=0;     compat[2][1]=0;    compat[2][2]=1; 
-    // compat[2][3]=0;     compat[2][4]=0;    compat[2][5]=0;    
-    // compat[2][6]=0;     compat[2][7]=0;    compat[2][8]=0;  
-
-    // compat[3][0]=1;     compat[3][1]=1;    compat[3][2]=0; 
-    // compat[3][3]=1;     compat[3][4]=0;    compat[3][5]=0;    
-    // compat[3][6]=0;     compat[3][7]=1;    compat[3][8]=0;  
-
-    // compat[4][0]=0;     compat[4][1]=0;    compat[4][2]=0; 
-    // compat[4][3]=0;     compat[4][4]=1;    compat[4][5]=0;    
-    // compat[4][6]=0;     compat[4][7]=0;    compat[4][8]=0;  
-
-    // compat[5][0]=1;     compat[5][1]=1;    compat[5][2]=0; 
-    // compat[5][3]=0;     compat[5][4]=0;    compat[5][5]=1;    
-    // compat[5][6]=0;     compat[5][7]=1;    compat[5][8]=0;  
-
-    // compat[6][0]=0;     compat[6][1]=0;    compat[6][2]=0; 
-    // compat[6][3]=0;     compat[6][4]=0;    compat[6][5]=0;    
-    // compat[6][6]=1;     compat[6][7]=0;    compat[6][8]=0;  
-
-    // compat[7][0]=1;     compat[7][1]=1;    compat[7][2]=0; 
-    // compat[7][3]=1;     compat[7][4]=0;    compat[7][5]=1;    
-    // compat[7][6]=0;     compat[7][7]=1;    compat[7][8]=0;
-    
-    // compat[8][0]=0;     compat[8][1]=0;    compat[8][2]=0; 
-    // compat[8][3]=0;     compat[8][4]=0;    compat[8][5]=0;    
-    // compat[8][6]=0;     compat[8][7]=0;    compat[8][8]=1;  
-    
-    
-    // clique_partition(compat, 9);
-
-    // /** The following is prototype code that illustrates
-        // how to access the clique partitioning results.
-        // You can modify this according to your needs.
-
-    // for(i=0; i<MAXCLIQUES; i++)
-    // {
-	// if(clique_set[i].size == UNKNOWN) break;
-	
-	// printf(" Clique #%d (size = %d) = { ",i, clique_set[i].size);
-	
-	// for(j=0; j<MAXCLIQUES; j++)
-	// {
-	    // if(clique_set[i].members[j] != UNKNOWN)
-		// printf(" %d ", clique_set[i].members[j]);
-	    // else
-		// break;
-	// }
-	// printf (" }\n");
-    // }
-    // **/ 
-// }
-

@@ -34,6 +34,10 @@ public:
     void pfFaultSim(PatternProcessor *pcoll, FaultListExtract *fListExtract);
     int  pfFaultSim(const Pattern * const p, FaultList &remain);
     int  pfFaultSim(FaultList &remain);
+    int  pfFaultSim(const Pattern * const p, 
+                    FaultVec &detect, 
+                    FaultList &remain);
+    int  pfFaultSim(FaultVec &detect, FaultList &remain);
 
     // parallel pattern
     void ppGoodSim(PatternProcessor *pcoll);
@@ -58,6 +62,7 @@ protected:
     bool            pfCheckActivation(const Fault * const f);
     void            pfInject(const Fault * const f, const size_t &i);
     int             pfCheckDetection(FaultList &remain);
+    int             pfCheckDetection(FaultVec &detect, FaultList &remain);
     FaultListIter   injected_[WORD_SIZE];
     int             ninjected_;
 

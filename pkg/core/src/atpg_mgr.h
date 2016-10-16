@@ -54,6 +54,7 @@ public:
 private: 
     void                DynamicCompression(FaultList &remain); 
     void                ReverseFaultSim(); 
+    void                RVEFaultSim(); 
     void                XFill(); 
 
     void                getPoPattern(Pattern *pat);  

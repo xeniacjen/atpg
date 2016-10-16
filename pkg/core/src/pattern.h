@@ -311,6 +311,10 @@ inline void PatternProcessor::StaticCompression() {
         comp_pat_vec.push_back(it->second); 
 
     pats_ = comp_pat_vec; 
+
+    for (size_t i=0; i<pats_.size(); i++)  
+        delete[] compat[i]; 
+    delete[] compat; 
 }
 
 inline void PatternProcessor::randomFill(Pattern *pat){

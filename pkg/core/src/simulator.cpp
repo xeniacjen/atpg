@@ -119,7 +119,19 @@ int Simulator::pfFaultSim(const Pattern * const p, FaultList &remain) {
     
     return pfFaultSim(remain);
 
-} //}}}
+} 
+
+int Simulator::pfFaultSim(const Pattern * const p, 
+                          FaultVec &detect, 
+                          FaultList &remain) { 
+
+    detect.clear(); 
+
+	// Assign pattern to circuit PI & PPI for further fault sim
+	assignPatternToPi( p );
+    
+    return pfFaultSim(detect, remain);
+}//}}}
 
 // **************************************************************************
 // Function   [ Simulator::pfFaultSim ]	
@@ -164,6 +176,42 @@ int Simulator::pfFaultSim(FaultList &remain) {
     } while (it != remain.end());
 
     return ret; 
+} 
+
+int Simulator::pfFaultSim(FaultVec &detect, FaultList &remain) { 
+    if (remain.size() == 0)
+        return 0;
+
+    int ret = 0; 
+
+    // run good simulation first
+    goodSimCopyToFault();
+
+    // inject number of WORD_SIZE activated faults
+    //size_t i = 0;
+    //pfReset();
+    FaultListIter it = remain.begin();
+    do {
+        // if fault is activated, inject fault
+        if (pfCheckActivation(*it)) {
+            pfInject(*it, ninjected_);
+            injected_[ninjected_] = it;
+            ninjected_++;
+        }
+        it++;
+
+        // run fault sim if enough fault or end of fault list
+        if (ninjected_ == (int)WORD_SIZE
+            || (it == remain.end() && ninjected_ > 0)) {
+            eventFaultSim();
+            ret+=pfCheckDetection(detect, remain);
+            pfReset();
+        }
+
+    } while (it != remain.end());
+
+    return ret; 
+
 } //}}}
 
 // **************************************************************************
@@ -283,6 +331,43 @@ int Simulator::pfCheckDetection(FaultList &remain) {
             else 
                 (*injected_[i])->state_ = Fault::DT;
 
+            remain.erase(injected_[i]);
+            ret++; 
+        }
+    }
+
+    return ret; 
+} 
+
+int Simulator::pfCheckDetection(FaultVec &detect, FaultList &remain) { 
+    int ret = 0; 
+    ParaValue detected = PARA_L;
+    int start = cir_->tgate_ - cir_->npo_ - cir_->nppi_;
+    for (int i = start; i < cir_->tgate_; ++i)
+        detected |= ((cir_->gates_[i].gl_ & cir_->gates_[i].fh_)
+                   | (cir_->gates_[i].gh_ & cir_->gates_[i].fl_));
+
+    // fault drop
+    for (int i = 0; i < ninjected_; ++i) {
+        if (getBitValue(detected, (size_t)i) == L)
+            continue;
+        (*injected_[i])->det_++;
+        if ((*injected_[i])->det_ >= ndet_) {
+            if ((*injected_[i])->state_==Fault::DH 
+              || (*injected_[i])->state_==Fault::AB 
+              || (*injected_[i])->state_==Fault::AH) 
+                (*injected_[i])->state_ = Fault::DH;
+            else if ((*injected_[i])->state_==Fault::PT)  
+                (*injected_[i])->state_ = Fault::PT;
+            else if ((*injected_[i])->state_==Fault::AU) { 
+                // TODO: assert after debug 
+                (*injected_[i])->print(); 
+                (*injected_[i])->state_ = Fault::PT;
+            }
+            else 
+                (*injected_[i])->state_ = Fault::DT;
+
+            detect.push_back(*injected_[i]); 
             remain.erase(injected_[i]);
             ret++; 
         }
