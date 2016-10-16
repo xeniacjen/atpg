@@ -200,7 +200,8 @@ void AtpgMgr::generation(int limit) {
     }
 
     if (pcoll_->staticCompression_==PatternProcessor::ON) { 
-        ReverseFaultSim(); 
+        // ReverseFaultSim(); 
+        RVEFaultSim(); 
         pcoll_->StaticCompression(); 
 
         if (pcoll_->XFill_==PatternProcessor::ON) 
