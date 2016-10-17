@@ -118,6 +118,10 @@ int CliquePartition::select_new_node(const CompGraph& local_compat, int nodesize
   printf(" curr_max_degree = %d max_node= %d\n", curr_max_degree, max_node);
 #endif
 
+  for(int i = 0; i < nodesize; i++) //declare empty comp graph filled with junk data
+	free(degrees[i]); 
+  free(degrees); 
+
   return max_node;
 }
 
