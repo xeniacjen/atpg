@@ -1,100 +1,8 @@
 #include "clique_partition.h"
 
-int CliquePartition::input_sanity_check(int** compat, int array_dimension)
-{ 
-    /* Verifies whether the compat array passed is valid array
-     *  (1) Is each array entry =0 or 1?
-     *  (2) Is the matrix symmetric
-     * Note that diagnol entries can be either 0 or 1.
-     */
+using namespace std; 
 
-  int i=CLIQUE_UNKNOWN;
-  int j=CLIQUE_UNKNOWN;
-  printf(" Checking the sanity of the input..");
-
-  for(i=0; i< array_dimension; i++) 
-    {
-      for(j=0; j< array_dimension; j++) 
-	{
-	  if((compat[i][j] != 1) &&  (compat[i][j] != 0)) 
-	  {
-	    printf(" %d \n", compat[i][j]);
-	    printf("The value of an array element is other than 1 or 0. Aborting..\n"); 
-	    exit(0);
-	  }
-	  if(compat[i][j] != compat[j][i])
-	  {
-    	    printf("The compatibility array is NOT symmetric at (%d,%d) and (%d,%d) Aborting..\n", i,j, j,i); 
-	    exit(0);
-	  }
-	  printf(".");
-	}
-    }
-  printf("Done.\n");
-  return CLIQUE_TRUE;
-}
-
-int CliquePartition::output_sanity_check(int array_dimension, int** local_compat, int** compat)
-{
-    /* 
-     * Verifies the results of the heuristic.
-     * for each clique do
-     *   if the clique size is UNKNOWN
-     *      break
-     *   else
-     *     for every pair of members x and y in clique do
-     *       assert  compat[x][y] = 1 and compat[y][x] = 1
-     *     end for
-     *   end if
-     * end for
-     */
-    int i=UNKNOWN, j=UNKNOWN, k=UNKNOWN;
-    int member1=UNKNOWN, member2=UNKNOWN;
-
-    printf("\n Verifying the results of the clique partitioning algorithm..");
-    for(i=0; i<MAXCLIQUES; i++)
-    {
-	if(clique_set[i].size != UNKNOWN)
-	{
-	    assert(clique_set[i].size > 0);
-	    for(j=0; j < clique_set[i].size; j++)
-	    {
-		for(k=0; k < clique_set[i].size ; k++)
-		{
-		    if(j != k)
-		    {
-			member1=clique_set[i].members[j];
-			member2=clique_set[i].members[k];
-		    
-			assert(compat[member1][member2] == 1);
-			assert(compat[member2][member1] == 1);
-			assert(local_compat[member2][member1] == 1);
-			assert(local_compat[member2][member1] == 1);
-			printf(".");
-		    }
-		}
-	    }
-	}
-    }
-    printf("..Done.\n");
-	return CLIQUE_TRUE;
-}
-
-void CliquePartition::make_a_local_copy(int** local_compat, int** compat, int nodesize)
-{
-  int i=CLIQUE_UNKNOWN, j=CLIQUE_UNKNOWN;
-
-  for(i=0; i<nodesize; i++) 
-    {
-      for(j=0; j<nodesize; j++) 
-	{
-	  local_compat[i][j]= compat[i][j];
-	}
-    }
-  return;
-}
-
-int CliquePartition::get_degree_of_a_node(int x, int nodesize, int** local_compat, int* node_set)
+int CliquePartition::get_degree_of_a_node(int x, int nodesize, const CompGraph& local_compat, int* node_set)
 {
   int j=CLIQUE_UNKNOWN, node_degree=CLIQUE_UNKNOWN;
 
@@ -103,15 +11,15 @@ int CliquePartition::get_degree_of_a_node(int x, int nodesize, int** local_compa
     {
       if(node_set[j] != CLIQUE_UNKNOWN)
 	{
-	  if(x != j)
-	    node_degree += local_compat[x][j];
+	  if(x != j && local_compat.get(x, j))
+	    node_degree+=1;  
 	}
     }
 
   return node_degree;
 }
 
-int CliquePartition::select_new_node(int** local_compat, int nodesize, int* node_set)
+int CliquePartition::select_new_node(const CompGraph& local_compat, int nodesize, int* node_set)
 {
  /*    if a node with priority, then pick that node 
   *      else a node with highest degree
@@ -213,7 +121,7 @@ int CliquePartition::select_new_node(int** local_compat, int nodesize, int* node
   return max_node;
 }
 
-int CliquePartition::form_setY(int* setY, int* current_clique, int** local_compat, int nodesize, int* node_set)
+int CliquePartition::form_setY(int* setY, int* current_clique, const CompGraph& local_compat, int nodesize, int* node_set)
 {
   int i=CLIQUE_UNKNOWN, j=CLIQUE_UNKNOWN, index=CLIQUE_UNKNOWN;
   int setY_size = CLIQUE_UNKNOWN;
@@ -237,7 +145,7 @@ int CliquePartition::form_setY(int* setY, int* current_clique, int** local_compa
 	    {
 	      if(current_clique[j] != CLIQUE_UNKNOWN)
 	      {
-		if(local_compat[current_clique[j]][i] == 0)
+		if(!local_compat.get(current_clique[j], i))
 		  {
 		    compatibility=CLIQUE_FALSE;
 		    break;
@@ -409,7 +317,7 @@ void CliquePartition::form_set_Y2(int nodesize, int* set_Y2, int* set_Y1, int* s
   return;
 }
 
-int CliquePartition::pick_a_node_to_merge(int* setY, int** local_compat, int* node_set, int nodesize)
+int CliquePartition::pick_a_node_to_merge(int* setY, const CompGraph& local_compat, int* node_set, int nodesize)
 {
   int** sets_I_y=(int**) NULL;
   int i=CLIQUE_UNKNOWN, j=CLIQUE_UNKNOWN;
@@ -453,7 +361,7 @@ int CliquePartition::pick_a_node_to_merge(int* setY, int** local_compat, int* no
 	    {
 	      if(node_set[j] != CLIQUE_UNKNOWN)
 		{  /* if this node is still in set N */
-		  if(local_compat[setY[i]][j] != 1) 
+		  if(!local_compat.get(setY[i], j)) 
 		    { 
 		      sets_I_y[setY[i]][curr_indexes[setY[i]]]=j;
 		      curr_indexes[setY[i]]++;
@@ -510,49 +418,28 @@ int CliquePartition::pick_a_node_to_merge(int* setY, int** local_compat, int* no
   return new_node; 
 }
 
-void CliquePartition::init_clique_set()
-{
-    int i=UNKNOWN, j=UNKNOWN;
-    //printf("\n Initializing the clique set..");
-
-    for(i=0; i<MAXCLIQUES; i++)
-    {
-	clique_set[i].size = UNKNOWN;
-	for(j=0; j<MAXCLIQUES; j++)
-	{
-	    clique_set[i].members[j] = UNKNOWN;
-	}
-    }
-    //printf("..Done.\n");
-}
-
 void CliquePartition::print_clique_set()
 {
     int i=UNKNOWN, j=UNKNOWN;
 
     printf("\n Clique Set: \n");
     
-    for(i=0; i<MAXCLIQUES; i++)
+    for(i=0; i<(int)clique_set.size(); i++)
     {
-	if(clique_set[i].size == UNKNOWN) break;
-	
 	printf("\tClique #%d (size = %d) = { ",i, clique_set[i].size);
 	
-	for(j=0; j<MAXCLIQUES; j++)
+	for(j=0; j<(int)clique_set[i].members.size(); j++)
 	{
-	    if(clique_set[i].members[j] != UNKNOWN)
 		printf(" %d ", clique_set[i].members[j]);
-	    else
-		break;
 	}
 	printf (" }\n");
     }
     printf("\n");
 }
 
-int CliquePartition::clique_partition(int** compat, int nodesize)
+int CliquePartition::clique_partition(const CompGraph& compat, int nodesize)
 {
-  int** local_compat=(int**) NULL; 
+  const CompGraph& local_compat = compat; 
   int* current_clique=(int*) NULL; 
   int* node_set=(int*) NULL; 
   int* setY=(int*) NULL; 
@@ -562,7 +449,6 @@ int CliquePartition::clique_partition(int** compat, int nodesize)
   int new_node=CLIQUE_UNKNOWN;
   int curr_index=CLIQUE_UNKNOWN;
   int size_N = CLIQUE_UNKNOWN;
-  int clique_index = CLIQUE_UNKNOWN;
   /*int nodesize=CLIQUE_UNKNOWN;*/
 
 #ifdef DEBUG
@@ -572,21 +458,6 @@ int CliquePartition::clique_partition(int** compat, int nodesize)
   printf("**************************************\n");
   printf("\nEntering Clique Partitioner.. \n");
 
-  input_sanity_check(compat, nodesize);
-#endif 
-  
-  /* dynamically allocate memory for local copy */
-
-  local_compat=(int**) malloc (nodesize * sizeof(int*));
-
-  for(i=0; i<nodesize; i++)
-    {
-      local_compat[i]= (int*) malloc (nodesize * sizeof(int));
-    }
-
-  make_a_local_copy(local_compat, compat, nodesize);
-
-#ifdef DEBUG
   printf(" You entered the compatibility array: \n");
 
   for(i=0; i<nodesize; i++) 
@@ -594,13 +465,11 @@ int CliquePartition::clique_partition(int** compat, int nodesize)
 	printf("\t");
       for(j=0; j<nodesize; j++) 
 	{
-	  printf("%d ",local_compat[i][j]);
+	  printf("%d ",local_compat.get(i, j));
 	}
       printf("\n");
     }
 #endif 
-
-  init_clique_set();
 
   /* allocate memory for current clique & initialize to unknown values*/
   /* - current_clique has the indices of nodes that are compatible with each other*/
@@ -655,15 +524,8 @@ int CliquePartition::clique_partition(int** compat, int nodesize)
       if(setY_cardinality == 0) /* No possible nodes for merger; declare current_cliqueas complete */
 	{   //printf("completing clique!\n");
           /* copy the current clique into central datastructure */
-	    clique_index=0;
-	    while(clique_set[clique_index].size != UNKNOWN) 
-		{
-		clique_index++;
-		//printf("index = %d\n",clique_index );
-		
-		}
-		//printf("index = %d size = %d\n",clique_index, clique_set[clique_index].size );
-	    clique_set[clique_index].size = 0;
+        clique c; 
+	    c.size = 0;
 
 	    //printf(" A clique is found!! Clique = { ");
 		
@@ -672,7 +534,7 @@ int CliquePartition::clique_partition(int** compat, int nodesize)
 		//printf("node_index = %d\n",i );
 		if(current_clique[i] != CLIQUE_UNKNOWN) 
 		{
-		    clique_set[clique_index].members[i] = current_clique[i];
+		    c.members.push_back(current_clique[i]);
 		    
 		    //printf(" %d ", current_clique[i]);
 			
@@ -681,10 +543,12 @@ int CliquePartition::clique_partition(int** compat, int nodesize)
 		    node_set[current_clique[i]]=CLIQUE_UNKNOWN; /* remove this node from the node list */
 			current_clique[i]=CLIQUE_UNKNOWN;
 		    size_N = (size_N - 1);
-		    (clique_set[clique_index].size)++;		    
 		}
 		else
 		{
+            c.size = (int) c.members.size();  
+            if (c.size>0)
+                clique_set.push_back(c); 
 		    break;
 		}
 	    }
@@ -703,18 +567,12 @@ int CliquePartition::clique_partition(int** compat, int nodesize)
 	}
     }
 #ifdef DEBUG
-  output_sanity_check(nodesize, local_compat, compat);
   printf("\n Final Clique Partitioning Results:\n");
   print_clique_set();
   printf("Exiting Clique Partitioner.. Bye.\n");
   printf("**************************************\n\n");
 #endif 
 
-  for(i=0; i<nodesize; i++)
-    {
-      free(local_compat[i]); 
-    }
-  free(local_compat); 
   free(current_clique); 
   free(node_set); 
   free(setY); 

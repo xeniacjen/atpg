@@ -11,7 +11,6 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector> 
-#include "graph.h"
 #include "clique_partition.h"
 #include "circuit.h"
 #include "fault.h"
@@ -23,23 +22,6 @@ namespace CoreNs {
 class Pattern;
 
 typedef std::vector<Pattern *> PatternVec;
-
-//  this is for static compression using compatibility graph
-struct PatternVertex : public Vertex<Pattern *> { 
-    PatternVertex(Pattern *p, int id) : Vertex<Pattern *>(p){ 
-        id_ = id; 
-        merge_count_ = 0; 
-        detect_fault_.clear(); 
-    }
-
-    int id_; 
-    size_t merge_count_; 
-    FaultVec detect_fault_; 
-}; // PatternVertex 
-
-typedef std::vector<PatternVertex *> VertexList;
-typedef std::vector<Edge *> EdgeList; 
-//  end of compatibility graph
 
 class Pattern {
 public:
@@ -94,9 +76,6 @@ public:
     int        *piOrder_;
     int        *ppiOrder_;
     int        *poOrder_;
-
-    VertexList pat_graph_; 
-    EdgeList   pat_graph_edges_; 
 
     void       BuildGraph(); 
     void       ClearGraph(); 
@@ -266,35 +245,29 @@ inline void PatternProcessor::PrintPattern(unsigned i) const {
 inline void PatternProcessor::StaticCompression() {
     CliquePartition cp; 
 
-    int **compat; 
+    CompGraph compat; 
 
-    compat = new int *[pats_.size()]; 
-    for (size_t i=0; i<pats_.size(); i++)  
-        compat[i] = new int[pats_.size()]; 
-    
+    // size_t matrix_mem = 0; 
+    // size_t list_mem = 0; 
     for (size_t i=0; i<pats_.size(); i++) { 
-        compat[i][i] = 1; 
         for (size_t j=i+1; j<pats_.size(); j++) { 
+            // matrix_mem++; 
             if (IsCompatible(i, j)) { 
-                compat[i][j] = 1; 
-                compat[j][i] = 1; 
-            }
-            else { 
-                compat[i][j] = 0; 
-                compat[j][i] = 0; 
+                compat.add_edge(i, j); 
+                // list_mem++; 
             }
         } 
     }
+    // cout << "Comp.rate = " 
+    //      << (float)list_mem/(float)matrix_mem << endl;  
 
     cp.clique_partition(compat, pats_.size()); 
 
     std::map<int, Pattern *> comp_pats;  
-    for (int i=0; i<MAXCLIQUES; i++) { 
-        if (cp.clique_set[i].size==UNKNOWN) break; 
+    for (size_t i=0; i<cp.clique_set.size(); i++) { 
         int merged_pat = -1; 
         int pat_quality = 0; 
-        for (int j=0; j<MAXCLIQUES; j++) { 
-            if (cp.clique_set[i].members[j]==UNKNOWN) break;  
+        for (int j=0; j<cp.clique_set[i].members.size(); j++) { 
             merged_pat = cp.clique_set[i].members[j]; 
             pat_quality = (merged_pat>pat_quality)?merged_pat:pat_quality;; 
             if (j>0) { 
@@ -311,10 +284,6 @@ inline void PatternProcessor::StaticCompression() {
         comp_pat_vec.push_back(it->second); 
 
     pats_ = comp_pat_vec; 
-
-    for (size_t i=0; i<pats_.size(); i++)  
-        delete[] compat[i]; 
-    delete[] compat; 
 }
 
 inline void PatternProcessor::randomFill(Pattern *pat){
@@ -425,33 +394,6 @@ inline bool PatternProcessor::Merge(size_t i, size_t j) {
 
     return true; 
 } 
-
-inline void PatternProcessor::BuildGraph() { 
-    for (size_t i=0; i<pats_.size(); i++) { 
-        PatternVertex *pv = new PatternVertex(pats_[i], i); 
-        for (size_t j=0; j<pat_graph_.size(); j++) { 
-            if (IsCompatible(i, j)) { 
-                Edge *e = new Edge(); 
-                e->v1_ = pat_graph_[j]; 
-                e->v2_ = pv; 
-
-                pat_graph_[j]->es_.push_back(e); 
-                pv->es_.push_back(e); 
-
-                pat_graph_edges_.push_back(e); 
-            }
-        } 
-        pat_graph_.push_back(pv); 
-    }
-}
-
-inline void PatternProcessor::ClearGraph() { 
-    for (size_t n=0; n<pat_graph_.size(); n++) 
-        delete pat_graph_[n]; 
-
-    for (size_t n=0; n<pat_graph_edges_.size(); n++) 
-        delete pat_graph_edges_[n]; 
-}
 
 };
 
