@@ -82,6 +82,7 @@ public:
 
     void       init(Circuit *cir);
 	void 	   StaticCompression();
+	void 	   StaticCompressionGraph();
     void       PrintPorts() const; 
     void       PrintPatterns() const; 
     void       PrintPattern(unsigned i) const; 
@@ -222,7 +223,7 @@ inline void PatternProcessor::PrintPattern(unsigned i) const {
 } 
 
 // **************************************************************************
-// Function   [ PatternProcessor::StaticCompression ]
+// Function   [ PatternProcessor::StaticCompressionGraph ]
 // Commentor  [ HKY CYW ]
 // Synopsis   [ usage: do static compression
 // 		We first compare each pair of the patterns and check whether they are compatible.
@@ -242,7 +243,33 @@ inline void PatternProcessor::PrintPattern(unsigned i) const {
 // Date       [ HKY Ver. 1.0 started 2014/09/01 ]
 // **************************************************************************
 
-inline void PatternProcessor::StaticCompression() {
+inline void PatternProcessor::StaticCompression() { 
+    bool mergeRecord[(int)pats_.size()]; 
+    for (size_t i=0; i<pats_.size(); i++) 
+        mergeRecord[i] = false; 
+
+
+    for (size_t i=0; i<pats_.size(); i++) { 
+        if (mergeRecord[i]) continue; 
+        for (size_t j=0; j<pats_.size(); j++) { 
+            if (mergeRecord[j] || i==j) continue; 
+            if (IsCompatible(i, j)) { 
+                Merge(i, j); 
+                mergeRecord[j] = true; 
+            }
+        }
+    }
+
+    PatternVec comp_pats; 
+    for (size_t i=0; i<pats_.size(); i++) { 
+        if (!mergeRecord[i])  
+            comp_pats.push_back(pats_[i]); 
+    }
+
+    pats_ = comp_pats; 
+}
+
+inline void PatternProcessor::StaticCompressionGraph() {
     CliquePartition cp; 
 
     CompGraph compat; 

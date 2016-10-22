@@ -90,6 +90,7 @@ private:
     bool AddUniquePathObj(Gate *gtoprop, std::queue<Objective>& events); 
     bool GenObjs(); 
     bool CheckDDDrive(); 
+    bool MultiCheckDPath(Gate *g); 
     bool MultiDDrive(); 
     bool MultiDBackTrack(DecisionTree &tree); 
     bool isaMultiTest(); 

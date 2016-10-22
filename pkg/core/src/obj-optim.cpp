@@ -417,6 +417,10 @@ bool Atpg::CheckDDDrive() {
       proped.begin(), proped.end()); 
 }
 
+bool Atpg::MultiCheckDPath(Gate *g){ 
+    // TODO 
+} 
+
 struct FaultPropEvent { 
     Gate   *event; 
     int     source; 

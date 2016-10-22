@@ -836,6 +836,7 @@ bool ReportStatsCmd::exec(const vector<string> &argv) {
                 re++;
                 break;
             case Fault::AB:
+            case Fault::AH: 
                 ab++;
                 break;
         }
