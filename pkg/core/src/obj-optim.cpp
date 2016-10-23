@@ -230,7 +230,7 @@ bool Atpg::GenObjs() {
     // assert(j==gids.size()); 
 
     if (!objs_.empty()) { 
-        // if (!CheckDDDrive()) return false; 
+        if (!CheckDDDrive()) return false; 
         int gid = objs_.begin()->first; 
         if (gid < cir_->npi_ + cir_->nppi_) // has P/PI obj. 
             current_obj_ = *objs_.begin(); 
@@ -413,12 +413,46 @@ bool Atpg::CheckDDDrive() {
     d_tree_.top()->get_pred(pred); 
     d_tree_.sub_top()->top(proped); 
 
+    GateSet::iterator it = proped.begin(); 
+    for (; it!=proped.end(); ++it) { 
+        Gate *g = &cir_->gates_[*it]; 
+        if (impl_->isGateDrivePpo(g)) 
+            pred.insert(g->id_); 
+    }
+
     return includes(pred.begin(), pred.end(), 
-      proped.begin(), proped.end()); 
+                    proped.begin(), proped.end()); 
 }
 
 bool Atpg::MultiCheckDPath(Gate *g){ 
-    // TODO 
+    // get the previous object 
+    GateSet gs; d_tree_.top()->top(gs); 
+    GateSet::iterator it = gs.find(g->id_); 
+    if (it!=gs.end()) { 
+        d_path_[g->id_].gs_.insert(g->id_); 
+        d_path_[g->id_].has_d_path_ = H; 
+        return true; 
+    }
+
+    for (int i=0; i<g->nfi_; i++) { 
+        Gate *fi = &cir_->gates_[g->fis_[i]]; 
+        Value vi = impl_->GetVal(fi->id_); 
+        if (vi!=D && vi!=B) continue; 
+        if (d_path_[fi->id_].has_d_path_==X) 
+            MultiCheckDPath(fi); 
+
+        if (d_path_[fi->id_].has_d_path_==H) { 
+            d_path_[g->id_].gs_.insert(
+              d_path_[fi->id_].gs_.begin(), 
+              d_path_[fi->id_].gs_.end()); 
+            d_path_[g->id_].has_d_path_ = H; 
+        }
+    }
+    
+    if (d_path_[g->id_].has_d_path_!=H)     
+        d_path_[g->id_].has_d_path_ = L; 
+
+    return (d_path_[g->id_].has_d_path_==H); 
 } 
 
 struct FaultPropEvent { 
@@ -503,11 +537,16 @@ bool Atpg::MultiDDrive() {
             GateVec dfront; 
             impl_->GetDFrontier(dfront); 
     
+            ResetDPath(); 
             if (!CheckDFrontier(dfront)) return false;
 
             // FaultSetMap f2p = d_tree_.top()->fault_to_prop_; 
             // FaultSetMap fp = d_tree_.top()->fault_proped_; 
-            // GateSetMap pred; 
+            GateSetMap pred; 
+            for (size_t i=0; i<dfront.size(); i++) { 
+                pred.insert(make_pair(dfront[i], 
+                            d_path_[dfront[i]->id_].gs_)); 
+            }
             // GateVec gids; d_tree_.top()->top(gids); 
             // PropFaultSet(gids, pred); 
     
@@ -522,7 +561,7 @@ bool Atpg::MultiDDrive() {
             d_tree_.top()->set_mask_(mask); 
             // d_tree_.top()->fault_proped_ = fp; 
             // d_tree_.top()->set_f2p(f2p); 
-            // d_tree_.top()->predecessor_ = pred; 
+            d_tree_.top()->predecessor_ = pred; 
 
             GateVec &df = d_tree_.top()->dfront_; 
             sort (df.begin(), df.end(), comp_gate(this)); 

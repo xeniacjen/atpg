@@ -37,6 +37,13 @@ class Atpg {
 
         bool operator()(Gate* g1, Gate* g2); 
     }; 
+
+    struct DPathElem { 
+        GateSet gs_; 
+        Value has_d_path_; 
+
+        DPathElem() { has_d_path_ = X; }
+    }; 
     
 public: 
     enum GenStatus             { TEST_FOUND = 0, UNTESTABLE, ABORT }; 
@@ -90,7 +97,6 @@ private:
     bool AddUniquePathObj(Gate *gtoprop, std::queue<Objective>& events); 
     bool GenObjs(); 
     bool CheckDDDrive(); 
-    bool MultiCheckDPath(Gate *g); 
     bool MultiDDrive(); 
     bool MultiDBackTrack(DecisionTree &tree); 
     bool isaMultiTest(); 
@@ -102,6 +108,8 @@ private:
     bool BacktraceOO(); 
     bool BBackTrack(Gate *&g, Value& objv); 
 
+    bool MultiCheckDPath(Gate *g); 
+    void ResetDPath(); 
     bool CheckXPathObj(Gate *g, const ObjList& objs); 
     void ResetXPathObj(); 
 
@@ -120,6 +128,7 @@ private:
     int        *prob_fs; 
 
     Value      *x_path_obj_; 
+    DPathElem  *d_path_; 
 
     DDTree      d_tree_; 
     BDTree      b_tree_; 
@@ -170,6 +179,7 @@ inline Atpg::Atpg(Circuit *cir, Fault *f) {
     impl_ = new Implicator(cir, f); 
     x_path_ = new Value[cir_->tgate_]; 
     x_path_obj_ = new Value[cir_->tgate_]; 
+    d_path_ = new DPathElem[cir_->tgate_]; 
     prob_fs = new int[cir_->tgate_]; 
     is_fault_reach_ = new bool[cir_->tgate_]; 
 
@@ -186,7 +196,8 @@ inline Atpg::Atpg(Circuit *cir, Fault *f, Pattern *p) {
     is_obj_optim_mode_ = false; 
     impl_ = new Implicator(cir, f); 
     x_path_ = new Value[cir_->tgate_]; 
-    x_path_obj_ = new Value[cir_->tgate_]; 
+    // x_path_obj_ = new Value[cir_->tgate_]; 
+    d_path_ = new DPathElem[cir_->tgate_]; 
     prob_fs = new int[cir_->tgate_]; 
     is_fault_reach_ = new bool[cir_->tgate_]; 
 
@@ -198,7 +209,8 @@ inline Atpg::Atpg(Circuit *cir, Fault *f, Pattern *p) {
 inline Atpg::~Atpg() { 
     delete    impl_; 
     delete [] x_path_; 
-    delete [] x_path_obj_; 
+    // delete [] x_path_obj_; 
+    delete [] d_path_; 
     delete [] prob_fs; 
     delete [] is_fault_reach_; 
 }
@@ -321,6 +333,13 @@ inline void Atpg::ResetXPathObj() {
     for (int i=0; i<cir_->tgate_; i++) { 
         if (x_path_[i]==L) x_path_obj_[i] = L; 
         else x_path_obj_[i] = X; 
+    }
+}
+
+inline void Atpg::ResetDPath() { 
+    for (int i=0; i<cir_->tgate_; i++) { 
+        d_path_[i].gs_.clear(); 
+        d_path_[i].has_d_path_ = X; 
     }
 }
 
