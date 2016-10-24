@@ -72,6 +72,7 @@ private:
     // podem help function 
     bool isTestPossible(); 
     bool isaTest(); 
+    void setCurrObj(const Objective& obj); 
 
     // dfs-podem 
     bool init_d_tree(); 
@@ -94,7 +95,7 @@ private:
     bool ForwardObjProp(ObjList& objs, 
                         std::queue<Objective>& events_forward); 
     bool AddGateToProp(Gate *gtoprop); 
-    bool AddUniquePathObj(Gate *gtoprop, std::queue<Objective>& events); 
+    bool AddUniquePathObj(Gate *gtoprop, std::stack<Objective>& events); 
     bool GenObjs(); 
     bool CheckDDDrive(); 
     bool MultiDDrive(); 
@@ -166,6 +167,7 @@ protected:
     unsigned    back_track_limit; 
 
     Objective   current_obj_; 
+    size_t      current_obj_height_; 
     Value      *x_path_; // keep the x-path search status 
     bool       *is_fault_reach_; 
 }; //Atpg 
@@ -173,13 +175,15 @@ protected:
 inline Atpg::Atpg(Circuit *cir, Fault *f) { 
     cir_ = cir;
     current_fault_ = f; 
+    current_obj_ = make_pair(-1, X); 
+    current_obj_height_ = 0; 
 
     is_path_oriented_mode_ = false; 
     is_obj_optim_mode_ = false; 
     impl_ = new Implicator(cir, f); 
     x_path_ = new Value[cir_->tgate_]; 
     x_path_obj_ = new Value[cir_->tgate_]; 
-    d_path_ = new DPathElem[cir_->tgate_]; 
+    // d_path_ = new DPathElem[cir_->tgate_]; 
     prob_fs = new int[cir_->tgate_]; 
     is_fault_reach_ = new bool[cir_->tgate_]; 
 
@@ -191,13 +195,15 @@ inline Atpg::Atpg(Circuit *cir, Fault *f) {
 inline Atpg::Atpg(Circuit *cir, Fault *f, Pattern *p) { 
     cir_ = cir;
     current_fault_ = f; 
+    current_obj_ = make_pair(-1, X); 
+    current_obj_height_ = 0; 
 
     is_path_oriented_mode_ = false; 
     is_obj_optim_mode_ = false; 
     impl_ = new Implicator(cir, f); 
     x_path_ = new Value[cir_->tgate_]; 
     // x_path_obj_ = new Value[cir_->tgate_]; 
-    d_path_ = new DPathElem[cir_->tgate_]; 
+    // d_path_ = new DPathElem[cir_->tgate_]; 
     prob_fs = new int[cir_->tgate_]; 
     is_fault_reach_ = new bool[cir_->tgate_]; 
 
@@ -210,7 +216,7 @@ inline Atpg::~Atpg() {
     delete    impl_; 
     delete [] x_path_; 
     // delete [] x_path_obj_; 
-    delete [] d_path_; 
+    // delete [] d_path_; 
     delete [] prob_fs; 
     delete [] is_fault_reach_; 
 }
@@ -411,6 +417,20 @@ inline void Atpg::EvalObj(Objective& obj, ObjList& objs) {
 inline void Atpg::SetLearnEngine(LearnInfoMgr *learn_mgr) { 
     learn_mgr_ = learn_mgr; 
 }
+
+inline void Atpg::setCurrObj(const Objective& obj) { 
+    if (current_obj_!=obj) { 
+        if (impl_->GetTreeHeight()>current_obj_height_) { 
+            // check if initial obj. justified 
+            assert(impl_->GetVal(current_obj_.first)
+                   ==current_obj_.second); 
+            // TODO: clean RSA  
+        }
+
+        current_obj_ = obj; 
+        current_obj_height_ = impl_->GetTreeHeight(); 
+    }
+} 
 
 }; //CoreNs 
 

@@ -35,8 +35,8 @@ Atpg::GenStatus Atpg::Tpg() {
     while (true) { 
         if (isTestPossible() && is_backtrace_success) { 
             // Make a decision 
-            is_backtrace_success = (!objs_.empty())?BacktraceOO():Backtrace(); 
-            // Backtrace(); 
+            // is_backtrace_success = (!objs_.empty())?BacktraceOO():Backtrace(); 
+            Backtrace(); 
             if (!is_backtrace_success) continue; 
         } 
         else { 
@@ -120,18 +120,18 @@ bool Atpg::FaultActivate() { // TODO: TDF support
 bool Atpg::CheckDFrontier(GateVec &dfront) { 
    if (is_path_oriented_mode_) { 
        for (int i=dfront.size()-1; i>=0; i--) { 
-           if (!is_obj_optim_mode_) { 
+           // if (!is_obj_optim_mode_) { 
               if (!CheckDPath(dfront[i])) { 
                 dfront[i] = dfront.back(); 
                 dfront.pop_back(); 
               }
-           }
-           else { 
-              if (!MultiCheckDPath(dfront[i])) { 
-                dfront[i] = dfront.back(); 
-                dfront.pop_back(); 
-              }
-           }
+           // }
+           // else { 
+           //   if (!MultiCheckDPath(dfront[i])) { 
+           //      dfront[i] = dfront.back(); 
+           //      dfront.pop_back(); 
+           //    }
+           // }
        }
    }
 

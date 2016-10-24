@@ -26,19 +26,12 @@ using namespace std;
 
 using namespace CoreNs; 
 
-bool Atpg::AddUniquePathObj(Gate *gtoprop, queue<Objective>& events) { 
+bool Atpg::AddUniquePathObj(Gate *gtoprop, stack<Objective>& events) { 
     Gate *gnext = gtoprop; 
-    while (gnext->nfo_==1) { 
-        for (int i=0; i<gnext->nfi_; i++) { 
-            if (impl_->GetVal(gnext->fis_[i])!=X) continue;  
-            //   || is_fault_reach_[gnext->fis_[i]]) continue; 
-            Objective obj; 
-            obj.first = gnext->fis_[i]; 
-            obj.second = gnext->getInputNonCtrlValue(); 
-            events.push(obj); 
-        }
+    do { 
+        PushFaninObjEvent(gnext, events); 
         gnext = &cir_->gates_[gnext->fos_[0]]; 
-    }
+    } while (gnext->nfo_==1);  
 
     return true; 
 } 
@@ -75,6 +68,7 @@ bool Atpg::BackwardObjProp(Gate *gtoprop,
     bool need_foward_impl = true; 
     stack<Objective> event_list; 
     PushFaninObjEvent(gtoprop, event_list); 
+    // AddUniquePathObj(gtoprop, event_list); 
     if (learn_mgr_!=0) learn_mgr_->GetLearnInfo(event_list); 
     while (!event_list.empty()) { 
         Objective obj = event_list.top(); 
@@ -162,7 +156,6 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
         ObjList objs = objs_; // create a temp. copy 
 
         queue<Objective> event_list_forward; 
-        // if (!AddUniquePathObj(gtoprop, event_list)) return false; 
 
         if (!BackwardObjProp(gtoprop, objs, event_list_forward)) 
             return false; 
@@ -230,7 +223,7 @@ bool Atpg::GenObjs() {
     // assert(j==gids.size()); 
 
     if (!objs_.empty()) { 
-        if (!CheckDDDrive()) return false; 
+        // if (!CheckDDDrive()) return false; 
         int gid = objs_.begin()->first; 
         if (gid < cir_->npi_ + cir_->nppi_) // has P/PI obj. 
             current_obj_ = *objs_.begin(); 
@@ -537,16 +530,16 @@ bool Atpg::MultiDDrive() {
             GateVec dfront; 
             impl_->GetDFrontier(dfront); 
     
-            ResetDPath(); 
+            // ResetDPath(); 
             if (!CheckDFrontier(dfront)) return false;
 
             // FaultSetMap f2p = d_tree_.top()->fault_to_prop_; 
             // FaultSetMap fp = d_tree_.top()->fault_proped_; 
-            GateSetMap pred; 
-            for (size_t i=0; i<dfront.size(); i++) { 
-                pred.insert(make_pair(dfront[i], 
-                            d_path_[dfront[i]->id_].gs_)); 
-            }
+            // GateSetMap pred; 
+            // for (size_t i=0; i<dfront.size(); i++) { 
+            //     pred.insert(make_pair(dfront[i], 
+            //                 d_path_[dfront[i]->id_].gs_)); 
+            // }
             // GateVec gids; d_tree_.top()->top(gids); 
             // PropFaultSet(gids, pred); 
     
@@ -561,7 +554,7 @@ bool Atpg::MultiDDrive() {
             d_tree_.top()->set_mask_(mask); 
             // d_tree_.top()->fault_proped_ = fp; 
             // d_tree_.top()->set_f2p(f2p); 
-            d_tree_.top()->predecessor_ = pred; 
+            // d_tree_.top()->predecessor_ = pred; 
 
             GateVec &df = d_tree_.top()->dfront_; 
             sort (df.begin(), df.end(), comp_gate(this)); 

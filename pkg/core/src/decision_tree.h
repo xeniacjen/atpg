@@ -8,6 +8,7 @@
 #ifndef _CORE_DECISION_TREE_H_
 #define _CORE_DECISION_TREE_H_
 
+#include <cstdlib>
 #include <vector>
 
 namespace CoreNs {
@@ -33,6 +34,7 @@ public:
     bool get(int &gid, unsigned &startPoint);
     bool empty() const;
     bool lastNodeMark() const;
+    size_t size() const; 
 
     DecisionTree &operator= (const DecisionTree &rhs); 
 
@@ -40,6 +42,9 @@ private:
     std::vector<DecisionTreeNode> tree_;
 };
 
+inline size_t DecisionTree::size() const { 
+    return tree_.size(); 
+} 
 
 inline DecisionTreeNode::DecisionTreeNode(const int &gid,
                                           const unsigned &startPoint) {

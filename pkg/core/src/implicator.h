@@ -53,6 +53,7 @@ public:
 
     bool MakeDecision(Gate *g, Value v); 
     bool BackTrack(); 
+    size_t GetTreeHeight() const;  
 
     bool  isPossiblyToSetVal(int gid, Value v) const; 
     // bool  isPossiblyToSetDorB(int gid) const; 
@@ -275,6 +276,10 @@ inline void Implicator::AssignValue(int gid, Value v) {
         // if (g->isFanoutStem()) 
         PushBEvent(gid); 
     }
+} 
+
+inline size_t Implicator::GetTreeHeight() const { 
+    return decision_tree_.size(); 
 } 
  
 }; // CoreNs

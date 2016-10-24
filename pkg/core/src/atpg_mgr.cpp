@@ -200,7 +200,8 @@ void AtpgMgr::generation(int limit) {
         }   
     }
 
-    if (set_dfs_on_ && set_oo_on_) { 
+    // if (set_dfs_on_ && set_oo_on_) { 
+    if (false) { 
         flist.sort(comp_fault_hard); 
     
         cout << "\n# ------------------------------------------------------------------------\n"; 
@@ -239,8 +240,8 @@ void AtpgMgr::generation(int limit) {
     
                 flist.front()->state_ = Fault::DH; 
 
-                // if (pcoll_->dynamicCompression_==PatternProcessor::ON) 
-                // DynamicCompression(flist); 
+                if (pcoll_->dynamicCompression_==PatternProcessor::ON) 
+                DynamicCompression(flist); 
     
 		        if ((pcoll_->staticCompression_ == PatternProcessor::OFF) 
                 && (pcoll_->XFill_ == PatternProcessor::ON)){
