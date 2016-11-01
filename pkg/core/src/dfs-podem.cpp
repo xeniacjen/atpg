@@ -69,6 +69,12 @@ bool Atpg::DDDrive() {
     d_tree_.GetPath(dpath); 
     if (CheckPath(dpath)) { 
         if (v==D || v==B) { // D-frontier pushed forward 
+            // GateSet nsa; 
+            // FindNSA(&cir_->gates_[current_obj_.first], nsa); 
+            // impl_->RelaxRSA(nsa, d_tree_.top()->startPoint_); 
+            // assert(impl_->GetVal(current_obj_.first)==D 
+            //     || impl_->GetVal(current_obj_.first)==B); 
+
             GateVec dfront; 
             impl_->GetDFrontier(dfront); 
     
@@ -123,3 +129,29 @@ bool Atpg::DBackTrack() {
 
     return false; 
 } 
+
+void Atpg::FindNSA(Gate *gproped, GateSet &nsa) { 
+    stack<Gate *> l; 
+    l.push(gproped); 
+    while (!l.empty()) { 
+        Gate *g = l.top(); 
+        l.pop(); 
+
+        Value v = impl_->GetVal(g->id_); 
+        if (g->type_==Gate::PI || g->type_==Gate::PPI) 
+            nsa.insert(g->id_); 
+        // else if (v==X) continue; 
+        else if (v==EvalNot(g->getOutputCtrlValue())) { 
+            for (int i=0; i<g->nfi_; i++) { 
+                if (impl_->GetVal(g->fis_[i])
+                  ==g->getInputCtrlValue()) { 
+                    l.push(&cir_->gates_[g->fis_[i]]); 
+                }
+            }
+        }
+        else { 
+            for (int i=0; i<g->nfi_; i++)
+                l.push(&cir_->gates_[g->fis_[i]]); 
+        }
+    }
+}

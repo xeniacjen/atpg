@@ -24,6 +24,10 @@ using namespace std;
 
 using namespace CoreNs; 
 
+
+size_t Implicator::nsa_ = 0; 
+size_t Implicator::nnsa_ = 0; 
+
 bool Implicator::EventDrivenSim() {
     while (!events_b->empty()) events_b->pop();  
     while (!events_->empty()) { 
@@ -386,4 +390,30 @@ bool Implicator::BackTrack() {
     } 
 
     return false; 
+}
+
+void Implicator::RelaxRSA(const GateSet &nsa, unsigned sp) { 
+    vector<Objective> nsas; 
+    for (size_t i=0; i<decision_tree_.size(); i++) { 
+        GateSet::const_iterator it 
+          = nsa.find(decision_tree_.tree_[i].gid_); 
+
+        if (it!=nsa.end()) { 
+            nsas.push_back(make_pair(*it, values_[*it])); 
+            nnsa_++; 
+        }
+    }
+    nsa_+=decision_tree_.size(); 
+    if (nsas.size()==decision_tree_.size()) return; 
+
+    for (size_t i=sp; i<e_front_list_.size(); i++) 
+        values_[e_front_list_[i]] = X; 
+    e_front_list_.resize(sp); 
+
+    decision_tree_.clear(); 
+    for (size_t i=0; i<nsas.size(); i++) { 
+        MakeDecision(&cir_->gates_[nsas[i].first], 
+                     nsas[i].second); 
+        EventDrivenSim(); 
+    }
 }

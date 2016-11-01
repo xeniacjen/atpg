@@ -26,7 +26,6 @@
 namespace CoreNs { 
 
 struct LearnInfo; 
-typedef std::pair<int, Value> Objective; 
 typedef std::vector<LearnInfo* > ImplyList; 
 typedef std::map<Objective, LearnInfo *> LearnInfoList; 
 typedef LearnInfoList::iterator LearnInfoListIter; 

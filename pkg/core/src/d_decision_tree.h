@@ -31,7 +31,10 @@ typedef std::map<Gate *, FaultSet> FaultSetMap;
 typedef FaultSetMap::iterator FaultSetMapIter; 
 typedef GateSetMap::iterator GateSetMapIter; 
 
+class DDTree; 
 struct DDNode { 
+    friend class DDTree; 
+
                  DDNode(const GateVec &df, 
                    const unsigned &startPoint, 
                    const DecisionTree &tree); 
@@ -85,6 +88,14 @@ class DDTree {
 
     void GetPath(GateVec &path) const; // retuen path by reference  
     void GetMultiPath(GateVec &path) const; // retuen path by reference  
+    size_t GetJTreeHeight() const { 
+        size_t ret = 0; 
+        for (size_t i=0; i<trees_.size(); i++) {
+            ret+=trees_[i]->j_tree_.size(); 
+        } 
+
+        return ret; 
+    }
 
   protected: 
     std::vector<DDNode*> trees_; 

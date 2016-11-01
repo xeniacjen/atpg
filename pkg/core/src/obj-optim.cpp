@@ -225,12 +225,13 @@ bool Atpg::GenObjs() {
     if (!objs_.empty()) { 
         // if (!CheckDDDrive()) return false; 
         int gid = objs_.begin()->first; 
-        if (gid < cir_->npi_ + cir_->nppi_) // has P/PI obj. 
-            current_obj_ = *objs_.begin(); 
-        else 
-            current_obj_ = *objs_.rbegin(); 
+        if (gid < cir_->npi_ + cir_->nppi_) { // has P/PI obj. 
+            setCurrObj(*objs_.begin()); 
+        }
+        else { 
+            setCurrObj(*objs_.rbegin()); 
+        }
         // FindEasiestToSetObj(current_obj_); 
-        // FindHardestToSetObj(current_obj_); 
     }
 
     return ret; 
@@ -527,6 +528,10 @@ bool Atpg::MultiDDrive() {
     d_tree_.GetMultiPath(dpath); 
     if (CheckPath(dpath)) { 
         if (objs_.empty()) { // D-frontier pushed forward 
+            // GateSet nsa; MultiFindNSA(nsa); 
+            // impl_->RelaxRSA(nsa, d_tree_.top()->startPoint_); 
+            // GenObjs(); assert(objs_.empty()); 
+
             GateVec dfront; 
             impl_->GetDFrontier(dfront); 
     
@@ -563,8 +568,9 @@ bool Atpg::MultiDDrive() {
             else {
                 if (objs_.empty()) { 
                     GateVec gids; d_tree_.top(gids); 
-                    current_obj_.first = gids[0]->id_; 
-                    current_obj_.second = gids[0]->getOutputCtrlValue(); 
+                    setCurrObj(make_pair(
+                      gids[0]->id_, 
+                      gids[0]->getOutputCtrlValue())); 
                 }
                 return true; 
             } 

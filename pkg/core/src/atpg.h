@@ -80,8 +80,10 @@ private:
     bool CheckDPath(Gate *g) const; 
     bool CheckPath(const GateVec &path) const; 
     bool DBackTrack(); 
+    void FindNSA(Gate *gproped, GateSet &nsa); 
 
     // obj-optim. help function 
+    void MultiFindNSA(GateSet &nsa); 
     Value GetObj(int gid, const ObjList& objs); 
     SetObjRet SetObj(const Objective& obj, ObjList& objs);  
     void EvalObj(Objective& obj, ObjList& objs); 
@@ -420,16 +422,27 @@ inline void Atpg::SetLearnEngine(LearnInfoMgr *learn_mgr) {
 
 inline void Atpg::setCurrObj(const Objective& obj) { 
     if (current_obj_!=obj) { 
-        if (impl_->GetTreeHeight()>current_obj_height_) { 
+        size_t height = d_tree_.GetJTreeHeight() 
+          + impl_->GetTreeHeight(); 
+        // if (height>current_obj_height_) { 
             // check if initial obj. justified 
-            assert(impl_->GetVal(current_obj_.first)
-                   ==current_obj_.second); 
+            // Value v = impl_->GetVal(current_obj_.first); 
+            // assert(v==D || v==B 
+            //   || v==current_obj_.second); 
             // TODO: clean RSA  
-        }
+        // }
 
         current_obj_ = obj; 
-        current_obj_height_ = impl_->GetTreeHeight(); 
+        current_obj_height_ = height; 
     }
+} 
+
+inline void Atpg::MultiFindNSA(GateSet &nsa) { 
+    nsa.clear(); 
+
+    GateVec gids; d_tree_.top(gids); 
+    for (size_t i=0; i<gids.size(); i++)  
+        FindNSA(gids[i], nsa); 
 } 
 
 }; //CoreNs 

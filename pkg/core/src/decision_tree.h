@@ -38,8 +38,8 @@ public:
 
     DecisionTree &operator= (const DecisionTree &rhs); 
 
-private:
     std::vector<DecisionTreeNode> tree_;
+// private:
 };
 
 inline size_t DecisionTree::size() const { 

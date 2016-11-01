@@ -30,6 +30,7 @@ namespace CoreNs {
 
 class LearnInfoMgr;  
 
+typedef std::pair<int, Value> Objective; 
 typedef std::set<int> GateSet; 
 
 class Implicator { 
@@ -55,6 +56,8 @@ public:
     bool BackTrack(); 
     size_t GetTreeHeight() const;  
 
+    void RelaxRSA(const GateSet &nsa, unsigned sp); 
+
     bool  isPossiblyToSetVal(int gid, Value v) const; 
     // bool  isPossiblyToSetDorB(int gid) const; 
     Value GetVal(int gid) const; 
@@ -72,7 +75,6 @@ public:
     bool IsFaultAtPo() const; 
     bool isGateDrivePpo(Gate *g); 
 
-
     void GetPiPattern(Pattern *p) const; 
     void GetPoPattern(Pattern *p) const; 
 
@@ -82,6 +84,9 @@ public:
     void ClearDecisionTree();    
     const DecisionTree &getDecisionTree() const; 
     void setDecisionTree(const DecisionTree &tree); 
+
+    static size_t   nsa_; 
+    static size_t   nnsa_; 
 
 private: 
     Value           GoodEval(Gate *g) const; 
