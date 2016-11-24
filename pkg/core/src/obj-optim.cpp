@@ -27,10 +27,24 @@ using namespace std;
 using namespace CoreNs; 
 
 bool Atpg::AddUniquePathObj(Gate *gtoprop, stack<Objective>& events) { 
+
+    Value vnext; 
+    for (int i=0; i< gtoprop->nfi_; i++) { 
+        vnext = impl_->GetVal(gtoprop->fis_[i]); 
+        if (vnext==D||vnext==B) break; 
+    }
+    vnext = (gtoprop->isInverse())?EvalNot(vnext):vnext;
+
     Gate *gnext = gtoprop; 
     do { 
-        PushFaninObjEvent(gnext, events); 
+        // PushFaninObjEvent(gnext, events); 
+        Objective obj; 
+        obj.first = gnext->id_; 
+        obj.second = vnext; 
+        events.push(obj); 
+
         gnext = &cir_->gates_[gnext->fos_[0]]; 
+        vnext = (gnext->isInverse())?EvalNot(vnext):vnext;
     } while (gnext->nfo_==1);  
 
     return true; 
@@ -63,13 +77,10 @@ void Atpg::PushFanoutObjEvent(const Objective& obj,
 
 bool Atpg::BackwardObjProp(Gate *gtoprop, 
                            ObjList& objs,  
+                           stack<Objective>& event_list,  
                            queue<Objective>& events_forward) { 
 
     bool need_foward_impl = true; 
-    stack<Objective> event_list; 
-    PushFaninObjEvent(gtoprop, event_list); 
-    // AddUniquePathObj(gtoprop, event_list); 
-    if (learn_mgr_!=0) learn_mgr_->GetLearnInfo(event_list); 
     while (!event_list.empty()) { 
         Objective obj = event_list.top(); 
         event_list.pop(); 
@@ -77,6 +88,8 @@ bool Atpg::BackwardObjProp(Gate *gtoprop,
         SetObjRet ret = SetObj(obj, objs); 
         if (ret==FAIL) return false; 
         else if (ret==NOCHANGE) continue; 
+
+        if (obj.second==D||obj.second==B) continue; 
        
         Gate *g = &cir_->gates_[obj.first]; 
         if (g->nfo_>1&&need_foward_impl) 
@@ -145,19 +158,30 @@ bool Atpg::ForwardObjProp(ObjList& objs,
 bool Atpg::AddGateToProp(Gate *gtoprop) { 
     Value v = impl_->GetVal(gtoprop->id_); 
 
-    if (v==D || v==B) // D-frontier pushed forward 
+    ObjList objs = objs_; // create a temp. copy 
+
+    stack<Objective> event_list; 
+    queue<Objective> event_list_forward; 
+    if (v==D || v==B) { // D-frontier pushed forward 
+        // AddUniquePathObj(gtoprop, event_list); 
+        // if (!BackwardObjProp(gtoprop, objs, event_list, 
+        //                      event_list_forward)) 
+        //     assert(0); 
+
         return true; 
+    }
     else if (v!=X) // D-frontier compromised 
         return false;  
     else  { 
         if (!CheckXPath(gtoprop)) return false; 
         assert(!gtoprop->isUnary()); 
 
-        ObjList objs = objs_; // create a temp. copy 
+        PushFaninObjEvent(gtoprop, event_list); 
+        if (learn_mgr_!=0) learn_mgr_->GetLearnInfo(event_list); 
+        AddUniquePathObj(gtoprop, event_list); 
 
-        queue<Objective> event_list_forward; 
-
-        if (!BackwardObjProp(gtoprop, objs, event_list_forward)) 
+        if (!BackwardObjProp(gtoprop, objs, event_list, 
+                             event_list_forward)) 
             return false; 
         if (!ForwardObjProp(objs, event_list_forward)) 
             return false; 
@@ -222,19 +246,35 @@ bool Atpg::GenObjs() {
     }
     // assert(j==gids.size()); 
 
-    if (!objs_.empty()) { 
-        // if (!CheckDDDrive()) return false; 
-        int gid = objs_.begin()->first; 
-        if (gid < cir_->npi_ + cir_->nppi_) { // has P/PI obj. 
-            setCurrObj(*objs_.begin()); 
-        }
-        else { 
-            setCurrObj(*objs_.rbegin()); 
-        }
-        // FindEasiestToSetObj(current_obj_); 
-    }
+    ChooseFinalObj(); 
 
     return ret; 
+}
+
+bool Atpg::ChooseFinalObj() { 
+    while (!objs_.empty()) { 
+        // if (!CheckDDDrive()) return false; 
+        Objective obj = *objs_.begin(); 
+        if (obj.first < cir_->npi_ 
+              + cir_->nppi_) { // has P/PI obj. 
+            if (obj.second==D||obj.second==B) { 
+                objs_.erase(objs_.begin());  
+                continue; 
+            }
+        }
+        else { 
+            obj = *objs_.rbegin(); 
+            if (obj.second==D||obj.second==B) { 
+                objs_.erase(--(objs_.rbegin().base()));  
+                continue; 
+            }
+        }
+        // FindEasiestToSetObj(current_obj_); 
+        setCurrObj(obj); 
+        return true; 
+    }
+
+    return false; 
 }
 
 void Atpg::FindEasiestToSetObj(Objective& obj) { 

@@ -93,12 +93,14 @@ private:
                             std::queue<Objective>& events_forward); 
     bool BackwardObjProp(Gate *gtoprop, 
                          ObjList& objs,  
+                         std::stack<Objective>& event_list,  
                          std::queue<Objective>& events_forward); 
     bool ForwardObjProp(ObjList& objs, 
                         std::queue<Objective>& events_forward); 
     bool AddGateToProp(Gate *gtoprop); 
     bool AddUniquePathObj(Gate *gtoprop, std::stack<Objective>& events); 
     bool GenObjs(); 
+    bool ChooseFinalObj(); 
     bool CheckDDDrive(); 
     bool MultiDDrive(); 
     bool MultiDBackTrack(DecisionTree &tree); 
@@ -377,12 +379,13 @@ inline Value Atpg::GetObj(int gid, const ObjList& objs) {
 
 inline Atpg::SetObjRet Atpg::SetObj(const Objective& obj, ObjList& objs) { 
     int gid = obj.first; Value vo = obj.second; 
+    assert(vo!=X); 
     Value vg = impl_->GetVal(gid); 
     if (vg==X) { 
         std::pair<ObjListIter, bool> ret = objs.insert(obj); 
-        if (!ret.second && ret.first->second!=vo)  
+        if (!ret.second && ret.first->second==EvalNot(vo))  
             return FAIL; 
-        else if (!ret.second && ret.first->second==vo)  
+        else if (!ret.second && ret.first->second!=EvalNot(vo))  
             return NOCHANGE; 
         else return SUCCESS; 
     } 
