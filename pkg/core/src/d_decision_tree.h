@@ -46,6 +46,7 @@ struct DDNode {
     bool         empty() const; 
     Gate        *top() const; 
     void         top(GateVec &gids) const;        
+    void         top(FaultVec &fs) const;        
     void         top(GateSet &gs) const; 
     void         pop(); 
     void         getJTree(DecisionTree &tree) const; 
@@ -63,6 +64,7 @@ struct DDNode {
     GateSetMap   predecessor_; 
 
     GateVec      dfront_; 
+    FaultVec     fs_; 
   protected: 
     Value       *d_mask_; // indicate which gates to d-drive 
 
@@ -121,6 +123,13 @@ inline bool DDNode::empty() const {
 
 inline Gate *DDNode::top() const { 
     return dfront_.back(); 
+} 
+
+inline void DDNode::top(FaultVec &fs) const { 
+    fs.clear(); 
+    for (size_t i=0; i<fs_.size(); i++) 
+        if (d_mask_[i]==H || d_mask_[i]==X)
+            fs.push_back(fs_[i]); 
 } 
 
 inline void DDNode::top(GateVec &gids) const { 

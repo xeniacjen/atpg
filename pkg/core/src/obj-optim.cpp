@@ -155,6 +155,29 @@ bool Atpg::ForwardObjProp(ObjList& objs,
     return true; 
 }
 
+bool Atpg::AddFaultToAct(Fault *f) { 
+    Value v = impl_->GetVal(f->gate_); 
+    Gate* g = &cir_->gates_[f->gate_]; 
+
+    ObjList objs = objs_; // create a temp. copy 
+
+    stack<Objective> event_list; 
+    queue<Objective> event_list_forward; 
+    if (v==D || v==B) { // D-frontier pushed forward 
+        return true; 
+    }
+    else if (v!=X) // D-frontier compromised 
+        return false;  
+    else  { 
+        if (!CheckXPath(g)) return false; 
+        // TODO 
+        
+        objs_ = objs; 
+    }
+
+    return true; 
+}
+
 bool Atpg::AddGateToProp(Gate *gtoprop) { 
     Value v = impl_->GetVal(gtoprop->id_); 
 
@@ -210,6 +233,46 @@ void Atpg::CalcIsFaultReach(const GateVec &gv) {
             if (!is_fault_reach_[g->fos_[i]]) 
                 events.push(&cir_->gates_[g->fos_[i]]); 
     }
+}
+
+bool Atpg::GenFaultActObjs() { 
+    GateVec gids; 
+    FaultVec fs; 
+    size_t size; 
+    bool ret = false; 
+
+    objs_.clear(); 
+
+    d_tree_.top()->top(fs); 
+    Value *mask = d_tree_.top()->get_mask_(size); 
+    for (size_t i=0; i<fs.size(); i++) 
+        gids.push_back(&cir_->gates_[fs[i]->gate_]); 
+    CalcIsFaultReach(gids); 
+
+    int j = 0; 
+    for (size_t i=0; i<size; i++) { 
+        if (mask[i]==L) continue; 
+        Fault *f = fs[j++]; 
+
+        if (!AddFaultToAct(f)) {
+            if (mask[i]==H) return false; 
+            mask[i] = L; 
+        } 
+        else { 
+            mask[i] = H; 
+            ret = true; 
+
+            if (!objs_.empty()) { 
+                // if has P/PIs obj. 
+                if (objs_.begin()->first<cir_->npi_+cir_->nppi_) 
+                    break; 
+            }
+        }
+    }
+    assert(j==fs.size()); 
+    ChooseFinalObj(); 
+
+    return ret; 
 }
 
 bool Atpg::GenObjs() { 

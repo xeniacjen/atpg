@@ -97,8 +97,13 @@ private:
                          std::queue<Objective>& events_forward); 
     bool ForwardObjProp(ObjList& objs, 
                         std::queue<Objective>& events_forward); 
+
+    bool AddUniquePathObj(Gate *gtoprop, 
+                          std::stack<Objective>& events); 
+
+    bool AddFaultToAct(Fault *f); 
+    bool GenFaultActObjs(); 
     bool AddGateToProp(Gate *gtoprop); 
-    bool AddUniquePathObj(Gate *gtoprop, std::stack<Objective>& events); 
     bool GenObjs(); 
     bool ChooseFinalObj(); 
     bool CheckDDDrive(); 
@@ -143,6 +148,8 @@ protected:
     virtual bool FaultActivate(); 
     virtual bool DDrive(); 
     virtual bool Backtrace(); 
+
+    virtual bool IsFaultAct(); 
 
     bool CheckXPath(Gate *g); 
     bool CheckDFrontier(GateVec &dfront); 

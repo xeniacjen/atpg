@@ -53,9 +53,25 @@ Atpg::GenStatus Atpg::Tpg() {
     }
 }
 
-bool Atpg::isTestPossible() { 
+bool Atpg::IsFaultAct() { 
+    if (is_obj_optim_mode_) { 
+        FaultVec fs; d_tree_.top()->top(fs); 
+        for (size_t i=0; i<fs.size(); i++) { 
+            Fault *f = fs[i]; 
+            Value v = impl_->GetVal(f->gate_); 
+            if (v==X) 
+                return false; 
+        }
+
+        return true; 
+    }
+
     Gate *fg = &cir_->gates_[current_fault_->gate_]; 
-    if (impl_->GetVal(fg->id_)==X) {  // GUT output at X? 
+    return (impl_->GetVal(fg->id_)!=X); 
+}
+
+bool Atpg::isTestPossible() { 
+    if (!IsFaultAct()) {  // GUT output at X? 
         FaultActivate(); 
         return true; 
     }    

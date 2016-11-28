@@ -43,11 +43,13 @@ bool Atpg::init_d_tree() {
     d_tree_.push(fgs, 0, tree_dummy); 
 
     if (is_obj_optim_mode_) { 
+        FaultVec fs; fs.push_back(f); 
         Value *mask = new Value [fgs.size()]; 
         for (size_t i=0; i<fgs.size(); i++)  
             mask[i] = H; 
         
         d_tree_.top()->set_mask_(mask); 
+        d_tree_.top()->fs_ = fs; 
         // d_tree_.top()->set_f2p(f2p); 
     }
 
