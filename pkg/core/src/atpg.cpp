@@ -71,9 +71,11 @@ bool Atpg::IsFaultAct() {
 }
 
 bool Atpg::isTestPossible() { 
+    ResetXPath(); 
+    ResetFaultReach(); 
+
     if (!IsFaultAct()) {  // GUT output at X? 
-        FaultActivate(); 
-        return true; 
+        return FaultActivate(); 
     }    
     else  
         return DDrive(); 
@@ -105,6 +107,9 @@ bool Atpg::Imply() {
 } 
 
 bool Atpg::FaultActivate() { // TODO: TDF support 
+    if (is_obj_optim_mode_) 
+        return GenFaultActObjs(); 
+
     Gate *fg = &cir_->gates_[current_fault_->gate_]; 
     int fline = current_fault_->line_; 
 
@@ -161,9 +166,6 @@ bool Atpg::CheckDFrontier(GateVec &dfront) {
 } 
 
 bool Atpg::DDrive() { 
-    ResetXPath(); 
-    ResetFaultReach(); 
-
     if (is_obj_optim_mode_) return MultiDDrive(); 
     if (is_path_oriented_mode_) return DDDrive(); 
 

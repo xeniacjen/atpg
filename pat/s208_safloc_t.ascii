@@ -309,7 +309,7 @@ pattern = 26;
 apply  "group1_load" 0 =
 chain "chain1" = "11111111";
 end;
-force "PI" "00000101110110" 1;
+force "PI" "00000000010101" 1;
 measure "PO" "X10" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =

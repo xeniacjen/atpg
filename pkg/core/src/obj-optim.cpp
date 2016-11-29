@@ -170,7 +170,33 @@ bool Atpg::AddFaultToAct(Fault *f) {
         return false;  
     else  { 
         if (!CheckXPath(g)) return false; 
-        // TODO 
+        Objective obj; 
+        if (f->line_) { 
+            // TODO
+            for (int i=0; i<g->nfi_; i++) { 
+                obj.first = g->fis_[i]; 
+                if (i==f->line_-1) { 
+                    obj.second = (f->type_==Fault::SA0 
+                               || f->type_==Fault::STR)?H:L;
+                }
+                else { 
+                    obj.second = g->getInputNonCtrlValue(); 
+                }
+                event_list.push(obj);
+            }
+        }
+        else { 
+            obj.first = g->id_; 
+            obj.second = (f->type_==Fault::SA0 
+                       || f->type_==Fault::STR)?H:L;
+            event_list.push(obj);
+        }
+
+        if (!BackwardObjProp(g, objs, event_list, 
+                             event_list_forward)) 
+            return false; 
+        if (!ForwardObjProp(objs, event_list_forward)) 
+            return false; 
         
         objs_ = objs; 
     }
