@@ -182,7 +182,7 @@ AddPinConsCmd	atpg/src/atpg_cmd.cpp	/^AddPinConsCmd::AddPinConsCmd(const std::st
 AddPinConsCmd	atpg/src/atpg_cmd.h	/^class AddPinConsCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
 AddScanChainsCmd	atpg/src/atpg_cmd.cpp	/^AddScanChainsCmd::AddScanChainsCmd(const std::string &name, FanMgr *fanMgr) :$/;"	f	class:AddScanChainsCmd
 AddScanChainsCmd	atpg/src/atpg_cmd.h	/^class AddScanChainsCmd : public CommonNs::Cmd {$/;"	c	namespace:FanNs
-AddUniquePathObj	core/src/obj-optim.cpp	/^bool Atpg::AddUniquePathObj(Gate *gtoprop, stack<Objective>& events) { $/;"	f	class:Atpg
+AddUniquePathObj	core/src/obj-optim.cpp	/^bool Atpg::AddUniquePathObj(Objective init_obj, $/;"	f	class:Atpg
 AndMap	core/src/logic.h	/^const Value AndMap[5][5] = { $/;"	m	namespace:CoreNs
 Arg	common/src/get_opt.h	/^inline Arg::Arg(const Type &type,$/;"	f	class:CommonNs::Arg
 Arg	common/src/get_opt.h	/^struct Arg {$/;"	s	namespace:CommonNs
@@ -601,6 +601,8 @@ GetDFrontier	core/src/implicator.cpp	/^void Implicator::GetDFrontier(GateVec& df
 GetDFrontierNCheck	core/src/implicator.cpp	/^bool Implicator::GetDFrontierNCheck(GateVec& df) {$/;"	f	class:Implicator
 GetEFrontierSize	core/src/implicator.h	/^inline size_t Implicator::GetEFrontierSize() const { $/;"	f	class:CoreNs::Implicator
 GetHexVal	core/src/implicator.h	/^inline HexValue Implicator::GetHexVal(int gid) const {$/;"	f	class:CoreNs::Implicator
+GetInitEventsFA	core/src/obj-optim.cpp	/^bool Atpg::GetInitEventsFA(Fault *f, $/;"	f	class:Atpg
+GetInitEventsFP	core/src/obj-optim.cpp	/^bool Atpg::GetInitEventsFP(Gate *gtoprop, $/;"	f	class:Atpg
 GetJFrontier	core/src/implicator.cpp	/^bool Implicator::GetJFrontier(GateVec& jf) { $/;"	f	class:Implicator
 GetJTreeHeight	core/src/d_decision_tree.h	/^    size_t GetJTreeHeight() const { $/;"	f	class:CoreNs::DDTree
 GetLearnInfo	core/src/learn.cpp	/^void LearnInfoMgr::GetLearnInfo(stack<Objective>& objs) const { $/;"	f	class:LearnInfoMgr
@@ -3441,7 +3443,7 @@ fos_	core/src/circuit.h	/^    int             *fos_;        \/\/ fanout net arra
 fos_	core/src/gate.h	/^    int       *fos_;  \/\/ fanout array$/;"	m	class:CoreNs::Gate
 frame_	core/src/gate.h	/^    int       frame_; \/\/ time frame of the gate, for 2-pattern test$/;"	m	class:CoreNs::Gate
 fs_	core/src/d_decision_tree.h	/^    FaultVec     fs_; $/;"	m	struct:CoreNs::DDNode
-fs_	core/src/gate.h	/^    Fault    *fs_;  $/;"	m	class:CoreNs::Gate
+fs_	core/src/gate.h	/^    Fault   **fs_;  $/;"	m	class:CoreNs::Gate
 gateToFault_	core/src/fault.h	/^    int       *gateToFault_;$/;"	m	class:CoreNs::FaultListExtract
 gate_	core/src/fault.h	/^    int   gate_;  \/\/ ID of the faulty gate$/;"	m	class:CoreNs::Fault
 gates_	core/src/circuit.h	/^    Gate            *gates_;      \/\/ gate array$/;"	m	class:CoreNs::Circuit
@@ -3533,6 +3535,7 @@ hasCons_	core/src/gate.h	/^    bool      hasCons_;$/;"	m	class:CoreNs::Gate
 hasPmt	interface/src/techlib.h	/^inline bool Techlib::hasPmt(const char * const name,$/;"	f	class:IntfNs::Techlib
 hasPmt	interface/src/techlib.h	/^inline bool Techlib::hasPmt(const size_t &i, const Pmt::Type &type) const {$/;"	f	class:IntfNs::Techlib
 has_d_path_	core/src/atpg.h	/^        Value has_d_path_; $/;"	m	struct:CoreNs::Atpg::DPathElem
+has_fault_	core/src/gate.h	/^    bool      has_fault_; $/;"	m	class:CoreNs::Gate
 head	interface/src/mdt_file.h	/^    MdtNames *head;$/;"	m	struct:IntfNs::MdtNames
 head	interface/src/mdt_file.h	/^    MdtPortToNet *head;$/;"	m	struct:IntfNs::MdtPortToNet
 head	interface/src/pat_file.h	/^    PatNames *head;$/;"	m	struct:IntfNs::PatNames

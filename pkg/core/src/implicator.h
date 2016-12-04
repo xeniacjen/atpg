@@ -199,7 +199,7 @@ inline bool Implicator::SetVal(int gid, HexValue hv) {
 
 inline bool Implicator::isUnjustified(int gid) const { 
     Gate *g = &cir_->gates_[gid]; 
-    Value v = (g->fs_!=0)?FaultEval(g):GoodEval(g); 
+    Value v = (g->has_fault_)?FaultEval(g):GoodEval(g); 
     return (v!=GetVal(gid)); 
 }
  
@@ -260,7 +260,7 @@ inline void Implicator::AssignValue(int gid, Value v) {
     
     e_front_list_.push_back(gid); 
 
-    if (cir_->gates_[gid].fs_!=0) { 
+    if (cir_->gates_[gid].has_fault_) { 
         PushEvent(gid); 
         // PushEventHex(g->id_); 
     }
@@ -278,22 +278,28 @@ inline size_t Implicator::GetTreeHeight() const {
 } 
  
 inline void Implicator::ResetTargetFaults() { 
-    for (int i=0; i<cir_->tgate_; i++) 
-        cir_->gates_[i].fs_ = 0; 
+    for (int i=0; i<cir_->tgate_; i++) { 
+        Gate *g = &cir_->gates_[i]; 
+        g->has_fault_ = false; 
+        for (int j=0; j<g->nfi_+1; j++)
+            g->fs_[j] = 0; 
+    }
 }
 
 inline void Implicator::SetTargetFaults(Fault *f) { 
     ResetTargetFaults(); 
     Gate *g = &cir_->gates_[f->gate_]; 
-    g->fs_ = f; 
+    g->has_fault_ = true; 
+    g->fs_[f->line_] = f; 
 }
 
 inline void Implicator::SetTargetFaults(const FaultVec& fs) { 
     ResetTargetFaults(); 
     for (size_t i=0; i<fs.size(); i++) { 
-        int gid = fs[i]->gate_; 
-        assert(cir_->gates_[gid].fs_==0); 
-        cir_->gates_[gid].fs_ = fs[i]; 
+        Gate *g = &cir_->gates_[fs[i]->gate_]; 
+        g->has_fault_ = true; 
+        assert(g->fs_[fs[i]->line_]==0); 
+        g->fs_[fs[i]->line_] = fs[i]; 
     }
 }
 

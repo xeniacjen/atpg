@@ -207,6 +207,7 @@ void Circuit::createPi(int &nfo) {
         gates_[id].lvl_ = 0;
         gates_[id].type_ = Gate::PI;
         gates_[id].fos_ = &fos_[nfo];
+        gates_[id].fs_= new Fault*[1]; 
         nfo += top->getNetPorts(p->inNet_->id_).size() - 1;
     }
 } //}}}
@@ -223,6 +224,7 @@ void Circuit::createPpi(int &nfo) {
         gates_[id].lvl_ = 0;
         gates_[id].type_ = Gate::PPI;
         gates_[id].fos_ = &fos_[nfo];
+        gates_[id].fs_= new Fault*[1]; 
 		int qid = 0;
 		while(strcmp(c->getPort(qid)->name_,"Q"))++qid;
 		nfo += top->getNetPorts(c->getPort(qid)->exNet_->id_).size() - 2;
@@ -251,6 +253,7 @@ void Circuit::createComb(int &nfi, int &nfo) {
                 Pmt *pmt = (Pmt *)c->libc_->getCell(j);
                 createPmt(id, c, pmt, nfi, nfo);
                 gates_[id].co_i_ = new int[gates_[id].nfi_]; 
+                gates_[id].fs_= new Fault*[gates_[id].nfi_+1]; 
                 for(int pid=0; pid<gates_[id].nfi_; pid++)
                     gates_[id].co_i_[pid] = 0;   
             }
@@ -263,6 +266,7 @@ void Circuit::createComb(int &nfi, int &nfo) {
     
             createVerilogPmt(id, c, nfi, nfo); 
             gates_[id].co_i_ = new int[gates_[id].nfi_]; 
+            gates_[id].fs_= new Fault*[gates_[id].nfi_+1]; 
             for(int pid=0; pid<gates_[id].nfi_; pid++)
                 gates_[id].co_i_[pid] = 0;   
         }
@@ -613,6 +617,7 @@ void Circuit::createPo(int &nfi) {
             nfi++;
         }
         gates_[id].co_i_ = new int[gates_[id].nfi_]; 
+        gates_[id].fs_= new Fault*[gates_[id].nfi_+1]; 
         for(int pid=0; pid<gates_[id].nfi_; pid++)
             gates_[id].co_i_[pid] = 0;   
     }
@@ -660,6 +665,7 @@ void Circuit::createPpo(int &nfi) {
             nfi++;
         }
         gates_[id].co_i_ = new int[gates_[id].nfi_]; 
+        gates_[id].fs_= new Fault*[gates_[id].nfi_+1]; 
         for(int pid=0; pid<gates_[id].nfi_; pid++)
             gates_[id].co_i_[pid] = 0;   
     }

@@ -35,12 +35,12 @@ bool Implicator::EventDrivenSim() {
         events_->pop(); 
 
         Value v; 
-        v = (g->fs_!=0)?FaultEval(g):GoodEval(g); 
+        v = (g->has_fault_)?FaultEval(g):GoodEval(g); 
         if (v==X) continue; 
 
         if (GetVal(g->id_)!=v) { 
             if (!SetVal(g->id_, v)) { 
-                if (g->fs_!=0)
+                if (g->has_fault_)
                     values_[g->id_] = v; 
                 else { 
                     return false; 
@@ -137,64 +137,75 @@ Value Implicator::GoodEval(Gate *g) const {
 }
 
 Value Implicator::FaultEval(Gate *g) const { 
-    Fault *target_fault_ = g->fs_; 
-    if (target_fault_->line_==0) { //fault on output 
-        Value v;  
+    Value v, v1, v2; 
+    bool f_at_input = false, f_at_output = false; 
+
+    Fault *target_fault_; 
+    if (g->fs_[0]) { //fault on output 
         if (g->type_==Gate::PI || g->type_==Gate::PPI) 
             v = values_[g->id_]; 
         else 
             v = GoodEval(g); 
+
+        target_fault_ = g->fs_[0]; 
         if (v==L&&(target_fault_->type_==Fault::SA1
             || target_fault_->type_==Fault::STF)) v = B; 
         if (v==H&&(target_fault_->type_==Fault::SA0
             || target_fault_->type_==Fault::STR)) v = D; 
-        return v; 
+
+        f_at_output = true; 
+        v2 = v;  
     }
-    else {
-        int line = target_fault_->line_; 
-        Value v = GetVal(g->fis_[line-1]); 
-        if (v==L&&(target_fault_->type_==Fault::SA1
-            || target_fault_->type_==Fault::STF)) v = B; 
-        if (v==H&&(target_fault_->type_==Fault::SA0
-            || target_fault_->type_==Fault::STR)) v = D; 
-        
-        vector<Value> vs; vs.push_back(v); 
-        for (int n=0; n<g->nfi_; n++) 
-            if (n!=line-1) 
-                vs.push_back(GetVal(g->fis_[n])); 
-                
+
+    vector<Value> vs; 
+    for (int i=0; i<g->nfi_; i++){
+        v = GetVal(g->fis_[i]); 
+        if (g->fs_[i+1]) { 
+            target_fault_ = g->fs_[i+1]; 
+            if (v==L&&(target_fault_->type_==Fault::SA1
+             || target_fault_->type_==Fault::STF)) v = B; 
+            if (v==H&&(target_fault_->type_==Fault::SA0
+             || target_fault_->type_==Fault::STR)) v = D; 
+
+            f_at_input = true; 
+        }
+
+        vs.push_back(v); 
+    } 
+
+    if (f_at_input) { 
         switch (g->type_) { 
             case Gate::INV: 
-                return EvalNot(v); 
+                v1 = EvalNot(v); 
                 break; 
             case Gate::AND: 
             case Gate::AND2: 
             case Gate::AND3: 
             case Gate::AND4: 
-                return EvalAndN(vs); 
+                v1 = EvalAndN(vs); 
                 break; 
             case Gate::NAND: 
             case Gate::NAND2: 
             case Gate::NAND3: 
             case Gate::NAND4: 
-                return EvalNandN(vs); 
+                v1 = EvalNandN(vs); 
                 break; 
             case Gate::OR: 
             case Gate::OR2: 
             case Gate::OR3: 
             case Gate::OR4: 
-                return EvalOrN(vs); 
+                v1 = EvalOrN(vs); 
                 break; 
             case Gate::NOR: 
             case Gate::NOR2: 
             case Gate::NOR3: 
             case Gate::NOR4: 
-                return EvalNorN(vs); 
+                v1 = EvalNorN(vs); 
                 break; 
             case Gate::PO: 
             case Gate::PPO: 
             case Gate::BUF: 
-                return v; 
+                v1 = v; 
                 break;  
             default:  
                 assert(0); // should never get here... 
@@ -202,14 +213,23 @@ Value Implicator::FaultEval(Gate *g) const {
         }
     }
 
+    if (f_at_input && f_at_output) {
+        assert(v1==v2); 
+        return v1; 
+    }
+    else if (f_at_input)
+        return v1; 
+    else if (f_at_output) 
+        return v2; 
+
+    assert(0); 
     return X; 
 }
 
 void Implicator::PushEvent(int gid) {
     Gate *g = &cir_->gates_[gid]; 
-    if (g->type_==Gate::PI || g->type_==Gate::PPI) { 
-        if (g->fs_==0) assert(0); 
-    } 
+    if (g->type_==Gate::PI || g->type_==Gate::PPI)  
+        assert(g->has_fault_); 
 
     events_->push(gid); 
 
@@ -234,7 +254,7 @@ void Implicator::PushBEvent(int gid) {
 void Implicator::PushEventHex(int gid) {
     Gate *g = &cir_->gates_[gid]; 
     if (g->type_==Gate::PI || g->type_==Gate::PPI)
-        if (g->fs_==0) assert(0); 
+        assert(g->has_fault_); 
 
     hevents_->push(gid); 
 
@@ -376,7 +396,7 @@ bool Implicator::BackTrack() {
         e_front_list_.resize(back_track_point+1); 
         values_[gid] = flipped_val; 
 
-        if (cir_->gates_[gid].fs_!=0) 
+        if (cir_->gates_[gid].has_fault_) 
             PushEvent(gid); 
         else 
             PushFanoutEvent(gid); 

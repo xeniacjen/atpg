@@ -49,21 +49,21 @@ pattern = 0;
 apply  "group1_load" 0 =
 chain "chain1" = "00010000";
 end;
-force "PI" "00011110111100" 1;
-measure "PO" "X01" 4;
-pulse "/CK" 5;
-apply  "group1_unload" 6 =
-chain "chain1" = "00000000";
-end;
-pattern = 1;
-apply  "group1_load" 0 =
-chain "chain1" = "00100000";
-end;
 force "PI" "00010110111100" 1;
 measure "PO" "X01" 4;
 pulse "/CK" 5;
 apply  "group1_unload" 6 =
 chain "chain1" = "00001000";
+end;
+pattern = 1;
+apply  "group1_load" 0 =
+chain "chain1" = "00100000";
+end;
+force "PI" "00011110111100" 1;
+measure "PO" "X01" 4;
+pulse "/CK" 5;
+apply  "group1_unload" 6 =
+chain "chain1" = "00000000";
 end;
 pattern = 2;
 apply  "group1_load" 0 =
