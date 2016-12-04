@@ -61,7 +61,7 @@ public:
     bool    CheckCompatibility(Fault *f);  
 
     bool    TurnOnPoMode(); 
-    bool    TurnOnObjOptimMode(FaultListExtract *fl); 
+    bool    TurnOnObjOptimMode(FaultList *fl); 
 
     void    SetLearnEngine(LearnInfoMgr *learn_mgr); 
 
@@ -98,9 +98,12 @@ private:
     bool ForwardObjProp(ObjList& objs, 
                         std::queue<Objective>& events_forward); 
 
-    bool AddUniquePathObj(Gate *gtoprop, 
+    bool AddUniquePathObj(Objective init_obj, 
                           std::stack<Objective>& events); 
-
+    bool GetInitEventsFP(Gate *gtoprop, 
+                         std::stack<Objective>& event_list); 
+    bool GetInitEventsFA(Fault *f, 
+                         std::stack<Objective>& event_list); 
     bool AddFaultToAct(Fault *f); 
     bool GenFaultActObjs(); 
     bool AddGateToProp(Gate *gtoprop); 
@@ -143,7 +146,7 @@ private:
     DDTree      d_tree_; 
     BDTree      b_tree_; 
 
-    FaultListExtract *flist_; 
+    FaultList  *flist_; 
 protected:
     virtual bool FaultActivate(); 
     virtual bool DDrive(); 
@@ -191,7 +194,8 @@ inline Atpg::Atpg(Circuit *cir, Fault *f) {
 
     is_path_oriented_mode_ = false; 
     is_obj_optim_mode_ = false; 
-    impl_ = new Implicator(cir, f); 
+    impl_ = new Implicator(cir); 
+    impl_->SetTargetFaults(f); 
     x_path_ = new Value[cir_->tgate_]; 
     x_path_obj_ = new Value[cir_->tgate_]; 
     // d_path_ = new DPathElem[cir_->tgate_]; 
@@ -211,7 +215,8 @@ inline Atpg::Atpg(Circuit *cir, Fault *f, Pattern *p) {
 
     is_path_oriented_mode_ = false; 
     is_obj_optim_mode_ = false; 
-    impl_ = new Implicator(cir, f); 
+    impl_ = new Implicator(cir); 
+    impl_->SetTargetFaults(f); 
     x_path_ = new Value[cir_->tgate_]; 
     // x_path_obj_ = new Value[cir_->tgate_]; 
     // d_path_ = new DPathElem[cir_->tgate_]; 
@@ -332,7 +337,7 @@ inline bool Atpg::TurnOnPoMode() {
     return is_path_oriented_mode_; 
 }
 
-inline bool Atpg::TurnOnObjOptimMode(FaultListExtract *fl) { 
+inline bool Atpg::TurnOnObjOptimMode(FaultList *fl) { 
     is_path_oriented_mode_ = true; 
     is_obj_optim_mode_ = true; 
 

@@ -26,16 +26,11 @@ using namespace std;
 
 using namespace CoreNs; 
 
-bool Atpg::AddUniquePathObj(Gate *gtoprop, stack<Objective>& events) { 
+bool Atpg::AddUniquePathObj(Objective init_obj, 
+                            stack<Objective>& events) { 
 
-    Value vnext; 
-    for (int i=0; i< gtoprop->nfi_; i++) { 
-        vnext = impl_->GetVal(gtoprop->fis_[i]); 
-        if (vnext==D||vnext==B) break; 
-    }
-    vnext = (gtoprop->isInverse())?EvalNot(vnext):vnext;
-
-    Gate *gnext = gtoprop; 
+    Gate *gnext = &cir_->gates_[init_obj.first]; 
+    Value vnext = init_obj.second; 
     do { 
         // PushFaninObjEvent(gnext, events); 
         Objective obj; 
@@ -155,6 +150,43 @@ bool Atpg::ForwardObjProp(ObjList& objs,
     return true; 
 }
 
+bool Atpg::GetInitEventsFA(Fault *f, 
+                           std::stack<Objective>& event_list) { 
+    Gate* g = &cir_->gates_[f->gate_]; 
+
+    Objective init_obj, obj; 
+    init_obj.first = f->gate_; 
+    if (f->line_) { 
+        for (int i=0; i<g->nfi_; i++) { 
+            obj.first = g->fis_[i]; 
+            if (i==f->line_-1) { 
+                obj.second = (f->type_==Fault::SA0 
+                           || f->type_==Fault::STR)?H:L;
+                init_obj.second = (obj.second==H)?D:B;
+            }
+            else { 
+                obj.second = g->getInputNonCtrlValue(); 
+            }
+            event_list.push(obj);
+        }
+
+        init_obj.second = (g->isInverse())?EvalNot(init_obj.second):
+                                           init_obj.second;
+    }
+    else { 
+        obj.first = g->id_; 
+        obj.second = (f->type_==Fault::SA0 
+                   || f->type_==Fault::STR)?H:L;
+        init_obj.second = (obj.second==H)?D:B;
+        event_list.push(obj);
+    }
+
+    if (learn_mgr_!=0) learn_mgr_->GetLearnInfo(event_list); 
+    // AddUniquePathObj(init_obj, event_list); 
+
+    return true; 
+}
+
 bool Atpg::AddFaultToAct(Fault *f) { 
     Value v = impl_->GetVal(f->gate_); 
     Gate* g = &cir_->gates_[f->gate_]; 
@@ -170,27 +202,8 @@ bool Atpg::AddFaultToAct(Fault *f) {
         return false;  
     else  { 
         if (!CheckXPath(g)) return false; 
-        Objective obj; 
-        if (f->line_) { 
-            // TODO
-            for (int i=0; i<g->nfi_; i++) { 
-                obj.first = g->fis_[i]; 
-                if (i==f->line_-1) { 
-                    obj.second = (f->type_==Fault::SA0 
-                               || f->type_==Fault::STR)?H:L;
-                }
-                else { 
-                    obj.second = g->getInputNonCtrlValue(); 
-                }
-                event_list.push(obj);
-            }
-        }
-        else { 
-            obj.first = g->id_; 
-            obj.second = (f->type_==Fault::SA0 
-                       || f->type_==Fault::STR)?H:L;
-            event_list.push(obj);
-        }
+
+        GetInitEventsFA(f, event_list); 
 
         if (!BackwardObjProp(g, objs, event_list, 
                              event_list_forward)) 
@@ -204,6 +217,25 @@ bool Atpg::AddFaultToAct(Fault *f) {
     return true; 
 }
 
+bool Atpg::GetInitEventsFP(Gate *gtoprop, 
+                           std::stack<Objective>& event_list) { 
+    PushFaninObjEvent(gtoprop, event_list); 
+    if (learn_mgr_!=0) learn_mgr_->GetLearnInfo(event_list); 
+
+    Value v; 
+    for (int i=0; i< gtoprop->nfi_; i++) { 
+        v= impl_->GetVal(gtoprop->fis_[i]); 
+        if (v==D||v==B) break; 
+    }
+    v = (gtoprop->isInverse())?EvalNot(v):v;
+
+    Objective obj; 
+    obj.first = gtoprop->id_; obj.second = v; 
+    AddUniquePathObj(obj, event_list); 
+
+    return true; 
+}
+
 bool Atpg::AddGateToProp(Gate *gtoprop) { 
     Value v = impl_->GetVal(gtoprop->id_); 
 
@@ -212,11 +244,6 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
     stack<Objective> event_list; 
     queue<Objective> event_list_forward; 
     if (v==D || v==B) { // D-frontier pushed forward 
-        // AddUniquePathObj(gtoprop, event_list); 
-        // if (!BackwardObjProp(gtoprop, objs, event_list, 
-        //                      event_list_forward)) 
-        //     assert(0); 
-
         return true; 
     }
     else if (v!=X) // D-frontier compromised 
@@ -225,9 +252,7 @@ bool Atpg::AddGateToProp(Gate *gtoprop) {
         if (!CheckXPath(gtoprop)) return false; 
         assert(!gtoprop->isUnary()); 
 
-        PushFaninObjEvent(gtoprop, event_list); 
-        if (learn_mgr_!=0) learn_mgr_->GetLearnInfo(event_list); 
-        AddUniquePathObj(gtoprop, event_list); 
+        GetInitEventsFP(gtoprop, event_list); 
 
         if (!BackwardObjProp(gtoprop, objs, event_list, 
                              event_list_forward)) 
@@ -295,7 +320,6 @@ bool Atpg::GenFaultActObjs() {
             }
         }
     }
-    assert(j==fs.size()); 
     ChooseFinalObj(); 
 
     return ret; 
@@ -333,7 +357,6 @@ bool Atpg::GenObjs() {
             }
         }
     }
-    // assert(j==gids.size()); 
 
     ChooseFinalObj(); 
 
@@ -772,29 +795,6 @@ bool Atpg::isaMultiTest() {
     return true; 
 }
 
-Fault *Atpg::GetFault(Gate *g, int line) { 
-    Fault *f; int fid; 
-
-    Value v; 
-    v = (line>0)?impl_->GetVal(g->fis_[line-1]):impl_->GetVal(g->id_); 
-    if (g->type_==Gate::PO || g->type_==Gate::PPO) 
-        line--; 
-    if (v!=D && v!=B) return 0; 
-    else if (v==D) // SA0 
-        fid = flist_->gateToFault_[g->id_] + 2 * line; 
-    else if (v==B) // SA1  
-        fid = flist_->gateToFault_[g->id_] + 2 * line + 1; 
-
-    f = flist_->faults_[fid]; 
-
-    if (f->state_==Fault::AB 
-      || f->state_==Fault::AH 
-      || f->state_==Fault::UD)  
-        return f; 
-
-    return 0; 
-}
-
 bool Atpg::comp_gate::operator()(Gate* g1, Gate* g2) {  
     /**
     FaultSetMap f2p = atpg_->d_tree_.top()->fault_to_prop_; 
@@ -826,6 +826,30 @@ bool Atpg::comp_gate::operator()(Gate* g1, Gate* g2) {
 
     return g1->co_o_ > g2->co_o_; 
     // return fs1 > fs2; 
+}
+
+/** 
+Fault *Atpg::GetFault(Gate *g, int line) { 
+    Fault *f; int fid; 
+
+    Value v; 
+    v = (line>0)?impl_->GetVal(g->fis_[line-1]):impl_->GetVal(g->id_); 
+    if (g->type_==Gate::PO || g->type_==Gate::PPO) 
+        line--; 
+    if (v!=D && v!=B) return 0; 
+    else if (v==D) // SA0 
+        fid = flist_->gateToFault_[g->id_] + 2 * line; 
+    else if (v==B) // SA1  
+        fid = flist_->gateToFault_[g->id_] + 2 * line + 1; 
+
+    f = flist_->faults_[fid]; 
+
+    if (f->state_==Fault::AB 
+      || f->state_==Fault::AH 
+      || f->state_==Fault::UD)  
+        return f; 
+
+    return 0; 
 }
 
 Fault *Atpg::GetProbFault(Gate *g, int line, Value vf) { 
@@ -903,4 +927,4 @@ int Atpg::GetProbFaultSet(Gate *g, Value vi) {
 
     return ret; 
 }
-
+*/ 

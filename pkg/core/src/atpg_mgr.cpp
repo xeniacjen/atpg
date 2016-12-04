@@ -115,7 +115,7 @@ void AtpgMgr::generation(int limit) {
 
     pcoll_->nbit_spec_ = 0; 
     pcoll_->nbit_spec_max = 0; 
-    flist.sort(comp_fault_lvl); 
+    flist.sort(comp_fault_hard); 
 
     cout << "\n# ------------------------------------------------------------------------\n"; 
     cout << "# Main Phase: hard-to-detect fault \n"; 
@@ -132,7 +132,8 @@ void AtpgMgr::generation(int limit) {
             break; 
 
         if (f==flist.front()) { 
-            assert(0); 
+            f->state_ = Fault::UD; 
+            // assert(0); 
         }
 
         f = flist.front();  
@@ -140,7 +141,7 @@ void AtpgMgr::generation(int limit) {
         atpg_->SetBackTrackLimit(limit); 
         // atpg_->SetLearnEngine(learn_mgr_); 
         if (set_dfs_on_) atpg_->TurnOnPoMode(); 
-        if (set_oo_on_) atpg_->TurnOnObjOptimMode(fListExtract_); 
+        if (set_oo_on_) atpg_->TurnOnObjOptimMode(&flist); 
         Atpg::GenStatus ret = atpg_->Tpg(); 
 
         if (ret==Atpg::TEST_FOUND) { 

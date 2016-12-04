@@ -107,8 +107,11 @@ bool Atpg::Imply() {
 } 
 
 bool Atpg::FaultActivate() { // TODO: TDF support 
-    if (is_obj_optim_mode_) 
-        return GenFaultActObjs(); 
+    if (is_obj_optim_mode_){  
+        if (!GenFaultActObjs()) return false; 
+        if (objs_.empty()) return MultiDDrive(); 
+        return true; 
+    }
 
     Gate *fg = &cir_->gates_[current_fault_->gate_]; 
     int fline = current_fault_->line_; 

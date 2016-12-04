@@ -36,7 +36,7 @@ typedef std::set<int> GateSet;
 class Implicator { 
     friend class LearnInfoMgr; 
 public: 
-         Implicator(Circuit *cir, Fault *ftarget); 
+         Implicator(Circuit *cir); 
          ~Implicator(); 
 
     void Init(); 
@@ -56,9 +56,12 @@ public:
     bool BackTrack(); 
     size_t GetTreeHeight() const;  
 
+    void ResetTargetFaults(); 
+    void SetTargetFaults(Fault *f); 
+    void SetTargetFaults(const FaultVec& fs); 
     void RelaxRSA(const GateSet &nsa, unsigned sp); 
 
-    bool  isPossiblyToSetVal(int gid, Value v) const; 
+    bool isPossiblyToSetVal(int gid, Value v) const; 
     // bool  isPossiblyToSetDorB(int gid) const; 
     Value GetVal(int gid) const; 
     HexValue GetHexVal(int gid) const; 
@@ -99,7 +102,7 @@ private:
     Circuit         *cir_; 
     Simulator       *sim_;  
 
-    Fault           *target_fault_; 
+    // Fault           *target_fault_; 
 
     Value           *values_; 
     HexValue        *hvalues_; 
@@ -116,9 +119,9 @@ private:
     bool            *is_possibly_D; 
 }; // Implicator 
 
-inline Implicator::Implicator(Circuit *cir, Fault *ftarget) {
+inline Implicator::Implicator(Circuit *cir) {
     cir_ = cir; 
-    target_fault_ = ftarget;     
+    // target_fault_ = ftarget;     
 
     sim_    = new Simulator(cir_); 
     is_possibly_D = new bool [cir_->tgate_]; 
@@ -148,19 +151,6 @@ inline void Implicator::Init() {
         cir_->gates_[i].fl_ = PARA_L; 
         cir_->gates_[i].fh_ = PARA_L; 
     }
-
-    // std::queue<int> possibly_D_queue; 
-    // possibly_D_queue.push(target_fault_->gate_); 
-// 
-    // while (!possibly_D_queue.empty()) { 
-        // int gid = possibly_D_queue.back(); 
-        // possibly_D_queue.pop(); 
-        // is_possibly_D[gid] = true; 
-// 
-        // Gate *g = &cir_->gates_[gid]; 
-        // for (int i=0; i<g->nfo_; i++) 
-            // possibly_D_queue.push(g->fos_[i]); 
-    // } 
 }
 
 inline void Implicator::Init(Pattern *p) {
@@ -209,7 +199,7 @@ inline bool Implicator::SetVal(int gid, HexValue hv) {
 
 inline bool Implicator::isUnjustified(int gid) const { 
     Gate *g = &cir_->gates_[gid]; 
-    Value v = (g->id_==target_fault_->gate_)?FaultEval(g):GoodEval(g); 
+    Value v = (g->fs_!=0)?FaultEval(g):GoodEval(g); 
     return (v!=GetVal(gid)); 
 }
  
@@ -270,7 +260,7 @@ inline void Implicator::AssignValue(int gid, Value v) {
     
     e_front_list_.push_back(gid); 
 
-    if (target_fault_->gate_==gid) { 
+    if (cir_->gates_[gid].fs_!=0) { 
         PushEvent(gid); 
         // PushEventHex(g->id_); 
     }
@@ -287,6 +277,26 @@ inline size_t Implicator::GetTreeHeight() const {
     return decision_tree_.size(); 
 } 
  
+inline void Implicator::ResetTargetFaults() { 
+    for (int i=0; i<cir_->tgate_; i++) 
+        cir_->gates_[i].fs_ = 0; 
+}
+
+inline void Implicator::SetTargetFaults(Fault *f) { 
+    ResetTargetFaults(); 
+    Gate *g = &cir_->gates_[f->gate_]; 
+    g->fs_ = f; 
+}
+
+inline void Implicator::SetTargetFaults(const FaultVec& fs) { 
+    ResetTargetFaults(); 
+    for (size_t i=0; i<fs.size(); i++) { 
+        int gid = fs[i]->gate_; 
+        assert(cir_->gates_[gid].fs_==0); 
+        cir_->gates_[gid].fs_ = fs[i]; 
+    }
+}
+
 }; // CoreNs
 
 #endif // _CORE_IMPL_H_

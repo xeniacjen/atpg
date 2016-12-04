@@ -62,19 +62,16 @@ void LearnInfoMgr::GetLearnInfo(stack<Objective>& objs) const {
 } 
 
 bool LearnInfoMgr::SetLearnInfo(const Objective& obj) { 
-    Fault *dummy_fault = new Fault(); 
-    Implicator *impl = new Implicator(cir_, dummy_fault); 
+    Implicator *impl = new Implicator(cir_); 
     impl->Init(); 
 
     impl->AssignValue(obj.first, obj.second); 
     // if (!impl->EventDrivenSimB()) { 
     //     delete impl; 
-    //     delete dummy_fault; 
     //     return false; 
     // }
     if (!impl->EventDrivenSim()) { 
         delete impl; 
-        delete dummy_fault; 
         return false; 
     }
 
@@ -88,7 +85,6 @@ bool LearnInfoMgr::SetLearnInfo(const Objective& obj) {
     }
 
     delete impl; 
-    delete dummy_fault; 
 
     return true; 
 }

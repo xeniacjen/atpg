@@ -35,12 +35,12 @@ bool Implicator::EventDrivenSim() {
         events_->pop(); 
 
         Value v; 
-        v = (g->id_==target_fault_->gate_)?FaultEval(g):GoodEval(g); 
+        v = (g->fs_!=0)?FaultEval(g):GoodEval(g); 
         if (v==X) continue; 
 
         if (GetVal(g->id_)!=v) { 
             if (!SetVal(g->id_, v)) { 
-                if (g->id_==target_fault_->gate_)
+                if (g->fs_!=0)
                     values_[g->id_] = v; 
                 else { 
                     return false; 
@@ -137,6 +137,7 @@ Value Implicator::GoodEval(Gate *g) const {
 }
 
 Value Implicator::FaultEval(Gate *g) const { 
+    Fault *target_fault_ = g->fs_; 
     if (target_fault_->line_==0) { //fault on output 
         Value v;  
         if (g->type_==Gate::PI || g->type_==Gate::PPI) 
@@ -207,7 +208,7 @@ Value Implicator::FaultEval(Gate *g) const {
 void Implicator::PushEvent(int gid) {
     Gate *g = &cir_->gates_[gid]; 
     if (g->type_==Gate::PI || g->type_==Gate::PPI) { 
-        if (target_fault_->gate_!=gid) assert(0); 
+        if (g->fs_==0) assert(0); 
     } 
 
     events_->push(gid); 
@@ -233,7 +234,7 @@ void Implicator::PushBEvent(int gid) {
 void Implicator::PushEventHex(int gid) {
     Gate *g = &cir_->gates_[gid]; 
     if (g->type_==Gate::PI || g->type_==Gate::PPI)
-        if (target_fault_->gate_!=gid) assert(0); 
+        if (g->fs_==0) assert(0); 
 
     hevents_->push(gid); 
 
@@ -375,7 +376,7 @@ bool Implicator::BackTrack() {
         e_front_list_.resize(back_track_point+1); 
         values_[gid] = flipped_val; 
 
-        if (target_fault_->gate_==gid) 
+        if (cir_->gates_[gid].fs_!=0) 
             PushEvent(gid); 
         else 
             PushFanoutEvent(gid); 

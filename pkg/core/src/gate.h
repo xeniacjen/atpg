@@ -19,6 +19,7 @@ using namespace std;
 
 namespace CoreNs {
 
+class Fault; 
 class Gate; 
 
 typedef std::vector<Gate *> GateVec;  
@@ -79,6 +80,8 @@ public:
     int       co_o_; 
     int       *co_i_; 
 
+    Fault    *fs_;  
+
     int       depthFromPo_; // depth from po, this is for fault effect propagation
     int       fiMinLvl_;    // the minimum level of the fanin gates, this is to justify the headline cone, (in atpg.cpp)
 
@@ -120,6 +123,8 @@ inline Gate::Gate() {
 
     depthFromPo_ = -1;
     fiMinLvl_    = -1;
+
+    fs_      = 0; 
 }
 
 inline Gate::~Gate() {

@@ -17,7 +17,6 @@ using namespace std;
 
 namespace CoreNs {
 
-class Fault;
 typedef std::vector<Fault *>         FaultVec;
 typedef std::list<Fault *>           FaultList;
 typedef std::list<Fault *>::iterator FaultListIter;

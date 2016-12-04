@@ -16,6 +16,8 @@
  * =====================================================================================
  */
 
+#define NFAULTACT       1 
+
 #include <cassert>
 #include <climits>
 #include <algorithm>
@@ -43,13 +45,26 @@ bool Atpg::init_d_tree() {
     d_tree_.push(fgs, 0, tree_dummy); 
 
     if (is_obj_optim_mode_) { 
-        FaultVec fs; fs.push_back(f); 
-        Value *mask = new Value [fgs.size()]; 
-        for (size_t i=0; i<fgs.size(); i++)  
-            mask[i] = H; 
+        fgs.clear(); 
+        FaultVec fs; 
+        vector<Value> vs; 
+        FaultListIter it = flist_->begin(); 
+        for (size_t i=0; i<NFAULTACT; i++) {  
+            if (it==flist_->end()) break; 
+            f = *it; 
+            fgs.push_back(&cir_->gates_[f->gate_]); 
+            fs.push_back(f); 
+            vs.push_back(X); 
+            ++it; 
+        }
         
-        d_tree_.top()->set_mask_(mask); 
+        Value *mask = new Value[vs.size()]; 
+        for (size_t i=0; i<vs.size(); i++) 
+            mask[i] = vs[i]; 
+
+        d_tree_.top()->dfront_ = fgs; 
         d_tree_.top()->fs_ = fs; 
+        d_tree_.top()->set_mask_(mask); 
         // d_tree_.top()->set_f2p(f2p); 
     }
 
