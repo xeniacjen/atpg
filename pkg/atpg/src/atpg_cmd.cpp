@@ -1106,12 +1106,49 @@ bool RunAtpgCmd::exec(const vector<string> &argv) {
     if (!fanMgr_->atpg_mgr->sim_)
         fanMgr_->atpg_mgr->sim_ = new Simulator(fanMgr_->atpg_mgr->cir_);
 
+    long rtime_offset = 0; 
+    string cmdStr = "ls "; 
+    const string cmdReDir = " >/dev/null"; 
+    if (system((cmdStr + LOGFILE + cmdReDir).c_str())==0 
+        && system((cmdStr + PATFILE + cmdReDir).c_str())==0) { 
+        cout << "**WARN RunAtpgCmd()::exec(): unfinished session found ... \n";
+        cout << "#  Restoring from previous session ...\n";
+        
+        // read rtime from previous session 
+        ifstream ifs(LOGFILE); 
+        ifs >> rtime_offset; 
+
+        // reset pattern collection objects 
+        PatternProcessor *pcoll = new PatternProcessor; 
+        pcoll->staticCompression_ = fanMgr_->atpg_mgr->pcoll_->staticCompression_; 
+        pcoll->dynamicCompression_ = fanMgr_->atpg_mgr->pcoll_->dynamicCompression_; 
+        pcoll->XFill_ = fanMgr_->atpg_mgr->pcoll_->XFill_; 
+
+        delete fanMgr_->atpg_mgr->pcoll_;
+        fanMgr_->atpg_mgr->pcoll_ = pcoll;
+        PatFile *patBlder = 
+            new PatternReader(fanMgr_->atpg_mgr->pcoll_, fanMgr_->atpg_mgr->cir_);
+
+        // read pattern file  
+        if (!patBlder->read(PATFILE, false)) {
+            cerr << "**ERROR RunAtpgCmd()::exec(): pattern builder error" << endl;
+            delete fanMgr_->atpg_mgr->pcoll_;
+            delete patBlder;
+            fanMgr_->atpg_mgr->pcoll_ = NULL;
+            return false;
+        }
+
+        // fault simulation 
+        fanMgr_->atpg_mgr->sim_->pfFaultSim(fanMgr_->atpg_mgr->pcoll_, fanMgr_->atpg_mgr->fListExtract_);
+    }
+
     cout << "#  Performing pattern generation ...\n";
     fanMgr_->tmusg.periodStart();
 
-    fanMgr_->atpg_mgr->generation();
+    fanMgr_->atpg_mgr->generation(fanMgr_->tmusg);
 
     fanMgr_->tmusg.getPeriodUsage(fanMgr_->atpgStat);
+    fanMgr_->atpgStat.rTime+=rtime_offset; 
     cout << "#  Finished pattern generation";
     cout << "    " << (double)fanMgr_->atpgStat.rTime / 1000000.0 << " s";
     cout << "    " << (double)fanMgr_->atpgStat.vmSize / 1024.0   << " MB";

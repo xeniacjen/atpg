@@ -8,8 +8,6 @@
 #ifndef _FAN_FAN_MGR_H_
 #define _FAN_FAN_MGR_H_
 
-#include "common/tm_usage.h"
-
 #include "interface/netlist.h"
 #include "interface/techlib.h"
 

@@ -19,7 +19,13 @@
 #ifndef _CORE_ATPG_MGR_H_
 #define _CORE_ATPG_MGR_H_ 
 
+#include "common/tm_usage.h"
+
 #include "atpg.h" 
+
+#define STR_VAL(str)    #str 
+#define LOGFILE         STR_VAL(atpg.log)
+#define PATFILE         STR_VAL(atpg.pat)
 
 #define RPT_PER_PAT     64 
 
@@ -32,7 +38,7 @@ public:
     AtpgMgr();  
     ~AtpgMgr();  
 
-    void                generation(); 
+    void                generation(CommonNs::TmUsage &tmusg); 
     
     FaultListExtract    *fListExtract_;
     PatternProcessor    *pcoll_;
@@ -45,6 +51,10 @@ private:
 
     void                getPoPattern(Pattern *pat);  
     void                calc_fault_hardness(Fault* f1); 
+
+    void                printHeader(size_t n, 
+                                    const std::string& name); 
+    void                printLogger(CommonNs::TmUsage &tmusg); 
 
     Atpg                *atpg_; 
 

@@ -16,18 +16,20 @@
  * =====================================================================================
  */
 
+#include <fstream>
 #include <cassert>
 #include <cstdlib>
 #include <iomanip>
 
 #include "atpg_mgr.h" 
+#include "core/pattern_rw.h"
 
 using namespace std; 
 
 using namespace CoreNs; 
 
 bool comp_fault(Fault* f1, Fault* f2);  
-void AtpgMgr::generation() { 
+void AtpgMgr::generation(CommonNs::TmUsage &tmusg) { 
     pcoll_->init(cir_); 
     Fault *f = NULL; 
     for (int i=0; i<fListExtract_->faults_.size(); i++) 
@@ -36,13 +38,7 @@ void AtpgMgr::generation() {
     FaultList flist = fListExtract_->current_; 
     flist.sort(comp_fault); 
 
-    cout << "# ------------------------------------------------------------------------\n"; 
-    cout << "# Phase 1: drop faults need no back-track \n"; 
-    cout << "# ------------------------------------------------------------------------\n"; 
-    cout << "# #patterns  fault     #faults  #faults \n"; 
-    cout << "# simulated  coverage  in list  detected\n"; 
-    cout << "# ------------------------------------------------------------------------\n"; 
-    
+    printHeader(1, "drop faults need no back-track"); 
     while (flist.begin()!=flist.end()) { 
         if (flist.front()->state_==Fault::DT) { 
             flist.pop_front(); 
@@ -99,13 +95,7 @@ void AtpgMgr::generation() {
         delete atpg_; 
 
         if (ret==Atpg::TEST_FOUND && pcoll_->pats_.size()%RPT_PER_PAT==0) {
-            int fu = fListExtract_->current_.size(); 
-            int dt = fListExtract_->getNStatus(Fault::DT); 
-            cout << "# " << setw(9) << pcoll_->pats_.size(); 
-            cout << "  " << setw(8) << (float)dt / (float)fu * 100.f << "%";  
-            cout << "  " << setw(7) << fu - dt; 
-            cout << "  " << setw(8) << dt; 
-            cout << endl; 
+            printLogger(tmusg); 
         }   
     }
     
@@ -115,12 +105,7 @@ void AtpgMgr::generation() {
         (*it)->state_ = Fault::UD; 
     flist.sort(comp_fault); 
 
-    cout << "\n\n# ------------------------------------------------------------------------\n"; 
-    cout << "# Phase 2: hard-to-detect fault \n"; 
-    cout << "# ------------------------------------------------------------------------\n"; 
-    cout << "# #patterns  fault     #faults  #faults \n"; 
-    cout << "# simulated  coverage  in list  detected\n"; 
-    cout << "# ------------------------------------------------------------------------\n"; 
+    printHeader(2, "hard-to-detect fault"); 
     while (flist.begin()!=flist.end()) { 
         if (flist.front()->state_==Fault::DT) { 
             flist.pop_front(); 
@@ -181,13 +166,7 @@ void AtpgMgr::generation() {
         delete atpg_; 
 
         if (ret==Atpg::TEST_FOUND && pcoll_->pats_.size()%RPT_PER_PAT==0) {
-            int fu = fListExtract_->current_.size(); 
-            int dt = fListExtract_->getNStatus(Fault::DT); 
-            cout << "# " << setw(9) << pcoll_->pats_.size(); 
-            cout << "  " << setw(8) << (float)dt / (float)fu * 100.f << "%";  
-            cout << "  " << setw(7) << fu - dt; 
-            cout << "  " << setw(8) << dt; 
-            cout << endl; 
+            printLogger(tmusg); 
         }   
     }
 
@@ -200,6 +179,44 @@ void AtpgMgr::generation() {
 	}
 
     ReverseFaultSim(); 
+    
+    string cmdStr = "rm "; 
+    system((cmdStr + LOGFILE).c_str()); 
+    system((cmdStr + PATFILE).c_str()); 
+}
+
+void AtpgMgr::printLogger(CommonNs::TmUsage &tmusg) { 
+    CommonNs::TmStat atpgStat; 
+    tmusg.getPeriodUsage(atpgStat); 
+
+    int fu = fListExtract_->current_.size(); 
+    int dt = fListExtract_->getNStatus(Fault::DT); 
+    cout << "# " << setw(9) << pcoll_->pats_.size(); 
+    cout << "  " << setw(8) << (float)dt / (float)fu * 100.f << "%";  
+    cout << "  " << setw(7) << fu - dt; 
+    cout << "  " << setw(7) << dt; 
+    cout << "  " << setw(6) << 
+        (double) atpgStat.rTime / 1000000.0;  
+    cout << endl; 
+
+    PatternWriter writer(pcoll_, cir_); 
+    ofstream fout(LOGFILE); 
+    if (!writer.writePat(PATFILE) || !fout.is_open()) { 
+        cerr << "**ERROR AtpgMgr::printLogger(): writer failed" << endl;
+        assert(0); 
+    }
+    fout << atpgStat.rTime << endl; 
+    fout.close(); 
+}
+
+void AtpgMgr::printHeader(size_t n, const string& name) { 
+    cout << "\n\n# ------------------------------------------------------------------------\n"; 
+    cout << "# Phase " << n; 
+    cout << ": " << name << " \n"; 
+    cout << "# ------------------------------------------------------------------------\n"; 
+    cout << "# #patterns  fault     #faults  #faults   #time\n"; 
+    cout << "# simulated  coverage  in list  detected  elapsed\n"; 
+    cout << "# ------------------------------------------------------------------------\n"; 
 }
 
 bool comp_fault(Fault* f1, Fault* f2) {
