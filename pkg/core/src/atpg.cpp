@@ -26,6 +26,9 @@ using namespace std;
 
 using namespace CoreNs; 
 
+size_t Atpg::suc_bt_ = 0; 
+size_t Atpg::tot_bt_ = 0; 
+
 Atpg::GenStatus Atpg::Tpg() { 
     if (is_path_oriented_mode_) { 
         GateVec f; f.push_back(&cir_->gates_[current_fault_->gate_]); 
@@ -94,22 +97,26 @@ bool Atpg::FaultActivate() { // TODO: TDF support
         if (v==X) { // faulted input at X? 
             Value objv = (current_fault_->type_==Fault::SA0 
                 || current_fault_->type_==Fault::STR)?H:L;
-            current_obj_.first = fg->fis_[fline-1]; 
-            current_obj_.second = objv; 
+            // current_obj_.first = fg->fis_[fline-1]; 
+            // current_obj_.second = objv; 
+            ChangeObj(fg->fis_[fline-1], objv); 
+            
         }
         else { 
             Value objv = fg->getOutputCtrlValue(); 
             if (objv==X) assert(0); //NOT, PO, PPO, TODO: XOR, XNOR
-            current_obj_.first = fg->id_; 
-            current_obj_.second = objv; 
+            // current_obj_.first = fg->id_; 
+            // current_obj_.second = objv; 
+            ChangeObj(fg->id_, objv); 
             return true; 
         }
     }
     else { 
         Value objv = (current_fault_->type_==Fault::SA0 
             || current_fault_->type_==Fault::STR)?H:L;
-        current_obj_.first = fg->id_; 
-        current_obj_.second = objv; 
+        // current_obj_.first = fg->id_; 
+        // current_obj_.second = objv; 
+        ChangeObj(fg->id_, objv); 
         return true; 
     }
 }
@@ -141,8 +148,9 @@ bool Atpg::DDDrive() {
     // get the previous object 
     d_tree_.top(gid); 
     Gate *gtoprop = &cir_->gates_[gid]; 
-    current_obj_.first = gtoprop->id_; 
-    current_obj_.second = gtoprop->getOutputCtrlValue(); 
+    // current_obj_.first = gtoprop->id_; 
+    // current_obj_.second = gtoprop->getOutputCtrlValue(); 
+    ChangeObj(gtoprop->id_, gtoprop->getOutputCtrlValue()); 
     Value v = impl_->GetVal(current_obj_.first); 
 
     // Check path is sensitized 
@@ -163,8 +171,9 @@ bool Atpg::DDDrive() {
                 impl_->getDecisionTree()); 
             impl_->ClearDecisionTree();  
 
-            current_obj_.first = gtoprop->id_; 
-            current_obj_.second = gtoprop->getOutputCtrlValue(); 
+            // current_obj_.first = gtoprop->id_; 
+            // current_obj_.second = gtoprop->getOutputCtrlValue(); 
+            ChangeObj(gtoprop->id_, gtoprop->getOutputCtrlValue()); 
             return true; 
         } 
         else if (v!=X) { // D-frontier compromised 
@@ -200,8 +209,9 @@ bool Atpg::DDrive() {
         }
 
     assert(gtoprop->isUnary()==L); 
-    current_obj_.first = gtoprop->id_; 
-    current_obj_.second = gtoprop->getOutputCtrlValue(); 
+    // current_obj_.first = gtoprop->id_; 
+    // current_obj_.second = gtoprop->getOutputCtrlValue(); 
+    ChangeObj(gtoprop->id_, gtoprop->getOutputCtrlValue()); 
 
     return true; 
 }

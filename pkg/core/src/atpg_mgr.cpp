@@ -22,7 +22,7 @@
 #include <iomanip>
 
 #include "atpg_mgr.h" 
-#include "core/pattern_rw.h"
+#include "pattern_rw.h"
 
 using namespace std; 
 
@@ -183,6 +183,10 @@ void AtpgMgr::generation(CommonNs::TmUsage &tmusg) {
     string cmdStr = "rm "; 
     system((cmdStr + LOGFILE).c_str()); 
     system((cmdStr + PATFILE).c_str()); 
+
+    cout << "#  Successful Backtrace Rate: " << Atpg::suc_bt_ 
+         << "/" << Atpg::tot_bt_ << " = " 
+         << (float)Atpg::suc_bt_ / (float)Atpg::tot_bt_ * 100.f << endl;   
 }
 
 void AtpgMgr::printLogger(CommonNs::TmUsage &tmusg) { 

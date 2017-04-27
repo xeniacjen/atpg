@@ -19,7 +19,7 @@
 #ifndef _CORE_ATPG_H_ 
 #define _CORE_ATPG_H_ 
 
-#define _MAX_BACK_TRACK_LIMIT_  128 
+#define _MAX_BACK_TRACK_LIMIT_  64 
 
 #include <map>
 
@@ -45,6 +45,9 @@ public:
 
     bool    CheckCompatibility(Fault *f);  
 
+    static size_t suc_bt_; 
+    static size_t tot_bt_; 
+
 private: 
     bool DDDrive(); 
     bool isTestPossible(); 
@@ -58,6 +61,8 @@ protected:
     virtual bool FaultActivate(); 
     virtual bool DDrive(); 
     virtual bool Backtrace(); 
+
+    bool ChangeObj(int gid, Value v); 
 
     bool CheckObjs(); 
     bool GenObjs(); 
@@ -178,7 +183,7 @@ inline bool Atpg::CheckDPath(Gate *g) const {
 }
 
 inline bool Atpg::TurnOnPoMode() { 
-    is_path_oriented_mode_ = true; 
+    // is_path_oriented_mode_ = true; 
     back_track_limit = _MAX_BACK_TRACK_LIMIT_; 
 
     return is_path_oriented_mode_; 
@@ -189,6 +194,18 @@ inline void Atpg::ResetXPath() {
         x_path_[i] = X; 
 }
   
+inline bool Atpg::ChangeObj(int gid, Value v) { 
+    if (current_obj_.first!=gid 
+     || current_obj_.second!=v) {
+        tot_bt_+=1; 
+        Value objv = impl_->GetVal(gid); 
+        if (objv==D || objv==B) suc_bt_+=1; 
+    }
+
+    current_obj_.first = gid; 
+    current_obj_.second = v; 
+}
+
 }; //CoreNs 
 
 #endif //_CORE_ATPG_H_
