@@ -1,4 +1,11 @@
-pat/*.pat
-pat/*.ascii
+# build files 
 **/bin
 **/lib
+**/include
+
+# Generated pattern 
+pat/*.pat
+pat/*.ascii
+
+# Report files 
+**/*.rpt
