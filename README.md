@@ -48,11 +48,11 @@ IV.     REVISION HISTORY
 
 V.      Author
     
-    The tool is currently under construction and managed by J.Y.Chen 
-    (xenia-cjen). Any suggestions and comments are welcomed.
+    The tool is currently under construction and managed by C.Y.Chen 
+    (xeniacjen). Any suggestions and comments are welcomed.
 
-    - e-mail: jonah0604@gmail.com
-    - github: https://github.com/xenia-cjen
+    - e-mail: chingyuanchen@g.ntu.edu.tw
+    - github: https://github.com/xeniacjen
 
     Note: UI, including COMMON & INTERFACE package, is in the courtesy 
 	  of LaDS(II). 
