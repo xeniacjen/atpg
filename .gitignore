@@ -1,0 +1,4 @@
+pat/*.pat
+pat/*.ascii
+**/bin
+**/lib
