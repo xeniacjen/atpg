@@ -33,8 +33,7 @@ III.    USAGE
         make
 
     Run ATPG:
-        ./bin/opt/atpg
-        source script/atpg.script
+        ./script/atpg_saf.script
 
     Run fault simulation:
         ./bin/opt/atpg
