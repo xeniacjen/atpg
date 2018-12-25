@@ -9,3 +9,6 @@ pat/*.ascii
 
 # Report files 
 **/*.rpt
+
+# Exclude tech file 
+tsmc*

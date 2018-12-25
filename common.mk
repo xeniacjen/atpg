@@ -30,7 +30,7 @@ BINDIR = bin
 SHELL = /bin/sh
 
 # mode
-MODE = dbg
+MODE = opt
 
 # Path for source makefiles
 G_PKGDIR = ../../$(PKGDIR)
