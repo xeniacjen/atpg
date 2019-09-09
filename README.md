@@ -1,7 +1,3 @@
-
-LaDS(I)                     ATPG SYSTEM v2016                   FEB 2016
-
-
 CONTENTS
 
     I.    Introduction
@@ -47,15 +43,11 @@ IV.     REVISION HISTORY
 
 V.      Author
     
-    The tool is currently under construction and managed by C.Y.Chen 
-    (xeniacjen). Any suggestions and comments are welcomed.
+    The tool is currently managed by C.-Y.Chen (xeniacjen). Any 
+    suggestions and comments are welcomed.
 
-    - e-mail: chingyuanchen@g.ntu.edu.tw
+    - e-mail: chingyuan.chen@duke.edu
     - github: https://github.com/xeniacjen
 
     Note: UI, including COMMON & INTERFACE package, is in the courtesy 
-	  of LaDS(II). 
-
-
-Copyright (c) 2016 LaDS. All Rights Reserved.
-
+	  of LaDS(II), NTU, Taiwan. 
